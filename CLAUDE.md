@@ -93,6 +93,7 @@ Project and exam sessions have **no new teaching content**. They are working ses
 - **REST API is a load-bearing thread.** Sessions 5 and 6 must be solid because the mini-project depends on them and the exam projects routinely involve API design.
 - **Keep examples concrete.** Architecture students disengage when sessions are abstract. Whenever possible, anchor a concept to a system they can open and look at.
 - **Language**: course material can be in **English or Danish** — follow whatever the existing file uses, or ask if unclear.
+- **Optional readings/resources.** When a session links to material that is not required, place it under a `## Optional` heading (not `## References` or `## Further reading`) and mark each item with a leading `[optional]` tag. The expectation is that students engage with hands-on activities and investigation prompts first; canonical sources stay discoverable but never gate the session.
 
 ---
 

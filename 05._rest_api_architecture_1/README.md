@@ -68,14 +68,53 @@ Sketch a REST API for a small domain you care about (a library, a recipe book, a
 
 ---
 
-## After Class
+## Investigation (after class)
 
-- Read Fielding's chapter 5 (or a digestible summary) — it'll land differently now that you have concrete anchors from class.
-- Session 6 builds directly on this: versioning, pagination, errors, OpenAPI.
-- Sessions 7–8 (mini-project) use sessions 5–6. Take notes seriously.
+You learned the REST constraints by poking at a real API. Now sharpen what you noticed by interrogating an LLM about it — and verifying.
 
-## References
+**Ground rule:** the LLM is a fast, confident, sometimes-wrong study partner. For every claim it makes that matters, verify it against the real API (a `curl` away) or the GitHub docs. The point isn't to collect answers; it's to learn to *check* them.
 
-- Fielding, R. — *Architectural Styles and the Design of Network-based Software Architectures* (dissertation, 2000), chapter 5.
-- GitHub REST API docs: <https://docs.github.com/en/rest>
-- Tilkov, S. — *REST APIs must be hypertext-driven* (blog post, the famous Fielding rant).
+Pick **three** of the four prompts below. For each:
+
+1. Run the prompt in Claude Code (or another LLM tool — Claude works well because it can also run the verification command for you).
+2. Verify the central claim with a real request or a doc lookup.
+3. Note one place the LLM was correct, one place it was vague, wrong, or hedged.
+
+### Prompt 1 — Why does GitHub return 404 when 403 would be more honest?
+> "When I ask GitHub's API for a private repo I don't have access to, it returns 404 Not Found instead of 403 Forbidden. Why? Is this REST-compliant?"
+
+**Verify:** create a private repo on your own account, then try to fetch it both with and without your token. Then try fetching `/repos/some-real-org/some-real-private-repo`. Compare the status codes and the response bodies.
+
+### Prompt 2 — Star a repo: idempotent or not?
+> "Show me the exact HTTP requests to star and unstar a GitHub repo. Which HTTP method does each use, and is the operation idempotent in the REST sense? What status codes should I expect?"
+
+**Verify:** actually star and unstar a repo (use a test repo or one of your own). Run the calls twice in a row each. Does the second call behave the same as the first? Does the status code change? Does the LLM's answer match what you observe?
+
+### Prompt 3 — `If-None-Match` and the rate limit
+> "On GitHub's API, if I send a conditional GET with `If-None-Match` and the server responds 304, does that request count against my rate limit? Cite a primary source."
+
+**Verify:** make 5 unauth'd requests to the same endpoint, capture the `X-RateLimit-Remaining` value each time. Then make 5 more using `If-None-Match` with the ETag from the first response. Compare. Read the relevant section of GitHub's rate-limit docs and check whether the LLM's claim matches.
+
+### Prompt 4 — REST cheating
+> "GitHub's API returns 405 Method Not Allowed when I try `DELETE /repos/{owner}/{name}/issues/{n}`. Why don't they let me delete issues via the API? Is this a REST violation, and if so, why is it the right call here?"
+
+**Verify:** try the delete (it'll fail safely with 405). Read GitHub's issues API docs. Cross-check the LLM's reasoning against what GitHub actually documents about issue lifecycle.
+
+### Deliverable
+
+A half-page note (markdown is fine — drop it in the repo you're using for the semester). Structure:
+
+- **What I investigated** — which three prompts.
+- **One thing the LLM got right** — and how you know.
+- **One thing the LLM got wrong, vague, or hedged on** — and how you checked.
+- **What changed in my understanding** — one or two sentences.
+
+Bring this to session 6. We'll spend the first 10 minutes comparing notes.
+
+---
+
+## Optional
+
+- [optional] Fielding, R. — *Architectural Styles and the Design of Network-based Software Architectures*, dissertation chapter 5 (2000). The primary source for REST. Dense; the investigation above covers the working knowledge.
+- [optional] Tilkov, S. — *REST APIs must be hypertext-driven* (Fielding's blog rant on REST purity).
+- [optional] GitHub REST API docs: <https://docs.github.com/en/rest>. Useful when verifying in the investigation kit; also a great browse if you want more.
