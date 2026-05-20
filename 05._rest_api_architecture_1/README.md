@@ -2,80 +2,80 @@
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
-> REST is the dominant style for web APIs, but most "REST APIs" in the wild aren't strictly RESTful — and that's fine. The point isn't purity; it's understanding the constraints REST commits to and what each one buys you. Today we cover the foundations. Next session covers versioning, errors, and pagination.
+> REST is the dominant style for web APIs, but most "REST APIs" in the wild aren't strictly RESTful — and that's fine. The point isn't purity; it's understanding the constraints REST commits to and what each one buys you. Today we'll learn that by poking at a real one: GitHub's API. Bring `curl` and a Personal Access Token; come ready to break things on purpose.
 
 ---
 
 ## Learning Goals
 
-- Recite the REST constraints and what each one is *for*.
-- Model a domain as **resources** and decide on URL shapes.
-- Use HTTP methods (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`) correctly.
+- Model a domain as **resources** and read URL shapes critically.
+- Use HTTP methods (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`) correctly, and explain *why* each behaves the way it does.
 - Use status codes (2xx, 3xx, 4xx, 5xx) with intent, not vibes.
+- Recognise the REST constraints (uniform interface, statelessness, cacheability, …) in a real API you've just used.
 
 ---
 
 ## Before Class
 
-- Pick a public REST API you can browse the docs of (GitHub, Stripe, Twilio, Spotify Web API — any of them).
-- Find one endpoint that surprises you. Bring it to class.
+You'll spend most of the session hitting a real API directly from the terminal. Set up these in advance:
+
+1. Install `curl` (already on macOS/Linux) **or** `httpie` (`brew install httpie`, friendlier output).
+2. Install `jq` for pretty-printing JSON (`brew install jq`).
+3. Create a **GitHub Personal Access Token (classic)** with read-only scopes (`public_repo`, `read:user`). Save it in an env var, e.g. `export GH_TOKEN=...`.
+4. Sanity check it works:
+   ```bash
+   curl -H "Authorization: Bearer $GH_TOKEN" https://api.github.com/user | jq .login
+   ```
+   If you see your username, you're set.
+
+If GitHub auth is genuinely blocking you, you can do most of the session unauthed (60 requests/hour). Bring it up early so we can pair you with someone.
 
 ---
 
 ## Today's Teachings
 
-### Part 1 — The constraints (45 min)
-Fielding's six REST constraints:
-1. Client–server.
-2. Stateless.
-3. Cacheable.
-4. Uniform interface.
-5. Layered system.
-6. Code on demand (optional).
+### Part 1 — Predict, then probe (20 min)
+We'll look at a handful of GitHub API URLs *before* hitting them. You predict what each returns. Then we hit them and compare. Bring your terminal.
 
-For each: what does it actually buy you? Where do real APIs cheat?
+### Part 2 — Break things on purpose (30 min)
+A scavenger hunt for status codes. You'll try requests that *should* fail and inspect what comes back. Goal: collect as many distinct status codes as you can, and figure out which method/path combinations produce them.
 
-### Part 2 — Modelling as resources (45 min)
-- **Resource** = a noun the client cares about.
-- URLs are nouns; HTTP methods are verbs.
-- Common patterns:
-  - `/articles` (collection), `/articles/{id}` (item).
-  - Nested: `/articles/{id}/comments` — when, and when not.
-  - The "verb in the URL" smell (`/getArticleById?id=42`) — why it's a smell, and the rare cases where it's the right answer.
+Some are easy. Some are sneaky (try to find a `422`).
 
-### Part 3 — HTTP methods, properly (30 min)
-- `GET` — safe, cacheable, idempotent.
-- `POST` — non-idempotent; creates or invokes.
-- `PUT` — idempotent replacement.
-- `PATCH` — partial update.
-- `DELETE` — idempotent removal.
-- Why `idempotency` matters more than students usually realise (retries, network failures).
+### Part 3 — Statelessness and caching are part of the protocol (25 min)
+Response headers are an API talking about itself. We'll look at `ETag`, `Cache-Control`, and the rate-limit headers — and use conditional requests (`If-None-Match`) to make calls that *don't count against your rate limit*.
 
-### Part 4 — Status codes with intent (30 min)
-Beyond `200` and `500`:
-- `201 Created` vs `204 No Content`.
-- `400 Bad Request` vs `422 Unprocessable Entity`.
-- `401 Unauthorized` vs `403 Forbidden`.
-- `409 Conflict`, `429 Too Many Requests`, `503 Service Unavailable`.
-- Why "always return 200 with an error in the body" is a real (terrible) anti-pattern.
+### Part 4 — Follow the links (20 min)
+Look at a single repository response. Count the `*_url` fields. We'll try to navigate from a user to a specific issue without typing a single URL — only by following links inside responses. Then we'll talk about why almost no real client actually does this.
 
-### Part 5 — Critique a real API (30 min)
-In pairs: take the API from your before-class homework. Identify three good design choices and two questionable ones.
+### Part 5 — API archaeology (45 min, in pairs)
+Each pair picks one mystery and writes up a short dossier — what URI shape, what method, what status codes, what surprised you. Examples:
+
+- Star a repo, then unstar it. What methods? What status codes?
+- Create an issue, edit it, close it. Document the full lifecycle.
+- Find every way GitHub returns `422`.
+- Why does `/user` work but `/users` (with no name) doesn't?
+- Page through a user's repositories. How does the API tell you there's a next page?
+
+### Part 6 — What we just learned (40 min)
+Whiteboard. Every pair calls out what they found. We'll group your observations into the REST constraints (uniform interface, statelessness, cacheability, client-server, layered, code-on-demand). The constraints are names for things you already saw.
 
 ---
 
 ## Exercise
 
-Sketch a REST API for a small domain (e.g. a library, a recipe book, a todo app). Just URLs + methods + status codes — no implementation. Bring it to session 6.
+Sketch a REST API for a small domain you care about (a library, a recipe book, a habit tracker, anything). Just URLs + methods + status codes — no implementation. Bring it to session 6, where we'll do versioning, pagination, and error shapes on top of it.
 
 ---
 
 ## After Class
 
-- Session 6 builds on this: versioning, pagination, errors, OpenAPI.
+- Read Fielding's chapter 5 (or a digestible summary) — it'll land differently now that you have concrete anchors from class.
+- Session 6 builds directly on this: versioning, pagination, errors, OpenAPI.
 - Sessions 7–8 (mini-project) use sessions 5–6. Take notes seriously.
 
 ## References
 
-- Fielding, R. — *Architectural Styles and the Design of Network-based Software Architectures* (dissertation, 2000).
+- Fielding, R. — *Architectural Styles and the Design of Network-based Software Architectures* (dissertation, 2000), chapter 5.
+- GitHub REST API docs: <https://docs.github.com/en/rest>
 - Tilkov, S. — *REST APIs must be hypertext-driven* (blog post, the famous Fielding rant).
