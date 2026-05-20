@@ -30,8 +30,6 @@ The repository is a mix of student-facing session material (one folder per sessi
 /
 ├── CLAUDE.md                                      # This file
 ├── README.md                                      # Public-facing course overview
-├── architecture-class-handout.md                  # Reusable reading: the self-maintaining-wiki case study (pre-read for session 21)
-│
 ├── 01._intro_to_software_architecture/            # Teaching session
 ├── 02._quality_attributes/                        # Teaching session
 ├── ...                                            # 16 teaching sessions total
@@ -81,7 +79,7 @@ Project and exam sessions have **no new teaching content**. They are working ses
 | 18 | **Observability** | Logs, metrics, traces. What "observable" actually means in practice. |
 | 19 | **CI/CD and deployment** | Pipelines, environments, infrastructure-as-code, blue/green & canary. |
 | 20 | **Documentation: ADRs and the C4 model** | How to record decisions and draw the right diagrams. |
-| 21 | **Case study: the self-maintaining wiki** | Read `architecture-class-handout.md`. Build a tiny LLM-maintained wiki in pairs. |
+| 21 | **Case study: the self-maintaining wiki** | Read `21._self_maintaining_wiki_case_study/architecture-class-handout.md`. Build a tiny LLM-maintained wiki in pairs. |
 | 22 | **Synthesis: real-world architectures** | Reading two real architectures (e.g. Stack Overflow, GitHub) and discussing trade-offs. |
 | **23–30** | **Exam project** | *No teaching. Students design, build a slice, and present.* |
 
@@ -106,7 +104,7 @@ Typical tasks when asked to help in this repo:
 - **Suggesting concrete code/system examples** that illustrate a given concept (real systems > toy examples).
 - **Writing the project briefs** for sessions 7–8, 13–16, and 23–30 once the teacher is ready.
 - **Linting the curriculum** — find concepts referenced but never introduced; find prereq breaks if sessions are reordered.
-- **Drafting hand-outs** for in-class reading (the `architecture-class-handout.md` is the template).
+- **Drafting hand-outs** for in-class reading (the `21._self_maintaining_wiki_case_study/architecture-class-handout.md` is the template).
 
 ---
 

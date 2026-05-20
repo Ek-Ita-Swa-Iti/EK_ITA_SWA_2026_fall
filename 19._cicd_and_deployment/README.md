@@ -47,6 +47,7 @@ Where can each step fail? What does each step prevent?
 - **Blue/green**: two full environments; switch traffic. Easy rollback, double the cost.
 - **Canary**: small slice of traffic to new version first; expand if healthy. Smartest, most complex.
 - **Recreate**: take it all down, bring it all up. Sometimes the right choice.
+- **Expand–contract** (schema evolution as a deployment pattern): change a database schema in production without downtime by deploying in stages — first expand the schema to tolerate both old and new shapes, migrate data, then contract by removing the old shape. The same "deploy ≠ release" idea that feature flags give to code, applied to data. Introduced in session 9.
 - Feature flags as decoupling: deploy ≠ release.
 
 ### Part 4 — Infrastructure-as-code (45 min)
