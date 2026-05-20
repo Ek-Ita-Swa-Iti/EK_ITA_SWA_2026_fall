@@ -16,8 +16,8 @@
 
 ## Before Class
 
-- Find an example ADR online (GitHub has thousands in public repos). Read three.
-- Find an example C4 diagram. Identify which of the four levels it is.
+- Find **one** ADR in a public GitHub repo (try a code search for `decisions/` or `adr/`). Skim it — ~5 min.
+- Find **one** C4 diagram online and note which of the four levels it is.
 
 ---
 

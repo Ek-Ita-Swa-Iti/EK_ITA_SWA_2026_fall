@@ -17,8 +17,8 @@
 
 ## Before Class
 
-- Read: Martin Fowler's *Microservice Trade-Offs* (or a similar honest piece).
-- Bring an example of a "microservices" architecture from a real company (engineering blog post, conference talk).
+- Bring one example of a "microservices" architecture from a real company — an engineering blog post, conference talk, or tweet that caught your eye. One link is enough; we'll use it in class.
+- [optional] Martin Fowler — *Microservice Trade-Offs* (~15 min). Useful framing if you want it before class.
 
 ---
 

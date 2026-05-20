@@ -17,7 +17,8 @@
 
 ## Before Class
 
-- Find one production outage post-mortem online (Cloudflare, GitHub, AWS, Stripe — they publish detailed ones). Read it. Note: how did they figure out what happened?
+- Pick one production post-mortem from a known engineering blog (Cloudflare, GitHub, AWS, Stripe — they publish detailed ones). Bring the URL; we'll read excerpts in class.
+- [optional] Read the post-mortem end-to-end before class if you have time. Note one moment where they realised what was actually happening.
 
 ---
 

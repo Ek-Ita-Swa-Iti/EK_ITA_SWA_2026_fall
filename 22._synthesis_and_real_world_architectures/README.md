@@ -17,13 +17,8 @@
 
 ## Before Class
 
-- Read **two** of the following engineering posts (or substitute equivalents the teacher provides):
-  - Stack Overflow's architecture overview.
-  - How Discord stores trillions of messages.
-  - How GitHub builds GitHub.
-  - The Netflix microservices migration.
-  - How Figma's multiplayer works.
-- For each, write down: what's the central decision? what trade-off did it commit to?
+- Skim **one** real-world architecture write-up (≤10 min) — anything that interests you. A starter menu in `## Optional` below, or bring your own. Note one thing you didn't understand.
+- Come ready to nominate a system you'd like the class to read together.
 
 ---
 
@@ -65,7 +60,10 @@ Pick one of the two articles. Write half a page on what *quality attribute scena
 
 - Sessions 23–30 are exam project work. The next time the teacher gives input is at the exam itself.
 
-## References
+## Optional
 
-- The High Scalability blog archives — many real architectures, free.
-- Engineering blogs: Stack Overflow, GitHub, Discord, Figma, Netflix, Cloudflare, Stripe.
+- [optional] Stack Overflow's architecture overview.
+- [optional] How Discord stores trillions of messages.
+- [optional] How GitHub builds GitHub.
+- [optional] The Netflix microservices migration.
+- [optional] How Figma's multiplayer works.
