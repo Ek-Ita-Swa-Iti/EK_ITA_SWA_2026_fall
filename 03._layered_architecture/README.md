@@ -32,10 +32,18 @@ Pairs swap S2 investigation deliverables. Each pair surfaces one QA Vibe optimis
 
 In class we'll walk through a tiny example we've prepared — a textbook 4-layer notes service. Two versions, same shape:
 
-- [`example-kotlin/`](./example-kotlin/) — Ktor + Postgres
-- [`example-python/`](./example-python/) — FastAPI + Postgres
+- `example-kotlin/` — Ktor + Postgres
+- `example-python/` — FastAPI + Postgres
 
-Both run with one command: `docker compose up --build` from inside the folder. Pick whichever language you're more comfortable in. Clone the repo and try it before or after class.
+Both run with one command: `docker compose up --build` from inside the folder. Pick whichever language you're more comfortable in.
+
+The runnable code lives in a sibling repo so it has its own lifecycle:
+
+```bash
+git clone <examples repo url>
+cd ek-ita-swa-examples/03-layered-architecture/example-kotlin   # or example-python
+docker compose up --build
+```
 
 A **layer** is a horizontal slice of the system. The classic web stack has four:
 
@@ -169,7 +177,7 @@ Bring it to session 4. First 10 minutes we'll compare.
 ## After Class
 
 - Skim ahead: session 4 covers **hexagonal architecture** (ports and adapters). It's the answer to the failure modes of layered — and to the shape we noticed inside Vibe's `core/`.
-- If you didn't run the in-class example yourself, do it now: `cd example-kotlin && docker compose up --build` (or `example-python`). Then `grep -rh "^import com.example.notes" src/main/kotlin` (Kotlin) or `grep -rh "^from \.\." notes` (Python) — see the dependency rule with your own eyes.
+- If you didn't run the in-class example yourself, do it now. Clone the examples repo, `cd ek-ita-swa-examples/03-layered-architecture/example-kotlin` (or `example-python`), and `docker compose up --build`. Then `grep -rh "^import com.example.notes" src/main/kotlin` (Kotlin) or `grep -rh "^from \.\." notes` (Python) — see the dependency rule with your own eyes.
 
 ## Optional
 
