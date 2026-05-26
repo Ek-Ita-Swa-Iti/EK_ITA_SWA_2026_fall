@@ -17,12 +17,12 @@
 
 ## Before Class
 
-You'll spend most of the session hitting a real API directly from the terminal. Set up these in advance:
+You'll spend most of the session hitting a real API directly from the terminal. Set up these in advance (≤15 min):
 
 1. Install `curl` (already on macOS/Linux) **or** `httpie` (`brew install httpie`, friendlier output).
 2. Install `jq` for pretty-printing JSON (`brew install jq`).
 3. Create a **GitHub Personal Access Token (classic)** with read-only scopes (`public_repo`, `read:user`). Save it in an env var, e.g. `export GH_TOKEN=...`.
-4. Sanity check it works:
+4. Sanity check:
    ```bash
    curl -H "Authorization: Bearer $GH_TOKEN" https://api.github.com/user | jq .login
    ```
@@ -30,11 +30,16 @@ You'll spend most of the session hitting a real API directly from the terminal. 
 
 If GitHub auth is genuinely blocking you, you can do most of the session unauthed (60 requests/hour). Bring it up early so we can pair you with someone.
 
+Also: bring your S4 investigation deliverable. The session opens with a compare-notes round on it.
+
 ---
 
 ## Today's Teachings
 
-### Part 1 — Predict, then probe (20 min)
+### Part 0 — Compare notes on the S4 investigation (10 min)
+Round-robin: each of you names one thing you got out of the S4 hexagonal investigation — one claim the LLM nailed, one claim you had to push back on. No re-teaching; this is to align on what stuck and to keep the verification-first habit warm. We then bridge: last week we said HTTP is the *driving adapter* on the hexagon. Today we open up the protocol that adapter speaks.
+
+### Part 1 — Predict, then probe (15 min)
 We'll look at a handful of GitHub API URLs *before* hitting them. You predict what each returns. Then we hit them and compare. Bring your terminal.
 
 ### Part 2 — Break things on purpose (30 min)
@@ -57,8 +62,10 @@ Each pair picks one mystery and writes up a short dossier — what URI shape, wh
 - Why does `/user` work but `/users` (with no name) doesn't?
 - Page through a user's repositories. How does the API tell you there's a next page?
 
-### Part 6 — What we just learned (40 min)
+### Part 6 — What we just learned (30 min)
 Whiteboard. Every pair calls out what they found. We'll group your observations into the REST constraints (uniform interface, statelessness, cacheability, client-server, layered, code-on-demand). The constraints are names for things you already saw.
+
+Pull-through to S4 vocabulary: a REST endpoint is a *driving adapter's contract with the world*. The constraints are what that contract commits to so that any client — `curl`, a browser, Vibe — can talk to the server without prior arrangement. Next week (S6) we tighten that contract: versioning so it can evolve, pagination so it can scale, error shapes so failures are legible, OpenAPI so it's machine-checkable. Everything S6 does is *built on what you just probed today*.
 
 ---
 
