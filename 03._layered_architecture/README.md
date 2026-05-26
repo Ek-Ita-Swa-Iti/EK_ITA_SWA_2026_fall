@@ -2,62 +2,176 @@
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
-> The oldest architectural style still in everyday use. Layers are easy to draw, easier to misuse. Today we look at when layers help, when they hurt, and how to spot a layered architecture that has quietly become spaghetti.
+> The oldest architectural style still in everyday use. Layers are easy to draw, easier to misuse. Today we ask: what makes a stack actually layered? Is Vibe layered? And how do you spot a layered architecture that has quietly become spaghetti?
 
 ---
 
 ## Learning Goals
 
-- Define a layer and the rule that makes a stack "properly" layered.
-- Recognise the standard layers used in web/back-end systems (presentation, application, domain, persistence).
-- Identify when layering is a useful constraint vs. when it's ceremony.
-- Read a real codebase and judge whether its layers hold.
+- Define a **layer** and the **dependency-direction** rule that makes a stack "properly" layered.
+- Recognise the canonical web layers (presentation, application, domain, persistence).
+- Judge whether a real codebase is layered — including Vibe — by looking at *dependencies*, not folders.
+- Name the quality attributes layered buys you and the ones it costs.
 
 ---
 
 ## Before Class
 
-- Find an open-source project on GitHub you can read. Pick one written in a language you know.
-- Look at its top-level folder structure. Try to name the layers (or argue that it doesn't have any).
+- Bring your S2 investigation deliverable — we open by comparing.
+- Pick an open-source project on GitHub you can read, written in a language you know. Have it cloned (or at least bookmarked) and skim its top-level folders before class. Examples: Spring PetClinic, a Django app, an Express API, a Ktor backend, a Nest service — anything with visible structure.
+- [optional] One sentence: a codebase where you've felt "the layers exist but everything touches everything anyway".
 
 ---
 
 ## Today's Teachings
 
-### Part 1 — What "layered" means (30 min)
-- A layer can call **downward** only. Never upward, never sideways across layers.
-- The classic web stack: presentation → application → domain → persistence.
-- Strict vs. relaxed layering.
+### Part 0 — Compare notes from S2 (10 min)
+Pairs swap S2 investigation deliverables. Each pair surfaces one QA Vibe optimises for *with evidence* and one trade-off they spotted. Two pairs share. Quick — this is now routine.
 
-### Part 2 — Why it works when it works (45 min)
-- Replacing one layer is cheap (in theory): swap Postgres for MySQL, change the HTML framework, etc.
-- Each layer is testable in isolation.
-- A new developer can read one layer at a time.
+### Part 1 — What "layered" means (25 min)
 
-### Part 3 — How it falls apart (45 min)
-Common failure modes:
-- The "shortcut": a presentation-layer file imports something from persistence directly.
-- The God-domain: business logic leaks into controllers because the domain layer is empty.
-- The anaemic stack: layers exist as folders but every change touches all of them.
+In class we'll walk through a tiny example we've prepared — a textbook 4-layer notes service. Two versions, same shape:
 
-### Part 4 — Read a real one (45 min)
-Group reading of the codebase students brought. For each:
-- What are the layers, in the team's words?
-- Are the rules respected?
-- One concrete suggestion you'd make if you joined the team tomorrow.
+- [`example-kotlin/`](./example-kotlin/) — Ktor + Postgres
+- [`example-python/`](./example-python/) — FastAPI + Postgres
+
+Both run with one command: `docker compose up --build` from inside the folder. Pick whichever language you're more comfortable in. Clone the repo and try it before or after class.
+
+A **layer** is a horizontal slice of the system. The classic web stack has four:
+
+- **presentation** — receives requests, renders responses
+- **application** — orchestrates use cases, coordinates the layers below
+- **domain** — business rules and the model of the world
+- **persistence** — talks to the database, files, external systems
+
+The rule that *makes* this stack layered: **dependencies point downward only**.
+
+- A layer may call the layer below.
+- A layer **may not** call a layer above.
+- Ideally, a layer doesn't reach sideways either.
+
+Two flavours: **strict** (each layer calls only the next layer down) and **relaxed** (a layer can reach any layer below). Most real systems are relaxed.
+
+Note how this connects to last week's vocabulary:
+- The boxes are **components** (S1).
+- The horizontal lines are **boundaries** (S1).
+- "Arrows point down" is a **convention** the system commits to (S1).
+- "I can swap one layer without touching the others" is a **maintainability** claim (S2).
+
+Layered isn't new physics. It's a named arrangement of things you already know.
+
+### Part 2 — Is Vibe layered? (35 min)
+Open question, investigated together. Use the file browser and Vibe.
+
+First, the top-level. `vibe/` contains:
+
+- `cli/` — the interactive terminal interface
+- `core/` — the agent, LLM clients, tools, prompts, telemetry
+- `acp/` — an alternative entrypoint
+- `setup/` — install/setup helpers
+
+Looks layered: `cli/` is presentation, `core/` is application + domain. The dependency rule should say *`cli/` imports from `core/` and not the other way around*.
+
+Ask Vibe: *"List every import where `cli/` references something in `core/`, and every import where `core/` references something in `cli/`. Tell me the direction the dependency flows."*
+
+Verify on at least one file. If the arrows go one way only, the outer shape is layered. If they go both ways, it isn't.
+
+Now zoom into `core/`. Look at its contents:
+- `llm/` with a `backend/` folder containing one file per vendor (anthropic, mistral, vertex, generic, …)
+- `agents/`, `session/`, `tools/`, `prompts/`, `skills/`
+- cross-cutting: `logger.py`, `tracing.py`, `telemetry/`, `middleware.py`
+
+Is *this* layered? Probably not the way the canonical four-layer stack is. It's organised by capability, not by horizontal slice. The `llm/backend/` folder, in particular, looks like something else entirely. (We'll name that something else next week.)
+
+So: **Vibe is layered on the outside, and something else on the inside.** Hold that thought.
+
+### Part 3 — Why it works when it works (25 min)
+Layered's pay-offs, in QA terms:
+
+- **Maintainability.** Swap Postgres for MySQL by replacing the persistence layer. Swap the HTML framework by replacing the presentation layer. *In theory* — reality is messier, but the theory is the goal.
+- **Testability.** Each layer can be tested in isolation by stubbing the layer below. Vibe's `tests/` is layer-respecting in places.
+- **Onboarding cost.** A new developer can read one layer at a time. That's a real cost benefit.
+- The arrows-down rule is a *load-bearing convention*: small enough to fit on a sticker, big enough to shape months of design discipline.
+
+Quick exercise: name **two QAs layered buys you** and **one it costs**. Compare across pairs.
+
+### Part 4 — How it falls apart (35 min)
+Three classic failure modes. For each, find an example — in Vibe, or in your bring-your-own codebase.
+
+- **The shortcut.** A presentation file imports directly from persistence, skipping the layers in between. *In Vibe:* would `cli/` ever import from `core/llm/backend/` directly? Ask Vibe to look.
+- **The God-domain.** Business logic ends up in controllers because the domain layer is empty. *Diagnostic:* a controller file over 400 lines.
+- **The anaemic stack.** Layers exist as folders, but every change touches all of them. *Diagnostic:* pick a recent commit; how many layers did it modify?
+
+The lesson: **layered is a discipline, not a folder structure.** A `domain/` folder doesn't make you layered. The dependency rule does.
+
+Ask Vibe: *"Find one place in this codebase where a layering violation either exists or would be tempting. Show me the file and explain the temptation."* Verify by opening the file.
+
+### Part 5 — Read a real one: bring-your-own (40 min)
+In pairs, using the codebase one of you brought:
+
+- What are the layers, in the team's words (folder names, docs, conventions)?
+- Are the dependency rules respected? Use your agent to find imports that cross layers in the wrong direction.
+- Find one violation. (If you can't find one, find one place a violation would be tempting.)
+- What one concrete suggestion would you make as a new joiner tomorrow?
+
+Write a 5-line dossier per pair. Drop it in your semester notebook.
+
+### Part 6 — Synthesis (10 min)
+One pair shares. We end with the bridge to next week: **Vibe's `core/` isn't layered.** It's structured around adapters over multiple LLM vendors — Mistral, Anthropic, Vertex, generic, more. That shape has its own name. Next session: ports and adapters.
 
 ---
 
 ## Exercise
 
-Take your bring-your-own codebase. Draw its layers on paper (or in a diagram tool). Mark every place a layer is broken with a red dot. Bring it next session.
+Take the bring-your-own codebase. On paper or in a diagram tool:
+
+- Draw its layers.
+- Mark every place a layer is broken with a red dot.
+- One sentence per red dot: why is it there?
+- One sentence at the bottom: which QA is the breakage costing you?
+
+Bring it to session 4.
+
+---
+
+## Investigation (after class)
+
+Same pattern as before: ask, verify, write up. Pick **two** of the three.
+
+### Prompt 1 — The dependency direction across cli ↔ core
+> "In `mistral-vibe-ek-edition`, list every import statement where `cli/` references `core/`, and every import statement where `core/` references `cli/`. Summarise: which way does the dependency flow?"
+
+**Verify:** open two files Vibe names. Do the imports it cites actually exist? Is the direction it claims correct?
+
+### Prompt 2 — Is `core/` layered?
+> "Looking only at the contents of `core/`, would you describe this as a layered architecture? If yes, name the layers and the dependency rule. If no, describe the shape it has instead."
+
+**Verify:** list two top-level items in `core/` Vibe used in its argument. Are they really arranged the way Vibe describes? If the agent over-claims layering, note where.
+
+### Prompt 3 — A layering violation in your bring-your-own
+> "Here is the top-level structure of [BYO repo]. Based on names and any READMEs, identify the layers and one place a layering violation might exist. Tell me the file path."
+
+**Verify:** open the file. Does the violation actually exist, or did the agent guess? Either way, note what convinced you.
+
+### Deliverable
+
+Half a page in your semester notebook:
+
+- **What I investigated** — which two prompts.
+- **One claim my agent got right** — and the file or import that proves it.
+- **One claim that was vague, wrong, or oversold** — and how you checked.
+- **One QA layered buys, and one it costs** — in your own words, in the context of one specific codebase you looked at.
+
+Bring it to session 4. First 10 minutes we'll compare.
 
 ---
 
 ## After Class
 
-- Skim ahead: next session covers *hexagonal* architecture, which is in many ways a reaction to the failure modes of layered.
+- Skim ahead: session 4 covers **hexagonal architecture** (ports and adapters). It's the answer to the failure modes of layered — and to the shape we noticed inside Vibe's `core/`.
+- If you didn't run the in-class example yourself, do it now: `cd example-kotlin && docker compose up --build` (or `example-python`). Then `grep -rh "^import com.example.notes" src/main/kotlin` (Kotlin) or `grep -rh "^from \.\." notes` (Python) — see the dependency rule with your own eyes.
 
-## References
+## Optional
 
-- Fowler, M. — *Patterns of Enterprise Application Architecture* (the classic layered reference).
+- [optional] Fowler, M. — *Patterns of Enterprise Application Architecture*. The canonical layered reference. Skim the index, read the chapter on Layer Supertype if you're curious.
+- [optional] Search the repos you brought today for the phrase "clean architecture" — it's a layered cousin we're not teaching but you'll meet in the wild.
