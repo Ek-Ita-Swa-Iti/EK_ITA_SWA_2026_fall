@@ -66,7 +66,7 @@ Project and exam sessions have **no new teaching content**. They are working ses
 | 1 | **Intro to software architecture** | Discuss "where is the architecture?" using real and toy systems. Set up notebook/repo for the semester. |
 | 2 | **Quality attributes** | Map non-functional requirements (performance, scalability, security, maintainability) onto a system they know. |
 | 3 | **Layered architecture** | Identify layers in a real codebase. Discuss when separation helps and when it hurts. |
-| 4 | **Hexagonal architecture (ports and adapters)** | Refactor a small example. Discuss testability and replaceability. |
+| 4 | **Hexagonal architecture (ports & adapters)** | Refactor a small example. Discuss testability and replaceability. |
 | 5 | **REST API architecture I** | REST constraints, resources, methods, status codes. Read and critique a real API. |
 | 6 | **REST API architecture II** | Versioning, pagination, error shapes, OpenAPI. Design an API on paper. |
 | **7–8** | **Mini-project: design a REST API** | *No teaching. Students build on sessions 5–6.* |
