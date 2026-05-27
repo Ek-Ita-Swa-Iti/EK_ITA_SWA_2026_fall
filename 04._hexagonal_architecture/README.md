@@ -1,4 +1,4 @@
-# Session 4: Hexagonal Architecture (Ports & Adapters)
+# Session 4: Hexagonal Architecture (Ports and Adapters)
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
