@@ -2,7 +2,7 @@
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
-> What is software architecture, really? Not the diagrams — the underlying thing the diagrams are trying to show. Today we'll set up the toolkit we'll use all semester, and then learn to point at the architecture in a real codebase you've never seen. The codebase is `mistral-vibe-ek-edition`. The tool is Mistral Vibe itself. You don't need to know Python.
+> What is software architecture, really? Not the diagrams — the underlying thing the diagrams are trying to show. Today we'll set up the toolkit we'll use all semester, and then learn to point at the architecture in a real codebase you've never seen. The codebase is `mistral-vibe-ek-ita`. The tool is Mistral Vibe itself. You don't need to know Python.
 
 ---
 
@@ -56,7 +56,7 @@ On first launch, Vibe will create `~/.vibe/config.toml` and prompt you for an AP
 **B. Clone the repo (the thing we study).**
 
 ```bash
-git clone <repo-url> mistral-vibe-ek-edition
+git clone <repo-url> mistral-vibe-ek-ita
 ```
 
 You'll come back to this every week. Don't delete it.
@@ -64,7 +64,7 @@ You'll come back to this every week. Don't delete it.
 **C. Point one at the other.** Launch Vibe from inside the clone:
 
 ```bash
-cd mistral-vibe-ek-edition
+cd mistral-vibe-ek-ita
 vibe
 ```
 

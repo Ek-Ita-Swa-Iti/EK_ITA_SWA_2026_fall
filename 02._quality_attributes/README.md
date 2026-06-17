@@ -9,7 +9,7 @@
 ## Learning Goals
 
 - Name the quality attributes the course will use: performance, scalability, availability, security, maintainability, cost.
-- Spot each of them in `mistral-vibe-ek-edition` without reading method bodies.
+- Spot each of them in `mistral-vibe-ek-ita` without reading method bodies.
 - Recognise quality-attribute trade-offs and articulate one in your own words.
 - Turn a vague wish ("it should be fast") into a **quality-attribute scenario** — source, stimulus, environment, artefact, response, measure.
 - Write three scenarios for Vibe using only this week's and last week's vocabulary.
@@ -19,7 +19,7 @@
 ## Before Class
 
 - Bring your S1 investigation deliverable — we open the session by comparing them.
-- Have your `mistral-vibe-ek-edition` clone and `vibe` working from last week.
+- Have your `mistral-vibe-ek-ita` clone and `vibe` working from last week.
 - Bring the system you described in S1.
 - [optional] One sentence: the most annoying non-functional problem in a system you've used recently.
 

@@ -147,7 +147,7 @@ Bring it to session 4.
 Same pattern as before: ask, verify, write up. Pick **two** of the three.
 
 ### Prompt 1 — The dependency direction across cli ↔ core
-> "In `mistral-vibe-ek-edition`, list every import statement where `cli/` references `core/`, and every import statement where `core/` references `cli/`. Summarise: which way does the dependency flow?"
+> "In `mistral-vibe-ek-ita`, list every import statement where `cli/` references `core/`, and every import statement where `core/` references `cli/`. Summarise: which way does the dependency flow?"
 
 **Verify:** open two files Vibe names. Do the imports it cites actually exist? Is the direction it claims correct?
 
