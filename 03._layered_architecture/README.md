@@ -91,7 +91,7 @@ Now zoom into `core/`. Look at its contents:
 
 Is *this* layered? Probably not the way the canonical four-layer stack is. It's organised by capability, not by horizontal slice. The `llm/backend/` folder, in particular, looks like something else entirely. (We'll name that something else next week.)
 
-So: **Vibe is layered on the outside, and something else on the inside.** Hold that thought.
+So what's the verdict? The grep is more interesting than "yes" or "no". `cli/` leans on `core/`, as a presentation-over-application stack should — but you'll also find a few imports running *upward*, from `core/` back into `cli/`. That's an **upward dependency**, exactly what the arrows-down rule forbids (Part 4 calls this kind of leak by name). So: **Vibe's outer shape *looks* layered but leaks at the edges, and its `core/` is something else entirely on the inside.** Hold both halves of that thought — they're the bridge to next week.
 
 ### Part 3 — Why it works when it works (25 min)
 Layered's pay-offs, in QA terms:
