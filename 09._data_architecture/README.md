@@ -40,6 +40,7 @@ The honest framing: most apps need relational for the source of truth and *maybe
 ### Part 3 — Schema evolution (45 min)
 - Migrations as a first-class artefact.
 - The "expand–contract" pattern: add new column → backfill → switch reads → drop old column.
+- Expand–contract is a **deployment** discipline as much as a data one: because the database tolerates the old *and* new shape during the transition, you roll a schema change out to a *live* system in stages and never force a breaking switch. Shipping the change and switching to it become separate steps — **"deploy ≠ release", applied to data**. This is the architectural reason migrations are *planned*, not just run.
 - Why "just change the column" is fine on a small app and catastrophic on a large one.
 - Schema in document stores: still exists, just enforced in your code.
 

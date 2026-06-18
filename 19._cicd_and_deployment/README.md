@@ -10,5 +10,5 @@ to avoid duplication.
 The numbered slot is kept to preserve the session sequence; a new topic may fill it later.
 
 > Note: one idea from the old version of this session — **expand–contract** schema migration
-> ("deploy ≠ release", applied to data) — is a *data-architecture* point that belongs with
-> session 9, not with CI/CD. Consider relocating it there rather than losing it.
+> ("deploy ≠ release", applied to data) — is a *data-architecture* point. It has been
+> **relocated into session 9's "Schema evolution" section** (same branch) so it isn't lost.
