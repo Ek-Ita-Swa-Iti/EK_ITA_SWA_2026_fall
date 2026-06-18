@@ -1,6 +1,6 @@
 # Software Architecture — ITA Fall 2026
 
-**KEA — Copenhagen School of Design and Technology**
+**EK Business Academy Copenhagen**
 
 A 30-session course on software architecture for ITA students. Each session is 3 hours.
 
