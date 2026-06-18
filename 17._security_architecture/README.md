@@ -42,7 +42,7 @@ Walk through the current Top 10. For each, what's the *architectural* fix vs. th
 - Broken access control → centralise authz, default-deny.
 - Cryptographic failures → use libraries, never roll your own.
 - Injection → parameterise everything, treat input as untrusted at the boundary.
-- Security misconfiguration → infrastructure-as-code (preview of session 19).
+- Security misconfiguration → infrastructure-as-code (covered further in the DevOps semester).
 - SSRF → egress allowlists.
 - ... (continue through the list).
 
@@ -65,7 +65,7 @@ Take the project from sessions 13–16. Identify three trust boundaries and one 
 
 ## After Class
 
-- Session 18 (observability) is partly about catching security incidents in flight. Today's threat list will help.
+- Skim ahead: session 20 is about *recording* architectural decisions (ADRs) — including the security trade-offs you sketched today.
 
 ## References
 

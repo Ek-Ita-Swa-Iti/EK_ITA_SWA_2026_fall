@@ -44,7 +44,7 @@ The six this course cares about:
 - **Maintainability** — how cheaply can change happen?
 - **Cost** — sometimes the deciding constraint.
 
-(There are more. Portability, usability, observability. We'll meet them as they come.)
+(There are more — portability, usability, and others. We'll meet some as they come.)
 
 ### Part 2 — The big six, anchored to Vibe (40 min)
 For each QA, we'll define it and then *point* — to a folder, a file, a behaviour in Vibe.

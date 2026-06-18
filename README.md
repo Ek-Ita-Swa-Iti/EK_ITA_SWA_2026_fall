@@ -12,7 +12,7 @@ A 30-session course on software architecture for ITA students. Each session is 3
 
 ## Structure
 
-- **16 teaching sessions** covering layered, hexagonal, REST API, data, event-driven, microservices, security, observability, CI/CD, documentation, and a case study on LLM-maintained systems.
+- **13 teaching sessions** covering layered, hexagonal, REST API, data, event-driven, microservices, security, and documentation. (Sessions 18, 19, and 21 are intentionally empty — observability and CI/CD move to the following DevOps semester, and the LLM-wiki case study is out of scope.)
 - **2 mini-project sessions** (7–8) — design a REST API.
 - **4 mid-semester project sessions** (13–16) — small distributed system.
 - **8 exam project sessions** (23–30) — design and partially implement a system, present at exam.

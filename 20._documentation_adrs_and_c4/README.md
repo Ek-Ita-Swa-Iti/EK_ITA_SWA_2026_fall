@@ -70,7 +70,7 @@ Pick one decision in your professional or hobby life that you've made architectu
 
 ## After Class
 
-- Session 21 — the self-maintaining wiki — is partly a story about *who maintains the documentation*. Today: you. Next session: an LLM. Compare.
+- Skim ahead: session 22 pulls the whole semester's threads together by reading two real-world architectures.
 
 ## References
 
