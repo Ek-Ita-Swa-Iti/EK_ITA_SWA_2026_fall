@@ -107,7 +107,7 @@ A happy-path-only contract is half a contract. Two things it must include:
 **Change — the contract has a version, and it evolves.** The `/api/v1/` in every Gitea path *is* the contract's version. So:
 
 - What counts as a **breaking change**? (Remove a field, rename one, change a status code, make an optional field required.)
-- How do you evolve *without* breaking existing clients? **Add, don't remove; deprecate, then drop** — the same **expand–contract** discipline we met for databases in S9 ("deploy ≠ release"), now applied to an API contract.
+- How do you evolve *without* breaking existing clients? **Add, don't remove; deprecate, then drop** — the **expand–contract** discipline ("deploy ≠ release"). You'll see the same idea applied to *databases* in S9; here it governs an API contract.
 
 *(Collections need a paging convention too — you saw GitHub's `page`/`per_page` last week — and it belongs in the contract. We won't dwell on it.)*
 
