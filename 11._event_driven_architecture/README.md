@@ -30,8 +30,48 @@
 Pick up where S10 ended. Gitea's cached commit count (`CacheRef`) is wrong the instant someone pushes; the fix is to *invalidate on push*. That's an event in disguise — something happened, and code reacts. In pairs: name one other "X happened, so Y should follow" in a system you've built. Two pairs share. Today we hold yours up against a real event system.
 
 ### Part 1 — The shift in mindset (25 min)
-- **Request/response:** A calls B, A waits. The call stack *is* the control flow.
+- **Request/response:** A calls B, A waits. The call stack *is* the control flow. A is coupled to B: it must know B exists, and if B is slow or down, A is slow or down too.
+
+```mermaid
+sequenceDiagram
+    participant A as Service A
+    participant B as Service B
+    A->>B: request
+    activate A
+    activate B
+    Note over A: A is blocked,<br/>waiting for B
+    B-->>A: response
+    deactivate B
+    deactivate A
+    Note over A: A continues
+```
+
 - **Event-driven:** A emits an event; the world reacts. A doesn't need to know B exists, and B can fail without crashing A.
+
+```mermaid
+flowchart LR
+    A[Service A] -->|"emits 'something happened'"| BUS([Event bus / queue])
+    BUS --> B[Consumer B]
+    BUS --> C[Consumer C]
+    BUS --> D[Consumer D]
+    A -. "moves on immediately<br/>(doesn't know B, C, D exist)" .-> A
+    B -. "can fail & retry<br/>without affecting A" .-> B
+```
+
+Same handoff as a sequence — note that A returns *before* the work happens:
+
+```mermaid
+sequenceDiagram
+    participant A as Service A
+    participant BUS as Event bus
+    participant B as Consumer B
+    A->>BUS: emit event
+    BUS-->>A: accepted
+    Note over A: A continues right away
+    BUS->>B: deliver (later, async)
+    Note over B: B fails? retry from the bus —<br/>A never noticed
+```
+
 - **The trade:** you buy decoupling and resilience; you pay in operational complexity and traceability — "where did my call stack go?" (a thread we pick up again in S18-style observability, if you go on to it).
 
 ### Part 2 — Messaging primitives (25 min)
