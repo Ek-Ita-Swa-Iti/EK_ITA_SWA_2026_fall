@@ -72,7 +72,7 @@ sequenceDiagram
     Note over B: B fails? retry from the bus —<br/>A never noticed
 ```
 
-- **The trade:** you buy decoupling and resilience; you pay in operational complexity and traceability — "where did my call stack go?" (a thread we pick up again in S18-style observability, if you go on to it).
+- **The trade:** you buy decoupling and resilience; you pay in operational complexity and traceability — "where did my call stack go?" Tracing one request across async hops is an observability problem (the kind a DevOps course picks up); here, just notice you've traded a readable stack trace for it.
 
 ### Part 2 — Messaging primitives (25 min)
 - **Message queue** (RabbitMQ, SQS): one producer, one of N consumers — work distribution.
