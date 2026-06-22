@@ -2,7 +2,7 @@
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
-> Most of what an application *does* is move data between a user and persistent storage. Where it lives, how it's shaped, how reads and writes are routed, and how it *changes over time* are some of the highest-leverage decisions you make. Today we read a real one — **Gitea's** data model expressed in code, and the ~300-migration history that has evolved it on live systems without downtime.
+> Most of what an application *does* is move data between a user and persistent storage. Where it lives, how it's shaped, how reads and writes are routed, and how it *changes over time* are some of the highest-leverage decisions you make. Today we read a real one — **Gitea's** data model expressed in code, and the 261-migration history that has evolved it on live systems without downtime.
 
 ---
 
@@ -62,7 +62,7 @@ Ask your agent: *"Describe the data model for a Gitea issue — its key, its ind
 - The lens behind both: **"optimise for the read or for the write?"** Almost every data decision is one or the other. Gitea is read-heavy (people browse far more than they write), and the model shows it.
 
 ### Part 4 — Schema evolution: migrations in the wild (30 min) — set-piece 2
-A schema is never finished. Open `models/migrations/` — version folders `v1_6` … `v1_26`, holding **~300 numbered migration files**, each a small function that changes the schema. `migrations.go` (`prepareMigrationTasks`) is the ordered registry, and the DB stores which version it's on.
+A schema is never finished. Open `models/migrations/` — version folders `v1_6` … `v1_26`, holding **261 numbered migration files**, each a small function that changes the schema. `migrations.go` (`prepareMigrationTasks`) is the ordered registry, and the DB stores which version it's on.
 
 Open one — e.g. `models/migrations/v1_24/v312.go`: a real change (`AddDeleteBranchAfterMergeForAutoMerge`) that adds a column via `x.SyncWithOptions(...)`.
 
