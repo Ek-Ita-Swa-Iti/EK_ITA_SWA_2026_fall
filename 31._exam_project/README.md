@@ -1,4 +1,4 @@
-# Session 24: Exam Project
+# Session 31: Exam Project
 
 **ITA Software Architecture 2026 Fall | 3 hours | Exam project session (no new teaching)**
 
