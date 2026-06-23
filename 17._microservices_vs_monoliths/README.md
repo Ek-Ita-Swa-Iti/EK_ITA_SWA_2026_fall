@@ -19,7 +19,7 @@
 ## Before Class
 
 - Have **Gitea** (v1.26.2) cloned/browsable — same codebase we've read since S11.
-- Clone **`ek-ita-swa-examples`** and have Docker working (as since S8). Today uses `12-microservices-vs-monoliths/`.
+- Clone **`ek-ita-swa-examples`** and have Docker working (as since S8). Today uses `17-microservices-vs-monoliths/`.
 - Bring one real "microservices" example — an engineering blog post, talk, or tweet. One link is enough.
 
 ---
@@ -41,7 +41,7 @@ Open `services/` in Gitea: ~40 capability packages — `actions`, `auth`, `issue
 Ask your agent: *"List the top-level packages under Gitea's `services/`. Pick one that could plausibly become its own service — what does it get today for free (an in-process function call? a shared transaction? a foreign key?) that it would have to replace with a network call?"* Then open the package and check.
 
 ### Part 3 — Run the split: the same product, two shapes (35 min) — set-piece 2
-In `ek-ita-swa-examples/12-microservices-vs-monoliths/` the **same notes app** (a note shows its author's name) is built twice:
+In `ek-ita-swa-examples/17-microservices-vs-monoliths/` the **same notes app** (a note shows its author's name) is built twice:
 
 - `monolith/` — one FastAPI app, one Postgres. The author lookup is an **in-process call**; `author_id` is a real **foreign key**. One `docker compose up`, one deploy.
 - `microservices/` — a **`users-service` (Kotlin/Ktor)**, a **`notes-service` (Python/FastAPI)**, and a **`gateway` (Python)**, each with its own database, talking over HTTP. The author lookup is now a **network call** (`notes-service/app/users_client.py`).
@@ -101,7 +101,7 @@ Ask your agent, **verify against the code**, write it up. Pick **two** of the th
 **Verify:** open the package. Name one specific thing that would get harder across a network boundary.
 
 ### Prompt 2 — Run the failure
-> "In `ek-ita-swa-examples/12-microservices-vs-monoliths/microservices`, what happens to `GET /notes` vs `GET /users` when the users-service is stopped?"
+> "In `ek-ita-swa-examples/17-microservices-vs-monoliths/microservices`, what happens to `GET /notes` vs `GET /users` when the users-service is stopped?"
 
 **Verify:** `docker compose up --build`, then `docker compose stop users-service`. Hit both endpoints. Read `notes-service/app/users_client.py` and explain *why* notes degrades but doesn't die.
 

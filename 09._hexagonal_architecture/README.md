@@ -97,7 +97,7 @@ The runnable example again, this time with one inversion. Both versions sit side
 
 ```bash
 git clone <examples repo url>
-cd ek-ita-swa-examples/04-hexagonal-architecture/example-kotlin   # or example-python
+cd ek-ita-swa-examples/09-hexagonal-architecture/example-kotlin   # or example-python
 docker compose up --build
 ```
 
@@ -216,7 +216,7 @@ Bring it to session 10. First 10 minutes we'll compare.
 ## After Class
 
 - Skim ahead: session 10 covers **REST API architecture**. REST is the protocol on the *driving adapter* side of the hexagon — the thing that translates HTTP into calls on the core.
-- If you didn't run the in-class example yourself, do it now. Clone the examples repo, `cd ek-ita-swa-examples/04-hexagonal-architecture/example-kotlin` (or `example-python`), and `docker compose up --build`. Then grep the application layer for any import of `persistence` — it should return nothing. That's the rule.
+- If you didn't run the in-class example yourself, do it now. Clone the examples repo, `cd ek-ita-swa-examples/09-hexagonal-architecture/example-kotlin` (or `example-python`), and `docker compose up --build`. Then grep the application layer for any import of `persistence` — it should return nothing. That's the rule.
 - [optional, keen students] Add a third adapter — a SQLite or file-backed `NoteRepository` — to one of the examples. The service code should not change. If it does, your port has a leak.
 
 ## Optional
