@@ -1,6 +1,6 @@
 # Curriculum — Software Architecture (ITA, Fall 2026)
 
-**EK Business Academy Copenhagen** · 34 sessions × 3 hours
+**EK Business Academy Copenhagen** · 32 sessions × 3 hours
 
 This course teaches software architecture as **decisions, boundaries, and conventions** — the rules a
 system commits to so it can grow without collapsing under its own weight. Rather than drawing diagrams,
@@ -44,8 +44,8 @@ Each teaching-session README follows the same shape:
 
 ## Session overview
 
-Teaching runs **Sessions 6–24**; the exam project is **Sessions 27–34**. (Sessions 1–5 and 25–26 are
-reserved/empty slots and carry no content.)
+Teaching runs **Sessions 6–24**; the exam project is **Sessions 25–32**. (Sessions 1–5 are reserved/empty
+slots and carry no content.)
 
 | # | Topic | What you do |
 |:-:|-------|-------------|
@@ -65,8 +65,7 @@ reserved/empty slots and carry no content.)
 | 22 | **Security architecture** | Gitea's authentication as a port with many adapters and its ordered, default-deny authorization model. OWASP Top 10, trust boundaries, secrets, STRIDE. |
 | 23 | **Documentation: ADRs & the C4 model** | Record decisions as ADRs; draw diagrams that survive contact with reality. |
 | 24 | **Synthesis: real-world architectures** | Read two real architectures with the whole semester's vocabulary and weigh their trade-offs. |
-| 25–26 | *(reserved / empty)* | No content — placeholder slots. |
-| **27–34** | **Exam project** | *No teaching.* Design and partially implement a system of your choice; present and defend it at the exam. |
+| **25–32** | **Exam project** | *No teaching.* Design and partially implement a system of your choice; present and defend it at the exam. |
 
 ---
 
@@ -74,7 +73,7 @@ reserved/empty slots and carry no content.)
 
 - **Mini-project (12–13)** — design a REST API; the spec you write feeds the rest of the semester.
 - **Mid-semester project (18–21)** — a small distributed system, built as a **modular monolith** (not microservices — Session 17 is the *why*).
-- **Exam project (27–34)** — the assessment. You design and partially implement an architecture for a system of your choice, then present and defend it. The exam exercises every concept introduced across the semester.
+- **Exam project (25–32)** — the assessment. You design and partially implement an architecture for a system of your choice, then present and defend it. The exam exercises every concept introduced across the semester.
 
 ---
 
