@@ -44,7 +44,7 @@ Ask your agent: *"List the top-level packages under Gitea's `services/`. Pick on
 In `ek-ita-swa-examples/17-microservices-vs-monoliths/` the **same notes app** (a note shows its author's name) is built twice:
 
 - `monolith/` — one FastAPI app, one Postgres. The author lookup is an **in-process call**; `author_id` is a real **foreign key**. One `docker compose up`, one deploy.
-- `microservices/` — a **`users-service` (Kotlin/Ktor)**, a **`notes-service` (Python/FastAPI)**, and a **`gateway` (Python)**, each with its own database, talking over HTTP. The author lookup is now a **network call** (`notes-service/app/users_client.py`).
+- `microservices/` — a **`users-service` (Kotlin/Ktor)**, a **`notes-service` (Python/FastAPI)**, and a **`gateway` (Go/net-http)**, each with its own database, talking over HTTP. The author lookup is now a **network call** (`notes-service/app/users_client.py`).
 
 Run both — they expose the **same API** on `localhost:8080`; a client can't tell them apart until something breaks. The one line that tells the whole story:
 
@@ -53,13 +53,13 @@ grep -rn "find_by_id" monolith/app/notes.py        # monolith: an in-process fun
 grep -rn "httpx"      microservices/notes-service/  # microservices: the same lookup over the network
 ```
 
-**Polyglot:** the monolith is one runtime; the microservices mix **Kotlin and Python** because services integrate over a *contract*, not shared code. Swapping users-service to Kotlin changed nothing in notes-service or the gateway — the contract held. A monolith can't do that.
+**Polyglot:** the monolith is one runtime; the microservices mix **three languages — Kotlin (users), Python (notes), and Go (gateway)** — because services integrate over a *contract*, not shared code. Each is written in its own stack without touching the others; the contract holds, so the choice doesn't ripple. A monolith can't do that. (Go is also the language of Gitea, the codebase you've read across the systems half.)
 
 ### Part 4 — What it buys, what it costs — in running code (25 min)
 Buys (run it):
 - **Failure isolation** — `docker compose stop users-service`; `/notes` still serves, author shows `unavailable`. The monolith's author lookup *can't* fail on its own.
 - **Independent deployment** — `docker compose up -d --build notes-service` rebuilds one service.
-- **Technology diversity** — Kotlin and Python side by side.
+- **Technology diversity** — Kotlin, Python, and Go side by side.
 
 Costs (see it):
 - **Distributed-systems hard problems** — the network call can time out; retries need **idempotency** (S10/S16).
