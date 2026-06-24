@@ -29,7 +29,7 @@ Each teaching-session README follows the same shape:
 ## What you need
 
 - A laptop with **Docker** (used from Session 8 onward to run examples).
-- An **LLM coding agent** (e.g. Claude Code) — the course's core tool.
+- An **LLM coding agent** (e.g. Claude Code, Mistral Vibe) — the course's core tool.
 - **Git / GitHub**, and the three codebases below cloned or browsable.
 
 ### The codebases you'll read
