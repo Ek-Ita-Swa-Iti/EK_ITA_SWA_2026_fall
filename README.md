@@ -18,7 +18,7 @@ A 32-session course on software architecture for ITA students. Each session is 3
 - **4 mid-semester project sessions** (18–21) — small distributed system.
 - **8 exam project sessions** (25–32) — design and partially implement a system, present at exam.
 
-See `CLAUDE.md` for the full curriculum table and house rules.
+See **[`curriculum.md`](curriculum.md)** for the full session-by-session table, the tools you'll need, and how each session works.
 
 ## Repository layout
 
