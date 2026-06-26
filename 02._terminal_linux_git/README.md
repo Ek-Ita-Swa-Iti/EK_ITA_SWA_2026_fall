@@ -12,6 +12,7 @@
 - Navigate a Linux filesystem: paths, directories, listing, reading files.
 - Create, copy, move, and delete files and directories from the shell.
 - Read and change **file permissions**; see what running **processes** are.
+- See how the **Mistral-Vibe** agent runs the *same* terminal commands you're learning — and use that to read and verify what it does.
 - Use **Git** to save and push your work — clone, commit, push (by doing, not by theory).
 
 ---
@@ -20,6 +21,7 @@
 
 - Install **Docker Desktop** (Windows/macOS/Linux) and make sure it starts.
 - Have a **GitHub account** and be logged in.
+- Have **Mistral-Vibe** installed (from Session 1).
 - That's it — your Linux environment is set up *in class*.
 
 ---
@@ -41,7 +43,7 @@ Then open **http://localhost:3000** in your browser — that's a full Ubuntu MAT
 
 > **Mental model:** the desktop in your browser is a separate Linux computer. Your laptop is just the screen and keyboard. When we "stop the container" the machine is gone — so we'll use Git to save anything we want to keep.
 
-### Part 2 — Where am I? Navigating the filesystem (35 min) — blackboard + keyboard
+### Part 2 — Where am I? Navigating the filesystem (30 min) — blackboard + keyboard
 On the board: draw the Linux filesystem as a tree (`/`, `/home`, `/etc`, `/var`, `/tmp`). The three questions you ask constantly:
 
 - **Where am I?** `pwd`
@@ -53,7 +55,23 @@ Reading files without opening an editor: `cat`, `less`, `head`, `tail`. Getting 
 ### Part 3 — Making changes: files & directories (30 min) — keyboard
 `mkdir`, `touch`, `cp`, `mv`, `rm` (and the danger of `rm -r`). The tab-completion habit. Then **permissions**: what `rwx` means for user/group/other, reading `ls -l` output, and `chmod +x script.sh`. A quick look at **processes**: `ps`, `top` (then `q` to quit), and that a program is just a process.
 
-### Part 4 — Saving your work with Git (40 min) — keyboard, no theory
+### Part 4 — The agent speaks terminal: Mistral-Vibe (25 min) — demo + keyboard
+You installed **Mistral-Vibe** last session. Here's the thing worth seeing today: an AI coding agent has no magic access to your machine — it gets work done by **running the same terminal commands you just learned** (`ls`, `cd`, `cat`, `grep`, `find`, …), reading the output, and deciding what to do next. So the terminal isn't *replaced* by the agent — it's the language you both speak, and it's how you check the agent's work.
+
+**Demo (instructor):** point Mistral-Vibe at your scavenger-hunt directory and give it a plain-English task — *"what files are in here?"*, *"find the file that mentions Ada"*, *"show me what config.txt contains."* Watch the **commands it runs** and name each one out loud: that's the `ls` you learned, that's `find`, that's `grep`, that's `cat`.
+
+**Hands-on cross-reference (you):** for each task, **do it yourself first**, then ask Vibe to do the same, and compare the command it used to yours:
+
+| You type | You ask Vibe | Same command underneath |
+|---|---|---|
+| `ls -la` | "list everything here, including hidden files" | `ls` |
+| `grep -ri "todo" .` | "find every TODO in this folder" | `grep` |
+| `cat notes.md` | "what does notes.md say?" | `cat` |
+| `find . -name "*.log"` | "find all the log files" | `find` |
+
+**The point — verification, not magic:** because you know these commands, you can *read* what the agent did and **check it yourself** (`ls`, `cat`) instead of taking its word. That habit — direct the agent, then verify against the real thing — is one you'll use all semester. (Later you'll even read the *code* of a tool like this; today you just watch it speak terminal.)
+
+### Part 5 — Saving your work with Git (40 min) — keyboard, no theory
 You'll lose the container eventually, so put your work somewhere permanent. Purely the workflow:
 
 ```bash
@@ -68,8 +86,8 @@ git push                       # send it to GitHub
 
 What a "remote" is, shown by pushing and then seeing it on github.com. **From now on, everything you make this block lives in a Git repo** — that's also how you'll hand in the assignment in Session 5.
 
-### Part 5 — Wrap-up (10 min)
-The cheat-sheet of today's commands. Why this matters: every later session (Docker, the codebases, the AI agent) assumes you can move around a shell without thinking about it.
+### Part 6 — Wrap-up (10 min)
+The cheat-sheet of today's commands. Why this matters: every later session (Docker, the codebases, the AI agent) assumes you can move around a shell without thinking about it — and, as you saw, the agent runs these very commands, so reading them is how you stay in control.
 
 ---
 
@@ -80,6 +98,7 @@ A **filesystem scavenger hunt** in a directory tree we've pre-seeded inside your
 - Find a specific file several directories deep; read it; follow its instructions.
 - Create a directory structure to a given spec; move and rename files into it.
 - Make a script file executable (`chmod +x`) and run it.
+- **Cross-check with Mistral-Vibe:** pick two hunt steps, ask Vibe to do them, and note which command it ran — then verify its answer yourself with `ls`/`cat`. Did it match what you did?
 - **Commit and push** your results to your GitHub repo before you leave.
 
 ---
