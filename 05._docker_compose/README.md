@@ -133,7 +133,7 @@ Build a small, runnable `docker compose` project that ties together everything f
 - [ ] The bash script runs **inside a container** and produces its report from real input.
 - [ ] There are **two services** wired together via compose (they can reach each other).
 - [ ] The README lets a stranger clone and run it, and explains each part.
-- [ ] Everything is committed to Git with a sensible history (not one giant commit).
+- [ ] Everything is committed to Git with a sensible history (not one giant commit at the end).
 
 ---
 
