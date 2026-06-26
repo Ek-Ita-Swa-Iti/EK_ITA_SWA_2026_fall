@@ -1,8 +1,8 @@
-# Session 3: The Command Line — Pipes, Text & HTTP
+# Session 3: The Command Line — Pipes, HTTP & M2M Security
 
 **ITA Software Architecture 2026 Fall | 3 hours | Foundations block (hands-on)**
 
-> The Unix idea: small tools that each do one thing, joined together. Today you'll learn to *compose* commands — pipe the output of one into the next — to answer real questions about files and data. Then you'll meet `curl`, the command-line way to talk to the web, and get just enough **HTTP** to use it. (You'll see `curl` again when we design REST APIs later in the semester.)
+> The Unix idea: small tools that each do one thing, joined together. Today you'll learn to *compose* commands with pipes to answer real questions about data. Then you'll meet `curl` and just enough **HTTP** to talk to a web service — and, crucially, how machines talk to each other **securely**: HTTPS, certificates, and how one machine proves its identity to another. That last part is the heart of *interoperability security*, which you'll rely on for the rest of the semester.
 
 ---
 
@@ -10,8 +10,8 @@
 
 - Understand **stdin / stdout / stderr** and wire commands together with **pipes** and **redirection**.
 - Use the core text tools — `grep`, `sort`, `uniq`, `wc`, `cut`, `find`, and a little `sed`/`awk` — to slice data.
-- Read **exit codes** and understand environment variables and `PATH`.
-- Use **`curl`** to make HTTP requests; read methods, status codes, headers, and JSON responses.
+- Use **`curl`** to make HTTP requests; read methods, status codes, headers, and JSON.
+- Explain how **machine-to-machine communication is secured**: HTTPS/TLS, certificates (encryption + server identity), and **API authentication** (keys, bearer tokens, a word on mTLS).
 
 ---
 
@@ -25,68 +25,83 @@
 ## Today's Teachings
 
 ### Part 0 — Warm-up (10 min)
-Two-minute recap of last week's navigation commands, then `cd` into a `session-03/` folder we've seeded with a sample **log file** and a **CSV** to work on.
+Quick recap of last week's navigation, then `cd` into a seeded `session-03/` folder with a sample **log file** and a **CSV**.
 
-### Part 1 — Streams, pipes & redirection (35 min) — blackboard + keyboard
-On the board: every program has three streams — **stdin** (in), **stdout** (out), **stderr** (errors). The two moves that change everything:
+### Part 1 — Streams, pipes & redirection (30 min) — blackboard + keyboard
+On the board: every program has three streams — **stdin**, **stdout**, **stderr**. The two moves that change everything:
 
-- **Pipe** `|` — send one command's output into the next: `cat access.log | wc -l`.
-- **Redirect** `>` (overwrite), `>>` (append), `<` (read from file): `ls > files.txt`.
+- **Pipe** `|` — feed one command's output into the next: `cat access.log | wc -l`.
+- **Redirect** `>` (overwrite), `>>` (append), `<` (from file): `ls > files.txt`.
 
-The Unix philosophy: don't look for one big command — *chain small ones*.
+The Unix philosophy: don't hunt for one big command — *chain small ones*.
 
-### Part 2 — The text toolkit (45 min) — keyboard
-Each tool, then immediately used on the sample log:
+### Part 2 — The text toolkit (40 min) — keyboard
+Each tool, used immediately on the sample log:
 
-- `grep` — find lines matching a pattern (`grep ERROR access.log`).
-- `wc -l` — count lines. `sort` / `sort -n` — order. `uniq -c` — count duplicates.
-- `cut -d',' -f1` — pull a column out of CSV. `find` — locate files by name/type.
-- A gentle taste of `sed 's/old/new/'` (substitute) and `awk '{print $1}'` (fields).
+- `grep` (find lines), `wc -l` (count), `sort` / `sort -n`, `uniq -c` (count duplicates).
+- `cut -d',' -f1` (a CSV column), `find` (locate files), a taste of `sed 's/old/new/'` and `awk '{print $1}'`.
 
-**Building a pipeline live (the set-piece):** "Which 5 IP addresses hit the server most?" Build it one stage at a time on the board and in the terminal:
+**Live set-piece — "the 5 busiest IPs":** build it one stage at a time, re-running as it grows:
 
 ```bash
 cut -d' ' -f1 access.log | sort | uniq -c | sort -rn | head -5
 ```
 
-Each added stage, re-run, see it get closer. This *is* the lesson.
+Plus a 5-min note on **exit codes** (`echo $?`), env vars (`echo $HOME`, `export`), and `PATH`.
 
-### Part 3 — Exit codes, env vars & PATH (20 min)
-`echo $?` after a command — 0 means success, non-zero means failure (you'll rely on this when scripting next week). Environment variables: `echo $HOME`, `export NAME=value`. What `PATH` is and why "command not found" happens.
+### Part 3 — Talking to the web with curl + HTTP (35 min) — keyboard
+`curl` fetches URLs. Just enough HTTP to use it:
 
-### Part 4 — Talking to the web with curl + HTTP (40 min) — keyboard
-`curl` is just another command-line tool — it fetches URLs. Enough HTTP to use it:
-
-- **Methods:** `GET` (read) vs `POST` (send). `curl https://api.github.com/users/torvalds` (GET).
-- **Status codes:** `200` OK, `404` not found, `500` server error. See them with `curl -i` (show headers) and `curl -o /dev/null -w "%{http_code}\n"`.
+- **Methods:** `GET` (read) vs `POST` (send): `curl https://api.github.com/users/torvalds`.
+- **Status codes:** `200`/`404`/`500`; see them with `curl -i` and `curl -o /dev/null -w "%{http_code}\n"`.
 - **Headers** and **JSON bodies**; sending data: `curl -X POST -H "Content-Type: application/json" -d '{...}' <url>`.
-- Pipe a JSON response into the tools you just learned to pull out a field.
+- Pipe a JSON response into the Part-2 tools to pull out a field.
 
-> This is a preview, not the full story — we design HTTP APIs properly later in the semester. Today: be able to *poke* a web service from the terminal.
+> A preview, not the full story — we design HTTP APIs properly later. Today: *poke* a web service from the terminal.
+
+### Part 4 — Securing machine-to-machine communication (40 min) — blackboard + keyboard — the set-piece
+When two machines exchange data over a network, two questions matter: **can anyone on the path read it?** and **how does each side know who it's talking to?** This is *interoperability security* — the everyday reality behind every API call.
+
+- **Why plain HTTP is unsafe:** the request and response travel in the clear — any hop between can read or alter them. Blackboard: client → … → server, with an eavesdropper in the middle.
+- **HTTPS = HTTP over TLS.** TLS gives two things: **encryption in transit** (eavesdroppers see gibberish) and **server identity** via a **certificate**. `curl` checks the certificate automatically — that's what the padlock means.
+- **Certificates & trust:** a certificate is signed by a **Certificate Authority (CA)** your system already trusts. Inspect a real one:
+  ```bash
+  curl -v https://api.github.com 2>&1 | grep -Ei "subject|issuer|SSL"
+  openssl s_client -connect api.github.com:443 </dev/null   # see the cert chain
+  ```
+  What `curl` does on a **bad/expired cert** (it refuses), and `-k`/`--insecure` to skip the check — *and why doing that in real life defeats the point.*
+- **Authentication — how a machine proves who it is:** servers don't trust anonymous callers. The common patterns:
+  - **API key / bearer token** in a header: `curl -H "Authorization: Bearer $TOKEN" <url>` — and why the token lives in an **environment variable / secret**, never hard-coded or committed (callback to S2's "don't commit secrets").
+  - **mutual TLS (mTLS)** in one sentence: *both* sides present certificates — used between trusted back-end services.
+- **The tie-in:** this is exactly how services talk safely in a distributed system — forward link to **REST APIs**, **microservices**, and the **Security** session later in the semester.
 
 ### Part 5 — Wrap-up (10 min)
-The pipeline mindset, recapped. Commit today's pipelines/notes to your repo.
+Two threads, recapped: compose small tools; and machines exchange data over channels that must be *encrypted* and *authenticated*. Commit today's work.
 
 ---
 
 ## Exercise (in class)
 
-Using **only the terminal**, answer questions about the seeded data and save your commands to a file:
+Using **only the terminal**, save your commands to a file and push:
 
-- From the log: how many total requests? How many errors? The 5 busiest IPs? The busiest hour?
-- From the CSV: extract one column, sort it, count unique values.
-- With `curl`: fetch a public API endpoint, show its status code, and extract one field from the JSON.
-- Save your commands in `answers.sh` (one per line, commented) and **push to GitHub**.
+- From the log: total requests, error count, the 5 busiest IPs, the busiest hour.
+- From the CSV: extract a column, sort it, count unique values.
+- With `curl`: fetch a **public HTTPS API**, show its status code, and extract one field from the JSON.
+- **Inspect the server's certificate** (`curl -v …` or `openssl s_client`): who issued it, who it's for.
+- Make one **authenticated request** using a token in an `Authorization` header, with the token read from an **environment variable** (not written in the file).
+- Save commands in `answers.sh` (commented) and **push to GitHub** — with no secret in the file.
 
 ---
 
 ## After Class
 
-- Re-solve two of the exercise questions a *different* way (different tools, same answer) — there's always more than one pipeline.
+- Re-solve two exercise questions a *different* way (same answer, different tools).
+- In one sentence each: what does HTTPS protect that HTTP doesn't, and how does a server know an API request came from *you*?
 
 ---
 
 ## Optional
 
-- [optional] *The Linux Command Line* (Shotts), Part 2 — redirection, pipes, and the text-processing tools.
-- [optional] Skim the `curl` man page intro (`man curl`) — just the EXAMPLES section.
+- [optional] *The Linux Command Line* (Shotts), Part 2 — redirection, pipes, text tools.
+- [optional] *How HTTPS works* (`https://howhttps.works`) — a friendly illustrated walk-through of TLS and certificates.
+- [optional] Skim `man curl` EXAMPLES, and the `--cert`/`--cacert` options to see where mTLS plugs in.

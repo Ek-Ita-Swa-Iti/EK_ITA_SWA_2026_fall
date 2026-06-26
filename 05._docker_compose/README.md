@@ -1,8 +1,8 @@
-# Session 5: Docker & Docker Compose
+# Session 5: Docker, Compose & the Cloud
 
 **ITA Software Architecture 2026 Fall | 3 hours | Foundations block (hands-on) | Mandatory group assignment issued**
 
-> In Session 2 you *used* a container without knowing how it worked. Today you open the box: what an image is, how to build your own with a `Dockerfile`, and how to run several containers together with `docker compose`. This is the exact tooling every later session uses to run code — so by the end you'll read a `docker-compose.yml` and know what it does. The session closes by handing out the **mandatory group assignment**.
+> In Session 2 you *used* a container without knowing how it worked. Today you open the box: images, building your own with a `Dockerfile`, and running several containers together with `docker compose` — the exact tooling every later session uses to run code. Then we step back and ask *where* containers actually run in the real world: your own servers, or the **cloud** — and weigh the trade-offs. The session closes by handing out the **mandatory group assignment**.
 
 ---
 
@@ -13,6 +13,7 @@
 - Run a container: ports, volumes, environment variables, logs, `exec`.
 - Use **`docker compose`** to define and run a multi-service app.
 - Read the `docker-compose.yml` files you'll meet in the rest of the semester.
+- Explain where containers **run in production** (on-prem vs cloud), the cloud service models (**IaaS / PaaS / SaaS**), and **reflect on the pros and cons of cloud computing** versus other paradigms and business models.
 
 ---
 
@@ -55,7 +56,7 @@ CMD ["python", "main.py"]   # what to run when the container starts
 - **Volumes:** `-v $(pwd)/data:/data` — share a folder; data survives the container.
 - **Environment:** `-e KEY=value`. **Logs:** `docker logs <name>`. **Get a shell inside:** `docker exec -it <name> bash`.
 
-### Part 3 — Many containers: docker compose (45 min) — keyboard, the set-piece
+### Part 3 — Many containers: docker compose (40 min) — keyboard, the set-piece
 Real systems are more than one container. `docker compose` describes them in one file:
 
 ```yaml
@@ -76,7 +77,25 @@ services:
 - Services, the **network** compose creates (containers reach each other by service name), `depends_on`, `logs`, `exec`.
 - **The payoff:** open one of the `docker-compose.yml` files from the course examples repo and read it together — *you now understand every line.* This is what `docker compose up` runs from the architecture sessions onward.
 
-### Part 4 — The group assignment (15 min)
+### Part 4 — Where does this actually run? Cloud computing (30 min) — blackboard + discussion
+Everything so far ran on *your laptop*. In the real world it runs on a server somewhere — and that "somewhere" is a real architectural and business decision.
+
+- **Two homes for your containers:** your organisation's **own machines (on-prem)**, or rented from a **cloud** provider (AWS, Azure, GCP, …).
+- **VM vs container, in one line:** a virtual machine emulates a whole computer; a container shares the host's kernel and ships just your app — lighter, faster to start, which is why cloud platforms love them.
+- **Cloud service models** (board): how much the provider runs *for* you —
+  - **IaaS** — they give you a bare VM; you install and run everything (your container included).
+  - **PaaS** — you push code/containers; they handle the servers, scaling, patching.
+  - **SaaS** — you just *use* finished software (Gmail, GitHub) — no infrastructure at all.
+- **The reflection — pros & cons, and the business model:** on-prem (big upfront cost/*capex*, full control, fixed capacity, you carry the ops burden) vs cloud (pay-as-you-go/*opex*, elastic scaling, less to manage — but vendor lock-in, ongoing cost, and questions of data location/compliance). There is no universal winner; it depends on the workload and the business.
+
+**Discussion (in groups, then share):** for each scenario, cloud or on-prem — and *why*?
+- a two-person startup launching an MVP;
+- a hospital storing patient records;
+- a shop with huge traffic spikes on Black Friday and quiet weekdays.
+
+> We don't *deploy* to a cloud today (that's the DevOps semester) — today is about being able to **reason** about the choice.
+
+### Part 5 — The group assignment (10 min)
 Walk through the assignment brief below, the rubric, and the deadline. Form groups before you leave.
 
 ---
@@ -122,10 +141,12 @@ Build a small, runnable `docker compose` project that ties together everything f
 
 - Form your group and create the shared GitHub repo today.
 - Sketch what your toolbox will do before you start building — pick a real, small data-summarising task.
+- One paragraph for yourself: for the toolbox you're about to build, would you run it on-prem or in the cloud — and which service model (IaaS/PaaS/SaaS) — and why?
 
 ---
 
 ## Optional
 
 - [optional] The official *Docker get-started* guide — `https://docs.docker.com/get-started/`.
+- [optional] AWS's plain-language *Types of Cloud Computing* (IaaS/PaaS/SaaS) — skim for the model definitions.
 - [optional] *Docker Compose* docs — the `compose-file` reference, for when you want an option you haven't met.
