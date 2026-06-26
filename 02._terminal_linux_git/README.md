@@ -11,7 +11,7 @@
 - Run a **Linux machine in a container** via Docker Desktop and reach a terminal inside it.
 - Navigate a Linux filesystem: paths, directories, listing, reading files.
 - Create, copy, move, and delete files and directories from the shell.
-- Read and change **file permissions**; see what running **processes** are.
+- Read and change **file permissions** — and know why **root** can ignore them; see what running **processes** are.
 - See how the **Mistral-Vibe** agent runs the *same* terminal commands you're learning — and use that to read and verify what it does.
 - Use **Git** to save and push your work — clone, commit, push (by doing, not by theory).
 
@@ -53,7 +53,11 @@ On the board: draw the Linux filesystem as a tree (`/`, `/home`, `/etc`, `/var`,
 Reading files without opening an editor: `cat`, `less`, `head`, `tail`. Getting help: `man ls`, `ls --help`. Glob patterns: `ls *.txt`, `ls report-??.md`.
 
 ### Part 3 — Making changes: files & directories (30 min) — keyboard
-`mkdir`, `touch`, `cp`, `mv`, `rm` (and the danger of `rm -r`). The tab-completion habit. Then **permissions**: what `rwx` means for user/group/other, reading `ls -l` output, and `chmod +x script.sh`. A quick look at **processes**: `ps`, `top` (then `q` to quit), and that a program is just a process.
+`mkdir`, `touch`, `cp`, `mv`, `rm` (and the danger of `rm -r`). The tab-completion habit. Then **permissions**: what `rwx` means for user/group/other, reading `ls -l` output, and `chmod +x script.sh`.
+
+**One catch — `root` ignores read/write permissions.** In this container you're logged in as **root**, the all-powerful admin user. Try it: `chmod 000 afile` (remove *all* permissions) then `cat afile` — it still works, because root is allowed to bypass the read/write bits. As a *normal* user that same `chmod 000` would lock you out. (Execute is stricter: even root needs an `x` bit to run `./afile`.) The lesson: permissions protect you from *other* users — and root is above them. `whoami` tells you who you are.
+
+A quick look at **processes**: `ps`, `top` (then `q` to quit), and that a program is just a process.
 
 ### Part 4 — The agent speaks terminal: Mistral-Vibe (25 min) — demo + keyboard
 You installed **Mistral-Vibe** last session. Here's the thing worth seeing today: an AI coding agent has no magic access to your machine — it gets work done by **running the same terminal commands you just learned** (`ls`, `cd`, `cat`, `grep`, `find`, …), reading the output, and deciding what to do next. So the terminal isn't *replaced* by the agent — it's the language you both speak, and it's how you check the agent's work.
