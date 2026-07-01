@@ -76,7 +76,7 @@ The architectural discipline — the **expand–contract** pattern:
 In pairs, take one quality-attribute scenario from S7 (e.g. *"the repo home page loads under 300 ms with 50k issues"*). What does it imply for data architecture — where do you index, denormalise, cache, or replicate? Sketch the storage decisions. One pair shares.
 
 ### Part 6 — Synthesis (10 min)
-The bridge: a normalised model is correct but sometimes slow to read; **S15 (caching) is mostly about hiding slow reads**, and keeping those caches correct is an **event** problem (S16). Bring your "slow as written" notes next week.
+The bridge: a normalised model is correct but sometimes slow to read; **S13 (caching) is mostly about hiding slow reads**, and keeping those caches correct is an **event** problem (S18). Bring your "slow as written" notes next week.
 
 ---
 
@@ -88,7 +88,7 @@ Take the data model behind your 7–8 API. Half a page:
 - Mark one query that is **slow as written**, and one value you'd consider **denormalising** to speed a read — and what it would cost you on writes.
 - Sketch one **migration** you'd need for a plausible new feature, and say whether it's expand–contract-safe.
 
-Bring it to session 15.
+Bring it to session 13.
 
 ---
 
@@ -120,7 +120,7 @@ Half a page:
 - **One claim that was vague, wrong, or oversold** — and how you checked.
 - **One read/write asymmetry** — in your own words: a value that's cheap to read because something paid for it on write.
 
-Bring it to session 15. First 10 minutes we compare.
+Bring it to session 13. First 10 minutes we compare.
 
 ---
 

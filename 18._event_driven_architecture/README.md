@@ -1,8 +1,8 @@
-# Session 14: Event-Driven Architecture
+# Session 18: Event-Driven Architecture
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
-> Instead of "service A calls service B and waits," service A *announces* that something happened, and anything that cares reacts. S15 left us on the edge of this: a cached value goes stale the moment someone pushes — "invalidate on push" is *reacting to an event*. Today we generalise that, and read a real one — **Gitea's** internal queue (one interface, three broker backends) and the event fan-out that carries a repo push all the way out to a webhook.
+> Instead of "service A calls service B and waits," service A *announces* that something happened, and anything that cares reacts. S13 left us on the edge of this: a cached value goes stale the moment someone pushes — "invalidate on push" is *reacting to an event*. Today we generalise that, and read a real one — **Gitea's** internal queue (one interface, three broker backends) and the event fan-out that carries a repo push all the way out to a webhook.
 
 ---
 
@@ -19,7 +19,7 @@
 ## Before Class
 
 - Have **Gitea** (v1.26.2) cloned/browsable — same codebase we've read since S11.
-- Bring your S15 caching deliverable. The cached commit count that's wrong after a push is today's starting point: that push is an **event**.
+- Bring your S13 caching deliverable. The cached commit count that's wrong after a push is today's starting point: that push is an **event**.
 - [optional] One feature in a system you use that you suspect is async (a confirmation email, an export, a notification).
 
 ---
@@ -27,7 +27,7 @@
 ## Today's Teachings
 
 ### Part 0 — From cache invalidation to events (10 min)
-Pick up where S15 ended. Gitea's cached commit count (`CacheRef`) is wrong the instant someone pushes; the fix is to *invalidate on push*. That's an event in disguise — something happened, and code reacts. In pairs: name one other "X happened, so Y should follow" in a system you've built. Two pairs share. Today we hold yours up against a real event system.
+Pick up where S13 ended. Gitea's cached commit count (`CacheRef`) is wrong the instant someone pushes; the fix is to *invalidate on push*. That's an event in disguise — something happened, and code reacts. In pairs: name one other "X happened, so Y should follow" in a system you've built. Two pairs share. Today we hold yours up against a real event system.
 
 ### Part 1 — The shift in mindset (25 min)
 - **Request/response:** A calls B, A waits. The call stack *is* the control flow. A is coupled to B: it must know B exists, and if B is slow or down, A is slow or down too.
@@ -100,7 +100,7 @@ Now trace one event from the inside out. Something happens on a repo (say, a pus
 - `services/webhook/webhook.go` **enqueues** the delivery (it imports `modules/queue` — Part 3's queue, used for real); `services/webhook/deliver.go` does the actual HTTP delivery **asynchronously**, off the request path.
 - Per-provider adapters format the *same* event for each target: `discord.go`, `slack.go`, `dingtalk.go`, `msteams.go`, `telegram.go`. One event, many shapes — pub/sub fan-out made concrete.
 
-So the push from S15's cache invalidation is the same push that, traced outward, becomes a queued, asynchronously delivered webhook. One event, two reactions.
+So the push from S13's cache invalidation is the same push that, traced outward, becomes a queued, asynchronously delivered webhook. One event, two reactions.
 
 ### Part 5 — Patterns at a glance (20 min)
 - **Outbox** — the only safe way to "save to the DB *and* publish an event" atomically. Note the gap it closes: Gitea's queue can persist (levelqueue/redis) so an enqueued job survives a crash, but persisting the queue doesn't make the *save-and-enqueue pair* atomic — that's the outbox's job.
@@ -112,7 +112,7 @@ Conceptual today; deep dives are another course. The point is to recognise them 
 ### Part 6 — Sync or async? + synthesis (20 min)
 For each, decide sync / async / hybrid and defend it: user registration; posting a tweet; charging a credit card; sending the welcome email *after* registration; generating a monthly report.
 
-The thread forward: events are how decoupled parts coordinate without calling each other. **S17 (microservices vs monoliths)** is what happens when those event-connected parts also become *independently deployable* — and what that costs.
+The thread forward: events are how decoupled parts coordinate without calling each other. **S19 (microservices vs monoliths)** is what happens when those event-connected parts also become *independently deployable* — and what that costs.
 
 ---
 
@@ -124,7 +124,7 @@ Take one feature from your session 10–13 work that would be better async. Half
 - Which of Gitea's three queue backends (`channel` / `levelqueue` / `redis`) would you run for it, and **why**?
 - What's your **retry / dead-letter** story if a consumer is down when the event fires?
 
-Bring it to session 17.
+Bring it to session 19.
 
 ---
 
@@ -156,7 +156,7 @@ Half a page:
 - **One claim that was vague, wrong, or oversold** — and how you checked.
 - **One sync-vs-async trade-off** — in your own words: something event-driven made easier, and something it made harder.
 
-Bring it to session 17. First 10 minutes we compare.
+Bring it to session 19. First 10 minutes we compare.
 
 ---
 

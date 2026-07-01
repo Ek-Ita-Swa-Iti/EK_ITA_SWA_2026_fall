@@ -50,7 +50,7 @@ Simon Brown's four levels, from zoomed-out to zoomed-in:
 
 Most diagrams that fail try to be all four at once.
 
-Live: draw a Context + Container diagram for the project from sessions 16–19.
+Live: draw a Context + Container diagram for the project from sessions 14–17.
 
 ### Part 4 — What not to document (15 min)
 - Don't document what the code already says.
@@ -70,7 +70,7 @@ Pick one decision in your professional or hobby life that you've made architectu
 
 ## After Class
 
-- Skim ahead: session 24 pulls the whole semester's threads together by reading two real-world architectures.
+- This is the last teaching session before the exam project (sessions 22–29).
 
 ## References
 

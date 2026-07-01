@@ -119,12 +119,12 @@ Once the contract is an artefact, look at everyone who depends on it:
 - **Mock servers** serve a fake API from the spec before the real one exists.
 - **Contract tests** check that *both* the server and the client still honour it.
 
-One artefact, many consumers — a **boundary that several parties depend on without coordinating** (S6 contract; forward to S15, where independent services talk only through contracts, and S21, where this is how documentation stays true).
+One artefact, many consumers — a **boundary that several parties depend on without coordinating** (S6 contract; forward to S19, where independent services talk only through contracts, and S21, where this is how documentation stays true).
 
 GitHub publishes its own OpenAPI description too. Same kind of API as Gitea, two real contracts, slightly different choices — a useful thing to put side by side.
 
 ### Part 7 — Synthesis (10 min)
-One pair shares one place Gitea's spec told them something the code alone didn't. The bridge: **a good contract is what lets parts evolve independently** — the precondition for everything in the systems half. The project block (S16–19) and the exam start from a spec *you* write.
+One pair shares one place Gitea's spec told them something the code alone didn't. The bridge: **a good contract is what lets parts evolve independently** — the precondition for everything in the systems half. The project block (S14–17) and the exam start from a spec *you* write.
 
 ---
 

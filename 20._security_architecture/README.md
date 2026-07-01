@@ -39,7 +39,7 @@ Open `services/auth/interface.go`: the `Method` interface (`Verify(request) (*Us
 
 - `basic.go` (HTTP Basic), `oauth2.go` (OAuth2 / OIDC), `auth_token.go` (API tokens), `httpsign.go` (signed HTTP requests), `reverseproxy.go`, `session.go` (cookie session), `sspi.go` (Windows SSPI).
 
-Gitea tries the methods in order until one verifies. **This is ports-and-adapters again (S9)** — the same shape as the LLM backends (S9), the cache (S15), and the queue (S16): one interface, swappable implementations, *adding an auth method is adding a file*. Ask your agent: *"List the auth `Method`s in `services/auth/`. For each, what does `Verify()` accept as proof of identity?"* Then open two and check.
+Gitea tries the methods in order until one verifies. **This is ports-and-adapters again (S9)** — the same shape as the LLM backends (S9), the cache (S13), and the queue (S18): one interface, swappable implementations, *adding an auth method is adding a file*. Ask your agent: *"List the auth `Method`s in `services/auth/`. For each, what does `Verify()` accept as proof of identity?"* Then open two and check.
 
 ### Part 3 — Back in Gitea: authorization as an explicit model (30 min) — set-piece 2
 Authorization here isn't scattered `if user.IsAdmin` checks — it's a model:
@@ -66,18 +66,18 @@ A **trust boundary** is where assumptions about the other side change. In Gitea:
 - Rotation: how often, who triggers it, what breaks. The "leaked API key in a public repo" incident.
 
 ### Part 6 — Threat modelling lite + synthesis (10 min)
-STRIDE (Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege) as a quick checklist on any architecture diagram. Synthesis: every system we've read has trust boundaries — now we can name and place them. S23 records these decisions as ADRs.
+STRIDE (Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege) as a quick checklist on any architecture diagram. Synthesis: every system we've read has trust boundaries — now we can name and place them. S21 records these decisions as ADRs.
 
 ---
 
 ## Exercise
 
-Take the project from sessions 16–19. Half a page:
+Take the project from sessions 14–17. Half a page:
 
 - Identify **three trust boundaries** and **one threat** at each.
 - For one of them, decide: would you model authorization as an **ordered `AccessMode`** (like Gitea) or as named **roles** — and why?
 
-Bring it to session 23.
+Bring it to session 21.
 
 ---
 
@@ -109,7 +109,7 @@ Half a page:
 - **One claim that was vague, wrong, or oversold** — and how you checked.
 - **One trust boundary** — in your own words: where assumptions change, and what must be checked there.
 
-Bring it to session 23. First 10 minutes we compare.
+Bring it to session 21. First 10 minutes we compare.
 
 ---
 

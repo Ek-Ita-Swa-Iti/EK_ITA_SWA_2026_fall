@@ -124,7 +124,7 @@ Write a 5-line dossier per pair (paper or markdown). Drop it in your semester no
 ### Part 7 — Synthesis (20 min)
 Each pair shares what they found. The class assembles a shared map of "things we noticed in Vibe today." We'll come back to this map all semester.
 
-End with the semester-spanning promise: **we will return to this repo every week. You will get to know it. By session 22, you will be able to read its architecture out loud — without speaking Python.**
+End with the semester-spanning promise: **we will return to this repo every week. You will get to know it. By session 21, you will be able to read its architecture out loud — without speaking Python.**
 
 ---
 

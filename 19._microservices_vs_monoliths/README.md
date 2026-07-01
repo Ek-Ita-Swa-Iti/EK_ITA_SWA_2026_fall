@@ -1,4 +1,4 @@
-# Session 15: Microservices vs. Monoliths
+# Session 19: Microservices vs. Monoliths
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
@@ -27,7 +27,7 @@
 ## Today's Teachings
 
 ### Part 0 — From events to services (10 min)
-S16 showed **events** as how decoupled parts coordinate without calling each other. Microservices are what happens when those parts also become **independently deployable** — separate processes, separate teams, separate release cadences. In pairs: from the example you brought, name one thing you think they *gained* by splitting and one thing they *paid*. Two pairs share.
+S18 showed **events** as how decoupled parts coordinate without calling each other. Microservices are what happens when those parts also become **independently deployable** — separate processes, separate teams, separate release cadences. In pairs: from the example you brought, name one thing you think they *gained* by splitting and one thing they *paid*. Two pairs share.
 
 ### Part 1 — Definitions (25 min)
 - **Monolith** — one deployable artefact, one repo, one runtime.
@@ -62,7 +62,7 @@ Buys (run it):
 - **Technology diversity** — Kotlin, Python, and Go side by side.
 
 Costs (see it):
-- **Distributed-systems hard problems** — the network call can time out; retries need **idempotency** (S10/S16).
+- **Distributed-systems hard problems** — the network call can time out; retries need **idempotency** (S10/S18).
 - **No cross-service transaction or foreign key** — the microservices `author_id` is a bare number; nothing guarantees the author exists.
 - **Operational complexity** — five containers and two databases vs one and one.
 - **Debugging** — a request now spans services; you'd need distributed tracing to follow it.
@@ -76,7 +76,7 @@ The honest guidance:
 - Use the **strangler-fig** pattern to migrate incrementally, never big-bang.
 
 ### Part 6 — Workshop + synthesis (15 min)
-In pairs, take the company example you brought. Sketch it at a high level: where did microservices likely help, where do you suspect they hurt? Synthesis: the S16–19 project block is deliberately a **modular monolith** — now you know why.
+In pairs, take the company example you brought. Sketch it at a high level: where did microservices likely help, where do you suspect they hurt? Synthesis: the S14–17 project block is deliberately a **modular monolith** — this session is the *why* behind that choice.
 
 ---
 
@@ -87,7 +87,7 @@ Take the API + data model from sessions 10–13. Half a page:
 - Monolith, modular monolith, or microservices? Be specific about **who the team is** and **what the deploy cadence is**.
 - Name the **one service you'd extract first** — and what it would *lose* in the split (a foreign key? a transaction? an in-process call?).
 
-Bring it to session 18.
+Bring it to session 20.
 
 ---
 
@@ -119,7 +119,7 @@ Half a page:
 - **One claim that was vague, wrong, or oversold** — and how you checked.
 - **One trade** — in your own words: something splitting into services made better, and something it made worse.
 
-Bring it to session 18. First 10 minutes we compare.
+Bring it to session 20. First 10 minutes we compare.
 
 ---
 
