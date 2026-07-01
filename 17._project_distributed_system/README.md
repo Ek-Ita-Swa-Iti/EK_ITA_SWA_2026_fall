@@ -1,4 +1,4 @@
-# Session 19: Project — Small Distributed System
+# Session 17: Project — Small Distributed System
 
 **ITA Software Architecture 2026 Fall | 3 hours | Project session (no new teaching)**
 

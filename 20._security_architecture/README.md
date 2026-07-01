@@ -1,4 +1,4 @@
-# Session 22: Security Architecture
+# Session 20: Security Architecture
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
@@ -72,7 +72,7 @@ STRIDE (Spoofing, Tampering, Repudiation, Information disclosure, Denial of serv
 
 ## Exercise
 
-Take the project from sessions 18–21. Half a page:
+Take the project from sessions 16–19. Half a page:
 
 - Identify **three trust boundaries** and **one threat** at each.
 - For one of them, decide: would you model authorization as an **ordered `AccessMode`** (like Gitea) or as named **roles** — and why?

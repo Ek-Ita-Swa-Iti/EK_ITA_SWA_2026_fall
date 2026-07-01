@@ -165,4 +165,4 @@ Bring it to session 8. First 10 minutes we'll compare.
 ## Optional
 
 - [optional] Bass, Clements, Kazman — *Software Architecture in Practice*, chapter 4 (Quality Attributes). The canonical source for the scenario shape we used today.
-- [optional] OWASP Top 10 (web edition) — useful background for the security examples; we revisit in session 22.
+- [optional] OWASP Top 10 (web edition) — useful background for the security examples; we revisit in session 20.

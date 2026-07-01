@@ -97,7 +97,7 @@ Here's the architectural punchline. Open the `Makefile`:
 
 So the contract **cannot silently drift** from the implementation — the build enforces it. Contrast a contract that lives in a wiki page: it's correct exactly until the first person changes the code and forgets to update the doc.
 
-This is a convention (S6) made load-bearing by *tooling*, and it's the answer to the documentation problem we'll name again in S23: **the docs that survive are the ones generated and checked, not the ones maintained by goodwill.**
+This is a convention (S6) made load-bearing by *tooling*, and it's the answer to the documentation problem we'll name again in S21: **the docs that survive are the ones generated and checked, not the ones maintained by goodwill.**
 
 ### Part 5 — What a contract must cover: failure and change (25 min)
 A happy-path-only contract is half a contract. Two things it must include:
@@ -107,7 +107,7 @@ A happy-path-only contract is half a contract. Two things it must include:
 **Change — the contract has a version, and it evolves.** The `/api/v1/` in every Gitea path *is* the contract's version. So:
 
 - What counts as a **breaking change**? (Remove a field, rename one, change a status code, make an optional field required.)
-- How do you evolve *without* breaking existing clients? **Add, don't remove; deprecate, then drop** — the **expand–contract** discipline ("deploy ≠ release"). You'll see the same idea applied to *databases* in S14; here it governs an API contract.
+- How do you evolve *without* breaking existing clients? **Add, don't remove; deprecate, then drop** — the **expand–contract** discipline ("deploy ≠ release"). You'll see the same idea applied to *databases* in S12; here it governs an API contract.
 
 *(Collections need a paging convention too — you saw GitHub's `page`/`per_page` last week — and it belongs in the contract. We won't dwell on it.)*
 
@@ -119,12 +119,12 @@ Once the contract is an artefact, look at everyone who depends on it:
 - **Mock servers** serve a fake API from the spec before the real one exists.
 - **Contract tests** check that *both* the server and the client still honour it.
 
-One artefact, many consumers — a **boundary that several parties depend on without coordinating** (S6 contract; forward to S17, where independent services talk only through contracts, and S23, where this is how documentation stays true).
+One artefact, many consumers — a **boundary that several parties depend on without coordinating** (S6 contract; forward to S15, where independent services talk only through contracts, and S21, where this is how documentation stays true).
 
 GitHub publishes its own OpenAPI description too. Same kind of API as Gitea, two real contracts, slightly different choices — a useful thing to put side by side.
 
 ### Part 7 — Synthesis (10 min)
-One pair shares one place Gitea's spec told them something the code alone didn't. The bridge: **a good contract is what lets parts evolve independently** — the precondition for everything in the systems half. Sessions 12–13 (the mini-project) start from a spec *you* write.
+One pair shares one place Gitea's spec told them something the code alone didn't. The bridge: **a good contract is what lets parts evolve independently** — the precondition for everything in the systems half. The project block (S16–19) and the exam start from a spec *you* write.
 
 ---
 
@@ -136,7 +136,7 @@ Take your session-5 API sketch. Produce an OpenAPI document (YAML) for **three e
 2. The **version** is in the path.
 3. Pick one realistic change you might make to this API later, classify it **breaking or non-breaking**, and write one sentence on how you'd ship it without breaking existing clients.
 
-This is the spec you build from in sessions 12–13.
+This is the kind of spec you build from in the project and exam.
 
 ---
 
@@ -168,7 +168,7 @@ Half a page in your semester notebook:
 - **One claim that was vague, wrong, or oversold** — and how you checked.
 - **One thing a contract must include beyond the happy path** — in your own words, and why.
 
-Bring it to session 12. The mini-project starts from a spec.
+Keep it — the project and exam start from a spec like this.
 
 ---
 

@@ -1,4 +1,4 @@
-# Session 17: Microservices vs. Monoliths
+# Session 15: Microservices vs. Monoliths
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
@@ -76,13 +76,13 @@ The honest guidance:
 - Use the **strangler-fig** pattern to migrate incrementally, never big-bang.
 
 ### Part 6 — Workshop + synthesis (15 min)
-In pairs, take the company example you brought. Sketch it at a high level: where did microservices likely help, where do you suspect they hurt? Synthesis: the S18–16 project block is deliberately a **modular monolith** — now you know why.
+In pairs, take the company example you brought. Sketch it at a high level: where did microservices likely help, where do you suspect they hurt? Synthesis: the S16–19 project block is deliberately a **modular monolith** — now you know why.
 
 ---
 
 ## Exercise
 
-Take the API + data model from sessions 10–15. Half a page:
+Take the API + data model from sessions 10–13. Half a page:
 
 - Monolith, modular monolith, or microservices? Be specific about **who the team is** and **what the deploy cadence is**.
 - Name the **one service you'd extract first** — and what it would *lose* in the split (a foreign key? a transaction? an in-process call?).

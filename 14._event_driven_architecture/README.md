@@ -1,4 +1,4 @@
-# Session 16: Event-Driven Architecture
+# Session 14: Event-Driven Architecture
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
@@ -118,7 +118,7 @@ The thread forward: events are how decoupled parts coordinate without calling ea
 
 ## Exercise
 
-Take one feature from your session 10–15 work that would be better async. Half a page:
+Take one feature from your session 10–13 work that would be better async. Half a page:
 
 - Sketch the event flow: **who emits, who consumes, what happens on failure**.
 - Which of Gitea's three queue backends (`channel` / `levelqueue` / `redis`) would you run for it, and **why**?

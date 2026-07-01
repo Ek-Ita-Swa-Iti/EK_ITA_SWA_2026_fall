@@ -1,4 +1,4 @@
-# Session 14: Data Architecture
+# Session 12: Data Architecture
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
@@ -19,15 +19,15 @@
 ## Before Class
 
 - Have **Gitea** (v1.26.2) cloned/browsable — same codebase we met in S11.
-- Bring the data model behind the API you built in the 7–8 mini-project (a sketch is fine).
+- Bring the data model behind the API you sketched in the REST sessions (10–11) (a sketch is fine).
 - [optional] One sentence: a place in a system you've built where you weren't sure how to model something.
 
 ---
 
 ## Today's Teachings
 
-### Part 0 — The data behind your mini-project (10 min)
-In pairs, share the data model you ended up with in the 7–8 mini-project. One thing you normalised, one thing you were tempted to duplicate. Two pairs share. Today we hold yours up against a real one.
+### Part 0 — The data behind your API (10 min)
+In pairs, share the data model behind the API you sketched in the REST sessions (10–11). One thing you normalised, one thing you were tempted to duplicate. Two pairs share. Today we hold yours up against a real one.
 
 ### Part 1 — Storage families, and the relational default (25 min)
 - **Relational** (Postgres, MySQL, SQLite) — strong consistency, joins, schemas.

@@ -1,4 +1,4 @@
-# Session 24: Synthesis — Reading Real-World Architectures
+# Session 22: Synthesis — Reading Real-World Architectures
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
@@ -46,7 +46,7 @@ The exam project asks students to design and partially implement a system. Today
 In pairs: give a 5-minute mock pitch for one of the two articles you read, as if it were your project.
 
 ### Part 4 — Q&A and exam prep (30 min)
-Open floor: questions about the exam project (sessions 25–32). The teacher answers; students take notes.
+Open floor: questions about the exam project (sessions 23–30). The teacher answers; students take notes.
 
 ---
 
@@ -58,7 +58,7 @@ Pick one of the two articles. Write half a page on what *quality attribute scena
 
 ## After Class
 
-- Sessions 25–32 are exam project work. The next time the teacher gives input is at the exam itself.
+- Sessions 23–30 are exam project work. The next time the teacher gives input is at the exam itself.
 
 ## Optional
 

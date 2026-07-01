@@ -1,4 +1,4 @@
-# Session 15: Caching and Performance
+# Session 13: Caching and Performance
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
@@ -89,7 +89,7 @@ The thread to S16: every cache is a bet that the source won't change before the 
 
 ## Exercise
 
-Take the API + data model from sessions 10–14. Write a caching plan, half a page:
+Take the API + data model from sessions 10–12. Write a caching plan, half a page:
 
 - Which **two** read paths are worth caching, and why (what's expensive)?
 - For each: which **level** (app / distributed / DB), which **strategy**, and what **TTL or event** invalidates it?

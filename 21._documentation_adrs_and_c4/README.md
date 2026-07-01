@@ -1,4 +1,4 @@
-# Session 23: Documentation — ADRs and the C4 Model
+# Session 21: Documentation — ADRs and the C4 Model
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
@@ -50,7 +50,7 @@ Simon Brown's four levels, from zoomed-out to zoomed-in:
 
 Most diagrams that fail try to be all four at once.
 
-Live: draw a Context + Container diagram for the project from sessions 18–21.
+Live: draw a Context + Container diagram for the project from sessions 16–19.
 
 ### Part 4 — What not to document (15 min)
 - Don't document what the code already says.
