@@ -24,11 +24,15 @@ Each teaching-session README follows the same shape:
 5. **Investigation (after class)** — ask your agent a question, **verify it against the code**, write up half a page.
 6. **Optional** — canonical readings, never required (hands-on first).
 
+*This is the rhythm of the architecture sessions (6–24). The **IT-infrastructure foundations block**
+(Sessions 2–5) is keyboard-first: setup, live teachings, and an in-class exercise you commit to Git —
+no agent-investigation write-up.*
+
 ---
 
 ## What you need
 
-- A laptop with **Docker** (used from Session 8 onward to run examples).
+- A laptop with **Docker Desktop** (introduced in Session 2, used throughout to run environments and examples).
 - An **LLM coding agent** (e.g. Claude Code, Mistral Vibe) — the course's core tool.
 - **Git / GitHub**, and the three codebases below cloned or browsable.
 
@@ -44,12 +48,16 @@ Each teaching-session README follows the same shape:
 
 ## Session overview
 
-Teaching runs **Sessions 6–24**; the exam project is **Sessions 25–32**. (Sessions 1–5 are reserved/empty
-slots and carry no content.)
+**Sessions 2–5** are the hands-on **IT-infrastructure foundations block**; architecture teaching runs
+**Sessions 6–24**; the exam project is **Sessions 25–32**. (Session 1 is a 3rd-semester intro placeholder.)
 
 | # | Topic | What you do |
 |:-:|-------|-------------|
-| 1–5 | *(reserved / empty)* | No content — placeholder slots. |
+| 1 | *(intro placeholder)* | 3rd-semester intro — headline only for now. |
+| **2** | **Terminal, Linux & Git** | Run a Linux machine in a container, navigate the shell, file permissions & processes, save/push work with Git. Keyboard-first. |
+| **3** | **Command line: pipes, HTTP & M2M security** | Streams/pipes/redirection & the text toolkit; `curl` + just-enough HTTP; securing machine-to-machine comms — HTTPS/TLS, certificates, bearer-token auth. |
+| **4** | **Bash scripting & SSH** | Write robust bash scripts (`set -euo pipefail`, args, loops, functions); reach remote machines with SSH keys and `scp`. |
+| **5** | **Docker, Compose & the cloud** | Images vs containers, write a `Dockerfile`, multi-service `docker compose`; on-prem vs cloud (IaaS/PaaS/SaaS), capex/opex. **Mandatory group assignment** issued. |
 | 6 | **Intro to software architecture** | "Where is the architecture?" in real and toy systems. Set up your agent + the spine repo. |
 | 7 | **Quality attributes** | Performance, scalability, availability, security, maintainability, cost — and the trade-offs between them. Quality-attribute *scenarios*. |
 | 8 | **Layered architecture** | Identify layers in a real codebase; the downward dependency rule. Runnable bilingual (Kotlin + Python) notes service. |
@@ -71,6 +79,7 @@ slots and carry no content.)
 
 ## Projects & exam
 
+- **Foundations group assignment (issued S5, "Containerised Toolbox")** — a small runnable `docker compose` project (a group-written bash tool + `Dockerfile` + a 2-service compose file, on GitHub). Pass/needs-rework; ties together the infrastructure block.
 - **Mini-project (12–13)** — design a REST API; the spec you write feeds the rest of the semester.
 - **Mid-semester project (18–21)** — a small distributed system, built as a **modular monolith** (not microservices — Session 17 is the *why*).
 - **Exam project (25–32)** — the assessment. You design and partially implement an architecture for a system of your choice, then present and defend it. The exam exercises every concept introduced across the semester.
