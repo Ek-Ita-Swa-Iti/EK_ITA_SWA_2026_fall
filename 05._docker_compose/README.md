@@ -102,7 +102,7 @@ Walk through the assignment brief below, the rubric, and the deadline. Form grou
 
 ## Exercise (in class)
 
-- Write a `Dockerfile` that containerises one of your **bash scripts** from Session 4 (e.g. the log reporter), and run it.
+- Write a `Dockerfile` that containerises a small **script** that summarises a file (build on the pipelines from Session 3), and run it.
 - Write a small `docker-compose.yml` with **two services** and `docker compose up` it.
 - Commit both to your repo and **push**.
 
@@ -116,7 +116,7 @@ Build a small, runnable `docker compose` project that ties together everything f
 
 **Requirements**
 
-1. A **bash script** your group wrote that does something genuinely useful — it ingests an input file (a log, a CSV, or data fetched with `curl`) and produces a **summary report**. It must use `set -euo pipefail` and handle a missing/empty input gracefully.
+1. A small **script** your group wrote that does something genuinely useful — it ingests an input file (a log, a CSV, or data fetched with `curl`) and produces a **summary report**. A shell pipeline from Session 3 is plenty (any language is fine); it should handle a missing/empty input gracefully.
 2. A **`Dockerfile`** that packages the script into an image.
 3. A **`docker-compose.yml`** with **at least two services** — your script's container plus one more (e.g. a Postgres database, or a small web server the script talks to with `curl`).
 4. The whole thing in a **Git repo on GitHub**, with a **`README.md`** that explains: what it does, how to run it (`docker compose up`), and what each file/service is responsible for.
@@ -130,7 +130,7 @@ Build a small, runnable `docker compose` project that ties together everything f
 **Assessment (pass / needs-rework)** — you pass when:
 
 - [ ] `docker compose up --build` runs the project without manual fixing.
-- [ ] The bash script runs **inside a container** and produces its report from real input.
+- [ ] The script runs **inside a container** and produces its report from real input.
 - [ ] There are **two services** wired together via compose (they can reach each other).
 - [ ] The README lets a stranger clone and run it, and explains each part.
 - [ ] Everything is committed to Git with a sensible history (not one giant commit at the end).

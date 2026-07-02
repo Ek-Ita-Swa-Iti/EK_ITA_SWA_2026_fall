@@ -56,7 +56,7 @@ no agent-investigation write-up.*
 | 1 | *(intro placeholder)* | 3rd-semester intro — headline only for now. |
 | **2** | **Terminal, Linux & Git** | Run a Linux machine in a container, navigate the shell, file permissions & processes, save/push work with Git. Keyboard-first. |
 | **3** | **Command line: pipes, HTTP & M2M security** | Streams/pipes/redirection & the text toolkit; `curl` + just-enough HTTP; securing machine-to-machine comms — HTTPS/TLS, certificates, bearer-token auth. |
-| **4** | **Bash scripting & SSH** | Write robust bash scripts (`set -euo pipefail`, args, loops, functions); reach remote machines with SSH keys and `scp`. |
+| **4** | **Networking — how services talk** | Ports & listening processes, `localhost`/`0.0.0.0`, DNS, the client–server round-trip, reverse proxy / load balancer; why the network is unreliable (latency, timeouts, partial failure). |
 | **5** | **Docker, Compose & the cloud** | Images vs containers, write a `Dockerfile`, multi-service `docker compose`; on-prem vs cloud (IaaS/PaaS/SaaS), capex/opex. **Mandatory group assignment** issued. |
 | 6 | **Intro to software architecture** | "Where is the architecture?" in real and toy systems. Set up your agent + the spine repo. |
 | 7 | **Quality attributes** | Performance, scalability, availability, security, maintainability, cost — and the trade-offs between them. Quality-attribute *scenarios*. |
