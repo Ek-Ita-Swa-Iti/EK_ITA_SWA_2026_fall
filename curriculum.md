@@ -54,7 +54,7 @@ no agent-investigation write-up.*
 | # | Topic | What you do |
 |:-:|-------|-------------|
 | 1 | *(intro placeholder)* | 3rd-semester intro — headline only for now. |
-| **2** | **Terminal, Linux & Git** | Run a Linux machine in a container, navigate the shell, file permissions & processes, save/push work with Git. Keyboard-first. |
+| **2** | **Terminal, Linux & Git** | Run a Linux machine in a container, navigate the shell, file permissions & processes, install software with a package manager (`apt`), save/push work with Git. Keyboard-first. |
 | **3** | **Command line: pipes, HTTP & M2M security** | Streams/pipes/redirection & the text toolkit; `curl` + just-enough HTTP; securing machine-to-machine comms — HTTPS/TLS, certificates, bearer-token auth. |
 | **4** | **Networking — how services talk** | Ports & listening processes, `localhost`/`0.0.0.0`, DNS, the client–server round-trip, reverse proxy / load balancer; why the network is unreliable (latency, timeouts, partial failure). |
 | **5** | **Docker, Compose & the cloud** | Images vs containers, write a `Dockerfile`, multi-service `docker compose`; on-prem vs cloud (IaaS/PaaS/SaaS), capex/opex. **Mandatory group assignment** issued. |

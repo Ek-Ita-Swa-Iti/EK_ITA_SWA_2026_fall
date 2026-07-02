@@ -12,6 +12,7 @@
 - Navigate a Linux filesystem: paths, directories, listing, reading files.
 - Create, copy, move, and delete files and directories from the shell.
 - Read and change **file permissions** — and know why **root** can ignore them; see what running **processes** are.
+- Install software with a **package manager** (`apt`) — and recognise the same idea across OSes (`brew`, `choco`) and inside a `Dockerfile`.
 - See how the **Mistral-Vibe** agent runs the *same* terminal commands you're learning — and use that to read and verify what it does.
 - Use **Git** to save and push your work — clone, commit, push (by doing, not by theory).
 
@@ -59,7 +60,23 @@ Reading files without opening an editor: `cat`, `less`, `head`, `tail`. Getting 
 
 A quick look at **processes**: `ps`, `top` (then `q` to quit), and that a program is just a process.
 
-### Part 4 — The agent speaks terminal: Mistral-Vibe (25 min) — demo + keyboard
+### Part 4 — Getting software onto the machine: package managers (15 min) — keyboard
+You've got a Linux machine — but how does *new software* get onto it? Not by hunting the web for random files: a **package manager** installs a program (and everything it depends on) from a trusted repository, in one command.
+
+On this Ubuntu container that's **`apt`**:
+
+```bash
+apt update            # refresh the list of available packages
+apt install tree      # install the "tree" program and its dependencies
+tree                  # ...now it's there
+```
+
+- **Every OS has one, same idea, different name:** `apt` (Debian/Ubuntu), **Homebrew** `brew` (macOS), `choco`/`winget` (Windows). This is how you got Docker/Git onto your laptop, whether you noticed or not.
+- **The forward link:** installing software is a *repeatable, scriptable* step — which is exactly what a **`Dockerfile`** does when it says `RUN apt-get install …` or `RUN pip install …` (Session 5). No manual click-through; the recipe installs it every time.
+
+> Language package managers — **`pip`** (Python), **`npm`** (Node) — are the same idea one level up: they install *libraries for a project* rather than *programs for the machine*.
+
+### Part 5 — The agent speaks terminal: Mistral-Vibe (25 min) — demo + keyboard
 You installed **Mistral-Vibe** last session. Here's the thing worth seeing today: an AI coding agent has no magic access to your machine — it gets work done by **running the same terminal commands you just learned** (`ls`, `cd`, `cat`, `grep`, `find`, …), reading the output, and deciding what to do next. So the terminal isn't *replaced* by the agent — it's the language you both speak, and it's how you check the agent's work.
 
 **Demo (instructor):** point Mistral-Vibe at your scavenger-hunt directory and give it a plain-English task — *"what files are in here?"*, *"find the file that mentions Ada"*, *"show me what config.txt contains."* Watch the **commands it runs** and name each one out loud: that's the `ls` you learned, that's `find`, that's `grep`, that's `cat`.
@@ -75,7 +92,7 @@ You installed **Mistral-Vibe** last session. Here's the thing worth seeing today
 
 **The point — verification, not magic:** because you know these commands, you can *read* what the agent did and **check it yourself** (`ls`, `cat`) instead of taking its word. That habit — direct the agent, then verify against the real thing — is one you'll use all semester. (Later you'll even read the *code* of a tool like this; today you just watch it speak terminal.)
 
-### Part 5 — Saving your work with Git (40 min) — keyboard, no theory
+### Part 6 — Saving your work with Git (40 min) — keyboard, no theory
 You'll lose the container eventually, so put your work somewhere permanent. Purely the workflow:
 
 ```bash
@@ -90,7 +107,7 @@ git push                       # send it to GitHub
 
 What a "remote" is, shown by pushing and then seeing it on github.com. **From now on, everything you make this block lives in a Git repo** — that's also how you'll hand in the assignment in Session 5.
 
-### Part 6 — Wrap-up (10 min)
+### Part 7 — Wrap-up (10 min)
 The cheat-sheet of today's commands. Why this matters: every later session (Docker, the codebases, the AI agent) assumes you can move around a shell without thinking about it — and, as you saw, the agent runs these very commands, so reading them is how you stay in control.
 
 ---
@@ -102,6 +119,7 @@ A **filesystem scavenger hunt** in a directory tree we've pre-seeded inside your
 - Find a specific file several directories deep; read it; follow its instructions.
 - Create a directory structure to a given spec; move and rename files into it.
 - Make a script file executable (`chmod +x`) and run it.
+- **Install a tool** with `apt` (e.g. `tree` or `jq`) and use it once.
 - **Cross-check with Mistral-Vibe:** pick two hunt steps, ask Vibe to do them, and note which command it ran — then verify its answer yourself with `ls`/`cat`. Did it match what you did?
 - **Commit and push** your results to your GitHub repo before you leave.
 
