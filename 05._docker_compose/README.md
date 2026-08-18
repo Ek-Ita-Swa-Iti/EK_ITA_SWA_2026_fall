@@ -124,7 +124,7 @@ Build a small, runnable `docker compose` project that ties together everything f
 **Hand-in**
 
 - A link to your group's **GitHub repository**.
-- Deadline: **[INSERT DEADLINE]**. Submit via **[INSERT SUBMISSION METHOD]**.
+- Deadline: **17/9**. Submit via **Wiseflow**.
 - One submission per group; list all members in the README.
 
 **Assessment (pass / needs-rework)** — you pass when:
