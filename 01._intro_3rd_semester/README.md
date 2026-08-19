@@ -53,7 +53,7 @@ The instructor points Vibe at a real, unfamiliar codebase and asks something pla
 Point Vibe at any project already on your laptop — something from an earlier semester, a personal repo, whatever you've got. Ask it one plain-English question: *"what does this do?"* is plenty. Nothing to hand in — the only goal is that it works, and that you've seen it work, before the semester needs it to.
 
 ### Part 7 — This repo is yours to improve too (5 min) — blackboard
-Everything you're reading — this README, every session's material — lives in a public GitHub repo: `EK_ITA_SWA_2026_fall`. If you spot a typo, a broken command, a dead link, or a section that's just unclear, **fork it and open a pull request.** Not required, not graded — genuinely useful if you do it, and a first taste of the fork → branch → PR workflow you'll use constantly as a developer. Git itself is properly taught next session; today, just know the door's open.
+Everything you're reading — this README, every session's material — lives in a public GitHub repo: `EK_ITA_SWA_2026_fall`. If you spot a typo, a broken command, a dead link, or a section that's just unclear, **fork it and open a pull request.** Not required, not graded — genuinely useful if you do it, and a first taste of the fork → branch → PR workflow you'll use constantly as a developer.
 
 ### Wrap (5 min)
 Session 2 goes hands-on with the terminal itself — the same commands your agent has been quietly running underneath all session. **Before then:** install **Docker Desktop** — same idea as today's install, but budget extra time; it sometimes needs a reboot or a virtualization setting enabled first.
