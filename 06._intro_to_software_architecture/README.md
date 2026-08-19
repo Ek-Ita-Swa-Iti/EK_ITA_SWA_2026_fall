@@ -2,7 +2,7 @@
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
-> What is software architecture, really? Not the diagrams — the underlying thing the diagrams are trying to show. Today we'll set up the toolkit we'll use all semester, and then learn to point at the architecture in a real codebase you've never seen. The codebase is `mistral-vibe-ek-ita`. The tool is Mistral Vibe itself. You don't need to know Python.
+> What is software architecture, really? Not the diagrams — the underlying thing the diagrams are trying to show. Today you point the agent you set up in Session 1 at a real codebase you've never seen, and learn to see the architecture in it. The codebase is `mistral-vibe-ek-ita`. The tool is Mistral Vibe itself. You don't need to know Python.
 
 ---
 
@@ -19,7 +19,7 @@
 ## Before Class
 
 - Bring a laptop with `git` installed and a terminal you're comfortable with.
-- Make sure you have **Python 3.12 or newer** installed (`python3 --version`). If not, install it — we'll need it for the agent we set up in class.
+- Make sure you have **Python 3.12 or newer** installed (`python3 --version`) — Vibe (installed back in Session 1) needs it.
 - Bring a system **you** have built or worked on (any language, any size). Be ready to describe it in 2 minutes.
 - [optional] Think for one minute about what "architecture" means to you in software. One sentence. Bring it.
 
@@ -36,24 +36,10 @@ Three useful framings of architecture, all true, all slightly different:
 
 Map each onto your bring-your-own system. Which fits best? Why? The three frames feel different but they're compatible — we won't pick a winner.
 
-### Part 2 — Setting up your semester toolkit (30 min)
-Two independent things to set up, then we connect them:
+### Part 2 — Meet the codebase (10 min)
+You installed Mistral Vibe back in Session 1 — today you point it at something real.
 
-**A. Install Mistral Vibe (the tool).** We'll use Vibe as our agent for the whole semester — it's also the codebase we'll study, which is part of the point. We follow the official quickstart: <https://docs.mistral.ai/mistral-vibe/terminal/quickstart>.
-
-```bash
-curl -LsSf https://mistral.ai/vibe/install.sh | bash
-```
-
-Alternative if you already use `uv`:
-
-```bash
-uv tool install mistral-vibe
-```
-
-On first launch, Vibe will create `~/.vibe/config.toml` and prompt you for an API key. Create one at <https://console.mistral.ai/codestral/cli> and paste it when prompted. Your key gets saved to `~/.vibe/.env`.
-
-**B. Clone the repo (the thing we study).**
+**A. Clone the repo (the thing we study).**
 
 ```bash
 git clone <repo-url> mistral-vibe-ek-ita
@@ -61,7 +47,7 @@ git clone <repo-url> mistral-vibe-ek-ita
 
 You'll come back to this every week. Don't delete it.
 
-**C. Point one at the other.** Launch Vibe from inside the clone:
+**B. Point Vibe at it.** Launch Vibe from inside the clone:
 
 ```bash
 cd mistral-vibe-ek-ita
