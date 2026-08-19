@@ -1,3 +1,58 @@
-# Session 1: Introduction — 3rd Semester
+# Session 1: Setting Up Your Toolkit
 
-*Placeholder — brief to be written.*
+**ITA Software Architecture 2026 Fall | ~1.5 hours, after the shared 3rd-semester welcome | Toolkit setup (hands-on)**
+
+> The shared welcome covered the semester, the schedule, and your groups. This is where *this* course starts. This semester you'll spend more time **reading** code with an AI coding agent than writing it from scratch — that's the method, not a gimmick. Today isn't teaching yet: it's getting the tool onto your laptop and watching it work for the first time.
+
+---
+
+## Before Class
+
+- Nothing beyond what the shared welcome already asked (GitHub account, laptop). Bring it charged — you'll be at the keyboard most of this session.
+
+---
+
+## Today's Teachings
+
+### Part 1 — Why an agent, and why reading over writing (10 min) — blackboard
+One idea, stated plainly: architecture lives in large, real systems, and the fastest way to learn to see it is to read large, real systems — with help. An AI coding agent can open, search, and explain a codebase far faster than you can alone, but only if you keep checking its claims against the actual code. That checking habit starts today and runs the whole semester.
+
+### Part 2 — Install Mistral Vibe (25 min) — keyboard
+Mistral Vibe is this semester's primary agent — the one every later session assumes is already working. Official quickstart: <https://docs.mistral.ai/mistral-vibe/terminal/quickstart>.
+
+```bash
+curl -LsSf https://mistral.ai/vibe/install.sh | bash
+```
+
+Already use `uv`?
+
+```bash
+uv tool install mistral-vibe
+```
+
+On first launch, Vibe creates `~/.vibe/config.toml` and asks for an API key. Create one at <https://console.mistral.ai/codestral/cli> and paste it in — it's saved to `~/.vibe/.env`.
+
+### Part 3 — Install Claude Code (15 min, optional second agent) — keyboard
+The course also accepts **Claude Code** as an agent. Installing both now costs little and gives you a point of comparison all semester. Requires Node.js 18+.
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+Then run `claude` and log in when prompted (Claude.ai account or an API key). Docs: <https://docs.claude.com/en/docs/claude-code>.
+
+### Part 4 — Demo: watch an agent read a codebase it's never seen (20 min) — instructor demo
+The instructor points Vibe at a real, unfamiliar codebase and asks something plain: *"what does this project do, and how is it organised?"* Watch what it actually does — it opens files, searches, and reads, out loud, the same way you would. No magic. (You'll get a proper, hands-on tour of this exact codebase in Session 6 — today is just a first look.)
+
+### Part 5 — First contact: you try it (15 min) — keyboard
+Point your own agent (Vibe, or Claude Code if you installed it) at any project already on your laptop — something from an earlier semester, a personal repo, whatever you've got. Ask it one plain-English question: *"what does this do?"* is plenty. Nothing to hand in — the only goal is that it works, and that you've seen it work, before the semester needs it to.
+
+### Wrap (5 min)
+Session 2 goes hands-on with the terminal itself — the same commands your agent has been quietly running underneath all session.
+
+---
+
+## Optional
+
+- [optional] Mistral Vibe quickstart — <https://docs.mistral.ai/mistral-vibe/terminal/quickstart>.
+- [optional] Claude Code quickstart — <https://docs.claude.com/en/docs/claude-code>.
