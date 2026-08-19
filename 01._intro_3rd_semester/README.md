@@ -31,6 +31,8 @@ Once we're past the foundations block, every teaching session follows the same r
 ### Part 3 — Install Mistral Vibe (25 min) — keyboard
 Mistral Vibe is this semester's primary agent — the one every later session assumes is already working. Official quickstart: <https://docs.mistral.ai/mistral-vibe/terminal/quickstart>.
 
+**macOS / Linux:**
+
 ```bash
 curl -LsSf https://mistral.ai/vibe/install.sh | bash
 ```
@@ -38,6 +40,16 @@ curl -LsSf https://mistral.ai/vibe/install.sh | bash
 Already use `uv`?
 
 ```bash
+uv tool install mistral-vibe
+```
+
+**Windows (PowerShell):** install `uv` first, then Vibe with it:
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+```powershell
 uv tool install mistral-vibe
 ```
 
