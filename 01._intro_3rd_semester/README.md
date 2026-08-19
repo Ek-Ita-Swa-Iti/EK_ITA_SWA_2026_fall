@@ -53,7 +53,7 @@ The instructor points Vibe at a real, unfamiliar codebase and asks something pla
 Point Vibe at any project already on your laptop — something from an earlier semester, a personal repo, whatever you've got. Ask it one plain-English question: *"what does this do?"* is plenty. Nothing to hand in — the only goal is that it works, and that you've seen it work, before the semester needs it to.
 
 ### Wrap (5 min)
-Session 2 goes hands-on with the terminal itself — the same commands your agent has been quietly running underneath all session.
+Session 2 goes hands-on with the terminal itself — the same commands your agent has been quietly running underneath all session. **Before then:** install **Docker Desktop** — same idea as today's install, but budget extra time; it sometimes needs a reboot or a virtualization setting enabled first.
 
 ---
 
