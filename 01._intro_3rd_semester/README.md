@@ -32,20 +32,14 @@ uv tool install mistral-vibe
 
 On first launch, Vibe creates `~/.vibe/config.toml` and asks for an API key. Create one at <https://console.mistral.ai/codestral/cli> and paste it in — it's saved to `~/.vibe/.env`.
 
-### Part 3 — Install Claude Code (15 min, optional second agent) — keyboard
-The course also accepts **Claude Code** as an agent. Installing both now costs little and gives you a point of comparison all semester. Requires Node.js 18+.
-
-```bash
-npm install -g @anthropic-ai/claude-code
-```
-
-Then run `claude` and log in when prompted (Claude.ai account or an API key). Docs: <https://docs.claude.com/en/docs/claude-code>.
+### Part 3 — Other agents in the wild (10 min) — blackboard + discussion
+Mistral Vibe is what this course standardises on, but it isn't the only CLI coding agent out there. **Claude Code** (Anthropic) is the other one the course explicitly allows — some of you may end up preferring it, and comparing two tools against the same codebase is a good habit anyway. Beyond those two, the field moves fast: Cursor's CLI, GitHub Copilot CLI, Aider, and others, with new ones shipping constantly. They differ in interface but converge on the same idea — an LLM that reads your code, plans, and runs commands, while you check its work. If you want to set one up alongside Vibe, do it on your own time; that's not today's task.
 
 ### Part 4 — Demo: watch an agent read a codebase it's never seen (20 min) — instructor demo
 The instructor points Vibe at a real, unfamiliar codebase and asks something plain: *"what does this project do, and how is it organised?"* Watch what it actually does — it opens files, searches, and reads, out loud, the same way you would. No magic. (You'll get a proper, hands-on tour of this exact codebase in Session 6 — today is just a first look.)
 
 ### Part 5 — First contact: you try it (15 min) — keyboard
-Point your own agent (Vibe, or Claude Code if you installed it) at any project already on your laptop — something from an earlier semester, a personal repo, whatever you've got. Ask it one plain-English question: *"what does this do?"* is plenty. Nothing to hand in — the only goal is that it works, and that you've seen it work, before the semester needs it to.
+Point Vibe at any project already on your laptop — something from an earlier semester, a personal repo, whatever you've got. Ask it one plain-English question: *"what does this do?"* is plenty. Nothing to hand in — the only goal is that it works, and that you've seen it work, before the semester needs it to.
 
 ### Wrap (5 min)
 Session 2 goes hands-on with the terminal itself — the same commands your agent has been quietly running underneath all session.
