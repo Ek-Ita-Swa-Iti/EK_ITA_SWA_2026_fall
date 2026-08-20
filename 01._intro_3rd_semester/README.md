@@ -1,4 +1,4 @@
-# Session 1: Setting Up Your Toolkit
+# Session 1: Introduction to 3rd semester
 
 **ITA Software Architecture 2026 Fall | ~1.5–2 hours, after the shared 3rd-semester welcome | Toolkit setup (hands-on)**
 

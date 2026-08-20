@@ -12,7 +12,7 @@ A 29-session course on software architecture for ITA students. Each session is 3
 
 ## Structure
 
-- **1 intro placeholder** (Session 1) — a 3rd-semester intro, headline only for now.
+- **1 intro session** (Session 1) — 3rd-semester welcome, semester overview, and toolkit setup (Mistral Vibe install).
 - **4 IT-infrastructure foundations sessions** (2–5) — hands-on terminal/Linux/Git, bash/HTTP + M2M security, networking, and Docker/Compose + cloud; ends with a mandatory group assignment.
 - **12 teaching sessions** (6–13, 18–21) covering layered, hexagonal, REST API, data, caching, event-driven, microservices, security, and documentation.
 - **4 mid-semester project sessions** (14–17) — small distributed system.
