@@ -42,7 +42,7 @@ You installed Mistral Vibe back in Session 1 — today you point it at something
 **A. Clone the repo (the thing we study).**
 
 ```bash
-git clone <repo-url> mistral-vibe-ek-ita
+git clone https://github.com/Ek-Ita-Swa-Iti/mistral-vibe-ek-ita.git
 ```
 
 You'll come back to this every week. Don't delete it.
