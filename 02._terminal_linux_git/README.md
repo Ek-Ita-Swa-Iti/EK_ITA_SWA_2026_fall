@@ -93,11 +93,11 @@ You installed **Mistral-Vibe** last session. Here's the thing worth seeing today
 **The point — verification, not magic:** because you know these commands, you can *read* what the agent did and **check it yourself** (`ls`, `cat`) instead of taking its word. That habit — direct the agent, then verify against the real thing — is one you'll use all semester. (Later you'll even read the *code* of a tool like this; today you just watch it speak terminal.)
 
 ### Part 6 — Saving your work with Git (40 min) — keyboard, no theory
-You'll lose the container eventually, so put your work somewhere permanent. Purely the workflow:
+You'll lose the container eventually, so put your work somewhere permanent. First, on github.com: create a **new, empty repository** under your own account (no README/license needed — you'll push into it). Copy its URL. Then, purely the workflow:
 
 ```bash
-git clone <your-repo-url>      # get a copy
-cd <repo>
+git clone <your-new-repo-url>  # get a copy
+cd <repo-name>
 # ...make or edit files...
 git status                     # what changed?
 git add .                      # stage the changes
