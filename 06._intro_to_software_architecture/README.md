@@ -37,7 +37,7 @@ Three useful framings of architecture, all true, all slightly different:
 Map each onto your bring-your-own system. Which fits best? Why? The three frames feel different but they're compatible — we won't pick a winner.
 
 ### Part 2 — Meet the codebase (10 min)
-You installed Mistral Vibe back in Session 1 — today you point it at something real.
+You installed Mistral Vibe back in Session 1 — today you point it at something real. You point it at its own source code.
 
 **A. Clone the repo (the thing we study).**
 
