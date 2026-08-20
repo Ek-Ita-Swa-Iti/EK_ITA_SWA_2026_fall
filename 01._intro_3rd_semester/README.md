@@ -28,6 +28,8 @@ Before we install anything, the map of what's ahead:
 
 Once we're past the foundations block, every teaching session follows the same rhythm: before class → compare notes with a partner → today's teachings, anchored on a real codebase → an in-class exercise → after class, ask your agent a question and verify it against the code yourself.
 
+The full session-by-session breakdown lives in [`curriculum.md`](../curriculum.md), in the repo root — worth bookmarking.
+
 ### Part 3 — Install Mistral Vibe (25 min) — keyboard
 Mistral Vibe is this semester's primary agent — the one every later session assumes is already working. Official quickstart: <https://docs.mistral.ai/mistral-vibe/terminal/quickstart>.
 
