@@ -64,7 +64,7 @@ The instructor points Vibe at a real, unfamiliar codebase and asks something pla
 ### Part 6 — First contact: you try it (15 min) — keyboard
 Point Vibe at any project already on your laptop — something from an earlier semester, a personal repo, whatever you've got. Ask it one plain-English question: *"what does this do?"* is plenty. Nothing to hand in — the only goal is that it works, and that you've seen it work, before the semester needs it to.
 
-You can choose a repository of your own preference, or you can try one of the ones below. Clone it, `cd` into the folder, and use Vibe on it.
+You can choose a repository of your own preference, or you can try one of these. Clone it, `cd` into the folder, and use Vibe on it.
 
 - **[Flask](https://github.com/pallets/flask)** — a small, well-known Python web framework.
 - **[Express](https://github.com/expressjs/express)** — a small, well-known Node.js web framework.
