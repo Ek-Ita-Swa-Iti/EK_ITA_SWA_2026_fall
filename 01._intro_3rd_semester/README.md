@@ -69,7 +69,7 @@ Mistral Vibe is what this course standardises on, but it isn't the only CLI codi
 [![Qwen Code](https://img.shields.io/badge/Qwen_Code-grey)](https://github.com/QwenLM/qwen-code)
 
 ### Part 5 — Demo: watch an agent read a codebase it's never seen (20 min) — instructor demo
-The instructor points Vibe at a real, unfamiliar codebase and asks something plain: *"what does this project do, and how is it organised?"* Watch what it actually does — it opens files, searches, and reads, out loud, the same way you would. No magic. (You'll get a proper, hands-on tour of this exact codebase in Session 6 — today is just a first look.)
+Let's point Vibe at a real, unfamiliar codebase and ask something like: *"what does this project do, and how is it organised?"* Watch what it actually does — it opens files, searches, and reads, out loud, the same way you would. No magic. (You'll get a proper, hands-on tour of this exact codebase in Session 6 — today is just a first look.)
 
 ### Part 6 — First contact: you try it (15 min) — keyboard
 Point Vibe at any project already on your laptop — something from an earlier semester, a personal repo, whatever you've got. Ask it one plain-English question: *"what does this do?"* is plenty. Nothing to hand in — the only goal is that it works, and that you've seen it work, before the semester needs it to.
