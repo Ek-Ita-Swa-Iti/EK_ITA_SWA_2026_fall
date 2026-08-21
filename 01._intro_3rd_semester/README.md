@@ -20,11 +20,15 @@ Architecture is easiest to see in large, real systems — and the fastest way to
 ### Part 2 — The semester at a glance (10 min) — blackboard
 Before we install anything, the map of what's ahead:
 
-- **Sessions 2–5 — IT-infrastructure foundations.** Terminal, Linux & Git → the command line, HTTP & machine-to-machine security → networking → Docker, Compose & the cloud. Hands-on, keyboard-first. Closes with the **mandatory group assignment** ("Containerised Toolbox") — a small `docker compose` project, done in your new groups. **Hand-in: 17/9, via Wiseflow. Written feedback on Wiseflow.**
-- **Sessions 6–13 — Architecture teaching, part 1.** Vocabulary (component, boundary, contract, convention), quality attributes, layered → hexagonal architecture, REST APIs, contracts & OpenAPI, data architecture, caching. Each session reads a real codebase with your agent, then verifies it by hand.
-- **Sessions 14–17 — Mid-semester project.** No teaching — you build a small distributed system as a modular monolith, applying what you've learned so far. Demo in class with feedback from Lasse & Claus.
-- **Sessions 18–21 — Architecture teaching, part 2.** Event-driven architecture, microservices vs monoliths, security architecture, documentation (ADRs & the C4 model).
-- **Sessions 22–29 — Exam project.** No teaching — each group finds a real project at a real customer. You map the company's architecture. You design, implement, and defend an architecture of your own choosing. This is the combined exam for Software Architecture, Systemudvikling, and IT-infrastruktur.
+```mermaid
+flowchart LR
+    A["S2–5<br/>IT-infrastructure foundations<br/>hands-on, keyboard-first<br/>→ mandatory group assignment<br/>hand-in 17/9, Wiseflow<br/>(written feedback on Wiseflow)"]
+    B["S6–13<br/>Architecture teaching, part 1<br/>vocabulary, quality attributes,<br/>layered → hexagonal, REST,<br/>contracts, data, caching"]
+    C["S14–17<br/>Mid-semester project<br/>modular monolith<br/>demo + feedback: Lasse & Claus"]
+    D["S18–21<br/>Architecture teaching, part 2<br/>event-driven, microservices,<br/>security, documentation"]
+    E["S22–29<br/>Exam project<br/>real customer — map their<br/>architecture, design, implement,<br/>defend your own<br/>combined exam"]
+    A --> B --> C --> D --> E
+```
 
 Once we're past the foundations block, every teaching session follows the same rhythm: before class → compare notes with a partner → today's teachings, anchored on a real codebase → an in-class exercise → after class, ask your agent a question and verify it against the code yourself.
 
