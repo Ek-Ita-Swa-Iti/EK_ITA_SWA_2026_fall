@@ -24,7 +24,7 @@ Before we install anything, the map of what's ahead:
 - **Sessions 6–13 — Architecture teaching, part 1.** Vocabulary (component, boundary, contract, convention), quality attributes, layered → hexagonal architecture, REST APIs, contracts & OpenAPI, data architecture, caching. Each session reads a real codebase with your agent, then verifies it by hand.
 - **Sessions 14–17 — Mid-semester project.** No teaching — you build a small distributed system as a modular monolith, applying what you've learned so far. Demo in class with feedback from Lasse & Claus.
 - **Sessions 18–21 — Architecture teaching, part 2.** Event-driven architecture, microservices vs monoliths, security architecture, documentation (ADRs & the C4 model).
-- **Sessions 22–29 — Exam project.** No teaching — you design, partially implement, and defend an architecture of your own choosing. This is the combined exam for Software Architecture, Systemudvikling, and IT-infrastruktur.
+- **Sessions 22–29 — Exam project.** No teaching — each group finds a real project at a real customer. You map the company's architecture. You design, implement, and defend an architecture of your own choosing. This is the combined exam for Software Architecture, Systemudvikling, and IT-infrastruktur.
 
 Once we're past the foundations block, every teaching session follows the same rhythm: before class → compare notes with a partner → today's teachings, anchored on a real codebase → an in-class exercise → after class, ask your agent a question and verify it against the code yourself.
 
