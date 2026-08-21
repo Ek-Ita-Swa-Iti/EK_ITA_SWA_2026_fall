@@ -60,6 +60,14 @@ On first launch, Vibe creates `~/.vibe/config.toml` and asks for an API key. Cre
 ### Part 4 — Other agents in the wild (10 min) — blackboard + discussion
 Mistral Vibe is what this course standardises on, but it isn't the only CLI coding agent out there. **Claude Code** (Anthropic) is another example of one you might wanna use — some of you may end up preferring it, and comparing two tools against the same codebase is a good habit anyway. Beyond those two, the field moves fast: **[Cursor's CLI](https://cursor.com)**, **[GitHub Copilot CLI](https://github.com/features/copilot)**, **[Aider](https://aider.chat)**, **[Codex](https://openai.com/codex)**, **[Gemini CLI](https://geminicli.com/)**, **[Qwen Code](https://github.com/QwenLM/qwen-code)**, and others, with new ones shipping constantly. They differ in interface but converge on the same idea — an LLM that reads your code, plans, and runs commands, while you check its work. If you want to set one up alongside Vibe, do it on your own time; that's not today's task.
 
+[![Claude Code](https://img.shields.io/badge/Claude_Code-D97757?logo=claude&logoColor=white)](https://docs.claude.com/en/docs/claude-code)
+[![Cursor](https://img.shields.io/badge/Cursor-000000?logo=cursor&logoColor=white)](https://cursor.com)
+[![GitHub Copilot CLI](https://img.shields.io/badge/GitHub_Copilot_CLI-181717?logo=github&logoColor=white)](https://github.com/features/copilot)
+[![Aider](https://img.shields.io/badge/Aider-grey)](https://aider.chat)
+[![Codex](https://img.shields.io/badge/Codex-000000?logo=openai&logoColor=white)](https://openai.com/codex)
+[![Gemini CLI](https://img.shields.io/badge/Gemini_CLI-4285F4?logo=googlegemini&logoColor=white)](https://geminicli.com/)
+[![Qwen Code](https://img.shields.io/badge/Qwen_Code-grey)](https://github.com/QwenLM/qwen-code)
+
 ### Part 5 — Demo: watch an agent read a codebase it's never seen (20 min) — instructor demo
 The instructor points Vibe at a real, unfamiliar codebase and asks something plain: *"what does this project do, and how is it organised?"* Watch what it actually does — it opens files, searches, and reads, out loud, the same way you would. No magic. (You'll get a proper, hands-on tour of this exact codebase in Session 6 — today is just a first look.)
 
