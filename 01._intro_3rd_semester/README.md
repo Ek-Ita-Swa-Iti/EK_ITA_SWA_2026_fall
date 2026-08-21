@@ -8,7 +8,7 @@
 
 ## Before Class
 
-- Nothing beyond what the shared welcome already asked (GitHub account, laptop). Bring it charged — you'll be at the keyboard most of this session.
+- No preparation for this class.
 
 ---
 
