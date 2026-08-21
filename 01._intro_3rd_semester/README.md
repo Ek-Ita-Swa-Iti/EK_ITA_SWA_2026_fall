@@ -68,7 +68,7 @@ You can choose a repository of your own preference, or you can try one of these.
 
 - **[Flask](https://github.com/pallets/flask)** — a small, well-known Python web framework.
 - **[Express](https://github.com/expressjs/express)** — a small, well-known Node.js web framework.
-- **[Requests](https://github.com/psf/requests)** — a compact, well-regarded Python HTTP library.
+- **[Ktor](https://github.com/ktorio/ktor)** — a Kotlin web framework (the same one you'll use hands-on in Sessions 8 & 9).
 
 ### Part 7 — This repo is yours to improve too (5 min) — blackboard
 Everything you're reading — this README, every session's material — lives in a public GitHub repo: `EK_ITA_SWA_2026_fall`. If you spot a typo, a broken command, a dead link, or a section that's just unclear, **fork it and open a pull request.** Not required, not graded — genuinely useful if you do it, and a first taste of the fork → branch → PR workflow you'll use constantly as a developer.
