@@ -71,7 +71,7 @@ no agent-investigation write-up.*
 | 19 | **Microservices vs monoliths** | Gitea as a real *modular monolith*; run the same product as a monolith vs **polyglot** microservices (Kotlin + Python + Go). Failure isolation; the distributed-monolith trap. |
 | 20 | **Security architecture** | Gitea's authentication as a port with many adapters and its ordered, default-deny authorization model. OWASP Top 10, trust boundaries, secrets, STRIDE. |
 | 21 | **Documentation: ADRs & the C4 model** | Record decisions as ADRs; draw diagrams that survive contact with reality. |
-| **22–29** | **Exam project** | *No teaching.* Design and partially implement a system of your choice; present and defend it at the exam. |
+| **22–29** | **Exam project** | *No teaching.* Each group finds a real project at a real customer, maps the company's architecture, then designs, implements, and defends an architecture of their own choosing; present and defend it at the exam. |
 
 ---
 
@@ -79,7 +79,7 @@ no agent-investigation write-up.*
 
 - **Foundations group assignment (issued S5, "Containerised Toolbox")** — a small runnable `docker compose` project (a group-written bash tool + `Dockerfile` + a 2-service compose file, on GitHub). Pass/needs-rework; ties together the infrastructure block.
 - **Mid-semester project (14–17)** — a small distributed system, built as a **modular monolith**. (Microservices vs monoliths, **Session 19**, later unpacks the trade-off behind that choice.)
-- **Exam project (22–29)** — the assessment. You design and partially implement an architecture for a system of your choice, then present and defend it. The exam exercises every concept introduced across the semester.
+- **Exam project (22–29)** — the assessment. Each group finds a real project at a real customer, maps the company's architecture, then designs, implements, and defends an architecture of their own choosing, before presenting and defending it. The exam exercises every concept introduced across the semester.
 
 ---
 
