@@ -15,7 +15,7 @@
 ## Today's Teachings
 
 ### Part 1 — Why an agent, and why reading over writing (10 min) — blackboard
-One idea, stated plainly: architecture lives in large, real systems, and the fastest way to learn to see it is to read large, real systems — with help. An AI coding agent can open, search, and explain a codebase far faster than you can alone, but only if you keep checking its claims against the actual code. That checking habit starts today and runs the whole semester.
+Architecture lives in large, real systems, and the fastest way to learn to see it is to read large, real systems — with help. An AI coding agent can open, search, and explain a codebase far faster than you can alone, but only if you keep checking its claims against the actual code. That checking habit starts today and runs the whole semester.
 
 ### Part 2 — The semester at a glance (10 min) — blackboard
 Before we install anything, the map of what's ahead:
