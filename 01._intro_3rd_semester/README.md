@@ -22,11 +22,11 @@ Before we install anything, the map of what's ahead:
 
 ```mermaid
 flowchart LR
-    A["<b>Session 2–5</b><br/>IT-infrastructure foundations<br/>hands-on, keyboard-first<br/>→ mandatory group assignment<br/>hand-in 17/9, Wiseflow<br/>(written feedback on Wiseflow)"]
-    B["<b>Session 6–13</b><br/>Architecture teaching, part 1<br/>vocabulary, quality attributes,<br/>layered → hexagonal, REST,<br/>contracts, data, caching"]
-    C["<b>Session 14–17</b><br/>Mid-semester project<br/>modular monolith<br/>demo + feedback: Lasse & Claus"]
-    D["<b>Session 18–21</b><br/>Architecture teaching, part 2<br/>event-driven, microservices,<br/>security, documentation"]
-    E["<b>Session 22–29</b><br/>Exam project<br/>real customer — map their<br/>architecture, design, implement,<br/>defend your own<br/>combined exam"]
+    A["Session 2–5<br/><b>IT-infrastructure foundations</b><br/>hands-on, keyboard-first<br/>→ mandatory group assignment<br/>hand-in 17/9, Wiseflow<br/>(written feedback on Wiseflow)"]
+    B["Session 6–13<br/><b>Architecture teaching, part 1</b><br/>vocabulary, quality attributes,<br/>layered → hexagonal, REST,<br/>contracts, data, caching"]
+    C["Session 14–17<br/><b>Mid-semester project</b><br/>modular monolith<br/>demo + feedback: Lasse & Claus"]
+    D["Session 18–21<br/><b>Architecture teaching, part 2</b><br/>event-driven, microservices,<br/>security, documentation"]
+    E["Session 22–29<br/><b>Exam project</b><br/>real customer — map their<br/>architecture, design, implement,<br/>defend your own<br/>combined exam"]
     A --> B --> C --> D --> E
     classDef yellowBg fill:#ffe066,stroke:#333,color:#000
     class A,B,C,D,E yellowBg
