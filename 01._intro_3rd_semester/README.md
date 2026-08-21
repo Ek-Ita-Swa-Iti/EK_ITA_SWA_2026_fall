@@ -39,12 +39,6 @@ Mistral Vibe is this semester's primary agent — the one every later session as
 curl -LsSf https://mistral.ai/vibe/install.sh | bash
 ```
 
-Already use `uv`?
-
-```bash
-uv tool install mistral-vibe
-```
-
 **Windows (PowerShell):** install `uv` first, then Vibe with it:
 
 ```powershell
