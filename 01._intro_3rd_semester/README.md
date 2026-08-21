@@ -64,6 +64,12 @@ The instructor points Vibe at a real, unfamiliar codebase and asks something pla
 ### Part 6 — First contact: you try it (15 min) — keyboard
 Point Vibe at any project already on your laptop — something from an earlier semester, a personal repo, whatever you've got. Ask it one plain-English question: *"what does this do?"* is plenty. Nothing to hand in — the only goal is that it works, and that you've seen it work, before the semester needs it to.
 
+Nothing of your own handy? Download one of these (green "Code" → "Download ZIP" — `git clone` comes in Session 2) and point Vibe at the folder instead:
+
+- **[Flask](https://github.com/pallets/flask)** — a small, well-known Python web framework.
+- **[Express](https://github.com/expressjs/express)** — a small, well-known Node.js web framework.
+- **[Requests](https://github.com/psf/requests)** — a compact, well-regarded Python HTTP library.
+
 ### Part 7 — This repo is yours to improve too (5 min) — blackboard
 Everything you're reading — this README, every session's material — lives in a public GitHub repo: `EK_ITA_SWA_2026_fall`. If you spot a typo, a broken command, a dead link, or a section that's just unclear, **fork it and open a pull request.** Not required, not graded — genuinely useful if you do it, and a first taste of the fork → branch → PR workflow you'll use constantly as a developer.
 
