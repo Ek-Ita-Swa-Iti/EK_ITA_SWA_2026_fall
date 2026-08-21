@@ -82,3 +82,4 @@ Everything you're reading — this README, every session's material — lives in
 
 - [optional] Mistral Vibe quickstart — <https://docs.mistral.ai/mistral-vibe/terminal/quickstart>.
 - [optional] Claude Code quickstart — <https://docs.claude.com/en/docs/claude-code>.
+- [optional] Claude Code 101 (Anthropic course) — <https://anthropic.skilljar.com/claude-code-101>.
