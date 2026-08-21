@@ -28,6 +28,8 @@ flowchart LR
     D["<b>Session 18–21</b><br/>Architecture teaching, part 2<br/>event-driven, microservices,<br/>security, documentation"]
     E["<b>Session 22–29</b><br/>Exam project<br/>real customer — map their<br/>architecture, design, implement,<br/>defend your own<br/>combined exam"]
     A --> B --> C --> D --> E
+    classDef yellowBg fill:#ffe066,stroke:#333,color:#000
+    class A,B,C,D,E yellowBg
 ```
 
 Once we're past the foundations block, every teaching session follows the same rhythm: before class → compare notes with a partner → today's teachings, anchored on a real codebase → an in-class exercise → after class, ask your agent a question and verify it against the code yourself.
