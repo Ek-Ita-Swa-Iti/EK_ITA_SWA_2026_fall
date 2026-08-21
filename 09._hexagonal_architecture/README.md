@@ -45,6 +45,29 @@ The rule that *makes* this hexagonal: **all dependencies point inward, toward th
 
 Diagram on the board: a hexagon in the centre (the core). Driving adapters on the left (HTTP handlers, CLI, test harnesses). Driven adapters on the right (databases, third-party APIs, file systems). Every arrow points at the hexagon.
 
+```mermaid
+flowchart LR
+    subgraph Driving["Driving adapters"]
+        HTTP[HTTP handler]
+        CLI[CLI]
+        TEST[Test harness]
+    end
+    CORE(("Core<br/>owns the ports"))
+    subgraph Driven["Driven adapters"]
+        DB[(Postgres adapter)]
+        API[Third-party API adapter]
+        FS[File-system adapter]
+    end
+    HTTP --> CORE
+    CLI --> CORE
+    TEST --> CORE
+    DB --> CORE
+    API --> CORE
+    FS --> CORE
+```
+
+Every arrow points *at* the core — on both sides. That's the whole rule.
+
 Note the symmetry with S8:
 - S8: dependencies point *down* — that's what makes a stack layered.
 - S9: dependencies point *in* — that's what makes a system hexagonal.
@@ -82,6 +105,20 @@ This is the **port**. The core says: *anyone who wants to be an LLM backend must
 
 **3. `vibe/core/llm/backend/factory.py`** — the selector. At composition time, given config, hand back the right adapter.
 
+```mermaid
+flowchart LR
+    ANTHROPIC[anthropic.py] --> BASE
+    MISTRAL[mistral.py] --> BASE
+    VERTEX[vertex.py] --> BASE
+    GENERIC[generic.py] --> BASE
+    OPENAI[openai_responses.py] --> BASE
+    BASE["base.py<br/>class APIAdapter(Protocol)"]
+    FACTORY["factory.py<br/>selector"] -->|imports directly| GENERIC
+    FACTORY -->|imports directly| MISTRAL
+```
+
+Five adapters, one port — `base.py` depends on none of them. Note `factory.py` only *directly* imports `generic.py`/`mistral.py` (most vendors route through the OpenAI-compatible `GenericBackend`) — worth discovering in Part 2's investigation rather than being told.
+
 Now verify. Ask Vibe:
 
 > "In `vibe/core/llm/backend/`, list every import in `base.py`, `anthropic.py`, and `mistral.py`. Summarise: which way do dependencies flow?"
@@ -103,11 +140,20 @@ docker compose up --build
 
 The single change to see:
 
+```mermaid
+flowchart TB
+    subgraph S8["S8 — layered"]
+        direction LR
+        APP1["application/"] --> PERSIST1["persistence/NoteRepository<br/>(concrete class)"]
+    end
+    subgraph S9["S9 — hexagonal"]
+        direction LR
+        APP2["application/"] --> DOMAIN2["domain/NoteRepository<br/>(interface / Protocol)"]
+        PERSIST2["persistence/PostgresNoteRepository"] -->|implements| DOMAIN2
+    end
 ```
-S8 layered:    application/  →  persistence/NoteRepository  (concrete class)
-S9 hexagonal:  application/  →  domain/NoteRepository       (interface / Protocol)
-               persistence/PostgresNoteRepository  ─────────↑ (implements the port)
-```
+
+S8: the application layer depends on the concrete repository directly. S9: it depends on the interface instead — and now the concrete repository depends on *that*, not the other way around. Same two files, one arrow flipped.
 
 Three things to look at in the diff:
 
