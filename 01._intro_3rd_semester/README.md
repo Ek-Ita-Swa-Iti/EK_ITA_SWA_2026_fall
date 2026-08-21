@@ -22,7 +22,7 @@ Before we install anything, the map of what's ahead:
 
 - **Sessions 2–5 — IT-infrastructure foundations.** Terminal, Linux & Git → the command line, HTTP & machine-to-machine security → networking → Docker, Compose & the cloud. Hands-on, keyboard-first. Closes with the **mandatory group assignment** ("Containerised Toolbox") — a small `docker compose` project, done in your new groups. **Hand-in: 17/9, via Wiseflow. Written feedback on Wiseflow.**
 - **Sessions 6–13 — Architecture teaching, part 1.** Vocabulary (component, boundary, contract, convention), quality attributes, layered → hexagonal architecture, REST APIs, contracts & OpenAPI, data architecture, caching. Each session reads a real codebase with your agent, then verifies it by hand.
-- **Sessions 14–17 — Mid-semester project.** No teaching — you build a small distributed system as a modular monolith, applying what you've learned so far.
+- **Sessions 14–17 — Mid-semester project.** No teaching — you build a small distributed system as a modular monolith, applying what you've learned so far. Demo in class with feedback from Lasse & Claus.
 - **Sessions 18–21 — Architecture teaching, part 2.** Event-driven architecture, microservices vs monoliths, security architecture, documentation (ADRs & the C4 model).
 - **Sessions 22–29 — Exam project.** No teaching — you design, partially implement, and defend an architecture of your own choosing. This is the combined exam for Software Architecture, Systemudvikling, and IT-infrastruktur.
 
