@@ -17,6 +17,11 @@
 ### Part 1 — Why an agent, and why reading over writing (10 min) — blackboard
 Architecture is easiest to see in large, real systems — and the fastest way to learn to spot it is to read real systems yourself, with help. With an AI coding agent we can open, search, and get explanation of a codebase far faster than you can alone, but we only learn something if we keep checking its claims against the actual code. That checking habit starts today and runs the whole semester.
 
+A quick look at where this is going — two real systems the semester anchors on. Just the shape for now, no explanation; that's the rest of the semester:
+
+[![mistral-vibe-ek-ita](https://img.shields.io/badge/mistral--vibe--ek--ita-181717?logo=github&logoColor=white)](https://github.com/Ek-Ita-Swa-Iti/mistral-vibe-ek-ita)
+[![Gitea](https://img.shields.io/badge/Gitea-609926?logo=gitea&logoColor=white)](https://github.com/go-gitea/gitea)
+
 ### Part 2 — The semester at a glance (10 min) — blackboard
 Before we install anything, the map of what's ahead:
 
