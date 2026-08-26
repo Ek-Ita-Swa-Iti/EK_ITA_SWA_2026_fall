@@ -35,9 +35,7 @@ We don't install Linux on your laptop — we **run it in a container** so everyo
 In your Terminal or PowerShell, paste in the following command:
 
 ```bash
-docker run -d --name webtop -p 3000:3000 \
-  --shm-size=1gb \
-  lscr.io/linuxserver/webtop:ubuntu-mate
+docker run -d --name webtop -p 3000:3000 --shm-size=1gb lscr.io/linuxserver/webtop:ubuntu-mate
 ```
 
 Then open **http://localhost:3000** in your browser — that's a full Ubuntu MATE desktop running in the container. Open its **Terminal** app. Everything below happens *in that terminal*.
