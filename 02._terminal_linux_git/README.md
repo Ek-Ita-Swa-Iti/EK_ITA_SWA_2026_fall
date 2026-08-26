@@ -135,31 +135,6 @@ The cheat-sheet of today's commands. Why this matters: every later session (Dock
 
 ## Exercise (in class)
 
-No pre-seeded files this time — you **build the tree yourself**, typing every command from Parts 2–4 as you go:
-
-1. **Orient and build.** `mkdir -p ~/practice/{notes,scripts,archive}`, then `cd ~/practice` and confirm with `pwd`. Move between the subfolders with both absolute (`cd /root/practice/notes`) and relative (`cd ../scripts`) paths.
-2. **Make some files.**
-   ```bash
-   echo "TODO: buy milk" > ~/practice/notes/todo.txt
-   printf '# Session 2 notes\nLearned the shell today.\n' > ~/practice/notes/notes.md
-   touch ~/practice/.session-log
-   echo "started container" > ~/practice/archive/old.log
-   echo "ran a script" > ~/practice/scripts/run.log
-   ```
-3. **List and glob.** `ls`, `ls -l`, `ls -la` (spot the hidden `.session-log`), then a glob: `ls ~/practice/notes/*.txt`.
-4. **Read without an editor.** `cat notes/notes.md`, `head`/`tail` on a file you've appended a few lines to, `less` on the same file.
-5. **Copy, move, rename, delete.** `cp notes/todo.txt archive/todo-backup.txt`, then `mv archive/todo-backup.txt archive/todo-2026.txt` to rename it. Create a throwaway file and `rm` it; create a throwaway directory and feel the danger of `rm -r` on it.
-6. **Make it executable.**
-   ```bash
-   printf '#!/usr/bin/env bash\necho "hello from a script"\n' > ~/practice/scripts/hello.sh
-   ```
-   Run `./hello.sh` — permission denied. `chmod +x hello.sh`, run it again — it works.
-7. **Root bypass.** `chmod 000 notes/todo.txt`, then `cat notes/todo.txt` — still works, because you're root (`whoami` to confirm). Try the same `chmod 000` + `cat` as a normal user some day and it won't.
-8. **Processes.** `ps`, `top` (then `q` to quit).
-9. **Install a tool.** `apt install tree` (or `jq`), then `tree ~/practice` to see the whole structure at a glance.
-10. **Cross-check with Mistral-Vibe** (Part 5): once it's installed in this container, point it at `~/practice` and compare its commands to yours — *"what files are in here?"* (`ls -la`), *"find every TODO"* (`grep -ri "todo" .`), *"what does notes.md say?"* (`cat notes.md`), *"find all the log files"* (`find . -name "*.log"`).
-11. **Commit and push.** Create a new, empty repository on github.com, `git clone` it, copy your `~/practice` files into it, then `git add . && git commit -m "session 2 practice" && git push`.
-
 ---
 
 ## After Class
