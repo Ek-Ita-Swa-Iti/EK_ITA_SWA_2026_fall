@@ -5,20 +5,96 @@
   <title>ITAR SWA</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  
+  <style>
+    /* Styling for the floating 'Copy Page Markdown' button */
+    .copy-page-btn {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      z-index: 1000;
+      padding: 6px 14px;
+      background-color: #42b983;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+    .copy-page-btn:hover {
+      background-color: #33a06f;
+    }
+    .copy-page-btn:active {
+      transform: scale(0.96);
+    }
+  </style>
 </head>
 <body>
   <div id="app"></div>
+
   <script>
+    // Custom plugin: Copies the raw Markdown of the currently loaded document
+    function copyPageMarkdownPlugin(hook, vm) {
+      let currentMarkdown = '';
+
+      // Capture raw markdown text before it gets parsed to HTML
+      hook.beforeEach(function (content) {
+        currentMarkdown = content;
+        return content;
+      });
+
+      // Inject the copy button whenever a page finishes rendering
+      hook.doneEach(function () {
+        let existingBtn = document.getElementById('copy-page-btn');
+        if (!existingBtn) {
+          const btn = document.createElement('button');
+          btn.id = 'copy-page-btn';
+          btn.className = 'copy-page-btn';
+          btn.innerText = '📋 Copy Page MD';
+          
+          btn.onclick = function () {
+            navigator.clipboard.writeText(currentMarkdown).then(() => {
+              btn.innerText = '✅ Copied!';
+              setTimeout(() => {
+                btn.innerText = '📋 Copy Page MD';
+              }, 2000);
+            }).catch(err => {
+              console.error('Failed to copy: ', err);
+            });
+          };
+
+          document.body.appendChild(btn);
+        }
+      });
+    }
+
     window.$docsify = {
       name: 'ITAR SWA',
       loadSidebar: true,
       subMaxLevel: 2,
-      search: 'auto',
-      auto2top: true
-    }
+      auto2top: true,
+      
+      // Code block copy settings
+      copyCode: {
+        buttonText: 'Copy',
+        errorText: 'Error',
+        successText: 'Copied'
+      },
+
+      plugins: [
+        copyPageMarkdownPlugin
+      ]
+    };
   </script>
-  <!-- Docsify Core & Search Plugin -->
+
+  <!-- Docsify Core & Search -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+
+  <!-- Code Block Quick Copy Plugin -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
 </body>
 </html>
