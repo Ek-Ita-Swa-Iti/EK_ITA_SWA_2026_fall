@@ -100,16 +100,27 @@ Same one-liner as Session 1. On first launch it'll ask for an API key again (`~/
 
 Here's the thing worth seeing today: an AI coding agent has no magic access to your machine — it gets work done by **running the same terminal commands you just learned** (`ls`, `cd`, `cat`, `grep`, `find`, …), reading the output, and deciding what to do next. So the terminal isn't *replaced* by the agent — it's the language you both speak, and it's how you check the agent's work.
 
-**Demo (instructor):** point Mistral-Vibe at a directory with a few files in it and give it a plain-English task — *"what files are in here?"*, *"find the file that mentions X"*, *"show me what Y says."* Watch the **commands it runs** and name each one out loud: that's the `ls` you learned, that's `find`, that's `grep`, that's `cat`.
+**Set up a demo directory:**
+
+```bash
+mkdir -p ~/hunt/{docs,config,logs,archive/old}
+echo "Start here. Your next clue is in config/secret.txt." > ~/hunt/docs/start.txt
+echo "Nice work. Final step: make archive/old/prize.sh executable, then run it with ./prize.sh" > ~/hunt/config/secret.txt
+printf '#!/usr/bin/env bash\necho "You found and ran the script. Commit this output."\n' > ~/hunt/archive/old/prize.sh
+# prize.sh has NO execute bit — students must 'chmod +x' it (even root needs an x bit to run ./prize.sh)
+echo "ada,lovelace" > ~/hunt/docs/people.csv
+```
+
+**Demo (instructor):** point Mistral-Vibe at `~/hunt` and give it a plain-English task — *"what files are in here?"*, *"find the file that mentions Ada"*, *"show me what config/secret.txt says."* Watch the **commands it runs** and name each one out loud: that's the `ls` you learned, that's `find`, that's `grep`, that's `cat`.
 
 **Hands-on cross-reference (you):** for each task, **do it yourself first**, then ask Vibe to do the same, and compare the command it used to yours:
 
 | You type | You ask Vibe | Same command underneath |
 |---|---|---|
-| `ls -la` | "list everything here, including hidden files" | `ls` |
-| `grep -ri "todo" .` | "find every TODO in this folder" | `grep` |
-| `cat notes.md` | "what does notes.md say?" | `cat` |
-| `find . -name "*.log"` | "find all the log files" | `find` |
+| `ls -la ~/hunt` | "list everything in hunt, including hidden files" | `ls` |
+| `grep -ri "ada" ~/hunt` | "find the file that mentions Ada" | `grep` |
+| `cat ~/hunt/config/secret.txt` | "what does secret.txt say?" | `cat` |
+| `find ~/hunt -name "*.sh"` | "find all the shell scripts" | `find` |
 
 **The point — verification, not magic:** because you know these commands, you can *read* what the agent did and **check it yourself** (`ls`, `cat`) instead of taking its word. That habit — direct the agent, then verify against the real thing — is one you'll use all semester. (Later you'll even read the *code* of a tool like this; today you just watch it speak terminal.)
 
