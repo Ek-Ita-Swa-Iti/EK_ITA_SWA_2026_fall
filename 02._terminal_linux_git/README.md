@@ -53,7 +53,9 @@ The Linux file system:
 ├── home
 ├── etc
 ├── var
-└── tmp
+├── tmp
+├── usr
+└── lib
 ```
 
 The three questions you ask constantly:
