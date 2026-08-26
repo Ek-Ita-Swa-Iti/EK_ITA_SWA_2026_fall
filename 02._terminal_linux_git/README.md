@@ -129,12 +129,21 @@ The cheat-sheet of today's commands. Why this matters: every later session (Dock
 
 A **filesystem scavenger hunt** in a directory tree we've pre-seeded inside your container:
 
-- Find a specific file several directories deep; read it; follow its instructions.
-- Create a directory structure to a given spec; move and rename files into it.
-- Make a script file executable (`chmod +x`) and run it.
-- **Install a tool** with `apt` (e.g. `tree` or `jq`) and use it once.
+```bash
+mkdir -p ~/hunt/{docs,config,logs,archive/old}
+echo "Start here. Your next clue is in config/secret.txt." > ~/hunt/docs/start.txt
+echo "Nice work. Final step: make archive/old/prize.sh executable, then run it with ./prize.sh" > ~/hunt/config/secret.txt
+printf '#!/usr/bin/env bash\necho "You found and ran the script. Commit this output."\n' > ~/hunt/archive/old/prize.sh
+# prize.sh has NO execute bit — students must 'chmod +x' it (even root needs an x bit to run ./prize.sh)
+echo "ada,lovelace" > ~/hunt/docs/people.csv
+```
+
+- **Find a specific file several directories deep; read it; follow its instructions:** start at `~/hunt/docs/start.txt` — it points to `~/hunt/config/secret.txt`, which points to `~/hunt/archive/old/prize.sh`.
+- **Create a directory structure to a given spec; move and rename files into it:** inside `~/hunt`, create a `submission/` folder, then move `docs/people.csv` into it and rename it `team.csv`.
+- **Make a script file executable (`chmod +x`) and run it:** `~/hunt/archive/old/prize.sh` has no execute bit — even root needs one to run `./prize.sh`.
+- **Install a tool** with `apt` (e.g. `tree` or `jq`) and use it once — `tree ~/hunt` is a good way to see the whole structure at a glance.
 - **Cross-check with Mistral-Vibe:** pick two hunt steps, ask Vibe to do them, and note which command it ran — then verify its answer yourself with `ls`/`cat`. Did it match what you did?
-- **Commit and push** your results to your GitHub repo before you leave.
+- **Commit and push** your results (including `prize.sh`'s output and `submission/team.csv`) to your GitHub repo before you leave.
 
 ---
 
