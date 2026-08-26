@@ -32,7 +32,7 @@
 ### Part 1 — Your Linux playground (25 min)
 We don't install Linux on your laptop — we **run it in a container** so everyone has the *exact same machine*. Today, Docker is just the delivery mechanism; you'll learn how it actually works in Session 5.
 
-In **Docker Desktop**, pull and run the image **`lscr.io/linuxserver/webtop:ubuntu-mate`**, mapping port **3000**. (We'll hand you the exact run command; the gist:)
+In your Terminal or PowerShell, paste in the following command:
 
 ```bash
 docker run -d --name webtop -p 3000:3000 \
