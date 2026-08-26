@@ -100,7 +100,7 @@ Same one-liner as Session 1. On first launch it'll ask for an API key again (`~/
 
 Here's the thing worth seeing today: an AI coding agent has no magic access to your machine — it gets work done by **running the same terminal commands you just learned** (`ls`, `cd`, `cat`, `grep`, `find`, …), reading the output, and deciding what to do next. So the terminal isn't *replaced* by the agent — it's the language you both speak, and it's how you check the agent's work.
 
-**Demo (instructor):** point Mistral-Vibe at your `~/practice` directory (built in the Exercise below) and give it a plain-English task — *"what files are in here?"*, *"find every TODO"*, *"show me what notes.md says."* Watch the **commands it runs** and name each one out loud: that's the `ls` you learned, that's `find`, that's `grep`, that's `cat`.
+**Demo (instructor):** point Mistral-Vibe at a directory with a few files in it and give it a plain-English task — *"what files are in here?"*, *"find the file that mentions X"*, *"show me what Y says."* Watch the **commands it runs** and name each one out loud: that's the `ls` you learned, that's `find`, that's `grep`, that's `cat`.
 
 **Hands-on cross-reference (you):** for each task, **do it yourself first**, then ask Vibe to do the same, and compare the command it used to yours:
 
