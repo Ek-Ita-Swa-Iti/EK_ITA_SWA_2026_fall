@@ -49,6 +49,7 @@ The Linux file system:
 
 ```
 /
+├── bin
 ├── home
 ├── etc
 ├── var
