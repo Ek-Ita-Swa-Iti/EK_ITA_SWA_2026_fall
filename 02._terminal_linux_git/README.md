@@ -42,6 +42,8 @@ Then open **http://localhost:3000** in your browser — that's a full Ubuntu MAT
 
 > **Mental model:** the desktop in your browser is a separate Linux computer. Your laptop is just the screen and keyboard. When we "stop the container" the machine is gone — so we'll use Git to save anything we want to keep.
 
+**Stopping and deleting the container.** When you're done for the day (or want a completely fresh machine), don't do this from the terminal — use **Docker Desktop**: open it, find `webtop` under **Containers**, click **Stop**, then **Delete** to remove it entirely. Next time you want the playground back, just re-run the `docker run` command above.
+
 ### Part 2 — Where am I? Navigating the filesystem (30 min) — blackboard + keyboard
 On the board: draw the Linux filesystem as a tree (`/`, `/home`, `/etc`, `/var`, `/tmp`). The three questions you ask constantly:
 
