@@ -124,7 +124,15 @@ echo "ada,lovelace" > ~/hunt/docs/people.csv
 **The point — verification, not magic:** because you know these commands, you can *read* what the agent did and **check it yourself** (`ls`, `cat`) instead of taking its word. That habit — direct the agent, then verify against the real thing — is one you'll use all semester. (Later you'll even read the *code* of a tool like this; today you just watch it speak terminal.)
 
 ### Part 6 — Wrap-up (10 min)
-The cheat-sheet of today's commands. Why this matters: every later session (Docker, the codebases, the AI agent) assumes you can move around a shell without thinking about it — and, as you saw, the agent runs these very commands, so reading them is how you stay in control.
+The cheat-sheet of today's commands:
+
+- **Getting the machine running** (Part 1): `docker run`
+- **Navigating** (Part 2): `pwd`, `ls`, `ls -l`, `ls -la`, `cd`, `cd ..`, `cd ~`, `cat`, `less`, `head`, `tail`, `man`, `ls --help`
+- **Making changes** (Part 3): `mkdir`, `touch`, `cp`, `mv`, `rm`, `rm -r`, `chmod`, `chmod +x`, `whoami`, `ps`, `top`
+- **Installing software** (Part 4): `apt update`, `apt install`
+- **Mistral-Vibe** (Part 5): `curl ... | bash` (install), `vibe`
+
+Why this matters: every later session (Docker, the codebases, the AI agent) assumes you can move around a shell without thinking about it — and, as you saw, the agent runs these very commands, so reading them is how you stay in control.
 
 ---
 
