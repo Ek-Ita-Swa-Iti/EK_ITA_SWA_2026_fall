@@ -90,9 +90,17 @@ tree                  # ...now it's there
 > Language package managers — **`pip`** (Python), **`npm`** (Node) — are the same idea one level up: they install *libraries for a project* rather than *programs for the machine*.
 
 ### Part 5 — The agent speaks terminal: Mistral-Vibe (25 min) — demo + keyboard
-You installed **Mistral-Vibe** last session. Here's the thing worth seeing today: an AI coding agent has no magic access to your machine — it gets work done by **running the same terminal commands you just learned** (`ls`, `cd`, `cat`, `grep`, `find`, …), reading the output, and deciding what to do next. So the terminal isn't *replaced* by the agent — it's the language you both speak, and it's how you check the agent's work.
+You installed **Mistral-Vibe** on your laptop last session — but webtop is a *separate* Linux machine (remember the mental model from Part 1), so it isn't there yet. Install it in this container first:
 
-**Demo (instructor):** point Mistral-Vibe at your scavenger-hunt directory and give it a plain-English task — *"what files are in here?"*, *"find the file that mentions Ada"*, *"show me what config.txt contains."* Watch the **commands it runs** and name each one out loud: that's the `ls` you learned, that's `find`, that's `grep`, that's `cat`.
+```bash
+curl -LsSf https://mistral.ai/vibe/install.sh | bash
+```
+
+Same one-liner as Session 1. On first launch it'll ask for an API key again (`~/.vibe/config.toml` is fresh in this container) — reuse the one you created last time.
+
+Here's the thing worth seeing today: an AI coding agent has no magic access to your machine — it gets work done by **running the same terminal commands you just learned** (`ls`, `cd`, `cat`, `grep`, `find`, …), reading the output, and deciding what to do next. So the terminal isn't *replaced* by the agent — it's the language you both speak, and it's how you check the agent's work.
+
+**Demo (instructor):** point Mistral-Vibe at your `~/practice` directory (built in the Exercise below) and give it a plain-English task — *"what files are in here?"*, *"find every TODO"*, *"show me what notes.md says."* Watch the **commands it runs** and name each one out loud: that's the `ls` you learned, that's `find`, that's `grep`, that's `cat`.
 
 **Hands-on cross-reference (you):** for each task, **do it yourself first**, then ask Vibe to do the same, and compare the command it used to yours:
 
@@ -127,23 +135,30 @@ The cheat-sheet of today's commands. Why this matters: every later session (Dock
 
 ## Exercise (in class)
 
-A **filesystem scavenger hunt** in a directory tree we've pre-seeded inside your container:
+No pre-seeded files this time — you **build the tree yourself**, typing every command from Parts 2–4 as you go:
 
-```bash
-mkdir -p ~/hunt/{docs,config,logs,archive/old}
-echo "Start here. Your next clue is in config/secret.txt." > ~/hunt/docs/start.txt
-echo "Nice work. Final step: make archive/old/prize.sh executable, then run it with ./prize.sh" > ~/hunt/config/secret.txt
-printf '#!/usr/bin/env bash\necho "You found and ran the script. Commit this output."\n' > ~/hunt/archive/old/prize.sh
-# prize.sh has NO execute bit — students must 'chmod +x' it (even root needs an x bit to run ./prize.sh)
-echo "ada,lovelace" > ~/hunt/docs/people.csv
-```
-
-- **Find a specific file several directories deep; read it; follow its instructions:** start at `~/hunt/docs/start.txt` — it points to `~/hunt/config/secret.txt`, which points to `~/hunt/archive/old/prize.sh`.
-- **Create a directory structure to a given spec; move and rename files into it:** inside `~/hunt`, create a `submission/` folder, then move `docs/people.csv` into it and rename it `team.csv`.
-- **Make a script file executable (`chmod +x`) and run it:** `~/hunt/archive/old/prize.sh` has no execute bit — even root needs one to run `./prize.sh`.
-- **Install a tool** with `apt` (e.g. `tree` or `jq`) and use it once — `tree ~/hunt` is a good way to see the whole structure at a glance.
-- **Cross-check with Mistral-Vibe:** pick two hunt steps, ask Vibe to do them, and note which command it ran — then verify its answer yourself with `ls`/`cat`. Did it match what you did?
-- **Commit and push** your results (including `prize.sh`'s output and `submission/team.csv`) to your GitHub repo before you leave.
+1. **Orient and build.** `mkdir -p ~/practice/{notes,scripts,archive}`, then `cd ~/practice` and confirm with `pwd`. Move between the subfolders with both absolute (`cd /root/practice/notes`) and relative (`cd ../scripts`) paths.
+2. **Make some files.**
+   ```bash
+   echo "TODO: buy milk" > ~/practice/notes/todo.txt
+   printf '# Session 2 notes\nLearned the shell today.\n' > ~/practice/notes/notes.md
+   touch ~/practice/.session-log
+   echo "started container" > ~/practice/archive/old.log
+   echo "ran a script" > ~/practice/scripts/run.log
+   ```
+3. **List and glob.** `ls`, `ls -l`, `ls -la` (spot the hidden `.session-log`), then a glob: `ls ~/practice/notes/*.txt`.
+4. **Read without an editor.** `cat notes/notes.md`, `head`/`tail` on a file you've appended a few lines to, `less` on the same file.
+5. **Copy, move, rename, delete.** `cp notes/todo.txt archive/todo-backup.txt`, then `mv archive/todo-backup.txt archive/todo-2026.txt` to rename it. Create a throwaway file and `rm` it; create a throwaway directory and feel the danger of `rm -r` on it.
+6. **Make it executable.**
+   ```bash
+   printf '#!/usr/bin/env bash\necho "hello from a script"\n' > ~/practice/scripts/hello.sh
+   ```
+   Run `./hello.sh` — permission denied. `chmod +x hello.sh`, run it again — it works.
+7. **Root bypass.** `chmod 000 notes/todo.txt`, then `cat notes/todo.txt` — still works, because you're root (`whoami` to confirm). Try the same `chmod 000` + `cat` as a normal user some day and it won't.
+8. **Processes.** `ps`, `top` (then `q` to quit).
+9. **Install a tool.** `apt install tree` (or `jq`), then `tree ~/practice` to see the whole structure at a glance.
+10. **Cross-check with Mistral-Vibe** (Part 5): once it's installed in this container, point it at `~/practice` and compare its commands to yours — *"what files are in here?"* (`ls -la`), *"find every TODO"* (`grep -ri "todo" .`), *"what does notes.md say?"* (`cat notes.md`), *"find all the log files"* (`find . -name "*.log"`).
+11. **Commit and push.** Create a new, empty repository on github.com, `git clone` it, copy your `~/practice` files into it, then `git add . && git commit -m "session 2 practice" && git push`.
 
 ---
 
