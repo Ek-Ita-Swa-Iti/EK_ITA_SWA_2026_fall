@@ -45,7 +45,17 @@ Then open **http://localhost:3000** in your browser — that's a full Ubuntu MAT
 **Stopping and deleting the container.** When you're done for the day (or want a completely fresh machine), open Docker Desktop, find `webtop` under **Containers**, click **Stop**, then **Delete** to remove it entirely. Next time you want the playground back, just re-run the `docker run` command above.
 
 ### Part 2 — Where am I? Navigating the filesystem (30 min) — blackboard + keyboard
-On the board: draw the Linux filesystem as a tree (`/`, `/home`, `/etc`, `/var`, `/tmp`). The three questions you ask constantly:
+The Linux file system:
+
+```
+/
+├── home
+├── etc
+├── var
+└── tmp
+```
+
+The three questions you ask constantly:
 
 - **Where am I?** `pwd`
 - **What's here?** `ls`, `ls -l`, `ls -la`
