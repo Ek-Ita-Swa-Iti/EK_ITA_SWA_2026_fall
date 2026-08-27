@@ -161,8 +161,6 @@ git push                       # send it to GitHub
 2. When `git push` prompts for a password, paste the token instead of your GitHub password.
 3. So you don't have to paste it every time: `git config --global credential.helper store` caches it after the first successful push.
 
-What a "remote" is, shown by pushing and then seeing it on github.com. **From now on, everything you make this block lives in a Git repo** — that's also how you'll hand in the assignment in Session 5.
-
 ### Part 7 — Wrap-up (10 min)
 The cheat-sheet of today's commands:
 
