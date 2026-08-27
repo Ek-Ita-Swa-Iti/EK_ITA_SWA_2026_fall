@@ -11,7 +11,7 @@
 - Run a **Linux machine in a container** via Docker Desktop and reach a terminal inside it.
 - Navigate a Linux filesystem: paths, directories, listing, reading files.
 - Create, copy, move, and delete files and directories from the shell.
-- Read and change **file permissions** — and know why **root** can ignore them; see what running **processes** are.
+- Read and change **file permissions** — `rwx` for user/group/other, and `chmod +x`.
 - Install software with a **package manager** (`apt`) — and recognise the same idea across OSes (`brew`, `choco`) and inside a `Dockerfile`.
 - See how the **Mistral-Vibe** agent runs the *same* terminal commands you're learning — and use that to read and verify what it does.
 - Use **Git** to save and push your work — clone, commit, push (by doing, not by theory).
@@ -68,10 +68,6 @@ Reading files without opening an editor: `cat`, `less`, `head`, `tail`. Getting 
 
 ### Part 3 — Making changes: files & directories (30 min) — keyboard
 `mkdir`, `touch`, `cp`, `mv`, `rm` (and the danger of `rm -r`). The tab-completion habit. Then **permissions**: what `rwx` means for user/group/other, reading `ls -l` output, and `chmod +x script.sh`.
-
-**One catch — `root` ignores read/write permissions.** In this container you're logged in as **root**, the all-powerful admin user. Try it: `chmod 000 afile` (remove *all* permissions) then `cat afile` — it still works, because root is allowed to bypass the read/write bits. As a *normal* user that same `chmod 000` would lock you out. (Execute is stricter: even root needs an `x` bit to run `./afile`.) The lesson: permissions protect you from *other* users — and root is above them. `whoami` tells you who you are.
-
-A quick look at **processes**: `ps`, `top` (then `q` to quit), and that a program is just a process.
 
 ### Part 4 — Getting software onto the machine: package managers (15 min) — keyboard
 You've got a Linux machine — but how does *new software* get onto it? Not by hunting the web for random files: a **package manager** installs a program (and everything it depends on) from a trusted repository, in one command.
@@ -166,7 +162,7 @@ The cheat-sheet of today's commands:
 
 - **Getting the machine running** (Part 1): `docker run`
 - **Navigating** (Part 2): `pwd`, `ls`, `ls -l`, `ls -la`, `cd`, `cd ..`, `cd ~`, `cat`, `less`, `head`, `tail`, `man`, `ls --help`
-- **Making changes** (Part 3): `mkdir`, `touch`, `cp`, `mv`, `rm`, `rm -r`, `chmod`, `chmod +x`, `whoami`, `ps`, `top`
+- **Making changes** (Part 3): `mkdir`, `touch`, `cp`, `mv`, `rm`, `rm -r`, `chmod`, `chmod +x`
 - **Installing software** (Part 4): `apt update`, `apt install`
 - **Mistral-Vibe** (Part 5): `curl ... | bash` (install), `vibe`
 - **Git** (Part 6): `git clone`, `git status`, `git add`, `git commit -m`, `git push`
