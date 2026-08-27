@@ -105,7 +105,7 @@ mkdir -p ~/hunt/{docs,config,logs,archive/old}
 echo "Start here. Your next clue is in config/secret.txt." > ~/hunt/docs/start.txt
 echo "Nice work. Final step: make archive/old/prize.sh executable, then run it with ./prize.sh" > ~/hunt/config/secret.txt
 printf '#!/usr/bin/env bash\necho "You found and ran the script. Commit this output."\n' > ~/hunt/archive/old/prize.sh
-# prize.sh has NO execute bit — students must 'chmod +x' it (even root needs an x bit to run ./prize.sh)
+# prize.sh has NO execute bit — students must 'chmod +x' it before running ./prize.sh
 echo "ada,lovelace" > ~/hunt/docs/people.csv
 ```
 
