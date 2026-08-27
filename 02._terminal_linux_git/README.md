@@ -75,10 +75,12 @@ You've got a Linux machine — but how does *new software* get onto it? Not by h
 On this Ubuntu container that's **`apt`**:
 
 ```bash
-apt update            # refresh the list of available packages
-apt install tree      # install the "tree" program and its dependencies
-tree                  # ...now it's there
+sudo apt update            # refresh the list of available packages
+sudo apt install tree      # install the "tree" program and its dependencies
+tree                       # ...now it's there
 ```
+
+> **A note on `sudo`:** `sudo` ("superuser do") runs a single command with administrator privileges. It's the everyday safety habit on Linux — you work as a normal user, and only reach for `sudo` on the one command that needs elevated rights, like installing software or touching system files. You'll see it prefixed on package-manager commands on almost any real Linux machine.
 
 - **Every OS has one, same idea, different name:** `apt` (Debian/Ubuntu), **Homebrew** `brew` (macOS), `choco`/`winget` (Windows). This is how you got Docker/Git onto your laptop, whether you noticed or not.
 - **The forward link:** installing software is a *repeatable, scriptable* step — which is exactly what a **`Dockerfile`** does when it says `RUN apt-get install …` or `RUN pip install …` (Session 5). No manual click-through; the recipe installs it every time.
@@ -163,7 +165,7 @@ The cheat-sheet of today's commands:
 - **Getting the machine running** (Part 1): `docker run`
 - **Navigating** (Part 2): `pwd`, `ls`, `ls -l`, `ls -la`, `cd`, `cd ..`, `cd ~`, `cat`, `less`, `head`, `tail`, `man`, `ls --help`
 - **Making changes** (Part 3): `mkdir`, `touch`, `cp`, `mv`, `rm`, `rm -r`, `chmod`, `chmod +x`
-- **Installing software** (Part 4): `apt update`, `apt install`
+- **Installing software** (Part 4): `sudo apt update`, `sudo apt install`
 - **Mistral-Vibe** (Part 5): `curl ... | bash` (install), `vibe`
 - **Git** (Part 6): `git clone`, `git status`, `git add`, `git commit -m`, `git push`
 
