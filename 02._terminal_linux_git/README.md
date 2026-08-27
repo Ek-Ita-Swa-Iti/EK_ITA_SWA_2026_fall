@@ -135,7 +135,7 @@ cd <repo-name>
 **Install `nano`** — it's not preinstalled in this container:
 
 ```bash
-apt install nano
+sudo apt install nano
 ```
 
 Write a README:
