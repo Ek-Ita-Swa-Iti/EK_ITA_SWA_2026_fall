@@ -1,8 +1,8 @@
-# Session 2: Terminal & Linux
+# Session 2: Terminal, Linux & Git
 
 **ITA Software Architecture 2026 Fall | 3 hours | Foundations block (hands-on)**
 
-> The terminal is the control panel for everything you'll do this semester — running the codebases, the AI agent, Docker, all of it. Today you get a real Linux machine (running in a container on your laptop) and learn to move around it from the command line. No slides where we can avoid them: you'll be at the keyboard most of the time.
+> The terminal is the control panel for everything you'll do this semester — running the codebases, the AI agent, Docker, all of it. Today you get a real Linux machine (running in a container on your laptop), learn to move around it from the command line, and start saving your work with Git. No slides where we can avoid them: you'll be at the keyboard most of the time.
 
 ---
 
@@ -14,6 +14,7 @@
 - Read and change **file permissions** — and know why **root** can ignore them; see what running **processes** are.
 - Install software with a **package manager** (`apt`) — and recognise the same idea across OSes (`brew`, `choco`) and inside a `Dockerfile`.
 - See how the **Mistral-Vibe** agent runs the *same* terminal commands you're learning — and use that to read and verify what it does.
+- Use **Git** to save and push your work — clone, commit, push (by doing, not by theory).
 
 ---
 
@@ -39,7 +40,7 @@ docker run -d --name webtop -p 3000:3000 --shm-size=1gb lscr.io/linuxserver/webt
 
 Then open **http://localhost:3000** in your browser — that's a full Ubuntu MATE desktop running in the container. Open its **Terminal** app. Everything below happens *in that terminal*.
 
-> **Mental model:** the desktop in your browser is a separate Linux computer. Your laptop is just the screen and keyboard. When we "stop the container" the machine is gone.
+> **Mental model:** the desktop in your browser is a separate Linux computer. Your laptop is just the screen and keyboard. When we "stop the container" the machine is gone — so we'll use Git to save anything we want to keep.
 
 **Stopping and deleting the container.** When you're done for the day (or want a completely fresh machine), open Docker Desktop, find `webtop` under **Containers**, click **Stop**, then **Delete** to remove it entirely. Next time you want the playground back, just re-run the `docker run` command above.
 
@@ -123,7 +124,46 @@ echo "ada,lovelace" > ~/hunt/docs/people.csv
 
 **The point — verification, not magic:** because you know these commands, you can *read* what the agent did and **check it yourself** (`ls`, `cat`) instead of taking its word. That habit — direct the agent, then verify against the real thing — is one you'll use all semester. (Later you'll even read the *code* of a tool like this; today you just watch it speak terminal.)
 
-### Part 6 — Wrap-up (10 min)
+### Part 6 — Saving your work with Git (40 min) — keyboard, no theory
+You'll lose the container eventually, so put your work somewhere permanent. First, on github.com: create a **new, empty repository** under your own account (no README/license needed — you'll push into it). Copy its URL.
+
+Then, in your webtop terminal:
+
+```bash
+git clone <your-new-repo-url>  # get a copy
+cd <repo-name>
+```
+
+**Install `nano`** — it's not preinstalled in this container:
+
+```bash
+apt install nano
+```
+
+Write a README:
+
+```bash
+nano README.md
+```
+
+Type a line or two, then save and exit (`Ctrl+O`, `Enter`, `Ctrl+X`). Then, purely the workflow:
+
+```bash
+git status                     # what changed?
+git add .                      # stage the changes
+git commit -m "session 2 work" # save a snapshot
+git push                       # send it to GitHub
+```
+
+**Authenticating with GitHub.** `git push` will ask for a username and password — but GitHub no longer accepts your account password here. You need a **personal access token (PAT)** instead:
+
+1. On github.com: **Settings → Developer settings → Personal access tokens → Tokens (classic)** → **Generate new token**. Give it the `repo` scope and an expiry, then **copy the token** — you only see it once.
+2. When `git push` prompts for a password, paste the token instead of your GitHub password.
+3. So you don't have to paste it every time: `git config --global credential.helper store` caches it after the first successful push.
+
+What a "remote" is, shown by pushing and then seeing it on github.com. **From now on, everything you make this block lives in a Git repo** — that's also how you'll hand in the assignment in Session 5.
+
+### Part 7 — Wrap-up (10 min)
 The cheat-sheet of today's commands:
 
 - **Getting the machine running** (Part 1): `docker run`
@@ -131,6 +171,7 @@ The cheat-sheet of today's commands:
 - **Making changes** (Part 3): `mkdir`, `touch`, `cp`, `mv`, `rm`, `rm -r`, `chmod`, `chmod +x`, `whoami`, `ps`, `top`
 - **Installing software** (Part 4): `apt update`, `apt install`
 - **Mistral-Vibe** (Part 5): `curl ... | bash` (install), `vibe`
+- **Git** (Part 6): `git clone`, `git status`, `git add`, `git commit -m`, `git push`
 
 Why this matters: every later session (Docker, the codebases, the AI agent) assumes you can move around a shell without thinking about it — and, as you saw, the agent runs these very commands, so reading them is how you stay in control.
 
@@ -191,7 +232,7 @@ _(c) 2016 by Peter Wad Sackett, pws@cbs.dtu.dk (ed. clbo@kea.dk 2019)_
 
 ## After Class
 
-- Re-run the whole setup from scratch once on your own (new container → terminal) so it's muscle memory.
+- Re-run the whole setup from scratch once on your own (new container → terminal → clone → commit → push) so it's muscle memory.
 - Skim your command cheat-sheet; you'll use all of it next week.
 
 ---
@@ -199,3 +240,4 @@ _(c) 2016 by Peter Wad Sackett, pws@cbs.dtu.dk (ed. clbo@kea.dk 2019)_
 ## Optional
 
 - [optional] *The Linux Command Line* by William Shotts (free online) — chapters 1–4 cover everything today and more.
+- [optional] The interactive `https://gitimmersion.com` walk-through if you want extra Git reps.
