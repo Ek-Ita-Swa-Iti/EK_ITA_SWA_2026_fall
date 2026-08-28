@@ -50,6 +50,7 @@ curl http://localhost:8000         # talk to it from inside the same container
 ss -tlnp                           # what's listening, on which ports?
 ```
 
+- **`ss` ("socket statistics") shows what the network stack is doing** — the modern replacement for `netstat`. The flags stack up: `-t` TCP only, `-l` only sockets in the *listening* state, `-n` numeric ports (don't translate `80` → `http`), `-p` show the process that owns each socket. So `ss -tlnp` reads as "which processes are listening on which TCP ports."
 - **A port is a door a process listens on.** Only one process per port — try starting a second server on `8000` and read the *"address already in use"* error.
 - **`localhost` vs `0.0.0.0` vs a real address:** `localhost` (127.0.0.1) is "only this machine"; `0.0.0.0` means "accept from anywhere." Start the server on each and see who can reach it.
 - Kill it and watch `curl` fail — the door is closed now (foreshadows Part 6).
