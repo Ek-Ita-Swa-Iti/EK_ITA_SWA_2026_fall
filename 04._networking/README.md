@@ -39,11 +39,14 @@ Draw the round-trip once, end to end:
 The mental model for the whole semester: an architecture is boxes (processes) connected by these request/response wires.
 
 ### Part 2 — Ports & listening processes (35 min) — keyboard, the set-piece
+
+> **Today's hands-on parts (2, 3, 5, 6) all run *inside the webtop container*, not on your laptop** — the same terminal you used in Sessions 2–3. `python3`, `ss`, `dig`, and `getent` are Linux tools that live in the container, and `localhost` here means *the container itself*, not your host machine. Mixing up the two machines is the easiest way to confuse yourself today — if a command behaves oddly, first check which machine your terminal is on.
+
 Make a server appear and talk to it:
 
 ```bash
-python3 -m http.server 8000        # your machine is now a web server on port 8000
-curl http://localhost:8000         # talk to it from the same machine
+python3 -m http.server 8000        # this container is now a web server on port 8000
+curl http://localhost:8000         # talk to it from inside the same container
 ss -tlnp                           # what's listening, on which ports?
 ```
 
