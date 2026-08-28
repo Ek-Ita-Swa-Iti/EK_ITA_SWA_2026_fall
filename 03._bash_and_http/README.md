@@ -46,7 +46,7 @@ Every command below works on these two files. One log line looks like:
 — the fields are space-separated, so the client IP is `cut -d' ' -f1` and the timestamp is field 4.
 
 ### Part 1 — Streams, pipes & redirection (30 min) — blackboard + keyboard
-On the board: every program has three streams — **stdin**, **stdout**, **stderr**. The two moves that change everything:
+Every program has three streams — **stdin**, **stdout**, **stderr**. The two moves that change everything:
 
 - **Pipe** `|` — feed one command's output into the next: `cat access.log | wc -l`.
 - **Redirect** `>` (overwrite), `>>` (append), `<` (from file): `ls > files.txt`.
