@@ -69,13 +69,13 @@ Use each tool, on the sample log file:
 - `grep` (find lines), `wc -l` (count), `sort` / `sort -n`, `uniq -c` (count duplicates).
 - `cut -d',' -f1` (a CSV column), `find` (locate files), a taste of `sed 's/old/new/'` and `awk '{print $1}'`.
 
-**Live set-piece — "the 5 busiest IPs":** build it one stage at a time, re-running as it grows:
+**"The 5 busiest IPs":** build it one stage at a time, re-running as it grows:
 
 ```bash
 cut -d' ' -f1 access.log | sort | uniq -c | sort -rn | head -5
 ```
 
-Plus a 5-min note on **exit codes** (`echo $?`), env vars (`echo $HOME`, `export`), and `PATH`.
+**Exit codes** (`echo $?`), env vars (`echo $HOME`, `export`), and `PATH`.
 
 ### Part 3 — Talking to the web with curl + HTTP (35 min) — keyboard
 `curl` fetches URLs. Just enough HTTP to use it:
