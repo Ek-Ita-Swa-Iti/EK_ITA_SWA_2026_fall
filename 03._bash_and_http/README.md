@@ -24,7 +24,7 @@
 
 ## Today's Teachings
 
-> **Everything today runs *inside the webtop container* from Session 2, not on your laptop** — same terminal, same machine. `curl`, the text tools, and `openssl` all live in the container; `localhost` means the container. If you open a fresh laptop terminal by mistake, the commands may be missing or behave differently.
+> Today everything runs **inside the webtop container (Docker container)** from Session 2, not "on" your laptop.
 
 ### Part 0 — Warm-up (10 min)
 Quick recap of last week's navigation, then `cd` into a seeded `session-03/` folder with a sample **log file** and a **CSV**.
