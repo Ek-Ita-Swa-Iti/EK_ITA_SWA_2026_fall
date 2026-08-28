@@ -46,10 +46,19 @@ Every command below works on these two files. One log line looks like:
 — the fields are space-separated, so the client IP is `cut -d' ' -f1` and the timestamp is field 4.
 
 ### Part 1 — Streams, pipes & redirection (30 min) — blackboard + keyboard
-Every program has three streams — **stdin**, **stdout**, **stderr**. The two moves that change everything:
+Every program has three streams — **stdin** (input), **stdout** (normal output), **stderr** (error messages).
 
-- **Pipe** `|` — feed one command's output into the next: `cat access.log | wc -l`.
-- **Redirect** `>` (overwrite), `>>` (append), `<` (from file): `ls > files.txt`.
+Try it with `ls`:
+
+```bash
+ls              # the file listing it prints → stdout
+ls nope         # "ls: cannot access 'nope'" → stderr
+```
+
+Both land on your screen by default, so they look the same — but they're *separate* channels. That separation is what lets you capture or send one somewhere without the other. Two ways to do that:
+
+- **Pipe** `|` — feed one command's stdout into the next command's stdin: `cat access.log | wc -l`.
+- **Redirect** `>` (overwrite), `>>` (append), `<` (read from a file): `ls > files.txt` writes the listing into a file instead of the screen.
 
 The Unix philosophy: don't hunt for one big command — *chain small ones*.
 
