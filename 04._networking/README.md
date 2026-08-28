@@ -63,6 +63,8 @@ dig +short api.github.com          # the name resolves to one or more IPs
 getent hosts localhost             # /etc/hosts maps names locally
 ```
 
+- **`dig` ("domain information groper") queries DNS directly.** `dig api.github.com` asks a DNS resolver "what address(es) back this name?"; `+short` trims the reply to just the IPs (without it you get the full record — TTLs, record types, which server answered).
+- **`getent hosts <name>` resolves a name the way a normal program does.** It walks the system's name-resolution order (`/etc/nsswitch.conf`): the local `/etc/hosts` file first, then DNS. That's why `getent hosts localhost` answers `127.0.0.1` straight from the file, with no DNS lookup.
 - A **hostname** is a stable name; the **IP** behind it can change. That indirection is what lets you move or scale a service without callers changing their code.
 - **Foreshadow Session 5:** `docker compose` gives each service a name, and containers reach each other *by that name* — this is why.
 
