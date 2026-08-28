@@ -48,11 +48,11 @@ Every command below works on these two files. One log line looks like:
 ### Part 1 — Streams, pipes & redirection (30 min) — blackboard + keyboard
 Every program has three streams — **stdin** (input), **stdout** (normal output), **stderr** (error messages).
 
-Try it with `ls`:
+Try it with `cat`:
 
 ```bash
-ls              # the file listing it prints → stdout
-ls nope         # "ls: cannot access 'nope'" → stderr
+cat data.csv    # the file's contents → stdout
+cat nope        # "cat: nope: No such file or directory" → stderr
 ```
 
 Both land on your screen by default, so they look the same — but they're *separate* channels. That separation is what lets you capture or send one somewhere without the other. Two ways to do that:
