@@ -20,14 +20,15 @@
 ## Before Class
 
 - Docker Desktop installed and running (you've used it since Session 2).
-- Your Git repo cloned locally; you'll commit a Dockerfile and a compose file today.
+- **A change of machine:** today you work on your **laptop** directly, *not* inside the webtop container — Docker runs on the host, and webtop can't run Docker inside itself.
+- Your Git repo cloned **on your laptop**. If you only ever cloned it inside webtop (Sessions 2–4), `git clone` it again on the host now — you'll commit a Dockerfile and a compose file today.
 
 ---
 
 ## Today's Teachings
 
 ### Part 0 — Callback (10 min)
-Remember the webtop container from Session 2? Today we learn what actually happened when you ran it — and you'll build your own.
+Remember the webtop container from Session 2? Today we learn what actually happened when you ran it — and you'll build your own. Note the switch: Sessions 2–4 lived *inside* that container; today you're back on your **host laptop**, because that's where Docker itself runs.
 
 ### Part 1 — Images vs containers (30 min) — blackboard
 The core distinction, on the board:
@@ -78,7 +79,7 @@ services:
 - **The payoff:** open one of the `docker-compose.yml` files from the course examples repo and read it together — *you now understand every line.* This is what `docker compose up` runs from the architecture sessions onward.
 
 ### Part 4 — Where does this actually run? Cloud computing (30 min) — blackboard + discussion
-Everything so far ran on *your laptop*. In the real world it runs on a server somewhere — and that "somewhere" is a real architectural and business decision.
+Everything so far ran on *a machine you control* — the webtop container in Sessions 2–4, your laptop today. In the real world it runs on a server somewhere — and that "somewhere" is a real architectural and business decision.
 
 - **Two homes for your containers:** your organisation's **own machines (on-prem)**, or rented from a **cloud** provider (AWS, Azure, GCP, …).
 - **VM vs container, in one line:** a virtual machine emulates a whole computer; a container shares the host's kernel and ships just your app — lighter, faster to start, which is why cloud platforms love them.
