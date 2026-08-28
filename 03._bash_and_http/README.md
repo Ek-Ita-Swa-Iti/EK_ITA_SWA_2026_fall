@@ -51,8 +51,9 @@ Every program has three streams — **stdin** (input), **stdout** (normal output
 Try it with `cat`:
 
 ```bash
-cat data.csv    # the file's contents → stdout
-cat nope        # "cat: nope: No such file or directory" → stderr
+cat data.csv    # a filename → cat reads the file; contents go to stdout
+cat             # no filename → cat reads stdin (type a line, Enter; Ctrl+D to stop)
+cat nope        # can't open it → "cat: nope: No such file or directory" to stderr
 ```
 
 Both land on your screen by default, so they look the same — but they're *separate* channels. That separation is what lets you capture or send one somewhere without the other. Two ways to do that:
