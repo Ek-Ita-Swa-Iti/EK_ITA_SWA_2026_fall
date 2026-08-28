@@ -64,7 +64,7 @@ Both land on your screen by default, so they look the same — but they're *sepa
 The Unix philosophy: don't hunt for one big command — *chain small ones*.
 
 ### Part 2 — The text toolkit (40 min) — keyboard
-Each tool, used immediately on the sample log:
+Use each tool, on the sample log file:
 
 - `grep` (find lines), `wc -l` (count), `sort` / `sort -n`, `uniq -c` (count duplicates).
 - `cut -d',' -f1` (a CSV column), `find` (locate files), a taste of `sed 's/old/new/'` and `awk '{print $1}'`.
