@@ -64,10 +64,26 @@ Both land on your screen by default, so they look the same — but they're *sepa
 The Unix philosophy: don't hunt for one big command — *chain small ones*.
 
 ### Part 2 — The text toolkit (40 min) — keyboard
-Use each tool, on the sample log file:
+Each tool, tried on `access.log` (and `data.csv` for the CSV example):
 
-- `grep` (find lines), `wc -l` (count), `sort` / `sort -n`, `uniq -c` (count duplicates).
-- `cut -d',' -f1` (a CSV column), `find` (locate files), a taste of `sed 's/old/new/'` and `awk '{print $1}'`.
+```bash
+grep '"POST' access.log                 # find lines matching a pattern
+grep -c ' 404$' access.log              # ...or just count them  (-c)
+wc -l access.log                        # count lines → 300 requests
+
+cut -d' ' -f1 access.log                # cut out a field: space-separated, field 1 = IP
+cut -d',' -f2 data.csv                  # comma-separated, field 2 = country
+
+cut -d' ' -f7 access.log | sort | uniq -c   # sort, then uniq -c = a tally (per status code)
+cut -d' ' -f7 access.log | sort -n          # sort -n = numeric order; add -r to reverse it
+
+find ~ -name '*.log'                     # locate files by name
+sed 's/\[//; s/\]//' access.log          # s/old/new/ on every line (here: drop the [ ])
+awk '{print $1, $7}' access.log          # print fields by number ($1 = IP, $7 = status)
+awk '$7 >= 500' access.log               # ...or filter: only server-error lines
+```
+
+`uniq` only collapses *adjacent* duplicates — that's why it's always `sort | uniq`.
 
 **"The 5 busiest IPs":** build it one stage at a time, re-running as it grows:
 
@@ -78,12 +94,24 @@ cut -d' ' -f1 access.log | sort | uniq -c | sort -rn | head -5
 **Exit codes** (`echo $?`), env vars (`echo $HOME`, `export`), and `PATH`.
 
 ### Part 3 — Talking to the web with curl + HTTP (35 min) — keyboard
-`curl` fetches URLs. Just enough HTTP to use it:
+`curl` fetches URLs. Just enough HTTP to use it — against the **GitHub API** (`api.github.com`, no key needed for reads):
 
-- **Methods:** `GET` (read) vs `POST` (send): `curl https://api.github.com/users/torvalds`.
-- **Status codes:** `200`/`404`/`500`; see them with `curl -i` and `curl -o /dev/null -w "%{http_code}\n"`.
-- **Headers** and **JSON bodies**; sending data: `curl -X POST -H "Content-Type: application/json" -d '{...}' <url>`.
-- Pipe a JSON response into the Part-2 tools to pull out a field.
+```bash
+curl https://api.github.com/users/torvalds              # GET: fetch a resource as JSON
+curl -s https://api.github.com/repos/torvalds/linux     # -s = quiet (drop the progress meter)
+
+curl -I https://api.github.com/users/torvalds           # -I = headers only: status line, content-type, x-ratelimit-*
+curl -s -o /dev/null -w "%{http_code}\n" https://api.github.com/users/torvalds          # just the status → 200
+curl -s -o /dev/null -w "%{http_code}\n" https://api.github.com/users/no-such-user-xyz  #                 → 404
+
+curl -s -o /dev/null -w "%{http_code}\n" -X POST https://api.github.com/user/repos      # → 401: POST needs auth (Part 4)
+
+curl -s https://api.github.com/users/torvalds | grep -E '"(login|name|public_repos)"'  # pipe JSON into the Part-2 tools
+```
+
+- **Methods:** `GET` reads, `POST` sends. Sending a body: `curl -X POST -H "Content-Type: application/json" -d '{...}' <url>`.
+- **Status codes:** `200` ok, `404` missing, `401`/`403` not allowed, `500` server broke.
+- Hit `403 {"message": "API rate limit exceeded"}`? The class is sharing one IP (60 requests/hour unauthenticated) — you'll switch to an authenticated call in Part 4.
 
 > A preview, not the full story — we design HTTP APIs properly later. Today: *poke* a web service from the terminal.
 
