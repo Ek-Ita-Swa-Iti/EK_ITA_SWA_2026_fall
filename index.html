@@ -8,11 +8,12 @@
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/prism-themes@1/themes/prism-one-dark.min.css">
 
   <style>
-    /* Dark code containers */
+    /* Dark code container */
     .markdown-section pre,
     .markdown-section pre[data-lang] {
       background-color: #282c34 !important;
       border-radius: 6px;
+      position: relative;
     }
     .markdown-section pre > code {
       background-color: transparent !important;
@@ -24,7 +25,28 @@
       color: #5c6370 !important;
     }
 
-    /* Full-page copy button */
+    /* Modern Dark Scrollbar for Code Blocks */
+    .markdown-section pre {
+      scrollbar-width: thin;
+      scrollbar-color: #4b5263 #21252b;
+    }
+    .markdown-section pre::-webkit-scrollbar {
+      height: 7px;
+      width: 7px;
+    }
+    .markdown-section pre::-webkit-scrollbar-track {
+      background: #21252b;
+      border-radius: 0 0 6px 6px;
+    }
+    .markdown-section pre::-webkit-scrollbar-thumb {
+      background: #4b5263;
+      border-radius: 4px;
+    }
+    .markdown-section pre::-webkit-scrollbar-thumb:hover {
+      background: #5c6370;
+    }
+
+    /* Global Page Copy Button */
     .copy-page-btn {
       position: fixed;
       top: 15px;
@@ -44,18 +66,17 @@
     .copy-page-btn:hover { background-color: #33a06f; }
     .copy-page-btn:active { transform: scale(0.96); }
 
-    /* Single-line copy styling */
+    /* Single-Line Row Copy (Left-Aligned Gutter) */
     .code-line {
       display: flex;
-      justify-content: space-between;
       align-items: center;
       position: relative;
       min-height: 1.5em;
-      padding: 1px 28px 1px 4px;
+      padding: 1px 4px 1px 28px; /* Left gutter padding for button */
       border-radius: 3px;
     }
     .code-line:hover {
-      background-color: rgba(255, 255, 255, 0.06);
+      background-color: rgba(255, 255, 255, 0.05);
     }
     .line-content {
       flex: 1;
@@ -64,19 +85,19 @@
     .line-copy-btn {
       opacity: 0;
       position: absolute;
-      right: 4px;
+      left: 3px;
       background: #3e4451;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 3px;
       color: #abb2bf;
       cursor: pointer;
-      font-size: 11px;
-      padding: 2px 5px;
+      font-size: 10px;
+      padding: 2px 4px;
       line-height: 1;
       transition: opacity 0.15s ease, background 0.15s ease;
     }
     .code-line:hover .line-copy-btn {
-      opacity: 0.7;
+      opacity: 0.65;
     }
     .line-copy-btn:hover {
       opacity: 1 !important;
@@ -119,14 +140,14 @@
           const lines = codeBlock.innerHTML.split('\n');
           codeBlock.innerHTML = lines.map((lineHtml, index) => {
             if (index === lines.length - 1 && lineHtml.trim() === '') return '';
-            return `<div class="code-line"><span class="line-content">${lineHtml}</span><button class="line-copy-btn" title="Copy line">📋</button></div>`;
+            return `<div class="code-line"><button class="line-copy-btn" title="Copy this line">📋</button><span class="line-content">${lineHtml}</span></div>`;
           }).join('');
         });
 
         document.querySelectorAll('.line-copy-btn').forEach(btn => {
           btn.onclick = function (e) {
             e.stopPropagation();
-            const textToCopy = this.previousElementSibling.innerText;
+            const textToCopy = this.nextElementSibling.innerText;
             navigator.clipboard.writeText(textToCopy).then(() => {
               const orig = this.innerText;
               this.innerText = '✓';
@@ -161,7 +182,7 @@
   <!-- Code Block Full Copy -->
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
 
-  <!-- Prism Syntax Components -->
+  <!-- Prism Syntax Highlighters -->
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-http.min.js"></script>
