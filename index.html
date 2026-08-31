@@ -1,199 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>ITAR SWA</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/prism-themes@1/themes/prism-one-dark.min.css">
+function lineCopyPlugin(hook, vm) {
+  hook.doneEach(function () {
+    document.querySelectorAll('.markdown-section pre > code').forEach(codeBlock => {
+      if (codeBlock.dataset.rowCopyInitialized) return;
+      codeBlock.dataset.rowCopyInitialized = 'true';
 
-  <style>
-    /* Dark code container */
-    .markdown-section pre,
-    .markdown-section pre[data-lang] {
-      background-color: #282c34 !important;
-      border-radius: 6px;
-      position: relative;
-    }
-    .markdown-section pre > code {
-      background-color: transparent !important;
-      color: #abb2bf !important;
-      text-shadow: none !important;
-      display: block;
-    }
-    .markdown-section pre:after {
-      color: #5c6370 !important;
-    }
+      const lines = codeBlock.innerHTML.split('\n');
+      codeBlock.innerHTML = lines.map((lineHtml, index) => {
+        if (index === lines.length - 1 && lineHtml.trim() === '') return '';
+        return `<div class="code-line"><button class="line-copy-btn" title="Copy clean command">📋</button><span class="line-content">${lineHtml}</span></div>`;
+      }).join('');
+    });
 
-    /* Modern Dark Scrollbar for Code Blocks */
-    .markdown-section pre {
-      scrollbar-width: thin;
-      scrollbar-color: #4b5263 #21252b;
-    }
-    .markdown-section pre::-webkit-scrollbar {
-      height: 7px;
-      width: 7px;
-    }
-    .markdown-section pre::-webkit-scrollbar-track {
-      background: #21252b;
-      border-radius: 0 0 6px 6px;
-    }
-    .markdown-section pre::-webkit-scrollbar-thumb {
-      background: #4b5263;
-      border-radius: 4px;
-    }
-    .markdown-section pre::-webkit-scrollbar-thumb:hover {
-      background: #5c6370;
-    }
-
-    /* Global Page Copy Button */
-    .copy-page-btn {
-      position: fixed;
-      top: 15px;
-      right: 20px;
-      z-index: 1000;
-      padding: 6px 14px;
-      background-color: #42b983;
-      color: #ffffff;
-      border: none;
-      border-radius: 4px;
-      font-size: 13px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-      transition: background-color 0.2s ease, transform 0.1s ease;
-    }
-    .copy-page-btn:hover { background-color: #33a06f; }
-    .copy-page-btn:active { transform: scale(0.96); }
-
-    /* Single-Line Row Copy (Left-Aligned Gutter) */
-    .code-line {
-      display: flex;
-      align-items: center;
-      position: relative;
-      min-height: 1.5em;
-      padding: 1px 4px 1px 28px; /* Left gutter padding for button */
-      border-radius: 3px;
-    }
-    .code-line:hover {
-      background-color: rgba(255, 255, 255, 0.05);
-    }
-    .line-content {
-      flex: 1;
-      white-space: pre;
-    }
-    .line-copy-btn {
-      opacity: 0;
-      position: absolute;
-      left: 3px;
-      background: #3e4451;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 3px;
-      color: #abb2bf;
-      cursor: pointer;
-      font-size: 10px;
-      padding: 2px 4px;
-      line-height: 1;
-      transition: opacity 0.15s ease, background 0.15s ease;
-    }
-    .code-line:hover .line-copy-btn {
-      opacity: 0.65;
-    }
-    .line-copy-btn:hover {
-      opacity: 1 !important;
-      background: #42b983;
-      color: #ffffff;
-    }
-  </style>
-</head>
-<body>
-  <div id="app"></div>
-
-  <script>
-    function copyPageMarkdownPlugin(hook, vm) {
-      let currentMarkdown = '';
-      hook.beforeEach(content => { currentMarkdown = content; return content; });
-      hook.doneEach(() => {
-        let existingBtn = document.getElementById('copy-page-btn');
-        if (!existingBtn) {
-          const btn = document.createElement('button');
-          btn.id = 'copy-page-btn';
-          btn.className = 'copy-page-btn';
-          btn.innerText = '📋 Copy Page MD';
-          btn.onclick = () => {
-            navigator.clipboard.writeText(currentMarkdown).then(() => {
-              btn.innerText = '✅ Copied!';
-              setTimeout(() => { btn.innerText = '📋 Copy Page MD'; }, 2000);
-            });
-          };
-          document.body.appendChild(btn);
+    document.querySelectorAll('.line-copy-btn').forEach(btn => {
+      btn.onclick = function (e) {
+        e.stopPropagation();
+        const contentEl = this.nextElementSibling;
+        
+        // Clone the row so the visible DOM is untouched
+        const clone = contentEl.cloneNode(true);
+        
+        // Remove Prism comment tokens (works across Bash, Python, JS, C#, YAML, etc.)
+        clone.querySelectorAll('.token.comment').forEach(el => el.remove());
+        
+        let textToCopy = clone.innerText.trimEnd();
+        
+        // Fallback: If the entire line was just a comment, copy the comment itself
+        if (!textToCopy.trim()) {
+          textToCopy = contentEl.innerText.trim();
         }
-      });
-    }
 
-    function lineCopyPlugin(hook, vm) {
-      hook.doneEach(() => {
-        document.querySelectorAll('.markdown-section pre > code').forEach(codeBlock => {
-          if (codeBlock.dataset.rowCopyInitialized) return;
-          codeBlock.dataset.rowCopyInitialized = 'true';
-
-          const lines = codeBlock.innerHTML.split('\n');
-          codeBlock.innerHTML = lines.map((lineHtml, index) => {
-            if (index === lines.length - 1 && lineHtml.trim() === '') return '';
-            return `<div class="code-line"><button class="line-copy-btn" title="Copy this line">📋</button><span class="line-content">${lineHtml}</span></div>`;
-          }).join('');
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          const orig = this.innerText;
+          this.innerText = '✓';
+          setTimeout(() => { this.innerText = orig; }, 1500);
         });
-
-        document.querySelectorAll('.line-copy-btn').forEach(btn => {
-          btn.onclick = function (e) {
-            e.stopPropagation();
-            const textToCopy = this.nextElementSibling.innerText;
-            navigator.clipboard.writeText(textToCopy).then(() => {
-              const orig = this.innerText;
-              this.innerText = '✓';
-              setTimeout(() => { this.innerText = orig; }, 1500);
-            });
-          };
-        });
-      });
-    }
-
-    window.$docsify = {
-      name: 'ITAR SWA',
-      loadSidebar: true,
-      subMaxLevel: 2,
-      auto2top: true,
-      copyCode: {
-        buttonText: 'Copy',
-        errorText: 'Error',
-        successText: 'Copied'
-      },
-      plugins: [
-        copyPageMarkdownPlugin,
-        lineCopyPlugin
-      ]
-    };
-  </script>
-
-  <!-- Docsify Core & Search -->
-  <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
-
-  <!-- Code Block Full Copy -->
-  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-
-  <!-- Prism Syntax Highlighters -->
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-http.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-docker.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-sql.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-markdown.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-javascript.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-java.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-csharp.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
-</body>
-</html>
+      };
+    });
+  });
+}
