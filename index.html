@@ -33,6 +33,24 @@
     .copy-page-btn:active {
       transform: scale(0.96);
     }
+
+    /* Force dark theme styling on code blocks */
+    .markdown-section pre,
+    .markdown-section pre[data-lang] {
+      background-color: #282c34 !important;
+      border-radius: 6px;
+    }
+    
+    .markdown-section pre > code {
+      background-color: transparent !important;
+      color: #abb2bf !important;
+      text-shadow: none !important;
+    }
+    
+    /* Adjust language tag in top right */
+    .markdown-section pre:after {
+      color: #5c6370 !important;
+    }
   </style>
 </head>
 <body>
