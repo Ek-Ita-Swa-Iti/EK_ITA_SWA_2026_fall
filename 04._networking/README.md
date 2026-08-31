@@ -39,14 +39,18 @@ Draw the round-trip once, end to end:
 The mental model for the whole semester: an architecture is boxes (processes) connected by these request/response wires.
 
 ### Part 2 — Ports & listening processes (35 min) — keyboard, the set-piece
+
+> **Today's hands-on parts (2, 3, 5, 6) all run *inside the webtop container*, not on your laptop** — the same terminal you used in Sessions 2–3. `python3`, `ss`, `dig`, and `getent` are Linux tools that live in the container, and `localhost` here means *the container itself*, not your host machine. Mixing up the two machines is the easiest way to confuse yourself today — if a command behaves oddly, first check which machine your terminal is on.
+
 Make a server appear and talk to it:
 
 ```bash
-python3 -m http.server 8000        # your machine is now a web server on port 8000
-curl http://localhost:8000         # talk to it from the same machine
+python3 -m http.server 8000        # this container is now a web server on port 8000
+curl http://localhost:8000         # talk to it from inside the same container
 ss -tlnp                           # what's listening, on which ports?
 ```
 
+- **`ss` ("socket statistics") shows what the network stack is doing** — the modern replacement for `netstat`. The flags stack up: `-t` TCP only, `-l` only sockets in the *listening* state, `-n` numeric ports (don't translate `80` → `http`), `-p` show the process that owns each socket. So `ss -tlnp` reads as "which processes are listening on which TCP ports."
 - **A port is a door a process listens on.** Only one process per port — try starting a second server on `8000` and read the *"address already in use"* error.
 - **`localhost` vs `0.0.0.0` vs a real address:** `localhost` (127.0.0.1) is "only this machine"; `0.0.0.0` means "accept from anywhere." Start the server on each and see who can reach it.
 - Kill it and watch `curl` fail — the door is closed now (foreshadows Part 6).
@@ -59,6 +63,8 @@ dig +short api.github.com          # the name resolves to one or more IPs
 getent hosts localhost             # /etc/hosts maps names locally
 ```
 
+- **`dig` ("domain information groper") queries DNS directly.** `dig api.github.com` asks a DNS resolver "what address(es) back this name?"; `+short` trims the reply to just the IPs (without it you get the full record — TTLs, record types, which server answered).
+- **`getent hosts <name>` resolves a name the way a normal program does.** It walks the system's name-resolution order (`/etc/nsswitch.conf`): the local `/etc/hosts` file first, then DNS. That's why `getent hosts localhost` answers `127.0.0.1` straight from the file, with no DNS lookup.
 - A **hostname** is a stable name; the **IP** behind it can change. That indirection is what lets you move or scale a service without callers changing their code.
 - **Foreshadow Session 5:** `docker compose` gives each service a name, and containers reach each other *by that name* — this is why.
 

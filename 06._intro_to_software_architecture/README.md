@@ -19,7 +19,7 @@
 ## Before Class
 
 - Bring a laptop with `git` installed and a terminal you're comfortable with.
-- Make sure you have **Python 3.12 or newer** installed (`python3 --version`) — Vibe (installed back in Session 1) needs it.
+- Confirm **Mistral Vibe still works** — open a terminal and run `vibe` (installed back in Session 1). If it launches, you're set; if not, fix it *before* class, not during.
 - Bring a system **you** have built or worked on (any language, any size). Be ready to describe it in 2 minutes.
 - [optional] Think for one minute about what "architecture" means to you in software. One sentence. Bring it.
 
