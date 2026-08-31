@@ -5,12 +5,26 @@
   <title>ITAR SWA</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
-  
-  <!-- One Dark Theme for Code Blocks -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/prism-themes@1/themes/prism-one-dark.min.css">
-  
+
   <style>
-    /* Styling for the floating 'Copy Page Markdown' button */
+    /* Dark code containers */
+    .markdown-section pre,
+    .markdown-section pre[data-lang] {
+      background-color: #282c34 !important;
+      border-radius: 6px;
+    }
+    .markdown-section pre > code {
+      background-color: transparent !important;
+      color: #abb2bf !important;
+      text-shadow: none !important;
+      display: block;
+    }
+    .markdown-section pre:after {
+      color: #5c6370 !important;
+    }
+
+    /* Full-page copy button */
     .copy-page-btn {
       position: fixed;
       top: 15px;
@@ -27,29 +41,47 @@
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
       transition: background-color 0.2s ease, transform 0.1s ease;
     }
-    .copy-page-btn:hover {
-      background-color: #33a06f;
-    }
-    .copy-page-btn:active {
-      transform: scale(0.96);
-    }
+    .copy-page-btn:hover { background-color: #33a06f; }
+    .copy-page-btn:active { transform: scale(0.96); }
 
-    /* Force dark theme styling on code blocks */
-    .markdown-section pre,
-    .markdown-section pre[data-lang] {
-      background-color: #282c34 !important;
-      border-radius: 6px;
+    /* Single-line copy styling */
+    .code-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      min-height: 1.5em;
+      padding: 1px 28px 1px 4px;
+      border-radius: 3px;
     }
-    
-    .markdown-section pre > code {
-      background-color: transparent !important;
-      color: #abb2bf !important;
-      text-shadow: none !important;
+    .code-line:hover {
+      background-color: rgba(255, 255, 255, 0.06);
     }
-    
-    /* Adjust language tag in top right */
-    .markdown-section pre:after {
-      color: #5c6370 !important;
+    .line-content {
+      flex: 1;
+      white-space: pre;
+    }
+    .line-copy-btn {
+      opacity: 0;
+      position: absolute;
+      right: 4px;
+      background: #3e4451;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      color: #abb2bf;
+      cursor: pointer;
+      font-size: 11px;
+      padding: 2px 5px;
+      line-height: 1;
+      transition: opacity 0.15s ease, background 0.15s ease;
+    }
+    .code-line:hover .line-copy-btn {
+      opacity: 0.7;
+    }
+    .line-copy-btn:hover {
+      opacity: 1 !important;
+      background: #42b983;
+      color: #ffffff;
     }
   </style>
 </head>
@@ -57,38 +89,51 @@
   <div id="app"></div>
 
   <script>
-    // Custom plugin: Copies the raw Markdown of the currently loaded document
     function copyPageMarkdownPlugin(hook, vm) {
       let currentMarkdown = '';
-
-      // Capture raw markdown text before it gets parsed to HTML
-      hook.beforeEach(function (content) {
-        currentMarkdown = content;
-        return content;
-      });
-
-      // Inject the copy button whenever a page finishes rendering
-      hook.doneEach(function () {
+      hook.beforeEach(content => { currentMarkdown = content; return content; });
+      hook.doneEach(() => {
         let existingBtn = document.getElementById('copy-page-btn');
         if (!existingBtn) {
           const btn = document.createElement('button');
           btn.id = 'copy-page-btn';
           btn.className = 'copy-page-btn';
           btn.innerText = '📋 Copy Page MD';
-          
-          btn.onclick = function () {
+          btn.onclick = () => {
             navigator.clipboard.writeText(currentMarkdown).then(() => {
               btn.innerText = '✅ Copied!';
-              setTimeout(() => {
-                btn.innerText = '📋 Copy Page MD';
-              }, 2000);
-            }).catch(err => {
-              console.error('Failed to copy: ', err);
+              setTimeout(() => { btn.innerText = '📋 Copy Page MD'; }, 2000);
             });
           };
-
           document.body.appendChild(btn);
         }
+      });
+    }
+
+    function lineCopyPlugin(hook, vm) {
+      hook.doneEach(() => {
+        document.querySelectorAll('.markdown-section pre > code').forEach(codeBlock => {
+          if (codeBlock.dataset.rowCopyInitialized) return;
+          codeBlock.dataset.rowCopyInitialized = 'true';
+
+          const lines = codeBlock.innerHTML.split('\n');
+          codeBlock.innerHTML = lines.map((lineHtml, index) => {
+            if (index === lines.length - 1 && lineHtml.trim() === '') return '';
+            return `<div class="code-line"><span class="line-content">${lineHtml}</span><button class="line-copy-btn" title="Copy line">📋</button></div>`;
+          }).join('');
+        });
+
+        document.querySelectorAll('.line-copy-btn').forEach(btn => {
+          btn.onclick = function (e) {
+            e.stopPropagation();
+            const textToCopy = this.previousElementSibling.innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+              const orig = this.innerText;
+              this.innerText = '✓';
+              setTimeout(() => { this.innerText = orig; }, 1500);
+            });
+          };
+        });
       });
     }
 
@@ -97,16 +142,14 @@
       loadSidebar: true,
       subMaxLevel: 2,
       auto2top: true,
-      
-      // Code block copy settings
       copyCode: {
         buttonText: 'Copy',
         errorText: 'Error',
         successText: 'Copied'
       },
-
       plugins: [
-        copyPageMarkdownPlugin
+        copyPageMarkdownPlugin,
+        lineCopyPlugin
       ]
     };
   </script>
@@ -115,10 +158,10 @@
   <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
 
-  <!-- Code Block Quick Copy Plugin -->
+  <!-- Code Block Full Copy -->
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
 
-  <!-- Prism Language Highlighting Components -->
+  <!-- Prism Syntax Components -->
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-http.min.js"></script>
