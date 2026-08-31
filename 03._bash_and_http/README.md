@@ -1,8 +1,8 @@
-# Session 3: The Command Line — Pipes, HTTP & M2M Security
+# Session 3: The Command Line — Pipes & HTTP
 
 **ITA Software Architecture 2026 Fall | 3 hours | Foundations block (hands-on)**
 
-> The Unix idea: small tools that each do one thing, joined together. Today you'll learn to *compose* commands with pipes to answer real questions about data. Then you'll meet `curl` and just enough **HTTP** to talk to a web service — and, crucially, how machines talk to each other **securely**: HTTPS, certificates, and how one machine proves its identity to another. That last part is the heart of *interoperability security*, which you'll rely on for the rest of the semester.
+> The Unix idea: small tools that each do one thing, joined together. Today you'll learn to *compose* commands with pipes to answer real questions about data. Then you'll meet `curl` and just enough **HTTP** to talk to a web service from the terminal — reading a resource, sending one, and attaching a token so the server knows who you are.
 
 ---
 
@@ -11,7 +11,7 @@
 - Understand **stdin / stdout / stderr** and wire commands together with **pipes** and **redirection**.
 - Use the core text tools — `grep`, `sort`, `uniq`, `wc`, `cut`, `find`, and a little `awk` — to slice data.
 - Use **`curl`** to make HTTP requests; read methods, status codes, headers, and JSON.
-- Explain how **machine-to-machine communication is secured**: HTTPS/TLS, certificates (encryption + server identity), and **API authentication** (keys, bearer tokens, a word on mTLS).
+- Send an **authenticated request** — a bearer token in a header, read from an environment variable, never committed.
 
 ---
 
@@ -130,24 +130,8 @@ Delete `s3-api-test` from its **Settings → Danger Zone** when you're done (the
 
 > A preview, not the full story — we design HTTP APIs properly later. Today: *poke* a web service from the terminal.
 
-### Part 4 — Securing machine-to-machine communication (40 min) — blackboard + keyboard — the set-piece
-When two machines exchange data over a network, two questions matter: **can anyone on the path read it?** and **how does each side know who it's talking to?** This is *interoperability security* — the everyday reality behind every API call.
-
-- **Why plain HTTP is unsafe:** the request and response travel in the clear — any hop between can read or alter them. Blackboard: client → … → server, with an eavesdropper in the middle.
-- **HTTPS = HTTP over TLS.** TLS gives two things: **encryption in transit** (eavesdroppers see gibberish) and **server identity** via a **certificate**. `curl` checks the certificate automatically — that's what the padlock means.
-- **Certificates & trust:** a certificate is signed by a **Certificate Authority (CA)** your system already trusts. Inspect a real one:
-  ```bash
-  curl -v https://api.github.com 2>&1 | grep -Ei "subject|issuer|SSL"
-  openssl s_client -connect api.github.com:443 </dev/null   # see the cert chain
-  ```
-  What `curl` does on a **bad/expired cert** (it refuses), and `-k`/`--insecure` to skip the check — *and why doing that in real life defeats the point.*
-- **Authentication — how a machine proves who it is:** servers don't trust anonymous callers. The common patterns:
-  - **API key / bearer token** in a header: `curl -H "Authorization: Bearer $TOKEN" <url>` — you did exactly this for the Part 3 `POST`; the point now is *why* it works and *why* the token lives in an **environment variable / secret**, never hard-coded or committed (callback to S2's "don't commit secrets").
-  - **mutual TLS (mTLS)** in one sentence: *both* sides present certificates — used between trusted back-end services.
-- **The tie-in:** this is exactly how services talk safely in a distributed system — forward link to **REST APIs**, **microservices**, and the **Security** session later in the semester.
-
-### Part 5 — Wrap-up (10 min)
-Two threads, recapped: compose small tools; and machines exchange data over channels that must be *encrypted* and *authenticated*. Commit today's work.
+### Part 4 — Wrap-up (10 min)
+Two threads, recapped: compose small tools with pipes to answer questions about data; and use `curl` to talk to a web service over HTTP — reads, writes, and a token that says who you are. Commit today's work (no secret in the file).
 
 ---
 
@@ -157,8 +141,7 @@ Using **only the terminal**, save your commands to a file and push:
 
 - From the log: total requests, error count, the 5 busiest IPs, the busiest hour.
 - From the CSV: extract a column, sort it, count unique values.
-- With `curl`: fetch a **public HTTPS API**, show its status code, and extract one field from the JSON.
-- **Inspect the server's certificate** (`curl -v …` or `openssl s_client`): who issued it, who it's for.
+- With `curl`: fetch from the **GitHub API**, show its status code, and extract one field from the JSON.
 - Make one **authenticated request** using a token in an `Authorization` header, with the token read from an **environment variable** (not written in the file).
 - Save commands in `answers.sh` (commented) and **push to GitHub** — with no secret in the file.
 
@@ -167,12 +150,11 @@ Using **only the terminal**, save your commands to a file and push:
 ## After Class
 
 - Re-solve two exercise questions a *different* way (same answer, different tools).
-- In one sentence each: what does HTTPS protect that HTTP doesn't, and how does a server know an API request came from *you*?
+- In one sentence: how does the GitHub API know a `POST` came from *you* and not someone else — and where does the token that proves it live?
 
 ---
 
 ## Optional
 
 - [optional] *The Linux Command Line* (Shotts), Part 2 — redirection, pipes, text tools.
-- [optional] *How HTTPS works* (`https://howhttps.works`) — a friendly illustrated walk-through of TLS and certificates.
-- [optional] Skim `man curl` EXAMPLES, and the `--cert`/`--cacert` options to see where mTLS plugs in.
+- [optional] Skim `man curl` EXAMPLES — there's a lot `curl` does that we didn't touch.
