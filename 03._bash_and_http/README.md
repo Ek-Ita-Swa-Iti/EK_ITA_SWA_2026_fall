@@ -27,7 +27,7 @@
 > Today everything runs **inside the webtop container (Docker container)** from Session 2, not "on" your laptop.
 
 ### Part 0 — Warm-up (10 min)
-Quick recap of last week's navigation. Then pull down today's data — a real-ish web-server **access log** (~300 lines) and a small **CSV** — into a fresh folder:
+Quick recap of last week's navigation — `pwd`, `ls`, `ls -l`, `ls -la`, `cd`, `cd ..`, `cd ~`, `cat`, `less`, `head`, `tail`. Then pull down today's data — a real-ish web-server **access log** (~300 lines) and a small **CSV** — into a fresh folder:
 
 ```bash
 mkdir -p ~/session-03 && cd ~/session-03
