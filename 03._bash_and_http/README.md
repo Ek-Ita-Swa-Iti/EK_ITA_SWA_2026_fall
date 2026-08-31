@@ -93,24 +93,40 @@ cut -d' ' -f1 access.log | sort | uniq -c | sort -rn | head -5
 **Exit codes** (`echo $?`), env vars (`echo $HOME`, `export`), and `PATH`.
 
 ### Part 3 — Talking to the web with curl + HTTP (35 min) — keyboard
-`curl` fetches URLs. Just enough HTTP to use it — against the **GitHub API** (`api.github.com`, no key needed for reads):
+`curl` fetches URLs. Just enough HTTP to use it — against the **GitHub API** (`api.github.com`): no key for reads, a **token** for writes.
+
+**Reads — `GET`:**
 
 ```bash
-curl https://api.github.com/users/torvalds              # GET: fetch a resource as JSON
+curl https://api.github.com/users/torvalds              # fetch a resource as JSON
 curl -s https://api.github.com/repos/torvalds/linux     # -s = quiet (drop the progress meter)
 
 curl -I https://api.github.com/users/torvalds           # -I = headers only: status line, content-type, x-ratelimit-*
 curl -s -o /dev/null -w "%{http_code}\n" https://api.github.com/users/torvalds          # just the status → 200
 curl -s -o /dev/null -w "%{http_code}\n" https://api.github.com/users/no-such-user-xyz  #                 → 404
 
-curl -s -o /dev/null -w "%{http_code}\n" -X POST https://api.github.com/user/repos      # → 401: POST needs auth (Part 4)
-
 curl -s https://api.github.com/users/torvalds | grep -E '"(login|name|public_repos)"'  # pipe JSON into the Part-2 tools
 ```
 
-- **Methods:** `GET` reads, `POST` sends. Sending a body: `curl -X POST -H "Content-Type: application/json" -d '{...}' <url>`.
-- **Status codes:** `200` ok, `404` missing, `401`/`403` not allowed, `500` server broke.
-- Hit `403 {"message": "API rate limit exceeded"}`? The class is sharing one IP (60 requests/hour unauthenticated) — you'll switch to an authenticated call in Part 4.
+**Writes — `POST`, with your identity attached.** A `POST` that changes something needs a token. Reuse the **personal access token from Session 2** (classic, `repo` scope), in an environment variable so it never lands in a file:
+
+```bash
+export TOKEN=ghp_xxxxxxxxxxxx     # paste your Session 2 token at the prompt — never into answers.sh
+
+curl -s -o /dev/null -w "%{http_code}\n" -X POST https://api.github.com/user/repos   # → 401: no token, GitHub can't tell who you are
+
+curl -s -X POST https://api.github.com/user/repos \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "s3-api-test", "private": true}' \
+  | grep -E '"(full_name|html_url)"'   # → 201 Created — refresh github.com, the repo is really there
+```
+
+Delete `s3-api-test` from its **Settings → Danger Zone** when you're done (the `repo` scope creates repos but can't delete them).
+
+- **Methods:** `GET` reads, `POST` sends (`-d '{...}'` is the body).
+- **Status codes:** `200` ok, `201` created, `401`/`403` not allowed, `404` missing, `500` server broke.
+- An authenticated call also lifts the rate limit from **60 to 5000 requests/hour** — the fix if you hit `403 {"message": "API rate limit exceeded"}`.
 
 > A preview, not the full story — we design HTTP APIs properly later. Today: *poke* a web service from the terminal.
 
@@ -126,7 +142,7 @@ When two machines exchange data over a network, two questions matter: **can anyo
   ```
   What `curl` does on a **bad/expired cert** (it refuses), and `-k`/`--insecure` to skip the check — *and why doing that in real life defeats the point.*
 - **Authentication — how a machine proves who it is:** servers don't trust anonymous callers. The common patterns:
-  - **API key / bearer token** in a header: `curl -H "Authorization: Bearer $TOKEN" <url>` — and why the token lives in an **environment variable / secret**, never hard-coded or committed (callback to S2's "don't commit secrets").
+  - **API key / bearer token** in a header: `curl -H "Authorization: Bearer $TOKEN" <url>` — you did exactly this for the Part 3 `POST`; the point now is *why* it works and *why* the token lives in an **environment variable / secret**, never hard-coded or committed (callback to S2's "don't commit secrets").
   - **mutual TLS (mTLS)** in one sentence: *both* sides present certificates — used between trusted back-end services.
 - **The tie-in:** this is exactly how services talk safely in a distributed system — forward link to **REST APIs**, **microservices**, and the **Security** session later in the semester.
 
