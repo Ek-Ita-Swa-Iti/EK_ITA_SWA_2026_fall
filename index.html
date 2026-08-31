@@ -8,26 +8,26 @@
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/prism-themes@1/themes/prism-one-dark.min.css">
 
   <style>
-    /* Dark code container with expanded left gutter */
+    /* Dark code container */
     .markdown-section pre,
     .markdown-section pre[data-lang] {
       background-color: #282c34 !important;
       border-radius: 6px;
       position: relative;
-      padding-left: 42px !important; /* Reserves outer space for gutter buttons */
+      /* Removed the left padding that caused the clipping bug */
     }
-    
+
     .markdown-section pre > code {
       background-color: transparent !important;
       color: #abb2bf !important;
       text-shadow: none !important;
       display: block;
     }
-    
+
     .markdown-section pre:after {
       color: #5c6370 !important;
     }
-    
+
     /* Modern Dark Scrollbar for Code Blocks */
     .markdown-section pre {
       scrollbar-width: thin;
@@ -48,7 +48,7 @@
     .markdown-section pre::-webkit-scrollbar-thumb:hover {
       background: #5c6370;
     }
-    
+
     /* Global Page Copy Button */
     .copy-page-btn {
       position: fixed;
@@ -68,10 +68,11 @@
     }
     .copy-page-btn:hover { background-color: #33a06f; }
     .copy-page-btn:active { transform: scale(0.96); }
-    
-    /* Single-Line Row Styling */
+
+    /* Single-Line Flexbox Row */
     .code-line {
-      position: relative;
+      display: flex;
+      align-items: center;
       min-height: 1.5em;
       padding: 1px 4px;
       border-radius: 3px;
@@ -79,18 +80,16 @@
     .code-line:hover {
       background-color: rgba(255, 255, 255, 0.05);
     }
+    
     .line-content {
-      display: inline-block;
       white-space: pre;
     }
-    
-    /* Row Copy Button in Outer Gutter */
+
+    /* Row Copy Button (Acts as a consistent left gutter) */
     .line-copy-btn {
       opacity: 0;
-      position: absolute;
-      left: -32px; /* Hangs button completely to the left in the gutter */
-      top: 50%;
-      transform: translateY(-50%);
+      flex-shrink: 0;
+      margin-right: 14px; /* Creates the empty gap between button and code */
       background: #3e4451;
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 3px;
@@ -103,11 +102,11 @@
       -webkit-user-select: none;
       transition: opacity 0.15s ease, background 0.15s ease;
     }
-    
+
     .code-line:hover .line-copy-btn {
       opacity: 0.65;
     }
-    
+
     .line-copy-btn:hover {
       opacity: 1 !important;
       background: #42b983;
