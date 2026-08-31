@@ -9,7 +9,7 @@
 ## Learning Goals
 
 - Understand **stdin / stdout / stderr** and wire commands together with **pipes** and **redirection**.
-- Use the core text tools — `grep`, `sort`, `uniq`, `wc`, `cut`, `find`, and a little `sed`/`awk` — to slice data.
+- Use the core text tools — `grep`, `sort`, `uniq`, `wc`, `cut`, `find`, and a little `awk` — to slice data.
 - Use **`curl`** to make HTTP requests; read methods, status codes, headers, and JSON.
 - Explain how **machine-to-machine communication is secured**: HTTPS/TLS, certificates (encryption + server identity), and **API authentication** (keys, bearer tokens, a word on mTLS).
 
@@ -78,7 +78,6 @@ cut -d' ' -f7 access.log | sort | uniq -c   # sort, then uniq -c = a tally (per 
 cut -d' ' -f7 access.log | sort -n          # sort -n = numeric order; add -r to reverse it
 
 find ~ -name '*.log'                     # locate files by name
-sed 's/\[//; s/\]//' access.log          # s/old/new/ on every line (here: drop the [ ])
 awk '{print $1, $7}' access.log          # print fields by number ($1 = IP, $7 = status)
 awk '$7 >= 500' access.log               # ...or filter: only server-error lines
 ```
