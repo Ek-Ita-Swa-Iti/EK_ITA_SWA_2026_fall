@@ -29,16 +29,24 @@
 Last week you ran `curl https://api.github.com/...` and got JSON back. Ask the room: *between pressing Enter and the reply arriving, what actually happened?* Collect guesses on the board. Today we fill in the blanks.
 
 ### Part 1 — The client–server model & a request's journey (30 min) — blackboard
-Draw the round-trip once, end to end:
+Walk the round-trip once, end to end.
 
-- A **client** wants something from a **server**; they exchange messages over a network.
-- **Name → address:** `api.github.com` isn't a place — **DNS** turns the name into an **IP address**.
-- **Address → port:** an IP reaches a *machine*; the **port** picks the *program* on it (`:443` = HTTPS, `:80` = HTTP, `:22` = SSH).
-- **Process → response:** a program is **listening** on that port, handles the request, and sends a reply back down the same connection.
+**The shape.** A **client** wants something from a **server**; they exchange messages over a network.
 
-![A request's journey: the client resolves the name to an IP address via a DNS resolver, the IP address reaches the machine, the port picks the listening process, and the response travels back down the same connection.](img/request-round-trip.svg)
+![Clients — a laptop, a phone, a desktop — all send requests through the Internet to a single server, which sends responses back.](img/client-server-model.webp)
 
-The mental model for the whole semester: an architecture is boxes (processes) connected by these request/response wires.
+Every client (a browser, a phone app, another service) sends a **request** and gets a **response** back. "The Internet" in the middle stands for all the network hops the message actually crosses. That is the mental model for the rest of the semester: **an architecture is boxes (processes) connected by these request/response wires.**
+
+**The journey.** How does one request actually get there and back? Four steps:
+
+![A user asks a DNS server for a domain's address; the DNS server replies with the web server's IP; the user then makes an HTTP request to that IP, and the web server responds with the data.](img/request-journey-dns.png)
+
+1. **Name → address.** `api.github.com` isn't a place. The client asks a **DNS server**: *what's the IP for this name?*
+2. The DNS server **replies with the IP address** of the machine you actually want.
+3. **Address → port → process.** The client now makes its **HTTP request straight to that IP**, on a **port** (`:443` = HTTPS, `:80` = HTTP, `:22` = SSH). An IP reaches a *machine*; the port picks the *program* on it.
+4. A program is **listening** on that port, handles the request, and the server **responds with the data** — back down the same connection.
+
+*(The second diagram's labels are informal — "Respond IP of Web Server", "Data Files" — but the order is exactly right: resolve the name first, then talk to the address.)*
 
 ### Part 2 — Ports & listening processes (35 min) — keyboard, the set-piece
 
