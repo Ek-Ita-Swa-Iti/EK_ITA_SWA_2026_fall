@@ -36,13 +36,7 @@ Draw the round-trip once, end to end:
 - **Address → port:** an IP reaches a *machine*; the **port** picks the *program* on it (`:443` = HTTPS, `:80` = HTTP, `:22` = SSH).
 - **Process → response:** a program is **listening** on that port, handles the request, and sends a reply back down the same connection.
 
-```mermaid
-flowchart LR
-    C["Client<br/>(curl, a browser,<br/>another service)"]
-    C -->|"1. name to address<br/>DNS resolves api.github.com"| IP["IP address<br/>reaches the machine"]
-    IP -->|"2. address to port<br/>:443 picks the program"| PROC["Listening process<br/>handles the request"]
-    PROC -->|"3. response, back down<br/>the same connection"| C
-```
+![A request's journey: the client resolves the name to an IP address via a DNS resolver, the IP address reaches the machine, the port picks the listening process, and the response travels back down the same connection.](img/request-round-trip.svg)
 
 The mental model for the whole semester: an architecture is boxes (processes) connected by these request/response wires.
 
