@@ -34,7 +34,7 @@ Last week you ran `curl https://api.github.com/...` and got JSON back. Ask the r
 
 ![Clients — a laptop, a phone, a desktop — all send requests through the Internet to a single server, which sends responses back.](img/client-server-model.webp)
 
-Every client (a browser, a phone app, another service) sends a **request** and gets a **response** back. "The Internet" in the middle stands for all the network hops the message actually crosses. That is the mental model for the rest of the semester: **an architecture is boxes (processes) connected by these request/response wires.**
+Every client (a browser, a phone app, another service, `curl`) sends a **request** and gets a **response** back. "The Internet" in the middle stands for all the network hops the message actually crosses. That is the mental model for the rest of the semester: **an architecture is boxes (processes) connected by these request/response wires.**
 
 **The journey.** How does one request actually get there and back? Four steps:
 
