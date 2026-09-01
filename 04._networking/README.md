@@ -29,7 +29,6 @@
 Last week you ran `curl https://api.github.com/...` and got JSON back. Ask the room: *between pressing Enter and the reply arriving, what actually happened?* Collect guesses on the board. Today we fill in the blanks.
 
 ### Part 1 — The client–server model & a request's journey (30 min) — blackboard
-Walk the round-trip once, end to end.
 
 **The shape.** A **client** wants something from a **server**; they exchange messages over a network.
 
