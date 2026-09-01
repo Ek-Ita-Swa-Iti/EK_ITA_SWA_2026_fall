@@ -72,7 +72,7 @@ getent ahosts api.github.com       # a real name → DNS lookup; often several I
 ```
 
 - **`getent hosts` / `getent ahosts <name>` resolve a name the way any program does.** They follow the system's name-resolution order (`/etc/nsswitch.conf`): the local `/etc/hosts` file first, then **DNS**. `localhost` comes straight from the file (`127.0.0.1`, no network); `api.github.com` has to ask DNS — and a busy site usually answers with **several IPs for one name**, which is load balancing glimpsed in the wild. (`getent ahosts api.github.com | awk '{print $1}' | sort -u` — a Session 3 pipe — trims it to the distinct IPs.)
-- The dedicated DNS tool is **`dig`** (`dig +short api.github.com`) — worth knowing the name — but it currently crashes in this webtop image (a BIND/libuv bug in containers), so we use `getent` today.
+- The dedicated DNS tool is **`dig`** (`dig +short api.github.com`) — worth knowing the name — but it currently crashes in this webtop image, so we use `getent` today.
 - A **hostname** is a stable name; the **IP** behind it can change. That indirection is what lets you move or scale a service without callers changing their code.
 - **Foreshadow Session 5:** `docker compose` gives each service a name, and containers reach each other *by that name* — this is why.
 
