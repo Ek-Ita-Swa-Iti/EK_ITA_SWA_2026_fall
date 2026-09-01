@@ -40,7 +40,7 @@ Every client (a browser, a phone app, another service, `curl`) sends a **request
 
 ![A user asks a DNS server for a domain's address; the DNS server replies with the web server's IP; the user then makes an HTTP request to that IP, and the web server responds with the data.](img/request-journey-dns.png)
 
-A web server does not have a name, it has an **IP address**. The name is just a lookup key.
+A web server does not have a name, it has an **IP address**. The name is just a lookup key — easier for people to remember than an IP address.
 
 1. **Name → address.** `api.github.com` isn't a place. The client asks a **DNS server**: *what's the IP for this name?*
 2. The DNS server **replies with the IP address** of the machine you actually want.
