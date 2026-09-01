@@ -56,6 +56,7 @@ Make a server appear and talk to it:
 ```bash
 python3 -m http.server 8000        # this container is now a web server on port 8000
 curl http://localhost:8000         # talk to it from inside the same container
+# ...or open http://localhost:8000 in the browser inside the webtop desktop
 ```
 
 - **A port is a door a process listens on.** Only one process per port — try starting a second server on `8000` and read the *"address already in use"* error.
