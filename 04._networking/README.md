@@ -75,7 +75,23 @@ getent ahosts api.github.com       # a real name → DNS lookup; often several I
 - A **hostname** is a stable name; the **IP** behind it can change. That indirection is what lets you move or scale a service without callers changing their code.
 
 ### Part 4 — Remote machines, briefly (15 min) — keyboard
-Reaching *another* machine is just the same round-trip to a different address. SSH is one such service (port 22): `ssh user@host` opens a shell on the far side; the terminal skills from S2 work identically there. We won't dwell — the point is that "remote" is not special, it's just a network hop.
+Reaching *another* machine is just the same round-trip to a different address. SSH is one such service (port 22): `ssh user@host` opens a shell on the far side; the terminal skills from S2 work identically there.
+
+**Try it.** Your instructor has a throwaway Linux VM running in a data centre in **North Europe**. From your webtop terminal:
+
+```bash
+sudo apt install openssh-client          # if `ssh` isn't already there
+
+ssh student@<ip-on-the-board>             # password is on the board; first time, type "yes" to trust the host
+hostname                                  # not your webtop — a machine somewhere else
+cat /etc/os-release                       # a real cloud Ubuntu box
+uptime                                    # how long this VM has existed (not long)
+exit                                      # back to your webtop
+
+ssh student@<ip-on-the-board> hostname    # SSH can also run one command without opening a shell
+```
+
+The point: nothing about "remote" is special — it's the same **name → port → process → response** as Part 1, just to an address that happens to be in another country. We won't dwell.
 
 ### Part 5 — The network is unreliable (25 min) — blackboard + demo — the payoff
 Everything above assumed the request arrives. It often doesn't:
