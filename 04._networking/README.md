@@ -50,7 +50,7 @@ flowchart LR
 
 Every **node** is a running program; every **edge** is a request that expects a response. Almost all of the diagrams you draw this semester are some version of this graph — the work is deciding where the boxes go and what travels on each wire.
 
-**The journey.** How does one request actually get there and back? Four steps:
+**The journey.** How does one request actually get there and back? It can be modelled in these four steps:
 
 ![A user asks a DNS server for a domain's address; the DNS server replies with the web server's IP; the user then makes an HTTP request to that IP, and the web server responds with the data.](img/request-journey-dns.png)
 
