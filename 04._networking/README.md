@@ -47,8 +47,6 @@ A web server does not have a name, it has an **IP address**. The name is just a 
 3. **Address → port → process.** The client now makes its **HTTP request straight to that IP**, on a **port** (`:443` = HTTPS, `:80` = HTTP, `:22` = SSH). An IP reaches a *machine*; the port picks the *program* on it.
 4. A program is **listening** on that port, handles the request, and the server **responds with the data** — back down the same connection.
 
-*(The second diagram's labels are informal — "Respond IP of Web Server", "Data Files" — but the order is exactly right: resolve the name first, then talk to the address.)*
-
 ### Part 2 — Ports & listening processes (35 min) — keyboard, the set-piece
 
 > **Today's hands-on parts (2, 3, 5, 6) all run *inside the webtop container*, not on your laptop** — the same terminal you used in Sessions 2–3. `python3`, `ss`, `dig`, and `getent` are Linux tools that live in the container, and `localhost` here means *the container itself*, not your host machine. Mixing up the two machines is the easiest way to confuse yourself today — if a command behaves oddly, first check which machine your terminal is on.
