@@ -67,6 +67,7 @@ curl http://localhost:8000         # talk to it from inside the same container
 Where does `localhost` — or `api.github.com` — come from?
 
 ```bash
+sudo apt install dnsutils          # dig lives in the dnsutils package, not one called "dig"
 dig +short api.github.com          # the name resolves to one or more IPs
 getent hosts localhost             # /etc/hosts maps names locally
 ```
