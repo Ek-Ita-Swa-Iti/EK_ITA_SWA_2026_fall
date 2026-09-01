@@ -49,7 +49,7 @@ A web server does not have a name, it has an **IP address**. The name is just a 
 
 ### Part 2 — Ports & listening processes (35 min) — keyboard, the set-piece
 
-> **Today's hands-on parts (2, 3, 5, 6) all run *inside the webtop container*, not on your laptop** — the same terminal you used in Sessions 2–3. `python3`, `dig`, and `getent` are Linux tools that live in the container, and `localhost` here means *the container itself*, not your host machine. Mixing up the two machines is the easiest way to confuse yourself today — if a command behaves oddly, first check which machine your terminal is on.
+> **Today's hands-on parts (2, 3, 5, 6) all run *inside the webtop container*, not on your laptop** — the same terminal you used in Sessions 2–3. `python3`, `curl`, and `getent` are Linux tools that live in the container, and `localhost` here means *the container itself*, not your host machine. Mixing up the two machines is the easiest way to confuse yourself today — if a command behaves oddly, first check which machine your terminal is on.
 
 Make a server appear and talk to it:
 
@@ -67,13 +67,12 @@ curl http://localhost:8000         # talk to it from inside the same container
 Where does `localhost` — or `api.github.com` — come from?
 
 ```bash
-sudo apt install dnsutils          # dig lives in the dnsutils package, not one called "dig"
-dig +short api.github.com          # the name resolves to one or more IPs
-getent hosts localhost             # /etc/hosts maps names locally
+getent hosts localhost             # a local name → /etc/hosts, no DNS
+getent ahosts api.github.com       # a real name → DNS lookup; often several IPs for one name
 ```
 
-- **`dig` ("domain information groper") queries DNS directly.** `dig api.github.com` asks a DNS resolver "what address(es) back this name?"; `+short` trims the reply to just the IPs (without it you get the full record — TTLs, record types, which server answered).
-- **`getent hosts <name>` resolves a name the way a normal program does.** It walks the system's name-resolution order (`/etc/nsswitch.conf`): the local `/etc/hosts` file first, then DNS. That's why `getent hosts localhost` answers `127.0.0.1` straight from the file, with no DNS lookup.
+- **`getent hosts` / `getent ahosts <name>` resolve a name the way any program does.** They follow the system's name-resolution order (`/etc/nsswitch.conf`): the local `/etc/hosts` file first, then **DNS**. `localhost` comes straight from the file (`127.0.0.1`, no network); `api.github.com` has to ask DNS — and a busy site usually answers with **several IPs for one name**, which is load balancing glimpsed in the wild. (`getent ahosts api.github.com | awk '{print $1}' | sort -u` — a Session 3 pipe — trims it to the distinct IPs.)
+- The dedicated DNS tool is **`dig`** (`dig +short api.github.com`) — worth knowing the name — but it currently crashes in this webtop image (a BIND/libuv bug in containers), so we use `getent` today.
 - A **hostname** is a stable name; the **IP** behind it can change. That indirection is what lets you move or scale a service without callers changing their code.
 - **Foreshadow Session 5:** `docker compose` gives each service a name, and containers reach each other *by that name* — this is why.
 
