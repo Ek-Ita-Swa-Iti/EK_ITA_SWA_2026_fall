@@ -91,7 +91,7 @@ exit                                      # back to your webtop
 ssh student@<ip-on-the-board> hostname    # SSH can also run one command without opening a shell
 ```
 
-The point: nothing about "remote" is special — it's the same **name → port → process → response** as Part 1, just to an address that happens to be in another country. We won't dwell.
+The point: nothing about "remote" is special — it's the same **name → port → process → response** as Part 1, just to an address that happens to be in another country.
 
 ### Part 5 — The network is unreliable (25 min) — blackboard + demo — the payoff
 Everything above assumed the request arrives. It often doesn't:
