@@ -77,7 +77,7 @@ getent ahosts api.github.com       # a real name → DNS lookup; often several I
 ### Part 4 — Remote machines, briefly (15 min) — keyboard
 Reaching *another* machine is just the same round-trip to a different address. SSH is one such service (port 22): `ssh user@host` opens a shell on the far side; the terminal skills from S2 work identically there.
 
-**Try it.** Your instructor has a throwaway Linux VM running in a data centre in **Norway East**. From your webtop terminal:
+**Try it.** From your webtop terminal:
 
 ```bash
 sudo apt install openssh-client          # if `ssh` isn't already there
