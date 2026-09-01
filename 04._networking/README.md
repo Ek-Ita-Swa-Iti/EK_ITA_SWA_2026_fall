@@ -36,20 +36,6 @@ Last week you ran `curl https://api.github.com/...` and got JSON back. Ask the r
 
 Every client (a browser, a phone app, another service, `curl`) sends a **request** and gets a **response** back. "The Internet" in the middle stands for all the network hops the message actually crosses. That is the mental model for the rest of the semester: **an architecture is boxes (processes) connected by these request/response wires.**
 
-```mermaid
-flowchart LR
-    C["Client<br/>(a process)"]
-    W["Web server<br/>(a process)"]
-    DB[("Database<br/>(a process)")]
-    S["Another service<br/>(a process)"]
-
-    C <-->|"request / response"| W
-    W <-->|"request / response"| DB
-    W <-->|"request / response"| S
-```
-
-Every **node** is a running program; every **edge** is a request that expects a response. Almost all of the diagrams you draw this semester are some version of this graph — the work is deciding where the boxes go and what travels on each wire.
-
 **The journey.** How does one request actually get there and back? It can be modelled in these four steps:
 
 ![A user asks a DNS server for a domain's address; the DNS server replies with the web server's IP; the user then makes an HTTP request to that IP, and the web server responds with the data.](img/request-journey-dns.png)
