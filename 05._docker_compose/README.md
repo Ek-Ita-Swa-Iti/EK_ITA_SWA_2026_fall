@@ -122,13 +122,18 @@ Walk through the assignment brief below, the rubric, and the deadline.
 
 **Groups of 3–4. Done outside teaching sessions. Hand in by the deadline.**
 
-Build a small, runnable `docker compose` project that ties together everything from this block.
+Build a small, runnable `docker compose` project: a shell script your group wrote, packaged in a container, doing real work **against a second service**.
 
 **Requirements**
 
-1. A small **script** your group wrote that does something genuinely useful — it ingests an input file (a log, a CSV, or data fetched with `curl`) and produces a **summary report**. A shell pipeline from Session 3 is plenty (any language is fine); it should handle a missing/empty input gracefully.
-2. A **`Dockerfile`** that packages the script into an image.
-3. A **`docker-compose.yml`** with **at least two services** — your script's container plus one more (e.g. a Postgres database, or a small web server the script talks to with `curl`).
+1. A **shell script your group wrote** that **works with another service over the network** — and does something genuinely useful. Pick a shape:
+   - a **loader** — `curl` a public API (or read a CSV), reshape the data with pipes, and write the rows into a **database** service;
+   - a **checker** — hit a list of endpoints on a schedule, record status + response time, and flag when something is down;
+   - a **feeder** — turn some input into a small file or table that a **web** service then serves.
+
+   Session 3 skills are enough (`curl`, pipes, `grep`/`cut`/`sort`, exit codes, redirection); any language is fine. It must **handle failure gracefully** — a missing input, a service that isn't up yet, a timeout. **Not** a copy of Part 2's `report.sh` (summarising a static log file) — your script has to *talk to the second service*.
+2. A **`Dockerfile`** that packages the script into an image (install whatever it needs — e.g. `postgresql-client` for `psql` — with a `RUN` step).
+3. A **`docker-compose.yml`** with **at least two services that actually work together** — your script's container plus the service it uses (a **Postgres** database, or a **web server** / small API). They must reach each other **by service name**.
 4. The whole thing in a **Git repo on GitHub**, with a **`README.md`** that explains: what it does, how to run it (`docker compose up`), and what each file/service is responsible for.
 
 **Hand-in**
@@ -140,8 +145,9 @@ Build a small, runnable `docker compose` project that ties together everything f
 **Assessment (pass / needs-rework)** — you pass when:
 
 - [ ] `docker compose up --build` runs the project without manual fixing.
-- [ ] The script runs **inside a container** and produces its report from real input.
-- [ ] There are **two services** wired together via compose (they can reach each other).
+- [ ] The script runs **inside a container** and **actually uses the second service** — writes rows, polls it, reads from it — not two containers that ignore each other.
+- [ ] The script **survives the second service being slow or missing** (it retries or fails cleanly, it doesn't just crash).
+- [ ] The two services reach each other **by service name** (not a hard-coded IP).
 - [ ] The README lets a stranger clone and run it, and explains each part.
 - [ ] Everything is committed to Git with a sensible history (not one giant commit at the end).
 
@@ -150,7 +156,7 @@ Build a small, runnable `docker compose` project that ties together everything f
 ## After Class
 
 - In your groups create the shared GitHub repo today.
-- Sketch what your toolbox will do before you start building — pick a real, small data-summarising task.
+- Sketch what your toolbox will do before you start building — pick which service it works with (a database, a web API) and what "useful work" it does against it.
 - One paragraph for yourself: for the toolbox you're about to build, would you run it on-prem or in the cloud — and which service model (IaaS/PaaS/SaaS) — and why?
 
 ---
