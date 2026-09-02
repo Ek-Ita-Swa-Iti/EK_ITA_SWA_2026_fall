@@ -121,7 +121,9 @@ Walk through the assignment brief below, the rubric, and the deadline.
 ## Mandatory Group Assignment — "Containerised Toolbox"
 
 **Type**: Group\
-**Hand in**: 17/9 (Wiseflow)
+**Hand in**: 17/9 (Wiseflow)\
+**Hard deadline**: 3 days before the exam\
+**Mandatory**: this assignment must be approved before you can sit the semester exam
 
 Build a small, runnable `docker compose` project: a shell script your group wrote, packaged in a container, that **talks to a web service running alongside it**.
 
