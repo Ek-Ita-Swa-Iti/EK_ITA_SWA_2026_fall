@@ -134,7 +134,7 @@ Build a small, runnable `docker compose` project: a shell script your group wrot
 
    Session 3 skills are enough (`curl`, HTTP status codes, pipes, `grep`/`cut`/`sort`, exit codes, redirection); a `while … sleep` loop is fine — look it up. It must **handle failure gracefully** — the service not up yet, a timeout, a non-200 response (this is the Session 4 "the network is unreliable" lesson, in code). **Not** a copy of Part 2's `report.sh` — your script has to *talk to the service*.
 2. A **`Dockerfile`** that packages the script into an image, with a `RUN` step that installs what it needs (e.g. `curl`, `jq`).
-3. A **`docker-compose.yml`** with **two services that work together** — your script's container plus the web service it talks to. The web service can be a **stock image, no config needed** (`nginx:alpine`, `kennethreitz/httpbin`) or a tiny one you build. They must reach each other **by service name** (e.g. `curl http://web/`).
+3. A **`docker-compose.yml`** with **two services that work together** — your script's container plus the web service it talks to. The web service can be as simple as `python3 -m http.server`, no config needed. Or you can use stock images like `nginx:alpine`. They must reach each other **by service name** (e.g. `curl http://web/`).
 4. The whole thing in a **Git repo on GitHub**, with a **`README.md`** that explains: what it does, how to run it (`docker compose up`), and what each file/service is responsible for.
 
 > Optional stretch — **only if your group already knows SQL**: swap the web service for a **Postgres** container and have your script write rows into it with `psql`.
