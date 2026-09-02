@@ -2,7 +2,7 @@
 
 **ITA Software Architecture 2026 Fall | 3 hours | Foundations block (hands-on) | Mandatory group assignment issued**
 
-> In Session 2 you *used* a container without knowing how it worked. Today you open the box: images, building your own with a `Dockerfile`, and running several containers together with `docker compose` — the exact tooling every later session uses to run code. Then we step back and ask *where* containers actually run in the real world: your own servers, or the **cloud** — and weigh the trade-offs. The session closes by handing out the **mandatory group assignment**.
+> In Session 2, 3 and 4 you *used* a container without knowing how it worked. Today you open the box: images, building your own with a `Dockerfile`, and running several containers together with `docker compose` — the exact tooling every later session uses to run code. Then we step back and ask *where* containers actually run in the real world: your own servers, or the **cloud** — and weigh the trade-offs. The session closes by handing out the **mandatory group assignment**.
 
 ---
 
@@ -21,7 +21,7 @@
 
 - Docker Desktop installed and running (you've used it since Session 2).
 - **A change of machine:** today you work on your **laptop** directly, *not* inside the webtop container — Docker runs on the host, and webtop can't run Docker inside itself.
-- Your Git repo cloned **on your laptop**. If you only ever cloned it inside webtop (Sessions 2–4), `git clone` it again on the host now — you'll commit a Dockerfile and a compose file today.
+- Your Git repo cloned **on your laptop**. If you only ever cloned it inside webtop (Sessions 2–4), `git clone` it again on the host now — you'll commit a Dockerfile and a Docker-compose file today.
 
 ---
 
@@ -41,20 +41,29 @@ The core distinction, on the board:
 Hands-on: `docker pull`, `docker run`, `docker ps`, `docker ps -a`, `docker stop`, `docker rm`, `docker images`.
 
 ### Part 2 — Building your own image (40 min) — keyboard
-A `Dockerfile` is a recipe. The instructions you need:
+Grab a tiny script to containerise — a log summariser built from Session 3 pipeline moves:
 
-```dockerfile
-FROM python:3.12-slim       # start from a base image
-WORKDIR /app                # working directory inside the container
-COPY . .                    # copy your files in
-RUN pip install -r requirements.txt   # run a build step
-CMD ["python", "main.py"]   # what to run when the container starts
+```bash
+mkdir -p ~/session-05 && cd ~/session-05
+base=https://raw.githubusercontent.com/Ek-Ita-Swa-Iti/EK_ITA_SWA_2026_fall/master/05._docker_compose/session-05
+curl -sO "$base/report.sh" -O "$base/sample.log"
+bash report.sh              # run it on the host first — 50 requests, 10 errors, top IPs
 ```
 
-`docker build -t myapp .` then `docker run myapp`. Then the run-time essentials, each tried live:
+A `Dockerfile` is a recipe that packages that script into an image. The instructions you need:
 
-- **Ports:** `-p 8080:8080` — map a container port to your laptop.
-- **Volumes:** `-v $(pwd)/data:/data` — share a folder; data survives the container.
+```dockerfile
+FROM debian:stable-slim         # start from a tiny base image
+WORKDIR /app                    # working directory inside the container
+COPY report.sh sample.log ./    # copy your files in
+RUN chmod +x report.sh          # a build step — make the script executable
+CMD ["./report.sh", "sample.log"]   # what to run when the container starts
+```
+
+`docker build -t myreport .` then `docker run myreport` — the same report, now from inside a container. Then the run-time essentials, each tried live:
+
+- **Ports:** `-p 8080:8080` — map a container port to your laptop (matters once something *listens*, like the compose services in Part 3).
+- **Volumes:** `-v $(pwd)/data:/data` — share a folder; data survives the container, and you can feed `report.sh` a real log without rebuilding.
 - **Environment:** `-e KEY=value`. **Logs:** `docker logs <name>`. **Get a shell inside:** `docker exec -it <name> bash`.
 
 ### Part 3 — Many containers: docker compose (40 min) — keyboard, the set-piece
@@ -97,13 +106,13 @@ Everything so far ran on *a machine you control* — the webtop container in Ses
 > We don't *deploy* to a cloud today (that's the DevOps semester) — today is about being able to **reason** about the choice.
 
 ### Part 5 — The group assignment (10 min)
-Walk through the assignment brief below, the rubric, and the deadline. Form groups before you leave.
+Walk through the assignment brief below, the rubric, and the deadline.
 
 ---
 
 ## Exercise (in class)
 
-- Write a `Dockerfile` that containerises a small **script** that summarises a file (build on the pipelines from Session 3), and run it.
+- Write a `Dockerfile` that containerises a small **script** that summarises a file — adapt `report.sh` from Part 2 or write your own Session 3-style pipeline — and run it.
 - Write a small `docker-compose.yml` with **two services** and `docker compose up` it.
 - Commit both to your repo and **push**.
 
@@ -140,7 +149,7 @@ Build a small, runnable `docker compose` project that ties together everything f
 
 ## After Class
 
-- Form your group and create the shared GitHub repo today.
+- In your groups create the shared GitHub repo today.
 - Sketch what your toolbox will do before you start building — pick a real, small data-summarising task.
 - One paragraph for yourself: for the toolbox you're about to build, would you run it on-prem or in the cloud — and which service model (IaaS/PaaS/SaaS) — and why?
 
