@@ -41,20 +41,29 @@ The core distinction, on the board:
 Hands-on: `docker pull`, `docker run`, `docker ps`, `docker ps -a`, `docker stop`, `docker rm`, `docker images`.
 
 ### Part 2 — Building your own image (40 min) — keyboard
-A `Dockerfile` is a recipe. The instructions you need:
+Grab a tiny script to containerise — a log summariser built from Session 3 pipeline moves:
 
-```dockerfile
-FROM python:3.12-slim       # start from a base image
-WORKDIR /app                # working directory inside the container
-COPY . .                    # copy your files in
-RUN pip install -r requirements.txt   # run a build step
-CMD ["python", "main.py"]   # what to run when the container starts
+```bash
+mkdir -p ~/session-05 && cd ~/session-05
+base=https://raw.githubusercontent.com/Ek-Ita-Swa-Iti/EK_ITA_SWA_2026_fall/master/05._docker_compose/session-05
+curl -sO "$base/report.sh" -O "$base/sample.log"
+bash report.sh              # run it on the host first — 50 requests, 10 errors, top IPs
 ```
 
-`docker build -t myapp .` then `docker run myapp`. Then the run-time essentials, each tried live:
+A `Dockerfile` is a recipe that packages that script into an image. The instructions you need:
 
-- **Ports:** `-p 8080:8080` — map a container port to your laptop.
-- **Volumes:** `-v $(pwd)/data:/data` — share a folder; data survives the container.
+```dockerfile
+FROM debian:stable-slim         # start from a tiny base image
+WORKDIR /app                    # working directory inside the container
+COPY report.sh sample.log ./    # copy your files in
+RUN chmod +x report.sh          # a build step — make the script executable
+CMD ["./report.sh", "sample.log"]   # what to run when the container starts
+```
+
+`docker build -t myreport .` then `docker run myreport` — the same report, now from inside a container. Then the run-time essentials, each tried live:
+
+- **Ports:** `-p 8080:8080` — map a container port to your laptop (matters once something *listens*, like the compose services in Part 3).
+- **Volumes:** `-v $(pwd)/data:/data` — share a folder; data survives the container, and you can feed `report.sh` a real log without rebuilding.
 - **Environment:** `-e KEY=value`. **Logs:** `docker logs <name>`. **Get a shell inside:** `docker exec -it <name> bash`.
 
 ### Part 3 — Many containers: docker compose (40 min) — keyboard, the set-piece
@@ -103,7 +112,7 @@ Walk through the assignment brief below, the rubric, and the deadline.
 
 ## Exercise (in class)
 
-- Write a `Dockerfile` that containerises a small **script** that summarises a file (build on the pipelines from Session 3), and run it.
+- Write a `Dockerfile` that containerises a small **script** that summarises a file — adapt `report.sh` from Part 2 or write your own Session 3-style pipeline — and run it.
 - Write a small `docker-compose.yml` with **two services** and `docker compose up` it.
 - Commit both to your repo and **push**.
 
