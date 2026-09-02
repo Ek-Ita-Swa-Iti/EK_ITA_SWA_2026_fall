@@ -97,7 +97,7 @@ Everything so far ran on *a machine you control* — the webtop container in Ses
 > We don't *deploy* to a cloud today (that's the DevOps semester) — today is about being able to **reason** about the choice.
 
 ### Part 5 — The group assignment (10 min)
-Walk through the assignment brief below, the rubric, and the deadline. Form groups before you leave.
+Walk through the assignment brief below, the rubric, and the deadline.
 
 ---
 
