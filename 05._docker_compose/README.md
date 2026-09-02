@@ -21,7 +21,7 @@
 
 - Docker Desktop installed and running (you've used it since Session 2).
 - **A change of machine:** today you work on your **laptop** directly, *not* inside the webtop container — Docker runs on the host, and webtop can't run Docker inside itself.
-- Your Git repo cloned **on your laptop**. If you only ever cloned it inside webtop (Sessions 2–4), `git clone` it again on the host now — you'll commit a Dockerfile and a compose file today.
+- Your Git repo cloned **on your laptop**. If you only ever cloned it inside webtop (Sessions 2–4), `git clone` it again on the host now — you'll commit a Dockerfile and a Docker-compose file today.
 
 ---
 
