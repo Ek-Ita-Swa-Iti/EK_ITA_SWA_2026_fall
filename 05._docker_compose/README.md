@@ -2,7 +2,7 @@
 
 **ITA Software Architecture 2026 Fall | 3 hours | Foundations block (hands-on) | Mandatory group assignment issued**
 
-> In Session 2 you *used* a container without knowing how it worked. Today you open the box: images, building your own with a `Dockerfile`, and running several containers together with `docker compose` — the exact tooling every later session uses to run code. Then we step back and ask *where* containers actually run in the real world: your own servers, or the **cloud** — and weigh the trade-offs. The session closes by handing out the **mandatory group assignment**.
+> In Session 2, 3 and 4 you *used* a container without knowing how it worked. Today you open the box: images, building your own with a `Dockerfile`, and running several containers together with `docker compose` — the exact tooling every later session uses to run code. Then we step back and ask *where* containers actually run in the real world: your own servers, or the **cloud** — and weigh the trade-offs. The session closes by handing out the **mandatory group assignment**.
 
 ---
 
