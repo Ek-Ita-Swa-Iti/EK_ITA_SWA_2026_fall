@@ -140,7 +140,7 @@ Build a small, runnable `docker compose` project that ties together everything f
 
 ## After Class
 
-- Form your group and create the shared GitHub repo today.
+- In your groups create the shared GitHub repo today.
 - Sketch what your toolbox will do before you start building — pick a real, small data-summarising task.
 - One paragraph for yourself: for the toolbox you're about to build, would you run it on-prem or in the cloud — and which service model (IaaS/PaaS/SaaS) — and why?
 
