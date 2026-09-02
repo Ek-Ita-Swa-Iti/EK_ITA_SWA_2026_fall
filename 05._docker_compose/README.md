@@ -120,7 +120,8 @@ Walk through the assignment brief below, the rubric, and the deadline.
 
 ## Mandatory Group Assignment — "Containerised Toolbox"
 
-**Groups of 3–4. Done outside teaching sessions. Hand in by the deadline.**
+**Type**: Group\
+**Hand in**: 17/9 (Wiseflow)
 
 Build a small, runnable `docker compose` project: a shell script your group wrote, packaged in a container, that **talks to a web service running alongside it**.
 
@@ -140,8 +141,7 @@ Build a small, runnable `docker compose` project: a shell script your group wrot
 
 **Hand-in**
 
-- A link to your group's **GitHub repository**.
-- Deadline: **17/9**. Submit via **Wiseflow**.
+- A link to your group's **GitHub repository**, submitted via **Wiseflow** by **17/9**.
 - One submission per group; list all members in the README.
 
 **Assessment (pass / needs-rework)** — you pass when:
