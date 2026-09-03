@@ -134,7 +134,6 @@ Using only the terminal, save your commands to `answers.sh` and push:
 
 - Start a server (`python3 -m http.server`) on a port of your choice, and fetch it with `curl`.
 - Resolve two public hostnames with `getent ahosts`; note that one has several IPs (that *is* load balancing).
-- Show the difference between binding to `localhost` and `0.0.0.0` (which one can a second container reach?).
 - Trigger **two** different network failures on purpose (a refused connection and a timeout) and record what `curl` reports for each.
 - One sentence: *why can't the client tell a "lost reply" apart from a "server never did the work"?*
 - **Commit and push** to your repo.
