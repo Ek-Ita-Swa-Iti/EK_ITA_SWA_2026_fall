@@ -25,7 +25,7 @@
 ## Today's Teachings
 
 ### Part 0 — Warm-up (10 min)
-Last week you ran `curl https://api.github.com/...` and got JSON back. *Between pressing Enter and the reply arriving, what actually happened?* Collect guesses on the board. Today we fill in the blanks.
+Last week you ran `curl https://api.github.com/...` and got JSON back. *Between pressing Enter and the reply arriving, what actually happened?*
 
 ### Part 1 — The client–server model & a request's journey (30 min) — blackboard
 
