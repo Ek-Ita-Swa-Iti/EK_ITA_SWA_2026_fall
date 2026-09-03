@@ -55,9 +55,9 @@
       display: none !important;
     }
 
-    /* Force Docsify's default modern sans-serif font */
-    body, .markdown-section {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    /* Force Docsify's default modern sans-serif font everywhere */
+    html, body, .sidebar, .sidebar-toggle, .markdown-section {
+      font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif !important;
     }
 
     /* Top Right UI Container */
@@ -238,17 +238,20 @@
 
       // Dark/Light Mode Configuration
       darklightTheme: {
-        defaultTheme: 'dark', // Options: 'dark' or 'light'
-        siteFont: 'inherit',
+        defaultTheme: 'dark',
         dark: {
           accent: '#42b983',
           background: '#1c2022',
           textColor: '#b4b4b4',
           borderColor: '#2d3339',
           sidebarSublink: '#b4b4b4',
+          codeTextColor: '#ff8c3a', // Brighter orange so it pops on dark mode
+          codeBackgroundColor: '#282c34'
         },
         light: {
           accent: '#42b983',
+          codeTextColor: '#e96900', // Original Docsify orange for light mode
+          codeBackgroundColor: '#f8f8f8'
         }
       },
       
