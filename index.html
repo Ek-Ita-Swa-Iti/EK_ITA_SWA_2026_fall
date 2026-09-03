@@ -245,12 +245,12 @@
           textColor: '#b4b4b4',
           borderColor: '#2d3339',
           sidebarSublink: '#b4b4b4',
-          codeTextColor: '#ff8c3a', // Brighter orange so it pops on dark mode
-          codeBackgroundColor: '#282c34'
+          highlightColor: '#ff8c3a', // Fix: Controls inline code text (bright orange for dark mode)
+          codeBackgroundColor: '#2a2e36' // Fix: Darkens the background pill behind the inline code
         },
         light: {
           accent: '#42b983',
-          codeTextColor: '#e96900', // Original Docsify orange for light mode
+          highlightColor: '#e96900', // Fix: Original Docsify orange for light mode
           codeBackgroundColor: '#f8f8f8'
         }
       },
