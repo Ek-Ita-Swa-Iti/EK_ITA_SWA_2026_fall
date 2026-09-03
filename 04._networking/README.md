@@ -74,7 +74,7 @@ getent ahosts api.github.com       # a real name → DNS lookup; often several I
 - The dedicated DNS tool is **`dig`** (`dig +short api.github.com`) — worth knowing the name — but it currently crashes in this webtop image, so we use `getent` today.
 - A **hostname** is a stable name; the **IP** behind it can change. That indirection is what lets you move or scale a service without callers changing their code.
 
-### Part 4 — Remote machines, briefly (15 min) — keyboard
+### Part 4 — Remote machines, (15 min) — keyboard
 Reaching *another* machine is just the same round-trip to a different address. SSH is one such service (port 22): `ssh user@host` opens a shell on the far side; the terminal skills from S2 work identically there.
 
 **Try it.** From your webtop terminal:
