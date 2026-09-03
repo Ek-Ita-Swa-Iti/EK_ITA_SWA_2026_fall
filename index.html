@@ -5,6 +5,7 @@
   <title>ITAR SWA</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-darklight-theme@3/dist/style.min.css" title="docsify-darklight-theme" type="text/css" />
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/prism-themes@1/themes/prism-one-dark.min.css">
 
   <style>
@@ -53,7 +54,7 @@
     .copy-page-btn {
       position: fixed;
       top: 15px;
-      right: 20px;
+      right: 70px;
       z-index: 1000;
       padding: 6px 14px;
       background-color: #42b983;
@@ -185,6 +186,23 @@
       loadSidebar: true,
       subMaxLevel: 2,
       auto2top: true,
+
+      // Dark/Light Mode Configuration
+      darklightTheme: {
+        defaultTheme: 'dark', // Options: 'dark' or 'light'
+        siteFont: 'inherit',
+        dark: {
+          accent: '#42b983',
+          background: '#1c2022',
+          textColor: '#b4b4b4',
+          borderColor: '#2d3339',
+          sidebarSublink: '#b4b4b4',
+        },
+        light: {
+          accent: '#42b983',
+        }
+      },
+      
       copyCode: {
         buttonText: 'Copy',
         errorText: 'Error',
@@ -231,5 +249,8 @@
   
   <!-- Docsify Mermaid Plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify-mermaid@2.0.1/dist/docsify-mermaid.min.js"></script>
+
+  <!-- Dark/Light Mode Plugin -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-darklight-theme@3/dist/index.min.js"></script>
 </body>
 </html>
