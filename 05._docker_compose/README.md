@@ -72,19 +72,19 @@ Real systems are more than one container. `docker compose` describes them in one
 ```yaml
 services:
   app:
-    build: .
-    ports:
-      - "8080:8080"
-    depends_on:
-      - db
-  db:
-    image: postgres:16
+    build: .                     # your script's image
     environment:
-      POSTGRES_PASSWORD: secret
+      TARGET: http://web         # how app finds web — by service name
+    depends_on:
+      - web
+  web:
+    image: nginx:alpine          # a service you pull, not build
+    ports:
+      - "8080:80"                # reachable from your laptop too
 ```
 
 - `docker compose up --build` — start everything; `down` — stop and remove it.
-- Services, the **network** compose creates (containers reach each other by service name), `depends_on`, `logs`, `exec`.
+- Services, the **network** compose creates (`app` reaches `web` at `http://web` — by service name), `depends_on`, `logs`, `exec`.
 - **The payoff:** open one of the `docker-compose.yml` files from the course examples repo and read it together — *you now understand every line.* This is what `docker compose up` runs from the architecture sessions onward.
 
 ### Part 4 — Where does this actually run? Cloud computing (30 min) — blackboard + discussion
@@ -120,28 +120,38 @@ Walk through the assignment brief below, the rubric, and the deadline.
 
 ## Mandatory Group Assignment — "Containerised Toolbox"
 
-**Groups of 3–4. Done outside teaching sessions. Hand in by the deadline.**
+**Type**: Group\
+**Hand in**: 17/9 (Wiseflow)\
+**Hard deadline**: 3 days before the exam\
+**Mandatory**: this assignment must be approved before you can attend the semester exam
 
-Build a small, runnable `docker compose` project that ties together everything from this block.
+Build a small, runnable `docker compose` project: a shell script your group wrote, packaged in a container, that **talks to a web service running alongside it**.
 
 **Requirements**
 
-1. A small **script** your group wrote that does something genuinely useful — it ingests an input file (a log, a CSV, or data fetched with `curl`) and produces a **summary report**. A shell pipeline from Session 3 is plenty (any language is fine); it should handle a missing/empty input gracefully.
-2. A **`Dockerfile`** that packages the script into an image.
-3. A **`docker-compose.yml`** with **at least two services** — your script's container plus one more (e.g. a Postgres database, or a small web server the script talks to with `curl`).
+1. A **shell script your group wrote** that **uses a web service over the network** — and does something genuinely useful. Pick a shape:
+   - a **checker** — every few seconds, `curl` the service, record the **status code and response time**, and flag when it's down or slow;
+   - a **poller** — `curl` an endpoint that returns data (JSON or text), pull out the field(s) you care about with pipes, and append them to a growing log with a timestamp;
+   - a **feeder** — turn some input into a file the service serves, then re-check it's served correctly.
+
+   Session 3 skills are enough (`curl`, HTTP status codes, pipes, `grep`/`cut`/`sort`, exit codes, redirection); a `while … sleep` loop is fine — look it up. It must **handle failure gracefully** — the service not up yet, a timeout, a non-200 response (this is the Session 4 "the network is unreliable" lesson, in code). **Not** a copy of Part 2's `report.sh` — your script has to *talk to the service*.
+2. A **`Dockerfile`** that packages the script into an image, with a `RUN` step that installs what it needs (e.g. `curl`, `jq`).
+3. A **`docker-compose.yml`** with **two services that work together** — your script's container plus the web service it talks to. The web service can be as simple as `python3 -m http.server`. Or you can use stock images like `nginx:alpine`. They must reach each other **by service name** (e.g. `curl http://web/`).
 4. The whole thing in a **Git repo on GitHub**, with a **`README.md`** that explains: what it does, how to run it (`docker compose up`), and what each file/service is responsible for.
+
+> Optional stretch — **only if your group already knows SQL**: swap the web service for a **Postgres** container and have your script write rows into it with `psql`.
 
 **Hand-in**
 
-- A link to your group's **GitHub repository**.
-- Deadline: **17/9**. Submit via **Wiseflow**.
+- A link to your group's **GitHub repository**, submitted via **Wiseflow** by **17/9**.
 - One submission per group; list all members in the README.
 
 **Assessment (pass / needs-rework)** — you pass when:
 
 - [ ] `docker compose up --build` runs the project without manual fixing.
-- [ ] The script runs **inside a container** and produces its report from real input.
-- [ ] There are **two services** wired together via compose (they can reach each other).
+- [ ] The script runs **inside a container** and **actually calls the web service** (`curl`s it, reads its responses) — not two containers that ignore each other.
+- [ ] The script **survives the service being slow or not-yet-up** (it retries or logs the failure — it doesn't just crash).
+- [ ] The two services reach each other **by service name** (not a hard-coded IP).
 - [ ] The README lets a stranger clone and run it, and explains each part.
 - [ ] Everything is committed to Git with a sensible history (not one giant commit at the end).
 
@@ -150,7 +160,7 @@ Build a small, runnable `docker compose` project that ties together everything f
 ## After Class
 
 - In your groups create the shared GitHub repo today.
-- Sketch what your toolbox will do before you start building — pick a real, small data-summarising task.
+- Sketch what your toolbox will do before you start building — pick which web service it hits and what it does with the responses.
 - One paragraph for yourself: for the toolbox you're about to build, would you run it on-prem or in the cloud — and which service model (IaaS/PaaS/SaaS) — and why?
 
 ---

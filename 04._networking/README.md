@@ -25,7 +25,7 @@
 ## Today's Teachings
 
 ### Part 0 — Warm-up (10 min)
-Last week you ran `curl https://api.github.com/...` and got JSON back. Ask the room: *between pressing Enter and the reply arriving, what actually happened?* Collect guesses on the board. Today we fill in the blanks.
+Last week you ran `curl https://api.github.com/...` and got JSON back. *Between pressing Enter and the reply arriving, what actually happened?*
 
 ### Part 1 — The client–server model & a request's journey (30 min) — blackboard
 
@@ -74,7 +74,7 @@ getent ahosts api.github.com       # a real name → DNS lookup; often several I
 - The dedicated DNS tool is **`dig`** (`dig +short api.github.com`) — worth knowing the name — but it currently crashes in this webtop image, so we use `getent` today.
 - A **hostname** is a stable name; the **IP** behind it can change. That indirection is what lets you move or scale a service without callers changing their code.
 
-### Part 4 — Remote machines, briefly (15 min) — keyboard
+### Part 4 — Remote machines, (15 min) — keyboard
 Reaching *another* machine is just the same round-trip to a different address. SSH is one such service (port 22): `ssh user@host` opens a shell on the far side; the terminal skills from S2 work identically there.
 
 **Try it.** From your webtop terminal:
@@ -134,7 +134,6 @@ Using only the terminal, save your commands to `answers.sh` and push:
 
 - Start a server (`python3 -m http.server`) on a port of your choice, and fetch it with `curl`.
 - Resolve two public hostnames with `getent ahosts`; note that one has several IPs (that *is* load balancing).
-- Show the difference between binding to `localhost` and `0.0.0.0` (which one can a second container reach?).
 - Trigger **two** different network failures on purpose (a refused connection and a timeout) and record what `curl` reports for each.
 - One sentence: *why can't the client tell a "lost reply" apart from a "server never did the work"?*
 - **Commit and push** to your repo.
