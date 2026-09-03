@@ -49,13 +49,29 @@
     .markdown-section pre::-webkit-scrollbar-thumb:hover {
       background: #5c6370;
     }
+    
+    /* Hide the plugin's default tiny toggle icon */
+    #docsify-darklight-theme {
+      display: none !important;
+    }
 
-    /* Global Page Copy Button */
-    .copy-page-btn {
+    /* Force Docsify's default modern sans-serif font */
+    body, .markdown-section {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    }
+
+    /* Top Right UI Container */
+    .custom-controls {
       position: fixed;
       top: 15px;
-      right: 70px;
+      right: 20px;
       z-index: 1000;
+      display: flex;
+      gap: 10px;
+    }
+
+    /* Shared Button Styling */
+    .custom-btn {
       padding: 6px 14px;
       background-color: #42b983;
       color: #ffffff;
@@ -67,8 +83,17 @@
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
       transition: background-color 0.2s ease, transform 0.1s ease;
     }
-    .copy-page-btn:hover { background-color: #33a06f; }
-    .copy-page-btn:active { transform: scale(0.96); }
+    .custom-btn:hover { background-color: #33a06f; }
+    .custom-btn:active { transform: scale(0.96); }
+    
+    /* Unique styling for the theme button so it stands out */
+    .theme-btn {
+      background-color: #3e4451;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .theme-btn:hover {
+      background-color: #4b5263;
+    }
 
     /* Single-Line Flexbox Row */
     .code-line {
@@ -119,23 +144,47 @@
   <div id="app"></div>
 
   <script>
-    function copyPageMarkdownPlugin(hook, vm) {
+    function customUIPlugin(hook, vm) {
       let currentMarkdown = '';
-      hook.beforeEach(content => { currentMarkdown = content; return content; });
+      
+      hook.beforeEach(content => { 
+        currentMarkdown = content; 
+        return content; 
+      });
+      
       hook.doneEach(() => {
-        let existingBtn = document.getElementById('copy-page-btn');
-        if (!existingBtn) {
-          const btn = document.createElement('button');
-          btn.id = 'copy-page-btn';
-          btn.className = 'copy-page-btn';
-          btn.innerText = '📋 Copy Page MD';
-          btn.onclick = () => {
+        let controls = document.getElementById('custom-controls');
+        if (!controls) {
+          // 1. Create the container
+          controls = document.createElement('div');
+          controls.id = 'custom-controls';
+          controls.className = 'custom-controls';
+
+          // 2. Create Custom Theme Button
+          const themeBtn = document.createElement('button');
+          themeBtn.className = 'custom-btn theme-btn';
+          themeBtn.innerText = '🌓 Theme';
+          themeBtn.onclick = () => {
+            // Clicks the hidden default plugin button behind the scenes
+            const hiddenDefaultBtn = document.getElementById('docsify-darklight-theme');
+            if (hiddenDefaultBtn) hiddenDefaultBtn.click();
+          };
+
+          // 3. Create Copy Markdown Button
+          const copyBtn = document.createElement('button');
+          copyBtn.className = 'custom-btn';
+          copyBtn.innerText = '📋 Copy Page MD';
+          copyBtn.onclick = () => {
             navigator.clipboard.writeText(currentMarkdown).then(() => {
-              btn.innerText = '✅ Copied!';
-              setTimeout(() => { btn.innerText = '📋 Copy Page MD'; }, 2000);
+              copyBtn.innerText = '✅ Copied!';
+              setTimeout(() => { copyBtn.innerText = '📋 Copy Page MD'; }, 2000);
             });
           };
-          document.body.appendChild(btn);
+
+          // Mount them to the page
+          controls.appendChild(themeBtn);
+          controls.appendChild(copyBtn);
+          document.body.appendChild(controls);
         }
       });
     }
@@ -209,7 +258,7 @@
         successText: 'Copied'
       },
       plugins: [
-        copyPageMarkdownPlugin,
+        customUIPlugin,
         lineCopyPlugin
       ]
     };
