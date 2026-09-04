@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ITAR SWA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-darklight-theme@3/dist/style.min.css" title="docsify-darklight-theme" type="text/css" />
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/prism-themes@1/themes/prism-one-dark.min.css">
+
+  <style>
+    /* Dark code container */
+    .markdown-section pre,
+    .markdown-section pre[data-lang] {
+      background-color: #282c34 !important;
+      border-radius: 6px;
+      position: relative;
+      /* Removed the left padding that caused the clipping bug */
+    }
+
+    .markdown-section pre > code {
+      background-color: transparent !important;
+      color: #abb2bf !important;
+      text-shadow: none !important;
+      display: block;
+    }
+
+    .markdown-section pre:after {
+      color: #5c6370 !important;
+    }
+
+    /* Modern Dark Scrollbar for Code Blocks */
+    .markdown-section pre {
+      scrollbar-width: thin;
+      scrollbar-color: #4b5263 #21252b;
+    }
+    .markdown-section pre::-webkit-scrollbar {
+      height: 7px;
+      width: 7px;
+    }
+    .markdown-section pre::-webkit-scrollbar-track {
+      background: #21252b;
+      border-radius: 0 0 6px 6px;
+    }
+    .markdown-section pre::-webkit-scrollbar-thumb {
+      background: #4b5263;
+      border-radius: 4px;
+    }
+    .markdown-section pre::-webkit-scrollbar-thumb:hover {
+      background: #5c6370;
+    }
+    
+    /* Hide the plugin's default tiny toggle icon */
+    #docsify-darklight-theme {
+      display: none !important;
+    }
+
+    /* Force Docsify's default modern sans-serif font everywhere */
+    html, body, .sidebar, .sidebar-toggle, .markdown-section {
+      font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif !important;
+    }
+
+    /* Top Right UI Container */
+    .custom-controls {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+    }
+
+    /* Shared Button Styling */
+    .custom-btn {
+      padding: 6px 14px;
+      background-color: #42b983;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+    .custom-btn:hover { background-color: #33a06f; }
+    .custom-btn:active { transform: scale(0.96); }
+    
+    /* Unique styling for the theme button so it stands out */
+    .theme-btn {
+      background-color: #3e4451;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .theme-btn:hover {
+      background-color: #4b5263;
+    }
+
+    /* Single-Line Flexbox Row */
+    .code-line {
+      display: flex;
+      align-items: center;
+      min-height: 1.5em;
+      padding: 1px 4px;
+      border-radius: 3px;
+    }
+    .code-line:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    .line-content {
+      white-space: pre;
+    }
+
+    /* Row Copy Button (Acts as a consistent left gutter) */
+    .line-copy-btn {
+      opacity: 0;
+      flex-shrink: 0;
+      margin-right: 14px; /* Creates the empty gap between button and code */
+      background: #3e4451;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 3px;
+      color: #abb2bf;
+      cursor: pointer;
+      font-size: 10px;
+      padding: 2px 4px;
+      line-height: 1;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: opacity 0.15s ease, background 0.15s ease;
+    }
+
+    .code-line:hover .line-copy-btn {
+      opacity: 0.65;
+    }
+
+    .line-copy-btn:hover {
+      opacity: 1 !important;
+      background: #42b983;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>
+    function customUIPlugin(hook, vm) {
+      let currentMarkdown = '';
+      
+      hook.beforeEach(content => { 
+        currentMarkdown = content; 
+        return content; 
+      });
+      
+      hook.doneEach(() => {
+        let controls = document.getElementById('custom-controls');
+        if (!controls) {
+          // 1. Create the container
+          controls = document.createElement('div');
+          controls.id = 'custom-controls';
+          controls.className = 'custom-controls';
+
+          // 2. Create Custom Theme Button
+          const themeBtn = document.createElement('button');
+          themeBtn.className = 'custom-btn theme-btn';
+          themeBtn.innerText = '🌓 Theme';
+          themeBtn.onclick = () => {
+            // Clicks the hidden default plugin button behind the scenes
+            const hiddenDefaultBtn = document.getElementById('docsify-darklight-theme');
+            if (hiddenDefaultBtn) hiddenDefaultBtn.click();
+          };
+
+          // 3. Create Copy Markdown Button
+          const copyBtn = document.createElement('button');
+          copyBtn.className = 'custom-btn';
+          copyBtn.innerText = '📋 Copy Page MD';
+          copyBtn.onclick = () => {
+            navigator.clipboard.writeText(currentMarkdown).then(() => {
+              copyBtn.innerText = '✅ Copied!';
+              setTimeout(() => { copyBtn.innerText = '📋 Copy Page MD'; }, 2000);
+            });
+          };
+
+          // Mount them to the page
+          controls.appendChild(themeBtn);
+          controls.appendChild(copyBtn);
+          document.body.appendChild(controls);
+        }
+      });
+    }
+
+    function lineCopyPlugin(hook, vm) {
+      hook.doneEach(function () {
+        document.querySelectorAll('.markdown-section pre > code').forEach(codeBlock => {
+          if (codeBlock.dataset.rowCopyInitialized) return;
+          codeBlock.dataset.rowCopyInitialized = 'true';
+    
+          const lines = codeBlock.innerHTML.split('\n');
+          codeBlock.innerHTML = lines.map((lineHtml, index) => {
+            if (index === lines.length - 1 && lineHtml.trim() === '') return '';
+            return `<div class="code-line"><button class="line-copy-btn" title="Copy clean command">📋</button><span class="line-content">${lineHtml}</span></div>`;
+          }).join('');
+        });
+    
+        document.querySelectorAll('.line-copy-btn').forEach(btn => {
+          btn.onclick = function (e) {
+            e.stopPropagation();
+            const contentEl = this.nextElementSibling;
+            
+            // Clone the row so the visible DOM is untouched
+            const clone = contentEl.cloneNode(true);
+            
+            // Remove Prism comment tokens (works across Bash, Python, JS, C#, YAML, etc.)
+            clone.querySelectorAll('.token.comment').forEach(el => el.remove());
+            
+            let textToCopy = clone.innerText.trimEnd();
+            
+            // Fallback: If the entire line was just a comment, copy the comment itself
+            if (!textToCopy.trim()) {
+              textToCopy = contentEl.innerText.trim();
+            }
+    
+            navigator.clipboard.writeText(textToCopy).then(() => {
+              const orig = this.innerText;
+              this.innerText = '✓';
+              setTimeout(() => { this.innerText = orig; }, 1500);
+            });
+          };
+        });
+      });
+    }
+
+    window.$docsify = {
+      name: 'ITAR Software Arkitektur',
+      loadSidebar: true,
+      subMaxLevel: 2,
+      auto2top: true,
+
+      // Dark/Light Mode Configuration
+      darklightTheme: {
+        defaultTheme: 'dark',
+        dark: {
+          accent: '#42b983',
+          background: '#1c2022',
+          textColor: '#b4b4b4',
+          borderColor: '#2d3339',
+          sidebarSublink: '#b4b4b4',
+          highlightColor: '#ff8c3a', // Fix: Controls inline code text (bright orange for dark mode)
+          codeBackgroundColor: '#2a2e36' // Fix: Darkens the background pill behind the inline code
+        },
+        light: {
+          accent: '#42b983',
+          highlightColor: '#e96900', // Fix: Original Docsify orange for light mode
+          codeBackgroundColor: '#f8f8f8'
+        }
+      },
+      
+      copyCode: {
+        buttonText: 'Copy',
+        errorText: 'Error',
+        successText: 'Copied'
+      },
+      plugins: [
+        customUIPlugin,
+        lineCopyPlugin
+      ]
+    };
+  </script>
+
+  <!-- Docsify Core & Search -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+
+  <!-- Code Block Full Copy -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+
+  <!-- Prism Syntax Highlighters -->
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-http.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-docker.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-sql.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-markdown.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-javascript.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-java.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-csharp.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
+
+  <!-- Mermaid.js Core -->
+  <script src="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  
+  <!-- Initialize Mermaid to match your dark theme -->
+  <script>
+    mermaid.initialize({ 
+      startOnLoad: false, 
+      theme: 'dark' 
+    });
+  </script>
+  
+  <!-- Docsify Mermaid Plugin -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-mermaid@2.0.1/dist/docsify-mermaid.min.js"></script>
+
+  <!-- Dark/Light Mode Plugin -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-darklight-theme@3/dist/index.min.js"></script>
+</body>
+</html>
