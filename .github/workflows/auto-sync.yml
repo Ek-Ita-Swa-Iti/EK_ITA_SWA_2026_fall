@@ -1,0 +1,55 @@
+name: Auto Sync Upstream
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Runs at the top of every hour
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Allows pushing the merged code
+      issues: write   # Allows the bot to create an issue alert
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Sync and Detect New Files
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 1. Set up bot identity
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 2. Fetch the teacher's latest code
+          git remote add upstream https://github.com/Ek-Ita-Swa-Iti/EK_ITA_SWA_2026_fall.git
+          git fetch upstream
+          
+          # 3. Record the current state BEFORE merging
+          BEFORE_MERGE=$(git rev-parse HEAD)
+          
+          # 4. Merge the changes and push to your fork
+          git merge upstream/master --no-edit
+          git push origin master
+          
+          # 5. Record the state AFTER merging
+          AFTER_MERGE=$(git rev-parse HEAD)
+          
+          # 6. Check if any brand new .md files were added (--diff-filter=A means "Added")
+          NEW_MD_FILES=$(git diff --name-only --diff-filter=A $BEFORE_MERGE $AFTER_MERGE | grep '\.md$' || true)
+          
+          if [ -n "$NEW_MD_FILES" ]; then
+            echo "New markdown files detected. Creating GitHub Issue..."
+            
+            # 7. Create an alert ticket using the GitHub CLI
+            gh issue create \
+              --title "🚨 New Session Files Added - Update Sidebar" \
+              --body "The upstream repository just added new Markdown files. Please check if you need to add them to your \`_sidebar.md\` navigation menu!<br><br>**New Files Detected:**<br>\`\`\`text<br>${NEW_MD_FILES}<br>\`\`\`"
+          else
+            echo "Sync complete. No new markdown files were added."
+          fi
