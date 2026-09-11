@@ -85,16 +85,22 @@ You're not reading the Python. You're checking whether the named file exists, wh
 This is the smallest version of what we'll do every week: **ask, verify, refine**.
 
 ### Part 5 — Architecture vs implementation (25 min)
-A useful test: would a competent engineer make the same call without reading the spec? If yes, it's probably implementation. If no, it's probably architectural.
+Not every decision in a codebase is architectural — most are just *a* reasonable choice
+among several that would have worked fine. Architecture is the subset that's expensive to
+undo, or that everything else quietly ends up depending on. Reuse Part 1's framings to
+tell them apart: **would this be painful to change later? Is it a decision you'd want
+made early, before other things get built on top of it?**
 
-Vote first, then discuss:
+Vote first (show of hands) on each one — architecture, or implementation? — then discuss
+why:
 
 - Vibe's choice of programming language (Python).
 - Vibe has separate `cli/` and `acp/` entrypoints.
 - Vibe is packaged via PyInstaller, uv, *and* a Nix flake.
 - The LLM-backend folder is named `backend` instead of `provider` or `vendor`.
 
-The disagreements matter more than the answers.
+Don't aim for a clean verdict — it's fine if the room splits on some of these. The
+disagreements matter more than the answers.
 
 ### Part 6 — Pair exercise: find a component, a boundary, a convention (25 min)
 In pairs, use Vibe to investigate the repo. Find one of each:
