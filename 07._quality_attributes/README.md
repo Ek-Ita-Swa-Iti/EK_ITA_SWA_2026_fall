@@ -52,7 +52,7 @@ For each QA, we'll define it and then *point* — to a folder, a file, a behavio
 - **Performance.** Type `vibe`. How long does it take to be ready? That's a latency you can measure.
 - **Scalability.** Vibe is a single-user CLI. Be honest: scalability isn't its biggest worry. (That's a useful realisation — not every QA matters for every system.)
 - **Availability.** What happens when the Mistral API is down? Does Vibe crash, retry, fail gracefully?
-- **Security.** `~/.vibe/.env` holds your API key (confidentiality). The `!` shell-command shortcut means the agent can execute things on your machine (integrity, trust boundary). The agent reads files you point it at — what if a file contains a prompt injection?
+- **Security.** Your API key lives in the OS keychain (macOS Keychain, Windows Credential Manager, Linux Secret Service) — not a plaintext file (confidentiality). The `!` shell-command shortcut means the agent can execute things on your machine (integrity, trust boundary). The agent reads files you point it at — what if a file contains a prompt injection?
 - **Maintainability.** `tests/` exists. The `backend/` folder isolates one LLM vendor from another. Adding a new vendor shouldn't require touching the rest. Verify by looking at the folder.
 - **Cost.** Every prompt is API tokens. You'll feel this directly this semester.
 
