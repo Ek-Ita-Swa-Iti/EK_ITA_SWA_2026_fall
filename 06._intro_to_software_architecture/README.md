@@ -88,14 +88,8 @@ This is the smallest version of what we'll do every week: **ask, verify, refine*
 Not every decision in a codebase is architectural — most are just *a* reasonable choice
 among several that would have worked fine. Architecture is the subset that's expensive to
 undo, or that everything else quietly ends up depending on. Reuse Part 1's framings to
-help: is this a decision you'd want made early, before other things get built on top of it?
-
-**A trap to watch for:** "expensive to change" isn't the same as "architectural."
-Rewriting something in a different language, say, would take forever — but if it kept the
-exact same shape (same folders, same boundaries, same contracts), nothing *else* would
-have to change. That's a lot of mechanical work, not a redesign. The sharper question:
-**would changing this force you to also rethink other decisions, or is it just a lot of
-typing?**
+tell them apart: **would this be painful to change later? Is it a decision you'd want
+made early, before other things get built on top of it?**
 
 Vote first (show of hands) on each one — architecture, or implementation? — then discuss
 why:
