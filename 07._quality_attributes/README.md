@@ -2,7 +2,7 @@
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
-> Last week we learned to point at the architecture. This week we ask the next question: when the system works, what makes it *good*? Fast? Safe? Cheap to change? These are the **quality attributes** — and they fight each other. Today we learn to name them, point at them in Vibe, and write requirements precise enough to actually verify.
+> Last session we learned to point at the architecture. This session we ask the next question: when the system works, what makes it *good*? Fast? Safe? Cheap to change? These are the **quality attributes** — and they fight each other. Today we learn to name them, point at them in Vibe, and write requirements precise enough to actually verify.
 
 ---
 
@@ -12,14 +12,14 @@
 - Spot each of them in `mistral-vibe-ek-ita` without reading method bodies.
 - Recognise quality-attribute trade-offs and articulate one in your own words.
 - Turn a vague wish ("it should be fast") into a **quality-attribute scenario** — source, stimulus, environment, artefact, response, measure.
-- Write three scenarios for Vibe using only this week's and last week's vocabulary.
+- Write three scenarios for Vibe using only this session's and last session's vocabulary.
 
 ---
 
 ## Before Class
 
 - Bring your S6 investigation deliverable — we open the session by comparing them.
-- Have your `mistral-vibe-ek-ita` clone and `vibe` working from last week.
+- Have your `mistral-vibe-ek-ita` clone and `vibe` working from last session.
 - Bring the system you described in S6.
 - [optional] One sentence: the most annoying non-functional problem in a system you've used recently.
 
@@ -28,7 +28,7 @@
 ## Today's Teachings
 
 ### Part 0 — Compare notes (10 min)
-In pairs, swap your S6 deliverables. Each pair picks one claim Vibe got right and one it oversold. Three pairs share with the room. We keep doing this — every session opens with last week's investigation.
+In pairs, swap your S6 deliverables. Each pair picks one claim Vibe got right and one it oversold. Three pairs share with the room. We keep doing this — every session opens with last session's investigation.
 
 ### Part 1 — What does "good" mean? (15 min)
 Imagine Vibe ships with no bugs. Every feature works exactly as specified. Could it still be a bad product?
@@ -68,7 +68,7 @@ Quality attributes fight each other. Vote first, discuss after:
 
 The lesson: there is no architecture without trade-offs. Anyone telling you a design is fast *and* cheap *and* easy to change is selling you something else.
 
-A sharper way to put last week's framing: **a decision is architectural when it commits the system to a trade-off it can't easily reverse**.
+A sharper way to put last session's framing: **a decision is architectural when it commits the system to a trade-off it can't easily reverse**.
 
 ### Part 4 — From wish to scenario (35 min)
 "It should be fast" is not a requirement. It's a wish. Architects turn wishes into something testable.
@@ -99,7 +99,7 @@ Rules:
 - Each measure must be a number, a yes/no, or a named threshold. "Fast" doesn't count. "Under 200 ms p95" does.
 - Each scenario should be specific enough that you could imagine writing a test for it.
 
-Vocabulary: today's (the six QAs, *scenario*, *trade-off*) plus last week's (*component*, *boundary*, *contract*, *convention*). Not yet: layered, hexagonal, microservices — those land in the next sessions.
+Vocabulary: today's (the six QAs, *scenario*, *trade-off*) plus last session's (*component*, *boundary*, *contract*, *convention*). Not yet: layered, hexagonal, microservices — those land in the next sessions.
 
 ### Part 6 — Synthesis (15 min)
 Each pair reads their hardest scenario. As a class we ask: is the measure measurable? Is the environment specified? Would two engineers agree on the outcome?
@@ -120,7 +120,7 @@ Half a page in your semester notebook:
 
 ## Investigation (after class)
 
-Same pattern as last week: ask Vibe, verify against the repo, write up what you learned.
+Same pattern as last session: ask Vibe, verify against the repo, write up what you learned.
 
 Pick **two** of the three:
 
