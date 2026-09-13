@@ -20,12 +20,44 @@
 
 - Bring a laptop with `git` installed and a terminal you're comfortable with.
 - Confirm **Mistral Vibe still works** — open a terminal and run `vibe` (installed back in Session 1). If it launches, you're set; if not, fix it *before* class, not during.
+- Confirm **Docker still works** (from Session 5) — `docker ps` should run without error.
 - Bring a system **you** have built or worked on (any language, any size). Be ready to describe it in 2 minutes.
 - [optional] Think for one minute about what "architecture" means to you in software. One sentence. Bring it.
 
 ---
 
 ## Today's Teachings
+
+### Part 0 — Warm-up: MySQL, but containerised (15 min)
+A quick Docker callback before today's main topic. You already know MySQL — probably
+through MySQL Workbench. Today you run the exact same database, but **in a container**
+instead of installed on your machine, and connect to it from a **VS Code extension**
+instead of a separate app.
+
+**Run MySQL in a container** ([Docker Hub: `mysql`](https://hub.docker.com/_/mysql)):
+```bash
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -p 3306:3306 -d mysql:8.0
+```
+The `-p 3306:3306` is what makes this reachable from *outside* the container — same port
+mapping idea from Session 5, now put to use with a database instead of a web server.
+Confirm it's up: `docker ps`.
+
+**Connect from VS Code** instead of MySQL Workbench: install a MySQL extension (e.g.
+`MySQL` by Weijan Chen, or `SQLTools` + its MySQL/MariaDB driver), then add a connection
+with the same details you'd type into Workbench:
+
+- Host: `localhost` (or `127.0.0.1`)
+- Port: `3306`
+- User: `root`
+- Password: `my-secret-pw`
+
+Run `SHOW DATABASES;` to confirm the connection works.
+
+The point: same MySQL, same SQL, same credentials — just running **isolated in a
+container** and reached through a **different client**. Nothing about the database itself
+changed; where and how it runs did. Keep that distinction in mind — it's the same kind of
+question today's session asks about *architecture*: which parts of a system are load-bearing,
+and which are just the tool you happened to use to reach it?
 
 ### Part 1 — Three definitions, side by side (20 min)
 Three useful framings of architecture, all true, all slightly different:
