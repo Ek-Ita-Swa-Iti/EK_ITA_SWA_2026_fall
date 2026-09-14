@@ -145,9 +145,6 @@ why:
 - Vibe is packaged via PyInstaller, uv, *and* a Nix flake.
 - The LLM-backend folder is named `backend` instead of `provider` or `vendor`.
 
-Don't aim for a clean verdict — it's fine if the room splits on some of these. The
-disagreements matter more than the answers.
-
 ### Part 6 — Pair exercise: find a component, a boundary, a convention (25 min)
 In pairs, use Vibe to investigate the repo. Find one of each:
 
