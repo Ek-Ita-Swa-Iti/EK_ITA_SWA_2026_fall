@@ -154,7 +154,7 @@ In pairs, use Vibe to investigate the repo. Find one of each:
 
 These are the three pieces of architecture-vocabulary we introduced today. Use only those — don't reach for "layered" or "hexagonal" yet; those come later in the semester.
 
-Write a 5-line dossier per pair (paper or markdown). Drop it in your semester notebook.
+Write a 5-line summary per pair (paper or markdown). Drop it in your semester notebook.
 
 ### Part 7 — Synthesis (20 min)
 Each pair shares what they found. The class assembles a shared map of "things we noticed in Vibe today." We'll come back to this map all semester.
