@@ -214,7 +214,3 @@ Bring it to session 7. We'll spend the first 10 minutes comparing notes.
 
 - Set up your semester notebook (digital or paper). One section per session.
 - Skim ahead: session 7 covers *quality attributes* — what "good" means when you can't say "it works."
-
-## Optional
-
-- [optional] A one-page primer on what "software architecture" means (teacher-provided — old reading, not required).
