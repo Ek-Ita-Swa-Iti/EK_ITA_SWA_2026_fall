@@ -120,7 +120,7 @@ With Vibe set up, look at the cloned repo in your file browser — *no source fi
 The point: structure carries most of the architectural signal. You don't need to read the code to see the shape.
 
 ### Part 4 — Ask Vibe, then check (30 min)
-Now turn to your agent. Run these three prompts in order. For each, *open at least one file Vibe names* and check whether the claim holds up:
+Now turn to your agent. Run these three prompts in order. For each, *open at least one file Vibe names* and check whether the claim holds up, then ask follow up questions:
 
 1. *"Give me a one-paragraph description of what this repo is and what its top-level structure suggests about its architecture."*
 2. *"What are the three or four most architecturally important files in this repo? For each, explain in one sentence why."*
