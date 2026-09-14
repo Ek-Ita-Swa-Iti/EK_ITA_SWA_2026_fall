@@ -42,6 +42,18 @@ The `-p 3306:3306` is what makes this reachable from *outside* the container —
 mapping idea from Session 5, now put to use with a database instead of a web server.
 Confirm it's up: `docker ps`.
 
+Same thing, as a `docker-compose.yml` (same parameters, Session 5 shape):
+```yaml
+services:
+  some-mysql:
+    container_name: some-mysql
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+    ports: ["3306:3306"]
+```
+`docker compose up -d` instead of the `docker run` line above — same container, same result.
+
 **Connect from VS Code** instead of MySQL Workbench: install the **Database Client**
 extension ([database-client.com](https://database-client.com)) — search "Database Client"
 in the VS Code marketplace — then add a MySQL connection with the same details you'd type
