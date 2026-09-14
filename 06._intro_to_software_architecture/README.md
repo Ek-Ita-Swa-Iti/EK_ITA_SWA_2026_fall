@@ -170,7 +170,7 @@ Write half a page on your bring-your-own system using today's vocabulary:
 - One or more **components**.
 - One or more **boundaries**.
 - One or more **conventions**.
-- One decision you'd revisit — what you'd change, and what changed *because* of the original choice.
+- One decision you'd revisit — what you'd change.
 
 Drop it in your semester notebook.
 
