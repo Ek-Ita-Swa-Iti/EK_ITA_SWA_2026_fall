@@ -165,7 +165,14 @@ Each pair shares what they found. The class assembles a shared map of "things we
 
 ## Exercise
 
-Write half a page on your bring-your-own system using today's vocabulary — components, boundaries, conventions, one decision you'd revisit. Drop it in your semester notebook.
+Write half a page on your bring-your-own system using today's vocabulary:
+
+- One or more **components**.
+- One or more **boundaries**.
+- One or more **conventions**.
+- One decision you'd revisit.
+
+Drop it in your semester notebook.
 
 ---
 
