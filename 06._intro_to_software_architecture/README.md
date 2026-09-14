@@ -110,6 +110,9 @@ A few things worth knowing about the Vibe interface (we'll use them later):
 - `!` prefix runs a shell command directly.
 - `/help` lists everything else.
 
+> **If Vibe is hanging or feels slow:** run `vibe --setup` and choose to log in through
+> your browser.
+
 ### Part 3 — Where is the architecture? (30 min)
 With Vibe set up, look at the cloned repo in your file browser — *no source files open yet*. Just folder names, file names, and what's at the top level. Together as a class:
 
