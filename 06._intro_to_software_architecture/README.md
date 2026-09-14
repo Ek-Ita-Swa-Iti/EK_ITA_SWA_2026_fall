@@ -50,7 +50,8 @@ services:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: my-secret-pw
-    ports: ["3306:3306"]
+    ports:
+      - "3306:3306"
 ```
 `docker compose up -d` instead of the `docker run` line above — same container, same result.
 
