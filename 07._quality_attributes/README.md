@@ -18,7 +18,6 @@
 
 ## Before Class
 
-- Bring your S6 investigation deliverable — we open the session by comparing them.
 - Have your `mistral-vibe-ek-ita` clone and `vibe` working from last session.
 - Bring the system you described in S6.
 - [optional] One sentence: the most annoying non-functional problem in a system you've used recently.
@@ -26,6 +25,14 @@
 ---
 
 ## Today's Teachings
+
+### Part 0 — Recap: Session 6 (5 min)
+Last session you met `mistral-vibe-ek-ita`, pointed Vibe at its own source code, and built
+vocabulary for talking about architecture: **component**, **boundary**, **contract**,
+**convention**. You also ran the ask-verify-refine loop for the first time — ask the
+agent a question, then open a file and check whether the claim actually holds up. Today
+builds on that vocabulary with a new lens: not just *what* the system is made of, but
+*how well* it does what it does.
 
 ### Part 1 — What does "good" mean? (15 min)
 Imagine Vibe ships with no bugs. Every feature works exactly as specified. Could it still be a bad product?
