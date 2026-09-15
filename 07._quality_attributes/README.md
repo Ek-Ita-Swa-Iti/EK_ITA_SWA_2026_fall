@@ -44,7 +44,7 @@ Imagine Vibe ships with no bugs. Every feature works exactly as specified. Could
 
 The answers — *slow, leaks the API key, only works on my laptop, impossible to extend* — are all real. None of them are about whether the code "works". They're about **quality attributes**: properties of the system that aren't "what it does" but "how well it does it".
 
-The six this course cares about:
+The six we look at this semester:
 
 - **Performance** — how fast?
 - **Scalability** — does it cope as load grows?
