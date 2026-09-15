@@ -42,7 +42,7 @@ Today builds on that vocabulary with a new lens: not just *what* the system is m
 ### Part 1 — What does "good" mean? (15 min)
 Imagine Vibe ships with no bugs. Every feature works exactly as specified. Could it still be a bad product?
 
-We brainstorm together. The answers — *slow, leaks the API key, only works on my laptop, impossible to extend* — are all real. None of them are about whether the code "works". They're about **quality attributes**: properties of the system that aren't "what it does" but "how well it does it".
+The answers — *slow, leaks the API key, only works on my laptop, impossible to extend* — are all real. None of them are about whether the code "works". They're about **quality attributes**: properties of the system that aren't "what it does" but "how well it does it".
 
 The six this course cares about:
 
