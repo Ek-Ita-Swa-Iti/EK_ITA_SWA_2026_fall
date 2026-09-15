@@ -27,9 +27,6 @@
 
 ## Today's Teachings
 
-### Part 0 — Compare notes (10 min)
-In pairs, swap your S6 deliverables. Each pair picks one claim Vibe got right and one it oversold. Three pairs share with the room. We keep doing this — every session opens with last session's investigation.
-
 ### Part 1 — What does "good" mean? (15 min)
 Imagine Vibe ships with no bugs. Every feature works exactly as specified. Could it still be a bad product?
 
