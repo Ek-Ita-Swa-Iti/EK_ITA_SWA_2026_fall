@@ -30,7 +30,7 @@ Pairs swap S7 investigation deliverables. Each pair surfaces one QA Vibe optimis
 
 ### Part 1 — What "layered" means (25 min)
 
-In class we'll walk through a tiny example we've prepared — a textbook 4-layer notes service. Two versions, same shape:
+In class we'll walk through a tiny example: a textbook 4-layer notes service. Two versions, same shape:
 
 - `example-kotlin/` — Ktor + Postgres
 - `example-python/` — FastAPI + Postgres
