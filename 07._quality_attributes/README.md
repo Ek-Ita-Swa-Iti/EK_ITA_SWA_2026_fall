@@ -37,7 +37,7 @@ Last session's goals:
   it makes rather than taking it on faith.
 
 Today builds on that vocabulary with a new lens: not just *what* the system is made of,
-but *how well* it does what it does.
+**but how well it does what it does**.
 
 ### Part 1 — What does "good" mean? (15 min)
 Imagine Vibe ships with no bugs. Every feature works exactly as specified. Could it still be a bad product?
