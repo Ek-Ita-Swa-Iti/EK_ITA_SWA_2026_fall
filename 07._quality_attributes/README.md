@@ -27,17 +27,13 @@
 ## Today's Teachings
 
 ### Part 0 — Recap: Session 6 (5 min)
-Last session's goals:
-
-- Answer "where is the architecture in this system?" with more than "the diagram."
-- See architecture as **decisions, boundaries, and conventions**.
-- Tell architecture apart from implementation choices that only look architectural.
-- Build vocabulary: **component**, **boundary**, **contract**, **convention**.
-- Use a coding agent (Vibe) to investigate an unfamiliar codebase, verifying every claim
-  it makes rather than taking it on faith.
-
-Today builds on that vocabulary with a new lens: not just *what* the system is made of,
-but *how well* it does what it does.
+Last session's goals: answer "where is the architecture in this system?" with more than
+"the diagram" — see architecture as **decisions, boundaries, and conventions**; tell
+architecture apart from implementation choices that only look architectural; build
+vocabulary — **component**, **boundary**, **contract**, **convention**; and use a coding
+agent (Vibe) to investigate an unfamiliar codebase, verifying every claim it makes rather
+than taking it on faith. Today builds on that vocabulary with a new lens: not just *what*
+the system is made of, but *how well* it does what it does.
 
 ### Part 1 — What does "good" mean? (15 min)
 Imagine Vibe ships with no bugs. Every feature works exactly as specified. Could it still be a bad product?
