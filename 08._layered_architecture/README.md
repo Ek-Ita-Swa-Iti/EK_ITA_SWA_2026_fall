@@ -57,7 +57,7 @@ The rule that *makes* this stack layered: **dependencies point downward only**.
 - A layer **may not** call a layer above.
 - Ideally, a layer doesn't reach sideways either.
 
-**This is about dependency, not data.** The arrows below mean *"references / imports / can't compile without"* — not *"data travels this way."* A request flows presentation → application → domain → persistence, and results flow straight back up through the same chain as ordinary return values — every request, every layer, and that's not a violation. What's forbidden is persistence's *source code* containing an import of, or a reference to, something defined in application or presentation. Returning a value to your caller is not the same as importing your caller's code.
+**Dependency, not data.** The arrows mean *imports*, not *data flow* — return values travelling back up are normal. What's forbidden is persistence's code importing from application or presentation.
 
 ```mermaid
 flowchart TB
