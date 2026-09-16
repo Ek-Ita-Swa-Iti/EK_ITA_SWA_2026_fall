@@ -58,7 +58,33 @@ The rule that *makes* this stack layered: **dependencies point downward only**.
 - A layer **may not** call a layer above.
 - Ideally, a layer doesn't reach sideways either.
 
+```mermaid
+flowchart TB
+    PRES[presentation] -->|allowed| APP[application]
+    APP -->|allowed| DOM[domain]
+    DOM -->|allowed| PERSIST[persistence]
+    PERSIST -.->|"✗ forbidden"| APP
+```
+
 Two flavours: **strict** (each layer calls only the next layer down) and **relaxed** (a layer can reach any layer below). Most real systems are relaxed.
+
+```mermaid
+flowchart TB
+    subgraph Strict["strict — only the layer directly below"]
+        direction TB
+        P1[presentation] --> A1[application]
+        A1 --> D1[domain]
+        D1 --> PS1[persistence]
+    end
+    subgraph Relaxed["relaxed — any layer below"]
+        direction TB
+        P2[presentation] --> A2[application]
+        A2 --> D2[domain]
+        D2 --> PS2[persistence]
+        P2 -.-> D2
+        A2 -.-> PS2
+    end
+```
 
 Note how this connects to last week's vocabulary:
 - The boxes are **components** (S6).
