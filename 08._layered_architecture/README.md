@@ -51,6 +51,8 @@ A **layer** is a horizontal slice of the system. The classic web stack has four:
 - **domain** — business rules and the model of the world
 - **persistence** — talks to the database, files, external systems
 
+### The dependency rule
+
 The rule that *makes* this stack layered: **dependencies point downward only**.
 
 - A layer may call the layer below.
