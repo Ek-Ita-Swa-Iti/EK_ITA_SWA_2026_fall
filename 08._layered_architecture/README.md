@@ -142,7 +142,7 @@ Ask Vibe: *"Find one place in this codebase where a layering violation either ex
 ### Part 5 — Read a real one: bring-your-own (40 min)
 In pairs, using the codebase one of you brought:
 
-- What are the layers, in the team's words (folder names, docs, conventions)?
+- What are the layers in your system?
 - Are the dependency rules respected? Use your agent to find imports that cross layers in the wrong direction.
 - Find one violation. (If you can't find one, find one place a violation would be tempting.)
 - What one concrete suggestion would you make as a new joiner tomorrow?
