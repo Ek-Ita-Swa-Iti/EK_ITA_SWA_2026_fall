@@ -93,8 +93,6 @@ Note how this connects to last week's vocabulary:
 - "Arrows point down" is a **convention** the system commits to (S6).
 - "I can swap one layer without touching the others" is a **maintainability** claim (S7).
 
-Layered isn't new physics. It's a named arrangement of things you already know.
-
 ### Part 2 — Is Vibe layered? (35 min)
 Open question, investigated together. Use the file browser and Vibe.
 
