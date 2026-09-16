@@ -189,6 +189,8 @@ Same pattern as before: ask, verify, write up. Pick **two** of the four.
 ### Prompt 4 — Swap your exam project's database to MySQL
 > "My 2nd-semester exam project uses [current DB engine — not MySQL] for its database. I want to migrate it to MySQL. Before you touch anything, tell me every file and every layer you expect to touch, and why. Then make the change. When you're done, list every file you actually touched, grouped by layer."
 
+Need a MySQL instance to migrate to? Reuse the [containerised MySQL warm-up from Session 6](../06._intro_to_software_architecture/README.md#part-0--warm-up-mysql-but-containerised-15-min). If you use that exact setup, use the credentials described there (`root` / `my-secret-pw`, `localhost:3306`).
+
 **Verify:** run the app against the new MySQL database — does it actually read and write correctly? Compare Vibe's *before* prediction to its *after* file list — did the change stay inside the persistence layer, or did it ripple into application, domain, or presentation? If it touched something above persistence, that's not automatically wrong (the layered rule does permit application/domain depending on persistence) — but it should be *explainable*, not a surprise. Note which QA this is putting to the test (maintainability) and whether your project actually delivered on the "swap the database, nothing else changes" claim from Part 3.
 
 ### Deliverable
