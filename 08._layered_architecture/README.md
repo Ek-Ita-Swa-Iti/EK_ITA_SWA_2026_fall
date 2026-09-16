@@ -126,8 +126,6 @@ Layered's pay-offs, in QA terms:
 - **Onboarding cost.** A new developer can read one layer at a time. That's a real cost benefit.
 - The arrows-down rule is a *load-bearing convention*: small enough to fit on a sticker, big enough to shape months of design discipline.
 
-Quick exercise: name **two QAs layered buys you** and **one it costs**. Compare across pairs.
-
 ### Part 4 — How it falls apart (35 min)
 Three classic failure modes. For each, find an example — in Vibe, or in your bring-your-own codebase.
 
