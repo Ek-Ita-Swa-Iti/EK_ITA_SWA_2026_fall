@@ -58,12 +58,14 @@ The rule that *makes* this stack layered: **dependencies point downward only**.
 - A layer **may not** call a layer above.
 - Ideally, a layer doesn't reach sideways either.
 
+**This is about dependency, not data.** The arrows below mean *"references / imports / can't compile without"* — not *"data travels this way."* A request flows presentation → application → domain → persistence, and results flow straight back up through the same chain as ordinary return values — every request, every layer, and that's not a violation. What's forbidden is persistence's *source code* containing an import of, or a reference to, something defined in application or presentation. Returning a value to your caller is not the same as importing your caller's code.
+
 ```mermaid
 flowchart TB
-    PRES[presentation] -->|allowed| APP[application]
-    APP -->|allowed| DOM[domain]
-    DOM -->|allowed| PERSIST[persistence]
-    PERSIST -.->|"✗ forbidden"| APP
+    PRES[presentation] -->|"may depend on"| APP[application]
+    APP -->|"may depend on"| DOM[domain]
+    DOM -->|"may depend on"| PERSIST[persistence]
+    PERSIST -.->|"✗ import — forbidden"| APP
 ```
 
 Two flavours: **strict** (each layer calls only the next layer down) and **relaxed** (a layer can reach any layer below). Most real systems are relaxed.
@@ -72,17 +74,17 @@ Two flavours: **strict** (each layer calls only the next layer down) and **relax
 flowchart TB
     subgraph Strict["strict — only the layer directly below"]
         direction TB
-        P1[presentation] --> A1[application]
-        A1 --> D1[domain]
-        D1 --> PS1[persistence]
+        P1[presentation] -->|"depends on"| A1[application]
+        A1 -->|"depends on"| D1[domain]
+        D1 -->|"depends on"| PS1[persistence]
     end
     subgraph Relaxed["relaxed — any layer below"]
         direction TB
-        P2[presentation] --> A2[application]
-        A2 --> D2[domain]
-        D2 --> PS2[persistence]
-        P2 -.-> D2
-        A2 -.-> PS2
+        P2[presentation] -->|"depends on"| A2[application]
+        A2 -->|"depends on"| D2[domain]
+        D2 -->|"depends on"| PS2[persistence]
+        P2 -.->|"depends on"| D2
+        A2 -.->|"depends on"| PS2
     end
 ```
 
