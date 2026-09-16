@@ -53,11 +53,11 @@ A **layer** is a horizontal slice of the system. The classic web stack has four:
 
 ### The dependency rule
 
-The rule that *makes* this stack layered: **dependencies point downward only**.
-
-- A layer may call the layer below.
-- A layer **may not** call a layer above.
-- Ideally, a layer doesn't reach sideways either.
+> The rule that *makes* this stack layered: **dependencies point downward only**.
+>
+> - A layer may call the layer below.
+> - A layer **may not** call a layer above.
+> - Ideally, a layer doesn't reach sideways either.
 
 **Dependency, not data.** The arrows mean *imports*, not *data flow* — return values travelling back up are normal. What's forbidden is persistence's code importing from application or presentation.
 
