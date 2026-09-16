@@ -39,10 +39,36 @@ The dependency rule: **arrows point downward only**.
 
 | Layer         | Depends on             | Knows nothing about     |
 |---------------|------------------------|-------------------------|
-| `web/`        | `application`          | `persistence`           |
+| `web/`        | `application`, `domain`| `persistence`           |
 | `application/`| `domain`, `persistence`| `web`                   |
 | `domain/`     | *(nothing)*            | everything else         |
 | `persistence/`| `domain`               | `web`, `application`    |
+
+```mermaid
+flowchart TB
+    subgraph web["web/"]
+        ROUTES[Routes.kt]
+    end
+    subgraph application["application/"]
+        SERVICE[NoteService.kt]
+    end
+    subgraph domain["domain/"]
+        NOTE[Note.kt]
+    end
+    subgraph persistence["persistence/"]
+        REPO[NoteRepository.kt]
+    end
+    MAIN[Main.kt<br/>composition root]
+
+    ROUTES -->|"depends on"| SERVICE
+    ROUTES -->|"depends on"| NOTE
+    SERVICE -->|"depends on"| NOTE
+    SERVICE -->|"depends on"| REPO
+    REPO -->|"depends on"| NOTE
+    MAIN -.->|wires| ROUTES
+    MAIN -.->|wires| SERVICE
+    MAIN -.->|wires| REPO
+```
 
 Verify by running:
 

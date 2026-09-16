@@ -45,6 +45,32 @@ The dependency rule: **arrows point downward only**.
 | `domain/`        | *(stdlib only)*          | everything else         |
 | `persistence/`   | `domain`                 | `web`, `application`    |
 
+```mermaid
+flowchart TB
+    subgraph web["web/"]
+        ROUTES[routes.py]
+    end
+    subgraph application["application/"]
+        SERVICE[service.py]
+    end
+    subgraph domain["domain/"]
+        NOTE[note.py]
+    end
+    subgraph persistence["persistence/"]
+        REPO[repository.py]
+    end
+    MAIN[main.py<br/>composition root]
+
+    ROUTES -->|"depends on"| SERVICE
+    ROUTES -->|"depends on"| NOTE
+    SERVICE -->|"depends on"| NOTE
+    SERVICE -->|"depends on"| REPO
+    REPO -->|"depends on"| NOTE
+    MAIN -.->|wires| ROUTES
+    MAIN -.->|wires| SERVICE
+    MAIN -.->|wires| REPO
+```
+
 Verify by running:
 
 ```bash
