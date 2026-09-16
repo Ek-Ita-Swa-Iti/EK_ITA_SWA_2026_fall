@@ -2,7 +2,7 @@
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
-> The oldest architectural style still in everyday use. Layers are easy to draw, easier to misuse. Today we ask: what makes a stack actually layered? Is Vibe layered? And how do you spot a layered architecture that has quietly become spaghetti?
+> The oldest architectural style still in everyday use. Layers are easy to draw, easier to misuse. Today we ask: what makes a stack actually layered? Is Vibe layered? And how do you spot a layered architecture that has quietly become spaghetti? After class, you'll change a real system's persistence layer and test how layered it actually is.
 
 ---
 
