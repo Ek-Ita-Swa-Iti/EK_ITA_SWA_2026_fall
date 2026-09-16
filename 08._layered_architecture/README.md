@@ -127,7 +127,7 @@ Layered's pay-offs, in QA terms:
 - The arrows-down rule is a *load-bearing convention*: small enough to fit on a sticker, big enough to shape months of design discipline.
 
 ### Part 4 — How it falls apart (35 min)
-Three classic failure modes. For each, find an example — in Vibe, or in your bring-your-own codebase.
+Three classic failure modes. For each, find an example — in [Vibe](https://github.com/Ek-Ita-Swa-Iti/mistral-vibe-ek-ita), or in your bring-your-own codebase.
 
 - **The shortcut.** A presentation file imports directly from persistence, skipping the layers in between. *In Vibe:* would `cli/` ever import from `core/llm/backend/` directly? Ask Vibe to look.
 - **The God-domain.** Business logic ends up in controllers because the domain layer is empty. *Diagnostic:* a controller file over 400 lines.
