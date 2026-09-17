@@ -17,16 +17,12 @@
 
 ## Before Class
 
-- Bring your S7 investigation deliverable — we open by comparing.
 - Pick an open-source project on GitHub you can read, written in a language you know. Have it cloned (or at least bookmarked) and skim its top-level folders before class. Examples: Spring PetClinic, a Django app, an Express API, a Ktor backend, a Nest service — anything with visible structure.
 - [optional] One sentence: a codebase where you've felt "the layers exist but everything touches everything anyway".
 
 ---
 
 ## Today's Teachings
-
-### Part 0 — Compare notes from S7 (10 min)
-Pairs swap S7 investigation deliverables. Each pair surfaces one QA Vibe optimises for *with evidence* and one trade-off they spotted. Two pairs share. Quick — this is now routine.
 
 ### Part 1 — What "layered" means (25 min)
 
