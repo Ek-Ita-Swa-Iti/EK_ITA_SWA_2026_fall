@@ -1,0 +1,10 @@
+{
+  "name": "notes-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Minimal Node.js layered backend for Session 8 — presentation + persistence only, zero dependencies.",
+  "main": "src/presentation/server.js",
+  "scripts": {
+    "start": "node src/presentation/server.js"
+  }
+}

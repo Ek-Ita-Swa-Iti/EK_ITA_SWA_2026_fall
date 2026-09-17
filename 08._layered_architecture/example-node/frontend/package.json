@@ -1,0 +1,10 @@
+{
+  "name": "notes-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static file server for the minimal notes frontend. Zero dependencies.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
