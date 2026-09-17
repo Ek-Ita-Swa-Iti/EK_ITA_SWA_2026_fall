@@ -23,6 +23,9 @@ Or talk to the backend directly:
 ```bash
 curl localhost:3000/notes
 curl localhost:3000/notes/1
+curl -X POST localhost:3000/notes \
+  -H 'Content-Type: application/json' \
+  -d '{"title":"hello","body":"first note"}'
 ```
 
 Stop with `Ctrl-C`, clean up with `docker compose down`.
@@ -79,13 +82,13 @@ below, not above" is even a meaningful sentence.
 
 `notesRepository.js` returns data from a plain in-memory array, not a
 database. That's a **development-only stand-in**, explicitly commented as
-such in the file. It exposes exactly two functions — `findAll()` and
-`findById(id)` — and that's the whole contract `presentation/server.js`
-depends on.
+such in the file. It exposes exactly three functions — `findAll()`,
+`findById(id)`, and `create(title, body)` — and that's the whole contract
+`presentation/server.js` depends on.
 
 **Left out for now, on purpose:** a second persistence layer that reads from
 a real database instead. Swapping one in later should mean writing a new
-file that exposes the same two functions and pointing the composition root
+file that exposes the same three functions and pointing the composition root
 at it — without touching `presentation/server.js` at all. That's the same
 "swap Postgres for MySQL... in theory" claim from Part 3, set up so it can
 actually be tested against this codebase when the time comes.
@@ -96,6 +99,31 @@ actually be tested against this codebase when the time comes.
 `frontend/` — each with its own `Dockerfile`, each exposing its own port.
 Neither has a build step or a framework: the frontend is one HTML file, one
 JS file, and a ~20-line static file server.
+
+```mermaid
+flowchart TB
+    BROWSER["Browser<br/>(runs app.js)"]
+
+    subgraph host["host machine"]
+        subgraph frontendC["frontend container — :8080"]
+            STATIC[server.js<br/>static file server]
+            HTML[public/index.html]
+            APPJS[public/app.js]
+        end
+        subgraph backendC["backend container — :3000"]
+            SERVER[presentation/server.js]
+            REPO[persistence/notesRepository.js]
+        end
+    end
+
+    BROWSER -->|"GET localhost:8080/"| STATIC
+    STATIC -->|serves| HTML
+    STATIC -->|serves| APPJS
+    BROWSER -->|"fetch localhost:3000/notes<br/>(published port, not 'backend')"| SERVER
+    SERVER -->|"depends on"| REPO
+```
+
+The frontend container never talks to the backend container directly — it only ever serves static files. Every arrow that reaches the backend starts at the browser, not at the frontend container. That's the point of the gotcha below.
 
 **The gotcha worth walking through in class:** `frontend/public/app.js` calls
 `http://localhost:3000`, not `http://backend:3000`. That's not a mistake.
@@ -115,8 +143,8 @@ depending on which side of the network boundary the code actually runs on.
 - **No build step for the frontend.** Plain HTML and vanilla JS, on purpose —
   a bundler would be one more thing standing between the dependency rule and
   the screen.
-- **No POST/PUT/DELETE.** Read-only (`GET /notes`, `GET /notes/:id`) — enough
-  to demonstrate the layers without also teaching request validation.
+- **No PUT/DELETE.** `GET /notes`, `GET /notes/:id`, and `POST /notes` only —
+  enough to demonstrate the layers without building out full CRUD.
 
 ## Troubleshooting
 

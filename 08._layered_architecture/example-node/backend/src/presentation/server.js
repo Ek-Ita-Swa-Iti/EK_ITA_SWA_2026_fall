@@ -17,11 +17,40 @@ function send(res, status, body) {
   res.end(JSON.stringify(body));
 }
 
-const server = http.createServer((req, res) => {
+function readJsonBody(req) {
+  return new Promise((resolve, reject) => {
+    let raw = "";
+    req.on("data", (chunk) => (raw += chunk));
+    req.on("end", () => {
+      try {
+        resolve(raw ? JSON.parse(raw) : {});
+      } catch (err) {
+        reject(err);
+      }
+    });
+    req.on("error", reject);
+  });
+}
+
+const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
 
   if (req.method === "GET" && url.pathname === "/notes") {
     return send(res, 200, notesRepository.findAll());
+  }
+
+  if (req.method === "POST" && url.pathname === "/notes") {
+    let body;
+    try {
+      body = await readJsonBody(req);
+    } catch {
+      return send(res, 400, { error: "Invalid JSON body" });
+    }
+    if (!body.title || !body.body) {
+      return send(res, 400, { error: "title and body are required" });
+    }
+    const note = notesRepository.create(body.title, body.body);
+    return send(res, 201, note);
   }
 
   const singleNote = url.pathname.match(/^\/notes\/(\d+)$/);
