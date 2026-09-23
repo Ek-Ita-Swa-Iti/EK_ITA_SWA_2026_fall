@@ -1,4 +1,4 @@
-# Session 9: Hexagonal Architecture (Ports & Adapters)
+# Session 9: Layered and Hexagonal Architecture (Ports & Adapters)
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
