@@ -90,6 +90,22 @@ Hints:
 
 **When you're done with both, answer in your pair:** how many lines of `server.js` did you change in total? Which *single* line knows which persistence layer is in use — and which layer does that line live in? Hold on to that answer: it's where the next session (hexagonal architecture) starts.
 
+### Part 3 — Demo: inserting a layer (15 min)
+
+The instructor inserts a third layer — an **application** layer — between presentation and persistence in `example-node/`, live. It's deliberately thin: `findAll()` and `findById()` only carry data up and down, and `create()` owns one rule of its own.
+
+The finished version lives on a separate branch, so `master` keeps the two-layer example you just worked on:
+
+- Browse it: [`s9-application-layer` → `example-node/`](https://github.com/Ek-Ita-Swa-Iti/EK_ITA_SWA_2026_fall/tree/s9-application-layer/09._Layered_architecture_hands_on/example-node)
+- See exactly what changed: [compare `master` … `s9-application-layer`](https://github.com/Ek-Ita-Swa-Iti/EK_ITA_SWA_2026_fall/compare/master...s9-application-layer)
+- Or check it out locally: `git fetch origin && git switch s9-application-layer` (and `git switch master` to come back)
+
+Follow along and keep these questions in mind:
+
+- Which files changed, and which `require(...)` line moved?
+- After the change, where does the *one line* you edited in Part 2 live now — and does `server.js` still know that persistence exists?
+- `create()` now trims whitespace. Why does that rule belong in this new layer, rather than in `server.js` or in `notesRepository.js`?
+
 ---
 
 ## After Class
