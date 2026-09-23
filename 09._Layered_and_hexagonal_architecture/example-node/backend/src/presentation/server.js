@@ -1,5 +1,8 @@
 // Presentation layer: receives HTTP requests, renders JSON responses.
 // The only file that imports persistence — see README.md's dependency table.
+// Every repository call is awaited: the contract is async, so a persistence
+// layer backed by a database or a remote API can be swapped in without
+// changing anything below the require line.
 
 const http = require("http");
 const notesRepository = require("../persistence/notesRepository");
@@ -36,7 +39,7 @@ const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
 
   if (req.method === "GET" && url.pathname === "/notes") {
-    return send(res, 200, notesRepository.findAll());
+    return send(res, 200, await notesRepository.findAll());
   }
 
   if (req.method === "POST" && url.pathname === "/notes") {
@@ -49,13 +52,13 @@ const server = http.createServer(async (req, res) => {
     if (!body.title || !body.body) {
       return send(res, 400, { error: "title and body are required" });
     }
-    const note = notesRepository.create(body.title, body.body);
+    const note = await notesRepository.create(body.title, body.body);
     return send(res, 201, note);
   }
 
   const singleNote = url.pathname.match(/^\/notes\/(\d+)$/);
   if (req.method === "GET" && singleNote) {
-    const note = notesRepository.findById(Number(singleNote[1]));
+    const note = await notesRepository.findById(Number(singleNote[1]));
     return note ? send(res, 200, note) : send(res, 404, { error: "Note not found" });
   }
 

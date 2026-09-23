@@ -48,9 +48,55 @@ Follow along during the demo and keep these questions in mind:
 - Which way do the dependencies point? How would you *prove* it without trusting anyone's diagram?
 - What would it take to swap the hardcoded persistence for a real database — and which files should *not* have to change?
 
-Hold on to the last question. It's the one the rest of today answers.
+The demo ends by answering the last question live: the instructor swaps the hardcoded persistence layer for a new one that reads from a **MySQL** database running in a Docker container. Watch what changes — a new file in `persistence/`, a database service in `docker-compose.yml`, and the one `require(...)` line in `server.js`. Watch what *doesn't* change: the rest of `server.js`, the frontend, and the `curl` commands.
 
-### Part 2 — Ports & adapters (25 min)
+### Part 2 — Exercise: swap the persistence layer yourself (45 min)
+
+Now you do the same swap, twice. Work in pairs, in your own copy of `example-node/`.
+
+**The rules for both parts:**
+
+- Write a **new file** in `backend/src/persistence/`. Don't edit `notesRepository.js` — the hardcoded version stays as it is.
+- The new file must export the same three **async** functions with the same shapes: `findAll()` → array of notes, `findById(id)` → one note or `null`, `create(title, body)` → the created note. Each note looks like `{ id, title, body }`, with a **numeric** `id`.
+- In `presentation/server.js` you may change **exactly one line**: the `require(...)` at the top. Nothing else.
+- Done means: the three `curl` commands from the example's README work **unchanged**, and the frontend on `http://localhost:8080` still lists notes.
+
+#### Part 2a — Persistence that reads from a JSON API
+
+Create `persistence/notesRepository.api.js` that stores notes in a remote JSON API instead of in memory: **[JSONPlaceholder](https://jsonplaceholder.typicode.com)**, a free fake REST API.
+
+Its `/posts` resource already has the shape we need — every post has `id`, `title` and `body`:
+
+| Our contract          | JSONPlaceholder call                                    |
+|-----------------------|---------------------------------------------------------|
+| `findAll()`           | `GET https://jsonplaceholder.typicode.com/posts`       |
+| `findById(id)`        | `GET https://jsonplaceholder.typicode.com/posts/{id}` — a `404` means `null` |
+| `create(title, body)` | `POST https://jsonplaceholder.typicode.com/posts` with `{ "title": ..., "body": ... }` |
+
+Hints:
+
+- Node 20 has `fetch` built in — you still need **zero** npm dependencies.
+- Try the API with `curl` first, before you write any code.
+- The API only *pretends* to save: a `POST` returns `201` with `id: 101`, but the post is not really stored, so `GET /posts/101` afterwards gives `404`. That's the API's limitation, not a bug in your code.
+- The API returns an extra `userId` field. Should your persistence layer pass it on, or strip it? Decide, and be ready to explain why.
+
+#### Part 2b — Persistence that reads from MongoDB in Docker
+
+Create `persistence/notesRepository.mongo.js` that stores notes in a **MongoDB** database running in its own container.
+
+1. Add a `mongo` service to `docker-compose.yml` (the official `mongo` image).
+2. Add the official driver to the backend: `npm install mongodb` inside `backend/`. Your backend now has a dependency — so its `Dockerfile` has to copy `package-lock.json` and run `npm install` before copying `src/`.
+3. Connect from the backend with the connection string `mongodb://mongo:27017`.
+
+Hints:
+
+- Why `mongo` and not `localhost`? This time the call goes **container to container**, inside the Docker network — so the service name works. Compare with the frontend's `app.js`, which has to use `localhost:3000` because it runs in the browser.
+- MongoDB gives every document an `_id` of its own, which isn't a number. The routes in `server.js` only match numeric ids (`/notes/1`), so you have to keep a numeric `id` field yourself — and decide whether `_id` leaks out through your contract.
+- `depends_on` only waits for the MongoDB *container* to start, not for the database to accept connections. Does your first request still work? Find out why — the answer is in the driver, not in your code.
+
+**When you're done with both, answer in your pair:** how many lines of `server.js` did you change in total? Which *single* line knows which persistence layer is in use — and which layer does that line live in? Hold on to that answer: it's where the rest of today starts.
+
+### Part 3 — Ports & adapters (25 min)
 
 A **port** is an interface defined by the core, on the core's terms. It describes *what* the core needs, never *how* it's provided.
 
@@ -106,7 +152,7 @@ Two flavours, named in passing:
 
 Most real systems are pragmatic. Pure hexagonal is a textbook ideal; pragmatic hexagonal is what ships.
 
-### Part 3 — Vibe's `core/llm/backend/` is the canonical example (35 min)
+### Part 4 — Vibe's `core/llm/backend/` is the canonical example (35 min)
 Open three files in order. Follow along in your editor.
 
 **1. `vibe/core/llm/backend/base.py`** — read the `APIAdapter` Protocol out loud.
@@ -136,7 +182,7 @@ flowchart LR
     FACTORY -->|imports directly| MISTRAL
 ```
 
-Five adapters, one port — `base.py` depends on none of them. Note `factory.py` only *directly* imports `generic.py`/`mistral.py` (most vendors route through the OpenAI-compatible `GenericBackend`) — worth discovering in Part 3's investigation rather than being told.
+Five adapters, one port — `base.py` depends on none of them. Note `factory.py` only *directly* imports `generic.py`/`mistral.py` (most vendors route through the OpenAI-compatible `GenericBackend`) — worth discovering in Part 4's investigation rather than being told.
 
 Now verify. Ask Vibe:
 
@@ -146,9 +192,9 @@ Open one of the files Vibe names. The expected pattern: vendor files import from
 
 Bridge to S8: last week we saw the *outer* arrows (`cli/` → `core/`) point downward. Today we saw the *inner* arrows (vendor adapters → port) point inward. **The two rules — layered and hexagonal — are the same diagnostic property applied to different parts of the same codebase.** Vibe uses both, deliberately.
 
-Park this question for Part 5: *What would it take to add a sixth LLM vendor — a local Ollama backend?* Hold the question.
+Park this question for Part 6: *What would it take to add a sixth LLM vendor — a local Ollama backend?* Hold the question.
 
-### Part 4 — The S8 notes service, refactored (45 min)
+### Part 5 — The S8 notes service, refactored (45 min)
 The runnable example again, this time with one inversion. Both versions sit side by side in the examples repo:
 
 ```bash
@@ -194,7 +240,7 @@ Same tool, opposite question. The rule is visible by what *isn't* there.
 
 Now answer the parked question. Adding an Ollama backend to Vibe is *one new file* — `ollama.py` next to the others, implementing `APIAdapter`, registered in `factory.py`. The core does not change. That's the operational pay-off of ports.
 
-### Part 5 — What it buys, what it costs (25 min)
+### Part 6 — What it buys, what it costs (25 min)
 Hexagonal buys:
 
 - **Testability.** The service runs against in-memory adapters in unit tests, real ones in integration tests. Two test pyramid layers fall out for free.
@@ -211,7 +257,7 @@ Quick exercise: name **two QAs hexagonal buys** and **one it costs**. Compare wi
 
 **When *not* to reach for hexagonal:** throwaway scripts, prototypes, code that will be rewritten before it has a second integration, systems with one obvious DB and zero realistic chance of swapping it. Pragmatic hexagonal — ports at the painful boundaries only — is what most real systems land on.
 
-### Part 6 — Bring-your-own: where would a port help? (35 min)
+### Part 7 — Bring-your-own: where would a port help? (35 min)
 In pairs, using one of the bring-your-own codebases from S8.
 
 - Identify one external dependency the codebase has — a database, a third-party API, a file system, a message queue, an email service.
@@ -222,7 +268,7 @@ In pairs, using one of the bring-your-own codebases from S8.
 
 5-line dossier per pair. Drop it in your semester notebook.
 
-### Part 7 — Synthesis (10 min)
+### Part 8 — Synthesis (10 min)
 One pair shares. We end with the synthesis:
 
 - **Layered** = arrows point down. Helpful for separation, weak on testability.

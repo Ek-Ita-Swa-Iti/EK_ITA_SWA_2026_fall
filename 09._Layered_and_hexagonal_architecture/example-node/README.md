@@ -82,16 +82,23 @@ below, not above" is even a meaningful sentence.
 
 `notesRepository.js` returns data from a plain in-memory array, not a
 database. That's a **development-only stand-in**, explicitly commented as
-such in the file. It exposes exactly three functions — `findAll()`,
+such in the file. It exposes exactly three **async** functions — `findAll()`,
 `findById(id)`, and `create(title, body)` — and that's the whole contract
 `presentation/server.js` depends on.
 
-**Left out for now, on purpose:** a second persistence layer that reads from
-a real database instead. Swapping one in later should mean writing a new
-file that exposes the same three functions and pointing the composition root
-at it — without touching `presentation/server.js` at all. That's the same
-"swap Postgres for MySQL... in theory" claim from Session 8, Part 3, set up so it can
-actually be tested against this codebase when the time comes.
+Why async when nothing here waits on anything? Because a database or an HTTP
+API *does* — its calls return Promises. If the contract were synchronous,
+swapping in a real persistence layer would force `server.js` to change too
+(every call would need an `await`). Making the contract async from day one is
+what lets presentation stay untouched.
+
+**Left out, on purpose:** a second persistence layer that reads from a real
+database. Swapping one in means writing a new file that exposes the same
+three async functions and changing the single `require(...)` line at the top
+of `server.js` to point at it — nothing else in `server.js` changes. That's
+the same "swap Postgres for MySQL... in theory" claim from Session 8, Part 3,
+set up so it can actually be tested against this codebase. (Session 9's
+exercise does exactly that — twice.)
 
 ## Backend and frontend as separate Docker images
 

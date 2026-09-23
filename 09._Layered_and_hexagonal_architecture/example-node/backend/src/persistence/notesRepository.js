@@ -4,6 +4,9 @@
 // reads from a real database will expose the same three functions
 // (findAll, findById, create) with the same shapes — so presentation/server.js,
 // which only calls this contract, won't need to change when that swap happens.
+//
+// The functions are async even though nothing here waits on anything: a real
+// database or HTTP call returns a Promise, so the contract is async from day one.
 
 const notes = [
   { id: 1, title: "Welcome", body: "This note is hardcoded, not read from a database." },
@@ -12,15 +15,15 @@ const notes = [
 
 let nextId = notes.length + 1;
 
-function findAll() {
+async function findAll() {
   return notes;
 }
 
-function findById(id) {
+async function findById(id) {
   return notes.find((note) => note.id === id) ?? null;
 }
 
-function create(title, body) {
+async function create(title, body) {
   const note = { id: nextId++, title, body };
   notes.push(note);
   return note;
