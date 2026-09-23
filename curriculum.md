@@ -61,7 +61,7 @@ no agent-investigation write-up.*
 | 6 | **Intro to software architecture** | "Where is the architecture?" in real and toy systems. Set up your agent + the spine repo. |
 | 7 | **Quality attributes** | Performance, scalability, availability, security, maintainability, cost — and the trade-offs between them. Quality-attribute *scenarios*. |
 | 8 | **Layered architecture** | Identify layers in a real codebase; the downward dependency rule. Runnable bilingual (Kotlin + Python) notes service. |
-| 9 | **Layered architecture** | Hands-on: live demo of a minimal two-layer Node.js notes service, then swap its persistence layer yourself — to a JSON API and to MongoDB in Docker. |
+| 9 | **Layered architecture (hands-on)** | Hands-on: live demo of a minimal two-layer Node.js notes service, then swap its persistence layer yourself — to a JSON API and to MongoDB in Docker. |
 | 10 | **REST API I** | Probe a real API (GitHub) hands-on; REST constraints, resources, methods, status codes, idempotency. |
 | 11 | **API contracts & OpenAPI** | The contract as a generated, CI-checked artefact — read Gitea's OpenAPI. *(Gitea is introduced here.)* |
 | 12 | **Data architecture** | Read Gitea's data model in code (schema as ORM tags), migrations & expand–contract, normalisation vs denormalisation, read/write asymmetry. |

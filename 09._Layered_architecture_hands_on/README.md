@@ -1,4 +1,4 @@
-# Session 9: Layered Architecture
+# Session 9: Layered Architecture (Hands-on)
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
@@ -28,7 +28,7 @@ We start by looking at code together. The instructor demos a tiny notes service 
 The example lives right here in this session's folder:
 
 ```bash
-cd 09._Layered_architecture/example-node
+cd 09._Layered_architecture_hands_on/example-node
 docker compose up --build
 ```
 

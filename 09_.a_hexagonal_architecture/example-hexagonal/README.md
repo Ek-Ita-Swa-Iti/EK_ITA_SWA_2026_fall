@@ -1,6 +1,6 @@
 # notes-hexagonal — ports & adapters, as small as it gets
 
-The same notes API as `../../09._Layered_architecture/example-node/` (same endpoints, same `curl`
+The same notes API as `../../09._Layered_architecture_hands_on/example-node/` (same endpoints, same `curl`
 commands), rebuilt as **ports & adapters**. The core owns a contract — the
 **port** — and everything outside the core **adapts** to it. Same language and style as `example-node/` — plain
 JavaScript, `require`, zero npm dependencies — so the only thing that's
@@ -82,7 +82,7 @@ grep -rn "require(" src/adapters
 ```
 
 Every adapter requires something from `../core/`. That's the arrow flipped compared to
-`../../09._Layered_architecture/example-node/`, where presentation imported persistence directly.
+`../../09._Layered_architecture_hands_on/example-node/`, where presentation imported persistence directly.
 
 ## Compared with the layered `example-node/` (Session 9)
 
