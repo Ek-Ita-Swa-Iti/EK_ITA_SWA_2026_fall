@@ -1,4 +1,4 @@
-# Session 9: Layered and Hexagonal Architecture (Ports & Adapters)
+# Session 9: Layered Architecture
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
@@ -28,7 +28,7 @@ We start by looking at code together. The instructor demos a tiny notes service 
 The example lives right here in this session's folder:
 
 ```bash
-cd 09._Layered_and_hexagonal_architecture/example-node
+cd 09._Layered_architecture/example-node
 docker compose up --build
 ```
 
