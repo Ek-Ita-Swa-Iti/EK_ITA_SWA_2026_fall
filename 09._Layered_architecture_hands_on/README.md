@@ -23,7 +23,7 @@
 
 ### Part 1 — Layered architecture, live: the Node.js example (20 min)
 
-We start by looking at code together. The instructor demos a tiny notes service and uses it to walk through the principles of layered architecture from S8 — this time on an example small enough to hold in your head at once.
+We start by looking at code together. I will demo a tiny notes service and use it to walk through the principles of layered architecture from S8 — this time on an example small enough to hold in your head at once.
 
 The example lives right here in this session's folder:
 
