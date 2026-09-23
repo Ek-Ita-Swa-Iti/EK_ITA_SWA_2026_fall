@@ -8,6 +8,7 @@
 
 ## Learning Goals
 
+- Restate the principles of **layered architecture** — layers, the downward dependency rule, and how to verify it from the imports — on the smallest possible working example.
 - Define a **port** and an **adapter** in your own words.
 - See why hexagonal's defining property is **dependency direction pointing inward** — and how that's the same diagnostic we used for layered, just rotated.
 - Read Vibe's `core/llm/backend/` and recognise the ports-and-adapters shape in real, working code.
@@ -18,7 +19,8 @@
 
 ## Before Class
 
-- Bring your S8 investigation deliverable — we open by comparing.
+- Pull the latest course repo and have Docker running — we open with a live demo of `example-node/` in this folder.
+- Bring your S8 investigation deliverable — we compare right after the demo.
 - Have Vibe running and `vibe/core/llm/backend/` bookmarked. We'll open `base.py` together.
 - [optional] One sentence: a place in the codebase you brought to S8 where "swap the database" or "add a second integration" would be expensive. That's a candidate for a port.
 
@@ -26,12 +28,35 @@
 
 ## Today's Teachings
 
-### Part 0 — Compare notes from S8 (10 min)
+### Part 1 — Layered architecture, live: the Node.js example (20 min)
+
+We start by looking at code together. The instructor demos a tiny notes service and uses it to walk through the principles of layered architecture from S8 — this time on an example small enough to hold in your head at once.
+
+The example lives right here in this session's folder:
+
+```bash
+cd 09._Layered_and_hexagonal_architecture/example-node
+docker compose up --build
+```
+
+Then open `http://localhost:8080`, or talk to the backend directly with `curl localhost:3000/notes`.
+
+What it is, in one breath: **two layers only** (`presentation/` and `persistence/`), **zero npm dependencies** (Node's built-in `http` module), and a separate backend and frontend Docker image. The folder's own [`README.md`](example-node/README.md) has the run instructions and the details.
+
+Follow along during the demo and keep these questions in mind:
+
+- Where are the layers, and what is each one responsible for?
+- Which way do the dependencies point? How would you *prove* it without trusting anyone's diagram?
+- What would it take to swap the hardcoded persistence for a real database — and which files should *not* have to change?
+
+Hold on to the last question. It's the one the rest of today answers.
+
+### Part 2 — Compare notes from S8 (10 min)
 Pairs swap S8 investigation deliverables. Each pair surfaces one layering claim Vibe got right *with file/import evidence* and one place it over-claimed. Two pairs share. Quick.
 
 Then re-read the cliffhanger from last week: *Vibe's `core/` isn't layered. It's structured around adapters over multiple LLM vendors.* Today we name the shape.
 
-### Part 1 — Ports & adapters (25 min)
+### Part 3 — Ports & adapters (25 min)
 
 A **port** is an interface defined by the core, on the core's terms. It describes *what* the core needs, never *how* it's provided.
 
@@ -87,7 +112,7 @@ Two flavours, named in passing:
 
 Most real systems are pragmatic. Pure hexagonal is a textbook ideal; pragmatic hexagonal is what ships.
 
-### Part 2 — Vibe's `core/llm/backend/` is the canonical example (35 min)
+### Part 4 — Vibe's `core/llm/backend/` is the canonical example (35 min)
 Open three files in order. Follow along in your editor.
 
 **1. `vibe/core/llm/backend/base.py`** — read the `APIAdapter` Protocol out loud.
@@ -117,7 +142,7 @@ flowchart LR
     FACTORY -->|imports directly| MISTRAL
 ```
 
-Five adapters, one port — `base.py` depends on none of them. Note `factory.py` only *directly* imports `generic.py`/`mistral.py` (most vendors route through the OpenAI-compatible `GenericBackend`) — worth discovering in Part 2's investigation rather than being told.
+Five adapters, one port — `base.py` depends on none of them. Note `factory.py` only *directly* imports `generic.py`/`mistral.py` (most vendors route through the OpenAI-compatible `GenericBackend`) — worth discovering in Part 4's investigation rather than being told.
 
 Now verify. Ask Vibe:
 
@@ -127,9 +152,9 @@ Open one of the files Vibe names. The expected pattern: vendor files import from
 
 Bridge to S8: last week we saw the *outer* arrows (`cli/` → `core/`) point downward. Today we saw the *inner* arrows (vendor adapters → port) point inward. **The two rules — layered and hexagonal — are the same diagnostic property applied to different parts of the same codebase.** Vibe uses both, deliberately.
 
-Park this question for Part 4: *What would it take to add a sixth LLM vendor — a local Ollama backend?* Hold the question.
+Park this question for Part 6: *What would it take to add a sixth LLM vendor — a local Ollama backend?* Hold the question.
 
-### Part 3 — The S8 notes service, refactored (45 min)
+### Part 5 — The S8 notes service, refactored (45 min)
 The runnable example again, this time with one inversion. Both versions sit side by side in the examples repo:
 
 ```bash
@@ -175,7 +200,7 @@ Same tool, opposite question. The rule is visible by what *isn't* there.
 
 Now answer the parked question. Adding an Ollama backend to Vibe is *one new file* — `ollama.py` next to the others, implementing `APIAdapter`, registered in `factory.py`. The core does not change. That's the operational pay-off of ports.
 
-### Part 4 — What it buys, what it costs (25 min)
+### Part 6 — What it buys, what it costs (25 min)
 Hexagonal buys:
 
 - **Testability.** The service runs against in-memory adapters in unit tests, real ones in integration tests. Two test pyramid layers fall out for free.
@@ -192,7 +217,7 @@ Quick exercise: name **two QAs hexagonal buys** and **one it costs**. Compare wi
 
 **When *not* to reach for hexagonal:** throwaway scripts, prototypes, code that will be rewritten before it has a second integration, systems with one obvious DB and zero realistic chance of swapping it. Pragmatic hexagonal — ports at the painful boundaries only — is what most real systems land on.
 
-### Part 5 — Bring-your-own: where would a port help? (35 min)
+### Part 7 — Bring-your-own: where would a port help? (35 min)
 In pairs, using one of the bring-your-own codebases from S8.
 
 - Identify one external dependency the codebase has — a database, a third-party API, a file system, a message queue, an email service.
@@ -203,7 +228,7 @@ In pairs, using one of the bring-your-own codebases from S8.
 
 5-line dossier per pair. Drop it in your semester notebook.
 
-### Part 6 — Synthesis (10 min)
+### Part 8 — Synthesis (10 min)
 One pair shares. We end with the synthesis:
 
 - **Layered** = arrows point down. Helpful for separation, weak on testability.
