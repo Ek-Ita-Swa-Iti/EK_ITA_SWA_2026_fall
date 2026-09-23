@@ -198,8 +198,6 @@ Half a page in your semester notebook:
 - **One claim that was vague, wrong, or oversold** — and how you checked.
 - **One QA layered buys, and one it costs** — in your own words, in the context of one specific codebase you looked at.
 
-Bring it to session 9. First 10 minutes we'll compare.
-
 ---
 
 ## After Class
