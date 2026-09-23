@@ -2,10 +2,10 @@
 // It picks a driven adapter, hands it to the core, and plugs the core into
 // a driving adapter. Swapping storage is a change here — and only here.
 
-import { NotesService } from "./core/NotesService.ts";
-import { InMemoryNotesRepository } from "./adapters/InMemoryNotesRepository.ts";
-import { JsonFileNotesRepository } from "./adapters/JsonFileNotesRepository.ts";
-import { startHttpServer } from "./adapters/httpServer.ts";
+const { NotesService } = require("./core/NotesService");
+const { InMemoryNotesRepository } = require("./adapters/InMemoryNotesRepository");
+const { JsonFileNotesRepository } = require("./adapters/JsonFileNotesRepository");
+const { startHttpServer } = require("./adapters/httpServer");
 
 const repository =
   process.env.NOTES_STORE === "file"

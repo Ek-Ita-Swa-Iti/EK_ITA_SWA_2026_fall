@@ -1,16 +1,15 @@
 // DRIVEN ADAPTER #2: keeps notes in a JSON file. Same port, different storage.
 
-import { readFile, writeFile } from "node:fs/promises";
-import type { Note, NotesRepository } from "../core/NotesRepository.ts";
+const { readFile, writeFile } = require("node:fs/promises");
+const { NotesRepository } = require("../core/NotesRepository");
 
-export class JsonFileNotesRepository implements NotesRepository {
-  private path: string;
-
-  constructor(path: string) {
+class JsonFileNotesRepository extends NotesRepository {
+  constructor(path) {
+    super();
     this.path = path;
   }
 
-  async findAll(): Promise<Note[]> {
+  async findAll() {
     try {
       return JSON.parse(await readFile(this.path, "utf8"));
     } catch {
@@ -18,14 +17,16 @@ export class JsonFileNotesRepository implements NotesRepository {
     }
   }
 
-  async findById(id: number): Promise<Note | null> {
+  async findById(id) {
     return (await this.findAll()).find((note) => note.id === id) ?? null;
   }
 
-  async create(title: string, body: string): Promise<Note> {
+  async create(title, body) {
     const notes = await this.findAll();
     const note = { id: notes.length + 1, title, body };
     await writeFile(this.path, JSON.stringify([...notes, note], null, 2));
     return note;
   }
 }
+
+module.exports = { JsonFileNotesRepository };

@@ -1,9 +1,10 @@
 # notes-hexagonal — ports & adapters, as small as it gets
 
 The same notes API as `../example-node/` (same endpoints, same `curl`
-commands), rebuilt as **ports & adapters**. The core owns an interface — the
-**port** — and everything outside the core **adapts** to it. Zero npm
-dependencies, no build step.
+commands), rebuilt as **ports & adapters**. The core owns a contract — the
+**port** — and everything outside the core **adapts** to it. Same language and style as `example-node/` — plain
+JavaScript, `require`, zero npm dependencies — so the only thing that's
+different is the architecture.
 
 ## Run it
 
@@ -35,74 +36,80 @@ Stop with `Ctrl-C`, clean up with `docker compose down`.
 ```
 src/
 ├── core/                              ← the hexagon
-│   ├── NotesRepository.ts             ← PORT: interface owned by the core
-│   └── NotesService.ts                ← CORE: the rules; imports only the port
+│   ├── NotesRepository.js             ← PORT: base class owned by the core
+│   └── NotesService.js                ← CORE: the rules; imports only the port
 ├── adapters/                          ← everything outside the hexagon
-│   ├── httpServer.ts                  ← DRIVING adapter: HTTP → core
-│   ├── InMemoryNotesRepository.ts     ← DRIVEN adapter: implements the port
-│   └── JsonFileNotesRepository.ts     ← DRIVEN adapter: implements the port
-└── main.ts                            ← COMPOSITION ROOT: wires it all together
+│   ├── httpServer.js                  ← DRIVING adapter: HTTP → core
+│   ├── InMemoryNotesRepository.js     ← DRIVEN adapter: extends the port
+│   └── JsonFileNotesRepository.js     ← DRIVEN adapter: extends the port
+└── main.js                            ← COMPOSITION ROOT: wires it all together
 ```
 
 ```mermaid
 flowchart LR
-    HTTP["httpServer.ts<br/>(driving adapter)"]
+    HTTP["httpServer.js<br/>(driving adapter)"]
     subgraph core["core/"]
-        SERVICE[NotesService.ts]
-        PORT[["NotesRepository.ts<br/>(port)"]]
+        SERVICE[NotesService.js]
+        PORT[["NotesRepository.js<br/>(port)"]]
         SERVICE --> PORT
     end
-    MEM["InMemoryNotesRepository.ts<br/>(driven adapter)"]
-    FILE["JsonFileNotesRepository.ts<br/>(driven adapter)"]
-    MAIN["main.ts<br/>(composition root)"]
+    MEM["InMemoryNotesRepository.js<br/>(driven adapter)"]
+    FILE["JsonFileNotesRepository.js<br/>(driven adapter)"]
+    MAIN["main.js<br/>(composition root)"]
 
     HTTP --> SERVICE
-    MEM -->|implements| PORT
-    FILE -->|implements| PORT
+    MEM -->|extends| PORT
+    FILE -->|extends| PORT
     MAIN -.->|wires| HTTP
     MAIN -.->|wires| MEM
     MAIN -.->|wires| FILE
     MAIN -.->|wires| SERVICE
 ```
 
-Every solid arrow is an `import`, and every one points **into** `core/`.
+Every solid arrow is a `require`, and every one points **into** `core/`.
 
 ## Verify the rule
 
 ```bash
-grep -rn "^import" src/core
+grep -rn "require(" src/core
 ```
 
-The only hit is `NotesService.ts` importing `./NotesRepository.ts`. The core
+The only hit is `NotesService.js` requiring `./NotesRepository`. The core
 knows nothing about HTTP, files or memory. Now look at an adapter:
 
 ```bash
-grep -rn "^import" src/adapters
+grep -rn "require(" src/adapters
 ```
 
-Every adapter imports from `../core/`. That's the arrow flipped compared to
+Every adapter requires something from `../core/`. That's the arrow flipped compared to
 `../example-node/`, where presentation imported persistence directly.
 
 ## Compared with `../example-node/`
 
 | Question                             | example-node (layered)                  | example-hexagonal                               |
 |--------------------------------------|-----------------------------------------|-------------------------------------------------|
-| Who defines the storage contract?    | Nobody explicitly — it's whatever `notesRepository.js` happens to export | The core, as the `NotesRepository` interface |
+| Who defines the storage contract?    | Nobody explicitly — it's whatever `notesRepository.js` happens to export | The core, as the `NotesRepository` base class |
 | Which way does the storage import go? | presentation → persistence             | adapter → core                                  |
-| Where is the storage chosen?         | a `require` line inside `server.js`     | `main.ts` only                                  |
+| Where is the storage chosen?         | a `require` line inside `server.js`     | `main.js` only                                  |
 | Where does validation live?          | in the HTTP handler                     | in the core (`NotesService`)                    |
 
-## Why TypeScript?
+## A port in a language without interfaces
 
-A port is an interface, and plain JavaScript has no way to write one down. In
-TypeScript the port is a real file (`NotesRepository.ts`), and every adapter
-says `implements NotesRepository` — so the dependency on the port shows up in
-the imports, where `grep` can see it.
+A port is an interface, and JavaScript has no `interface` keyword. So the port
+is written down as a **base class** whose three methods only throw
+`not implemented`. Each adapter `extends NotesRepository` and overrides all
+three. That gives us two things:
 
-Node 24 runs `.ts` files directly (it strips the types), so there is still no
-compiler and no build step. The price: only type syntax that can simply be
-deleted is allowed — which is why the classes assign their fields explicitly
-instead of using constructor shorthand.
+- The adapter's dependency on the port shows up in its `require` — where
+  `grep` can see it.
+- `NotesService` refuses anything that isn't a `NotesRepository`
+  (`instanceof` check in its constructor), so forgetting `extends` fails at
+  start-up instead of halfway through a request.
+
+What it *doesn't* give us: nothing checks that an adapter really overrides
+every method. Forget one and you find out when it's called — the base class
+throws `not implemented`. Languages with real interfaces (Kotlin, Java,
+TypeScript, C#) catch that before the program runs.
 
 ## What this example does *not* do
 
@@ -110,6 +117,6 @@ instead of using constructor shorthand.
   to show the swap without any extra containers.
 - **No tests.** Testing the core with a fake adapter is one of the in-class
   exercises.
-- **No port on the driving side.** `httpServer.ts` calls `NotesService`
+- **No port on the driving side.** `httpServer.js` calls `NotesService`
   directly. A stricter style would put an interface there too — the driven
   side carries the lesson.

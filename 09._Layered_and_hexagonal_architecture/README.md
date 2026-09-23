@@ -106,22 +106,22 @@ cd 09._Layered_and_hexagonal_architecture/example-hexagonal
 docker compose up --build
 ```
 
-It's TypeScript, run directly by Node 24 — no build step, zero dependencies. We use TypeScript for one reason: a port is an *interface*, and plain JavaScript can't write one down.
+It's the same plain JavaScript as `example-node/` — same `require`s, zero dependencies — so the only difference is the architecture. JavaScript has no `interface` keyword, so the port is written as a **base class** whose methods only throw; adapters `extends` it.
 
 The four words to take away, and where each one lives in the example:
 
 | Word | Meaning | In the example |
 |------|---------|----------------|
-| **Port** | An interface owned by the core, on the core's terms — *what* it needs, never *how* | `core/NotesRepository.ts` |
-| **Driven adapter** | Implements a port; the core uses it (storage, APIs, files) | `adapters/InMemoryNotesRepository.ts`, `adapters/JsonFileNotesRepository.ts` |
-| **Driving adapter** | Calls into the core from outside (HTTP, CLI, tests) | `adapters/httpServer.ts` |
-| **Composition root** | The one place that knows both sides and wires them together | `main.ts` |
+| **Port** | A contract owned by the core, on the core's terms — *what* it needs, never *how* | `core/NotesRepository.js` |
+| **Driven adapter** | Implements a port; the core uses it (storage, APIs, files) | `adapters/InMemoryNotesRepository.js`, `adapters/JsonFileNotesRepository.js` |
+| **Driving adapter** | Calls into the core from outside (HTTP, CLI, tests) | `adapters/httpServer.js` |
+| **Composition root** | The one place that knows both sides and wires them together | `main.js` |
 
 The rule that makes it hexagonal: **every dependency points inward, toward the core.** The core imports nothing but its own port.
 
 Follow along during the demo and keep these questions in mind:
 
-- Run `grep -rn "^import" src/core`. What does the core depend on — and what *doesn't* it?
+- Run `grep -rn "require(" src/core`. What does the core depend on — and what *doesn't* it?
 - The storage is swapped with `NOTES_STORE=file`. Which files changed? Compare with Part 2, where you edited a line in `server.js`.
 - Where did the "title and body are required" check move to, compared with `example-node/`? Why does that matter?
 
@@ -133,26 +133,26 @@ Pairs, in your own copy of `example-hexagonal/`. **One rule for everything below
 
 #### Part 4a — A new driven adapter: port your Part 2 code
 
-Take your JSONPlaceholder persistence from Part 2a and turn it into `adapters/JsonPlaceholderNotesRepository.ts`, a class that `implements NotesRepository`. Plug it in from `main.ts` (e.g. `NOTES_STORE=api`). The three `curl` commands must work unchanged.
+Take your JSONPlaceholder persistence from Part 2a and turn it into `adapters/JsonPlaceholderNotesRepository.js`, a class that `extends NotesRepository`. Plug it in from `main.js` (e.g. `NOTES_STORE=api`). The three `curl` commands must work unchanged.
 
-Then ask: which files did you touch this time, compared with Part 2? What did the `implements` keyword give you that Part 2 didn't?
+Then ask: which files did you touch this time, compared with Part 2? What did `extends NotesRepository` give you that Part 2 didn't — and what *doesn't* it check for you?
 
 #### Part 4b — A new driving adapter: a command-line interface
 
-Write `adapters/cli.ts` so notes can be used from the terminal, with no HTTP involved:
+Write `adapters/cli.js` so notes can be used from the terminal, with no HTTP involved:
 
 ```bash
-node src/cli.ts list
-node src/cli.ts add "hello" "first note"
+node src/cli.js list
+node src/cli.js add "hello" "first note"
 ```
 
-`src/cli.ts` is a second composition root: it builds a repository and a `NotesService` just like `main.ts`, then hands them to your CLI adapter instead of the HTTP one. Try `add` with an empty title — you should get the core's validation error without writing any validation yourself.
+`src/cli.js` is a second composition root: it builds a repository and a `NotesService` just like `main.js`, then hands them to your CLI adapter instead of the HTTP one. Try `add` with an empty title — you should get the core's validation error without writing any validation yourself.
 
-Hint: `process.argv` holds the command-line arguments. Run it inside the container with `docker compose run --rm --build notes node src/cli.ts list`, or locally if you have Node 22.18 or newer.
+Hint: `process.argv` holds the command-line arguments. Run it inside the container with `docker compose run --rm --build notes node src/cli.js list`, or locally with any recent Node.
 
 #### Part 4c — Test the core without any infrastructure
 
-Write `src/test/NotesService.test.ts` (outside `core/` — the rule still holds) using Node's built-in test runner (`node:test` and `node:assert`). Give `NotesService` a fake repository — a small object or class of your own that implements `NotesRepository` — and test that:
+Write `src/test/NotesService.test.js` (outside `core/` — the rule still holds) using Node's built-in test runner (`node:test` and `node:assert`). Give `NotesService` a fake repository — a small class of your own that `extends NotesRepository` (the service refuses anything else) — and test that:
 
 - `create` with a missing title is rejected with a `ValidationError`,
 - `create` with valid input hands the trimmed title and body to the repository.

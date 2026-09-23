@@ -1,26 +1,27 @@
 // THE CORE. The application's rules live here — and nothing else.
 // Its only import is the port. No HTTP, no files, no database.
 
-import type { Note, NotesRepository } from "./NotesRepository.ts";
+const { NotesRepository } = require("./NotesRepository");
 
-export class ValidationError extends Error {}
+class ValidationError extends Error {}
 
-export class NotesService {
-  private repository: NotesRepository;
-
-  constructor(repository: NotesRepository) {
+class NotesService {
+  constructor(repository) {
+    if (!(repository instanceof NotesRepository)) {
+      throw new TypeError("NotesService needs a NotesRepository");
+    }
     this.repository = repository;
   }
 
-  list(): Promise<Note[]> {
+  list() {
     return this.repository.findAll();
   }
 
-  get(id: number): Promise<Note | null> {
+  get(id) {
     return this.repository.findById(id);
   }
 
-  async create(title: string, body: string): Promise<Note> {
+  async create(title, body) {
     // A business rule: it belongs to the core, not to HTTP or to storage.
     if (!title?.trim() || !body?.trim()) {
       throw new ValidationError("title and body are required");
@@ -28,3 +29,5 @@ export class NotesService {
     return this.repository.create(title.trim(), body.trim());
   }
 }
+
+module.exports = { NotesService, ValidationError };

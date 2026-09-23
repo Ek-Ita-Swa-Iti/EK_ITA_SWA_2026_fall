@@ -1,23 +1,23 @@
 // DRIVING ADAPTER: translates HTTP into calls on the core, and the core's
 // answers (and errors) back into HTTP. It knows the core — never the storage.
 
-import http from "node:http";
-import { NotesService, ValidationError } from "../core/NotesService.ts";
+const http = require("node:http");
+const { ValidationError } = require("../core/NotesService");
 
-function send(res: http.ServerResponse, status: number, body: unknown) {
+function send(res, status, body) {
   res.writeHead(status, { "Content-Type": "application/json" });
   res.end(JSON.stringify(body));
 }
 
-async function readJson(req: http.IncomingMessage): Promise<any> {
+async function readJson(req) {
   let raw = "";
   for await (const chunk of req) raw += chunk;
   return raw ? JSON.parse(raw) : {};
 }
 
-export function startHttpServer(service: NotesService, port: number) {
+function startHttpServer(service, port) {
   const server = http.createServer(async (req, res) => {
-    const url = new URL(req.url ?? "/", "http://localhost");
+    const url = new URL(req.url, "http://localhost");
     const single = url.pathname.match(/^\/notes\/(\d+)$/);
 
     try {
@@ -42,3 +42,5 @@ export function startHttpServer(service: NotesService, port: number) {
 
   server.listen(port, () => console.log(`HTTP adapter listening on port ${port}`));
 }
+
+module.exports = { startHttpServer };

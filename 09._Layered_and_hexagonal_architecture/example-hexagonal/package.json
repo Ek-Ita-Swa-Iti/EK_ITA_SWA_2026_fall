@@ -2,9 +2,9 @@
   "name": "notes-hexagonal",
   "version": "1.0.0",
   "private": true,
-  "description": "Minimal ports-and-adapters demo for Session 9 — TypeScript run directly by Node 24, zero dependencies.",
-  "type": "module",
+  "description": "Minimal ports-and-adapters demo for Session 9 — plain Node.js, zero dependencies.",
+  "main": "src/main.js",
   "scripts": {
-    "start": "node src/main.ts"
+    "start": "node src/main.js"
   }
 }
