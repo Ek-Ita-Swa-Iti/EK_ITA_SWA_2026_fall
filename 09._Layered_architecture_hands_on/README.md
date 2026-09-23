@@ -92,7 +92,7 @@ Hints:
 
 ### Part 3 — Demo: inserting a layer (15 min)
 
-The instructor inserts a third layer — an **application** layer — between presentation and persistence in `example-node/`, live. It's deliberately thin: `findAll()` and `findById()` only carry data up and down, and `create()` owns one rule of its own.
+We now insert a third layer — an **application** layer — between presentation and persistence in `example-node/`, live. It's deliberately thin: `findAll()` and `findById()` only carry data up and down, and `create()` owns one rule of its own.
 
 The finished version lives on a separate branch, so `master` keeps the two-layer example you just worked on:
 
