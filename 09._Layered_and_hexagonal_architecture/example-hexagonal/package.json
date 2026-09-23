@@ -1,0 +1,10 @@
+{
+  "name": "notes-hexagonal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Minimal ports-and-adapters demo for Session 9 — TypeScript run directly by Node 24, zero dependencies.",
+  "type": "module",
+  "scripts": {
+    "start": "node src/main.ts"
+  }
+}

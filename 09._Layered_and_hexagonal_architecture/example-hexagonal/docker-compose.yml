@@ -1,0 +1,9 @@
+services:
+  notes:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      # Which driven adapter main.ts plugs in: "memory" (default) or "file".
+      # Swap with: NOTES_STORE=file docker compose up --build
+      NOTES_STORE: ${NOTES_STORE:-memory}

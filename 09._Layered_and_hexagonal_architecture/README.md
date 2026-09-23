@@ -9,7 +9,8 @@
 ## Learning Goals
 
 - Restate the principles of **layered architecture** — layers, the downward dependency rule, and how to verify it from the imports — on the smallest possible working example.
-- Define a **port** and an **adapter** in your own words.
+- Define a **port**, a **driving adapter**, a **driven adapter** and the **composition root** in your own words — and point at each one in a running example.
+- Build new adapters (a driven one, a driving one, a test fake) without changing a line of the core.
 - See why hexagonal's defining property is **dependency direction pointing inward** — and how that's the same diagnostic we used for layered, just rotated.
 - Read Vibe's `core/llm/backend/` and recognise the ports-and-adapters shape in real, working code.
 - Compare the S8 layered notes example to its hexagonal refactor — one inversion, visible in the imports.
@@ -96,63 +97,75 @@ Hints:
 
 **When you're done with both, answer in your pair:** how many lines of `server.js` did you change in total? Which *single* line knows which persistence layer is in use — and which layer does that line live in? Hold on to that answer: it's where the rest of today starts.
 
-### Part 3 — Ports & adapters (25 min)
+### Part 3 — Ports & adapters, live: the hexagonal example (20 min)
 
-A **port** is an interface defined by the core, on the core's terms. It describes *what* the core needs, never *how* it's provided.
+Same notes API, same `curl` commands — rebuilt so the arrow you found at the end of Part 2 points the other way. The instructor demos it; the README only gives you the map.
 
-An **adapter** is an implementation of a port, living outside the core. One port can have many adapters: a Postgres adapter, a SQLite adapter, an in-memory adapter. Same contract, different implementations.
-
-The rule that *makes* this hexagonal: **all dependencies point inward, toward the core.**
-
-- The core does not import the adapters.
-- The adapters import the core (specifically: the port).
-- The **composition root** — typically `Main.kt` / `main.py` — is the single place that knows about both sides and wires them together.
-
-Diagram on the board: a hexagon in the centre (the core). Driving adapters on the left (HTTP handlers, CLI, test harnesses). Driven adapters on the right (databases, third-party APIs, file systems). Every arrow points at the hexagon.
-
-```mermaid
-flowchart LR
-    subgraph Driving["Driving adapters"]
-        HTTP[HTTP handler]
-        CLI[CLI]
-        TEST[Test harness]
-    end
-    CORE(("Core<br/>owns the ports"))
-    subgraph Driven["Driven adapters"]
-        DB[(Postgres adapter)]
-        API[Third-party API adapter]
-        FS[File-system adapter]
-    end
-    HTTP --> CORE
-    CLI --> CORE
-    TEST --> CORE
-    DB --> CORE
-    API --> CORE
-    FS --> CORE
+```bash
+cd 09._Layered_and_hexagonal_architecture/example-hexagonal
+docker compose up --build
 ```
 
-Every arrow points *at* the core — on both sides. That's the whole rule.
+It's TypeScript, run directly by Node 24 — no build step, zero dependencies. We use TypeScript for one reason: a port is an *interface*, and plain JavaScript can't write one down.
 
-Note the symmetry with S8:
-- S8: dependencies point *down* — that's what makes a stack layered.
-- S9: dependencies point *in* — that's what makes a system hexagonal.
+The four words to take away, and where each one lives in the example:
 
-Same diagnostic property (**dependency direction**, S8), different rule. You already have the verification habit — grep the imports.
+| Word | Meaning | In the example |
+|------|---------|----------------|
+| **Port** | An interface owned by the core, on the core's terms — *what* it needs, never *how* | `core/NotesRepository.ts` |
+| **Driven adapter** | Implements a port; the core uses it (storage, APIs, files) | `adapters/InMemoryNotesRepository.ts`, `adapters/JsonFileNotesRepository.ts` |
+| **Driving adapter** | Calls into the core from outside (HTTP, CLI, tests) | `adapters/httpServer.ts` |
+| **Composition root** | The one place that knows both sides and wires them together | `main.ts` |
 
-Connecting to earlier vocabulary:
-- A port is the most disciplined kind of **contract** (S6) we've seen so far — owned by the core, implemented by everyone else.
-- The arrows still cross **boundaries** (S6) and the "arrows point inward" rule is still a **convention** (S6) the system commits to.
-- "I can run my service tests without a database" is a **testability** claim (S7).
-- "Swap one integration without touching the core" is a **maintainability** claim (S7).
-- And the ceremony — every external dependency now has an interface and at least one implementation — is a real **cost** (S7).
+The rule that makes it hexagonal: **every dependency points inward, toward the core.** The core imports nothing but its own port.
 
-Two flavours, named in passing:
-- **Strict hexagonal** — every external interaction goes through a port.
-- **Pragmatic hexagonal** — only the painful or swappable boundaries get ports.
+Follow along during the demo and keep these questions in mind:
 
-Most real systems are pragmatic. Pure hexagonal is a textbook ideal; pragmatic hexagonal is what ships.
+- Run `grep -rn "^import" src/core`. What does the core depend on — and what *doesn't* it?
+- The storage is swapped with `NOTES_STORE=file`. Which files changed? Compare with Part 2, where you edited a line in `server.js`.
+- Where did the "title and body are required" check move to, compared with `example-node/`? Why does that matter?
 
-### Part 4 — Vibe's `core/llm/backend/` is the canonical example (35 min)
+The example's own [`README.md`](example-hexagonal/README.md) has the diagram, the side-by-side comparison with `example-node/`, and the run instructions.
+
+### Part 4 — Exercise: build your own adapters (40 min)
+
+Pairs, in your own copy of `example-hexagonal/`. **One rule for everything below: nothing in `src/core/` may change.** If you feel you need to change the core, stop and discuss it in your pair — that's a sign the port is wrong, or that the code you're writing belongs somewhere else.
+
+#### Part 4a — A new driven adapter: port your Part 2 code
+
+Take your JSONPlaceholder persistence from Part 2a and turn it into `adapters/JsonPlaceholderNotesRepository.ts`, a class that `implements NotesRepository`. Plug it in from `main.ts` (e.g. `NOTES_STORE=api`). The three `curl` commands must work unchanged.
+
+Then ask: which files did you touch this time, compared with Part 2? What did the `implements` keyword give you that Part 2 didn't?
+
+#### Part 4b — A new driving adapter: a command-line interface
+
+Write `adapters/cli.ts` so notes can be used from the terminal, with no HTTP involved:
+
+```bash
+node src/cli.ts list
+node src/cli.ts add "hello" "first note"
+```
+
+`src/cli.ts` is a second composition root: it builds a repository and a `NotesService` just like `main.ts`, then hands them to your CLI adapter instead of the HTTP one. Try `add` with an empty title — you should get the core's validation error without writing any validation yourself.
+
+Hint: `process.argv` holds the command-line arguments. Run it inside the container with `docker compose run --rm --build notes node src/cli.ts list`, or locally if you have Node 22.18 or newer.
+
+#### Part 4c — Test the core without any infrastructure
+
+Write `src/test/NotesService.test.ts` (outside `core/` — the rule still holds) using Node's built-in test runner (`node:test` and `node:assert`). Give `NotesService` a fake repository — a small object or class of your own that implements `NotesRepository` — and test that:
+
+- `create` with a missing title is rejected with a `ValidationError`,
+- `create` with valid input hands the trimmed title and body to the repository.
+
+Run it with `node --test` (inside the container: `docker compose run --rm --build notes node --test`). No Docker network, no HTTP, no files — the whole test takes milliseconds.
+
+#### Part 4d — Stretch: MongoDB as an adapter
+
+Turn your Part 2b MongoDB persistence into a `MongoNotesRepository` adapter, with the `mongo` service back in `docker-compose.yml`. Same rule: nothing in `core/` changes.
+
+**When you're done, answer in your pair:** in how many places can this system now be *entered* (driving adapters), and in how many ways can it *store* notes (driven adapters)? How many lines of `core/` did that cost?
+
+### Part 5 — Vibe's `core/llm/backend/` is the canonical example (35 min)
 Open three files in order. Follow along in your editor.
 
 **1. `vibe/core/llm/backend/base.py`** — read the `APIAdapter` Protocol out loud.
@@ -182,7 +195,7 @@ flowchart LR
     FACTORY -->|imports directly| MISTRAL
 ```
 
-Five adapters, one port — `base.py` depends on none of them. Note `factory.py` only *directly* imports `generic.py`/`mistral.py` (most vendors route through the OpenAI-compatible `GenericBackend`) — worth discovering in Part 4's investigation rather than being told.
+Five adapters, one port — `base.py` depends on none of them. Note `factory.py` only *directly* imports `generic.py`/`mistral.py` (most vendors route through the OpenAI-compatible `GenericBackend`) — worth discovering in Part 5's investigation rather than being told.
 
 Now verify. Ask Vibe:
 
@@ -192,9 +205,9 @@ Open one of the files Vibe names. The expected pattern: vendor files import from
 
 Bridge to S8: last week we saw the *outer* arrows (`cli/` → `core/`) point downward. Today we saw the *inner* arrows (vendor adapters → port) point inward. **The two rules — layered and hexagonal — are the same diagnostic property applied to different parts of the same codebase.** Vibe uses both, deliberately.
 
-Park this question for Part 6: *What would it take to add a sixth LLM vendor — a local Ollama backend?* Hold the question.
+Park this question for Part 7: *What would it take to add a sixth LLM vendor — a local Ollama backend?* Hold the question.
 
-### Part 5 — The S8 notes service, refactored (45 min)
+### Part 6 — The S8 notes service, refactored (45 min)
 The runnable example again, this time with one inversion. Both versions sit side by side in the examples repo:
 
 ```bash
@@ -240,7 +253,7 @@ Same tool, opposite question. The rule is visible by what *isn't* there.
 
 Now answer the parked question. Adding an Ollama backend to Vibe is *one new file* — `ollama.py` next to the others, implementing `APIAdapter`, registered in `factory.py`. The core does not change. That's the operational pay-off of ports.
 
-### Part 6 — What it buys, what it costs (25 min)
+### Part 7 — What it buys, what it costs (25 min)
 Hexagonal buys:
 
 - **Testability.** The service runs against in-memory adapters in unit tests, real ones in integration tests. Two test pyramid layers fall out for free.
@@ -257,7 +270,7 @@ Quick exercise: name **two QAs hexagonal buys** and **one it costs**. Compare wi
 
 **When *not* to reach for hexagonal:** throwaway scripts, prototypes, code that will be rewritten before it has a second integration, systems with one obvious DB and zero realistic chance of swapping it. Pragmatic hexagonal — ports at the painful boundaries only — is what most real systems land on.
 
-### Part 7 — Bring-your-own: where would a port help? (35 min)
+### Part 8 — Bring-your-own: where would a port help? (35 min)
 In pairs, using one of the bring-your-own codebases from S8.
 
 - Identify one external dependency the codebase has — a database, a third-party API, a file system, a message queue, an email service.
@@ -268,7 +281,7 @@ In pairs, using one of the bring-your-own codebases from S8.
 
 5-line dossier per pair. Drop it in your semester notebook.
 
-### Part 8 — Synthesis (10 min)
+### Part 9 — Synthesis (10 min)
 One pair shares. We end with the synthesis:
 
 - **Layered** = arrows point down. Helpful for separation, weak on testability.
@@ -335,3 +348,65 @@ Bring it to session 10. First 10 minutes we'll compare.
 - [optional] Cockburn, A. — *Hexagonal Architecture* (the original 2005 article). Short, readable, opinionated.
 - [optional] Search the repos you brought today for "ports", "adapters", "clean architecture", "onion" — variants of the same idea you'll meet in the wild. They overlap heavily.
 - [optional] Vernon, V. — *Implementing Domain-Driven Design*, ch. 4. For students curious where the deeper "domain owns the interfaces" argument comes from.
+
+---
+
+## Parked for review — old "Ports & adapters" material (to be deleted)
+
+> **Instructor note:** this is the original Part 3, moved here on 2026-09-23 when Parts 3–4 were rebuilt around `example-hexagonal/`. Kept for review only — not part of the session flow. Delete once reviewed.
+
+### (old Part 3) Ports & adapters (25 min)
+
+A **port** is an interface defined by the core, on the core's terms. It describes *what* the core needs, never *how* it's provided.
+
+An **adapter** is an implementation of a port, living outside the core. One port can have many adapters: a Postgres adapter, a SQLite adapter, an in-memory adapter. Same contract, different implementations.
+
+The rule that *makes* this hexagonal: **all dependencies point inward, toward the core.**
+
+- The core does not import the adapters.
+- The adapters import the core (specifically: the port).
+- The **composition root** — typically `Main.kt` / `main.py` — is the single place that knows about both sides and wires them together.
+
+Diagram on the board: a hexagon in the centre (the core). Driving adapters on the left (HTTP handlers, CLI, test harnesses). Driven adapters on the right (databases, third-party APIs, file systems). Every arrow points at the hexagon.
+
+```mermaid
+flowchart LR
+    subgraph Driving["Driving adapters"]
+        HTTP[HTTP handler]
+        CLI[CLI]
+        TEST[Test harness]
+    end
+    CORE(("Core<br/>owns the ports"))
+    subgraph Driven["Driven adapters"]
+        DB[(Postgres adapter)]
+        API[Third-party API adapter]
+        FS[File-system adapter]
+    end
+    HTTP --> CORE
+    CLI --> CORE
+    TEST --> CORE
+    DB --> CORE
+    API --> CORE
+    FS --> CORE
+```
+
+Every arrow points *at* the core — on both sides. That's the whole rule.
+
+Note the symmetry with S8:
+- S8: dependencies point *down* — that's what makes a stack layered.
+- S9: dependencies point *in* — that's what makes a system hexagonal.
+
+Same diagnostic property (**dependency direction**, S8), different rule. You already have the verification habit — grep the imports.
+
+Connecting to earlier vocabulary:
+- A port is the most disciplined kind of **contract** (S6) we've seen so far — owned by the core, implemented by everyone else.
+- The arrows still cross **boundaries** (S6) and the "arrows point inward" rule is still a **convention** (S6) the system commits to.
+- "I can run my service tests without a database" is a **testability** claim (S7).
+- "Swap one integration without touching the core" is a **maintainability** claim (S7).
+- And the ceremony — every external dependency now has an interface and at least one implementation — is a real **cost** (S7).
+
+Two flavours, named in passing:
+- **Strict hexagonal** — every external interaction goes through a port.
+- **Pragmatic hexagonal** — only the painful or swappable boundaries get ports.
+
+Most real systems are pragmatic. Pure hexagonal is a textbook ideal; pragmatic hexagonal is what ships.
