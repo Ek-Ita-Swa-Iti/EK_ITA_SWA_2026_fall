@@ -1,8 +1,8 @@
-# notes-layered (Node.js) — the absolute minimum layered example
+# notes-layered (Node.js) — three layers, one rule each
 
 Stripped down further than the Kotlin and Python siblings in `../../08._layered_architecture/example-kotlin/`
-and `../../08._layered_architecture/example-python/`: **two layers only** (presentation, persistence — no
-application, no domain), **zero npm dependencies** (Node's built-in `http`
+and `../../08._layered_architecture/example-python/`: **three layers** (presentation, application,
+persistence — no separate domain layer), **zero npm dependencies** (Node's built-in `http`
 module, no Express), and **two separate Docker images** — a backend and a
 frontend that reads from it. Use this one when you want the dependency-rule
 story with nothing else competing for attention.
@@ -30,32 +30,39 @@ curl -X POST localhost:3000/notes \
 
 Stop with `Ctrl-C`, clean up with `docker compose down`.
 
-## The two layers (backend)
+## The three layers (backend)
 
 ```
 backend/
 └── src/
     ├── presentation/
-    │   └── server.js        ← receives HTTP requests, renders JSON
+    │   └── server.js           ← receives HTTP requests, renders JSON
+    ├── application/
+    │   └── notesService.js     ← sits in between; owns one rule (see below)
     └── persistence/
         └── notesRepository.js  ← hardcoded data — see below
 ```
 
-| Layer            | Depends on    | Knows nothing about |
-|-------------------|---------------|----------------------|
-| `presentation/`    | `persistence` | —                    |
-| `persistence/`     | —             | `presentation`       |
+| Layer             | Depends on    | Knows nothing about           |
+|-------------------|---------------|-------------------------------|
+| `presentation/`   | `application` | `persistence`                 |
+| `application/`    | `persistence` | `presentation`                |
+| `persistence/`    | —             | `application`, `presentation` |
 
 ```mermaid
 flowchart TB
     subgraph presentation["presentation/"]
         SERVER[server.js]
     end
+    subgraph application["application/"]
+        SERVICE[notesService.js]
+    end
     subgraph persistence["persistence/"]
         REPO[notesRepository.js]
     end
 
-    SERVER -->|"depends on"| REPO
+    SERVER -->|"depends on"| SERVICE
+    SERVICE -->|"depends on"| REPO
 ```
 
 Verify by running:
@@ -64,19 +71,43 @@ Verify by running:
 grep -rn "require(" backend/src
 ```
 
-You'll find exactly one cross-layer import: `presentation/server.js` requiring
-`../persistence/notesRepository`. Nothing in `persistence/` requires anything
-from `presentation/`. That one line is the entire dependency rule for this
-example.
+You'll find exactly two cross-layer imports: `presentation/server.js`
+requiring `../application/notesService`, and `application/notesService.js`
+requiring `../persistence/notesRepository`. Each layer only knows the one
+directly below it — presentation never reaches past the application layer
+into persistence, and nothing requires upward. Those two lines are the entire
+dependency rule for this example.
 
-## Why no application or domain layer
+## What the application layer does
 
-Deliberate, not an oversight. The canonical four-layer stack (Session 8, Part 1) needs
-all four to make its point about *orchestration* and *business rules* living
-apart from *plumbing*. This example isn't trying to teach that — it's trying
-to isolate the **dependency-direction** rule itself, with as little else on
-screen as possible. Two layers is the smallest number where "may depend on
-below, not above" is even a meaningful sentence.
+Almost nothing — on purpose. `findAll()` and `findById()` are hollow: they
+pass the call down to persistence and hand the data straight back up. Only
+`create()` has behaviour of its own:
+
+```js
+async function create(title, body) {
+  return notesRepository.create(title.trim(), body.trim());
+}
+```
+
+Notes are stored without leading or trailing whitespace — **whichever
+persistence layer is underneath.** That's the point of the layer: a rule that
+isn't about HTTP (so it doesn't belong in presentation) and isn't about
+storage (so it doesn't belong in persistence) finally has a home.
+
+Try it:
+
+```bash
+curl -X POST localhost:3000/notes \
+  -H 'Content-Type: application/json' \
+  -d '{"title":"   hello   ","body":"  first note  "}'
+```
+
+The note comes back as `"hello"` / `"first note"`.
+
+There's still no separate **domain** layer (Session 8, Part 1's fourth
+layer). With one rule, splitting "orchestration" from "business rules" would
+be ceremony without content.
 
 ## The persistence layer is hardcoded — on purpose
 
@@ -84,18 +115,19 @@ below, not above" is even a meaningful sentence.
 database. That's a **development-only stand-in**, explicitly commented as
 such in the file. It exposes exactly three **async** functions — `findAll()`,
 `findById(id)`, and `create(title, body)` — and that's the whole contract
-`presentation/server.js` depends on.
+`application/notesService.js` depends on.
 
 Why async when nothing here waits on anything? Because a database or an HTTP
 API *does* — its calls return Promises. If the contract were synchronous,
-swapping in a real persistence layer would force `server.js` to change too
-(every call would need an `await`). Making the contract async from day one is
-what lets presentation stay untouched.
+swapping in a real persistence layer would force the layer above to change
+too (every call would need an `await`). Making the contract async from day
+one is what lets the application layer stay untouched.
 
 **Left out, on purpose:** a second persistence layer that reads from a real
 database. Swapping one in means writing a new file that exposes the same
 three async functions and changing the single `require(...)` line at the top
-of `server.js` to point at it — nothing else in `server.js` changes. That's
+of `application/notesService.js` to point at it — nothing else changes, and
+`presentation/server.js` isn't touched at all. That's
 the same "swap Postgres for MySQL... in theory" claim from Session 8, Part 3,
 set up so it can actually be tested against this codebase. (Session 9's
 exercise does exactly that — twice.)
@@ -119,6 +151,7 @@ flowchart TB
         end
         subgraph backendC["backend container — :3000"]
             SERVER[presentation/server.js]
+            SERVICE[application/notesService.js]
             REPO[persistence/notesRepository.js]
         end
     end
@@ -127,7 +160,8 @@ flowchart TB
     STATIC -->|serves| HTML
     STATIC -->|serves| APPJS
     BROWSER -->|"fetch localhost:3000/notes<br/>(published port, not 'backend')"| SERVER
-    SERVER -->|"depends on"| REPO
+    SERVER -->|"depends on"| SERVICE
+    SERVICE -->|"depends on"| REPO
 ```
 
 The frontend container never talks to the backend container directly — it only ever serves static files. Every arrow that reaches the backend starts at the browser, not at the frontend container. That's the point of the gotcha below.
@@ -143,10 +177,10 @@ depending on which side of the network boundary the code actually runs on.
 
 ## What this example does *not* do
 
-- **No application or domain layer.** See above — deliberate, for focus.
+- **No domain layer.** See above — one rule doesn't justify a fourth layer.
 - **No database.** The persistence layer is hardcoded; see above.
-- **No tests.** A natural follow-up: stub `notesRepository`, test
-  `server.js`'s routing in isolation.
+- **No tests.** A natural follow-up: stub `notesRepository` and test
+  `notesService.create()`'s trimming in isolation.
 - **No build step for the frontend.** Plain HTML and vanilla JS, on purpose —
   a bundler would be one more thing standing between the dependency rule and
   the screen.
