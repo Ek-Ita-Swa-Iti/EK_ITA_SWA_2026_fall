@@ -2,7 +2,7 @@
 //
 // This is a swap point, not the final answer. A later persistence layer that
 // reads from a real database will expose the same three functions
-// (findAll, findById, create) with the same shapes — so presentation/server.js,
+// (findAll, findById, create) with the same shapes — so application/notesService.js,
 // which only calls this contract, won't need to change when that swap happens.
 //
 // The functions are async even though nothing here waits on anything: a real
