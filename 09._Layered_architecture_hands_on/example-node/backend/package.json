@@ -8,6 +8,7 @@
     "start": "node src/presentation/server.js"
   },
   "dependencies": {
+    "mongodb": "^6.9.0",
     "mysql2": "^3.11.0"
   }
 }

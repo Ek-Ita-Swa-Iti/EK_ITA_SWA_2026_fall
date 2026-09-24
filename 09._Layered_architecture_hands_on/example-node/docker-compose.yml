@@ -14,6 +14,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: my-secret-pw
 
+  mongo:
+    image: mongo:7
+
   frontend:
     build: ./frontend
     ports:

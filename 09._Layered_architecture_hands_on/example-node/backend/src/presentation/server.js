@@ -5,7 +5,7 @@
 // changing anything below the require line.
 
 const http = require("http");
-const notesRepository = require("../persistence/notesDBRepository");
+const notesRepository = require("../persistence/notesMongoDBRepository");
 
 const PORT = process.env.PORT || 3000;
 
