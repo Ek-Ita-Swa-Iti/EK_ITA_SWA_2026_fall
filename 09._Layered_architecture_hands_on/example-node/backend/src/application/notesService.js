@@ -4,7 +4,7 @@
 // Only create() has behaviour of its own. findAll() and findById() just pass
 // the call down and the data back up.
 
-const notesRepository = require("../persistence/notesRepository");
+const notesRepository = require("../persistence/notesDBRepository");
 
 async function findAll() {
   return notesRepository.findAll();

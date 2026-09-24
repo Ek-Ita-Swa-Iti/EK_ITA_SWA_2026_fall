@@ -23,7 +23,7 @@
 
 ### Part 1 — Layered architecture, live: the Node.js example (20 min)
 
-We start by looking at code together. The instructor demos a tiny notes service and uses it to walk through the principles of layered architecture from S8 — this time on an example small enough to hold in your head at once.
+We start by looking at code together. I will demo a tiny notes service and use it to walk through the principles of layered architecture from S8 — this time on an example small enough to hold in your head at once.
 
 The example lives right here in this session's folder:
 
@@ -42,7 +42,7 @@ Follow along during the demo and keep these questions in mind:
 - Which way do the dependencies point? How would you *prove* it without trusting anyone's diagram?
 - What would it take to swap the hardcoded persistence for a real database — and which files should *not* have to change?
 
-The demo ends by answering the last question live: the instructor swaps the hardcoded persistence layer for a new one that reads from a **MySQL** database running in a Docker container. Watch what changes — a new file in `persistence/`, a database service in `docker-compose.yml`, and the one `require(...)` line in `server.js`. Watch what *doesn't* change: the rest of `server.js`, the frontend, and the `curl` commands.
+The demo ends by answering the last question live: we will swap the hardcoded persistence layer for a new one that reads from a **MySQL** database running in a Docker container. Watch what changes — a new file in `persistence/`, a database service in `docker-compose.yml`, and the one `require(...)` line in `server.js`. Watch what *doesn't* change: the rest of `server.js`, the frontend, and the `curl` commands.
 
 ### Part 2 — Exercise: swap the persistence layer yourself (45 min)
 
@@ -89,6 +89,22 @@ Hints:
 - `depends_on` only waits for the MongoDB *container* to start, not for the database to accept connections. Does your first request still work? Find out why — the answer is in the driver, not in your code.
 
 **When you're done with both, answer in your pair:** how many lines of `server.js` did you change in total? Which *single* line knows which persistence layer is in use — and which layer does that line live in? Hold on to that answer: it's where the next session (hexagonal architecture) starts.
+
+### Part 3 — Demo: inserting a layer (15 min)
+
+We now insert a third layer — an **application** layer — between presentation and persistence in `example-node/`, live. It's deliberately thin: `findAll()` and `findById()` only carry data up and down, and `create()` owns one rule of its own.
+
+The finished version lives on a separate branch, so `master` keeps the two-layer example you just worked on:
+
+- Browse it: [`s9-application-layer` → `example-node/`](https://github.com/Ek-Ita-Swa-Iti/EK_ITA_SWA_2026_fall/tree/s9-application-layer/09._Layered_architecture_hands_on/example-node)
+- See exactly what changed: [compare `master` … `s9-application-layer`](https://github.com/Ek-Ita-Swa-Iti/EK_ITA_SWA_2026_fall/compare/master...s9-application-layer)
+- Or check it out locally: `git fetch origin && git switch s9-application-layer` (and `git switch master` to come back)
+
+Follow along and keep these questions in mind:
+
+- Which files changed, and which `require(...)` line moved?
+- After the change, where does the *one line* you edited in Part 2 live now — and does `server.js` still know that persistence exists?
+- `create()` now trims whitespace. Why does that rule belong in this new layer, rather than in `server.js` or in `notesRepository.js`?
 
 ---
 

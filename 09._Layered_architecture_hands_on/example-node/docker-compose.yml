@@ -3,6 +3,16 @@ services:
     build: ./backend
     ports:
       - "3000:3000"
+    environment:
+      DB_HOST: db
+      DB_PASSWORD: my-secret-pw
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
 
   frontend:
     build: ./frontend
