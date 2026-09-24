@@ -30,6 +30,19 @@ curl -X POST localhost:3000/notes \
 
 Stop with `Ctrl-C`, clean up with `docker compose down`.
 
+## Backend endpoints
+
+The backend listens on `http://localhost:3000`. Every response is JSON.
+
+| Method | Path          | Request body                          | Success                        | Errors |
+|--------|---------------|---------------------------------------|--------------------------------|--------|
+| `GET`  | `/notes`      | —                                     | `200` — array of all notes     | — |
+| `GET`  | `/notes/:id`  | —                                     | `200` — one note               | `404` `{"error":"Note not found"}` |
+| `POST` | `/notes`      | `{"title": "...", "body": "..."}`     | `201` — the created note       | `400` `{"error":"title and body are required"}`, `400` `{"error":"Invalid JSON body"}` |
+
+A note looks like `{"id": 1, "title": "Welcome", "body": "..."}`, with a numeric
+`id`. Any other method or path returns `404` `{"error":"Not found"}`.
+
 ## The two layers (backend)
 
 ```
