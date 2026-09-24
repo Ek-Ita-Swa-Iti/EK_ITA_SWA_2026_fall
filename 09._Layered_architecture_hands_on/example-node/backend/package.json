@@ -6,5 +6,8 @@
   "main": "src/presentation/server.js",
   "scripts": {
     "start": "node src/presentation/server.js"
+  },
+  "dependencies": {
+    "mysql2": "^3.11.0"
   }
 }
