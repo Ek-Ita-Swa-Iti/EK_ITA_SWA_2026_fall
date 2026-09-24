@@ -42,7 +42,7 @@ Follow along during the demo and keep these questions in mind:
 - Which way do the dependencies point? How would you *prove* it without trusting anyone's diagram?
 - What would it take to swap the hardcoded persistence for a real database — and which files should *not* have to change?
 
-The demo ends by answering the last question live: the instructor swaps the hardcoded persistence layer for a new one that reads from a **MySQL** database running in a Docker container. Watch what changes — a new file in `persistence/`, a database service in `docker-compose.yml`, and the one `require(...)` line in `server.js`. Watch what *doesn't* change: the rest of `server.js`, the frontend, and the `curl` commands.
+The demo ends by answering the last question live: we will swap the hardcoded persistence layer for a new one that reads from a **MySQL** database running in a Docker container. Watch what changes — a new file in `persistence/`, a database service in `docker-compose.yml`, and the one `require(...)` line in `server.js`. Watch what *doesn't* change: the rest of `server.js`, the frontend, and the `curl` commands.
 
 ### Part 2 — Exercise: swap the persistence layer yourself (45 min)
 
