@@ -17,7 +17,14 @@
 
 ## Before Class
 
-You'll spend most of the session hitting a real API directly from the terminal. Set up these in advance (≤15 min):
+Skim this README before we meet.
+
+---
+
+## Today's Teachings
+
+### Part 1 — Set up: `curl` and a GitHub token (15 min)
+We'll spend most of the session hitting a real API directly from the terminal. Set these up first:
 
 1. You need `curl`. It's already on macOS and Linux, and in **Git Bash** on Windows. On Windows, use Git Bash for everything in this session, not PowerShell.
 2. Create a **GitHub Personal Access Token (classic)** with read-only scopes (`public_repo`, `read:user`). Save it in an env var, e.g. `export GH_TOKEN=...`.
@@ -29,11 +36,7 @@ You'll spend most of the session hitting a real API directly from the terminal. 
 
 If GitHub auth is genuinely blocking you, you can do most of the session unauthed (60 requests/hour). Bring it up early so we can pair you with someone.
 
----
-
-## Today's Teachings
-
-### Part 1 — Predict, then probe (15 min)
+### Part 2 — Predict, then probe (15 min)
 We'll look at a handful of GitHub API URLs *before* hitting them. You predict what each returns. Then we hit them and compare.
 
 For each URL, predict: the **status code**, whether you get **one object or a list**, and **one field** you expect to see.
@@ -50,18 +53,18 @@ Then probe each one. `-i` shows the status line and headers above the body:
 curl -i -H "Authorization: Bearer $GH_TOKEN" https://api.github.com/users/octocat
 ```
 
-### Part 2 — Break things on purpose (30 min)
+### Part 3 — Break things on purpose (30 min)
 A scavenger hunt for status codes. You'll try requests that *should* fail and inspect what comes back. Goal: collect as many distinct status codes as you can, and figure out which method/path combinations produce them.
 
 Some are easy. Some are sneaky (try to find a `422`).
 
-### Part 3 — Statelessness and caching are part of the protocol (25 min)
+### Part 4 — Statelessness and caching are part of the protocol (25 min)
 Response headers are an API talking about itself. We'll look at `ETag`, `Cache-Control`, and the rate-limit headers — and use conditional requests (`If-None-Match`) to make calls that *don't count against your rate limit*.
 
-### Part 4 — Follow the links (20 min)
+### Part 5 — Follow the links (20 min)
 Look at a single repository response. Count the `*_url` fields. We'll try to navigate from a user to a specific issue without typing a single URL — only by following links inside responses. Then we'll talk about why almost no real client actually does this.
 
-### Part 5 — API archaeology (45 min, in pairs)
+### Part 6 — API archaeology (45 min, in pairs)
 Each pair picks one mystery and writes up a short dossier — what URI shape, what method, what status codes, what surprised you. Examples:
 
 - Star a repo, then unstar it. What methods? What status codes?
@@ -70,7 +73,7 @@ Each pair picks one mystery and writes up a short dossier — what URI shape, wh
 - Why does `/user` work but `/users` (with no name) doesn't?
 - Page through a user's repositories. How does the API tell you there's a next page?
 
-### Part 6 — What we just learned (30 min)
+### Part 7 — What we just learned (30 min)
 Whiteboard. Every pair calls out what they found. We'll group your observations into the REST constraints (uniform interface, statelessness, cacheability, client-server, layered, code-on-demand). The constraints are names for things you already saw.
 
 Pull-through to S9 vocabulary: a REST endpoint is a *driving adapter's contract with the world*. The constraints are what that contract commits to so that any client — `curl`, a browser, Vibe — can talk to the server without prior arrangement. Next week (S11) we tighten that contract: versioning so it can evolve, pagination so it can scale, error shapes so failures are legible, OpenAPI so it's machine-checkable. Everything S11 does is *built on what you just probed today*.
