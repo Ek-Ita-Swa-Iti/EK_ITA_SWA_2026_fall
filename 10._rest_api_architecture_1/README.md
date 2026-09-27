@@ -63,7 +63,7 @@ When you find a code you don't know, look it up in MDN's [list of HTTP status co
 We will collect all your findings on the blackboard.
 
 ### Part 4 — Statelessness and caching are part of the protocol (25 min)
-Response headers are the API talking about itself. We'll look at `ETag`, `Cache-Control`, and the rate-limit headers — and use conditional requests (`If-None-Match`) to make calls that *don't count against your rate limit*.
+Response headers are the API telling about itself. We'll look at `ETag`, `Cache-Control`, and the rate-limit headers — and use conditional requests (`If-None-Match`) to make calls that *don't count against your rate limit*.
 
 - `ETag`: a fingerprint of the response. If the data changes, the `ETag` changes.
 - `Cache-Control`: how long the response may be reused before asking again. GitHub sends `max-age=60`, which means 60 seconds.
