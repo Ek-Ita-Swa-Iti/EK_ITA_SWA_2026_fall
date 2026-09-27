@@ -40,6 +40,15 @@ If GitHub auth is genuinely blocking you, you can do most of the session unauthe
 REST is not a technology. It is a set of **constraints**: rules for how a client and a server talk to each other. Each rule takes away some freedom, and in return the system gets something useful: it can grow, be cached, and change without breaking its clients.
 
 - **Client–server:** the client and the server are separate and only talk through requests and responses. *Why:* each side can change without the other.
+
+```mermaid
+sequenceDiagram
+    participant C as Client (curl, browser, script)
+    participant S as Server (api.github.com)
+    C->>S: Request: GET /users/octocat
+    S-->>C: Response: 200 OK + JSON
+```
+
 - **Stateless:** every request carries everything the server needs; the server remembers nothing between requests. *Why:* any server can answer any request, so it's easy to add more servers.
 - **Cacheable:** every response says whether it may be reused, and for how long. *Why:* fewer requests, faster answers.
 - **Uniform interface:** every API is used the same way: resources with URLs, standard methods, status codes, and links to what comes next. *Why:* one client, like `curl`, works with any REST API.
