@@ -65,6 +65,11 @@ We will collect all your findings on the blackboard.
 ### Part 4 — Statelessness and caching are part of the protocol (25 min)
 Response headers are the API talking about itself. We'll look at `ETag`, `Cache-Control`, and the rate-limit headers — and use conditional requests (`If-None-Match`) to make calls that *don't count against your rate limit*.
 
+- `ETag`: a fingerprint of the response. If the data changes, the `ETag` changes.
+- `Cache-Control`: how long the response may be reused before asking again. GitHub sends `max-age=60`, which means 60 seconds.
+- `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`: how many requests you get per hour, how many you have left, and when the count starts over.
+- `If-None-Match`: a header *you* send, containing the `ETag` you got last time. If nothing has changed, GitHub answers `304 Not Modified` with no body, and the request doesn't count against your rate limit.
+
 ### Part 5 — Follow the links (20 min)
 Look at a single repository response. Count the `*_url` fields. We'll try to navigate from a user to a specific issue without typing a single URL — only by following links inside responses. Then we'll talk about why almost no real client actually does this.
 
