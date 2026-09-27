@@ -94,8 +94,6 @@ Each pair picks one mystery and writes up a short dossier — what URI shape, wh
 - Page through a user's repositories. How does the API tell you there's a next page?
 
 ### Part 7 — What we just learned (30 min)
-Whiteboard. Every pair calls out what they found. We'll group your observations into the REST constraints (uniform interface, statelessness, cacheability, client-server, layered, code-on-demand). The constraints are names for things you already saw.
-
 Where we saw each constraint today:
 
 - **Client–server:** `curl` and GitHub share nothing but HTTP. Any client (`curl`, a browser, a script) talks to the server the same way.
