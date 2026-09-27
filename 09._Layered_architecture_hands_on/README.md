@@ -110,5 +110,5 @@ Follow along and keep these questions in mind:
 
 ## After Class
 
-- If you didn't finish both halves of Part 2, finish them now — the next session starts from your Part 2 code.
+- If you didn't finish both halves of Part 2, finish them now — Session 9a's wrap-up compares your Part 2 swap with the hexagonal way.
 - Skim ahead: next session covers **hexagonal architecture** (ports & adapters) — the answer to the question Part 2 ends with.

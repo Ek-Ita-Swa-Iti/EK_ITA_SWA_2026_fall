@@ -114,7 +114,7 @@ Now zoom into `core/`. Look at its contents:
 
 Is *this* layered? Probably not the way the canonical four-layer stack is. It's organised by capability, not by horizontal slice. The `llm/backend/` folder, in particular, looks like something else entirely. (We'll name that something else next week.)
 
-So what's the verdict? The grep is more interesting than "yes" or "no". `cli/` leans on `core/`, as a presentation-over-application stack should — but you'll also find a few imports running *upward*, from `core/` back into `cli/`. That's an **upward dependency**, exactly what the arrows-down rule forbids (named in Part 3). So: **Vibe's outer shape *looks* layered but leaks at the edges, and its `core/` is something else entirely on the inside.** Hold both halves of that thought — they're the bridge to next week.
+So what's the verdict? The grep is more interesting than "yes" or "no". `cli/` leans on `core/`, as a presentation-over-application stack should — but you'll also find a few imports running *upward*, from `core/` back into `cli/`. That's an **upward dependency**, exactly what the arrows-down rule forbids (named in Part 3). So: **Vibe's outer shape *looks* layered but leaks at the edges, and its `core/` is something else entirely on the inside.** Hold both halves of that thought — they're the bridge to hexagonal architecture in Session 9a.
 
 ### Part 3 — Why it works when it works (25 min)
 Layered's pay-offs, in QA terms:
@@ -146,7 +146,7 @@ In pairs, using the codebase one of you brought:
 Write a 5-line dossier per pair. Drop it in your semester notebook.
 
 ### Part 6 — Synthesis (10 min)
-One pair shares. We end with the bridge to next week: **Vibe's `core/` isn't layered.** It's structured around adapters over multiple LLM vendors — Mistral, Anthropic, Vertex, generic, more. That shape has its own name. Next session: ports and adapters.
+One pair shares. We end with the bridge to next week: **Vibe's `core/` isn't layered.** It's structured around adapters over multiple LLM vendors — Mistral, Anthropic, Vertex, generic, more. That shape has its own name — ports and adapters — and Session 9a is where we learn it.
 
 ---
 
@@ -202,7 +202,7 @@ Half a page in your semester notebook:
 
 ## After Class
 
-- Skim ahead: session 9 covers **hexagonal architecture** (ports and adapters). It's the answer to the failure modes of layered — and to the shape we noticed inside Vibe's `core/`.
+- Skim ahead: session 9 makes layered hands-on on a tiny example, and session 9a covers **hexagonal architecture** (ports and adapters). Hexagonal is the answer to the failure modes of layered, and the name for the shape we noticed inside Vibe's `core/`.
 - If you didn't run the in-class example yourself, do it now. `cd 08._layered_architecture/example-kotlin` (or `example-python`), and `docker compose up --build`. Then `grep -rh "^import com.example.notes" src/main/kotlin` (Kotlin) or `grep -rh "^from \.\." notes` (Python) — see the dependency rule with your own eyes.
 
 ## Optional

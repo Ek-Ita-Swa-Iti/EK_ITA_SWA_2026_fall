@@ -117,7 +117,7 @@ Then go to Vibe. Compare. `cli/ → core/` looks like this example's `web/ → a
 
 Deliberate omissions, to keep the layered story clean:
 
-- **No repository interface.** In hexagonal (S9) the domain *owns* an interface that persistence implements. Here, `application/` imports the concrete `NoteRepository` directly — that's the layered way. Don't refactor it; it's the contrast S9 needs.
+- **No repository interface.** In hexagonal (S9a) the core *owns* an interface that persistence implements. Here, `application/` imports the concrete `NoteRepository` directly — that's the layered way. Don't refactor it; it's the layered side of the contrast.
 - **No DTOs.** `Note` (a domain type) is returned directly over the wire. In bigger systems you'd separate the wire format from the domain. Out of scope.
 - **No tests.** Adding tests is a great follow-up exercise — and a chance to feel layered's testability claim in your hands. Stub `NoteRepository`, test `NoteService` in isolation.
 - **No migrations tool.** Schema is created on startup with `CREATE TABLE IF NOT EXISTS`. Real systems use Flyway/Liquibase. Out of scope.

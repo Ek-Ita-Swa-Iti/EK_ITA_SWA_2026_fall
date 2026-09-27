@@ -111,7 +111,7 @@ Then go to Vibe. Compare.
 
 Same deliberate omissions as the Kotlin version:
 
-- **No repository interface in the domain.** `application/` imports the concrete `NoteRepository`. That's the layered way. S9 will invert it.
+- **No repository interface in the domain.** `application/` imports the concrete `NoteRepository`. That's the layered way. Hexagonal (S9a) inverts it: the core owns the interface.
 - **No tests.** A great follow-up exercise — stub `NoteRepository`, test `NoteService` in isolation.
 - **No migrations tool.** Schema created on startup with `CREATE TABLE IF NOT EXISTS`. Real systems use Alembic.
 - **No async.** psycopg supports it; FastAPI loves it. Adding async would distract from the layered story. Keep the route handlers synchronous.

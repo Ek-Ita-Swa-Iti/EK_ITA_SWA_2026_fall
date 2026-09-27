@@ -36,8 +36,8 @@ Also: bring your S9 investigation deliverable. The session opens with a compare-
 
 ## Today's Teachings
 
-### Part 0 — Compare notes on the S9 investigation (10 min)
-Round-robin: each of you names one thing you got out of the S9 hexagonal investigation — one claim the LLM nailed, one claim you had to push back on. No re-teaching; this is to align on what stuck and to keep the verification-first habit warm. We then bridge: last week we said HTTP is the *driving adapter* on the hexagon. Today we open up the protocol that adapter speaks.
+### Part 0 — Recap: ports & adapters (10 min)
+Round-robin: each of you names one adapter you built in S9a, which side of the hexagon it sits on (driving or driven), and whether you had to touch `core/` to add it. No re-teaching; this is to align on what stuck. We then bridge: in S9a, `http_server.py` was the *driving adapter* — HTTP in, calls on the core out. Today we open up the protocol that adapter speaks.
 
 ### Part 1 — Predict, then probe (15 min)
 We'll look at a handful of GitHub API URLs *before* hitting them. You predict what each returns. Then we hit them and compare. Bring your terminal.

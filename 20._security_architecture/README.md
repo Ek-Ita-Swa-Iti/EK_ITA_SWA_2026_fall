@@ -39,7 +39,7 @@ Open `services/auth/interface.go`: the `Method` interface (`Verify(request) (*Us
 
 - `basic.go` (HTTP Basic), `oauth2.go` (OAuth2 / OIDC), `auth_token.go` (API tokens), `httpsign.go` (signed HTTP requests), `reverseproxy.go`, `session.go` (cookie session), `sspi.go` (Windows SSPI).
 
-Gitea tries the methods in order until one verifies. **This is ports-and-adapters again (S9)** — the same shape as the LLM backends (S9), the cache (S13), and the queue (S18): one interface, swappable implementations, *adding an auth method is adding a file*. Ask your agent: *"List the auth `Method`s in `services/auth/`. For each, what does `Verify()` accept as proof of identity?"* Then open two and check.
+Gitea tries the methods in order until one verifies. **This is ports-and-adapters again (S9a)** — the same shape as the notes repository (S9a), the cache (S13), and the queue (S18): one interface, swappable implementations, *adding an auth method is adding a file*. Ask your agent: *"List the auth `Method`s in `services/auth/`. For each, what does `Verify()` accept as proof of identity?"* Then open two and check.
 
 ### Part 3 — Back in Gitea: authorization as an explicit model (30 min) — set-piece 2
 Authorization here isn't scattered `if user.IsAdmin` checks — it's a model:
