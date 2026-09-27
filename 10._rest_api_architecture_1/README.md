@@ -115,7 +115,7 @@ Sketch a REST API for a small domain you care about (a library, a recipe book, a
 
 You learned the REST constraints by poking at a real API. Now sharpen what you noticed by interrogating an LLM about it — and verifying.
 
-**Ground rule:** the LLM is a fast, confident, sometimes-wrong study partner. For every claim it makes that matters, verify it against the real API (a `curl` away) or the GitHub docs. The point isn't to collect answers; it's to learn to *check* them.
+**Ground rule:** the LLM is a fast, confident, sometimes-wrong study partner. For every claim it makes that matters, verify it against the real API (a `curl` away) or the [GitHub docs](https://docs.github.com/en/rest). The point isn't to collect answers; it's to learn to *check* them.
 
 Pick **three** of the four prompts below. For each:
 
