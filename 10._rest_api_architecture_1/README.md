@@ -33,9 +33,6 @@ If GitHub auth is genuinely blocking you, you can do most of the session unauthe
 
 ## Today's Teachings
 
-### Part 0 — Recap: ports & adapters (10 min)
-Round-robin: each of you names one adapter you built in S9a, which side of the hexagon it sits on (driving or driven), and whether you had to touch `core/` to add it. No re-teaching; this is to align on what stuck. We then bridge: in S9a, `http_server.py` was the *driving adapter* — HTTP in, calls on the core out. Today we open up the protocol that adapter speaks.
-
 ### Part 1 — Predict, then probe (15 min)
 We'll look at a handful of GitHub API URLs *before* hitting them. You predict what each returns. Then we hit them and compare. Bring your terminal.
 
