@@ -143,17 +143,6 @@ Pick **three** of the four prompts below. For each:
 
 **Verify:** try the delete (it'll fail safely with 405). Read GitHub's issues API docs. Cross-check the LLM's reasoning against what GitHub actually documents about issue lifecycle.
 
-### Deliverable
-
-A half-page note (markdown is fine — drop it in the repo you're using for the semester). Structure:
-
-- **What I investigated** — which three prompts.
-- **One thing the LLM got right** — and how you know.
-- **One thing the LLM got wrong, vague, or hedged on** — and how you checked.
-- **What changed in my understanding** — one or two sentences.
-
-Bring this to session 11. We'll spend the first 10 minutes comparing notes.
-
 ---
 
 ## Optional
