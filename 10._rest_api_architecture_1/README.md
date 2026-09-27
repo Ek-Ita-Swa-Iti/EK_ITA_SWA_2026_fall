@@ -2,7 +2,7 @@
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
-> REST is the dominant style for web APIs, but most "REST APIs" in the wild aren't strictly RESTful — and that's fine. The point isn't purity; it's understanding the constraints REST commits to and what each one buys you. Today we'll learn that by poking at a real one: GitHub's API. Bring `curl` and a Personal Access Token; come ready to break things on purpose.
+> REST is the dominant style for web APIs, but most "REST APIs" in the wild aren't strictly RESTful — and that's fine. The point isn't purity; it's understanding the constraints REST commits to and what each one buys you. Today we'll learn that by poking at a real one: GitHub's API.
 
 ---
 
