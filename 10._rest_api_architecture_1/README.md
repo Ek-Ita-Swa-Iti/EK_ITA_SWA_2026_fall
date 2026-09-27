@@ -36,7 +36,19 @@ We'll spend most of the session hitting a real API directly from the terminal. S
 
 If GitHub auth is genuinely blocking you, you can do most of the session unauthed (60 requests/hour). Bring it up early so we can pair you with someone.
 
-### Part 2 — Predict, then probe (15 min)
+### The REST constraints, in short
+REST is not a technology. It is a set of **constraints**: rules for how a client and a server talk to each other. Each rule takes away some freedom, and in return the system gets something useful: it can grow, be cached, and change without breaking its clients.
+
+- **Client–server:** the client and the server are separate and only talk through requests and responses. *Why:* each side can change without the other.
+- **Stateless:** every request carries everything the server needs; the server remembers nothing between requests. *Why:* any server can answer any request, so it's easy to add more servers.
+- **Cacheable:** every response says whether it may be reused, and for how long. *Why:* fewer requests, faster answers.
+- **Uniform interface:** every API is used the same way: resources with URLs, standard methods, status codes, and links to what comes next. *Why:* one client, like `curl`, works with any REST API.
+- **Layered system:** the client can't tell whether it talks to the real server or to something in between, like a cache. *Why:* caches, load balancers and security can be added without changing the client.
+- **Code on demand (optional):** the server may send code for the client to run, like JavaScript in a web page. *Why:* the client can be extended without being reinstalled.
+
+Today you'll find these in GitHub's API. The part headings below say which constraint each part is about.
+
+### Part 2 — Predict, then probe · Uniform interface: resources (15 min)
 We'll look at a handful of GitHub API URLs *before* hitting them. You predict what each returns. Then we hit them and compare.
 
 For each URL, predict: the **status code**, whether you get **one object or a list**, and **one field** you expect to see.
@@ -61,7 +73,7 @@ curl -i -H "Authorization: Bearer $GH_TOKEN" https://api.github.com/users/octoca
 - **Nesting** shows "belongs to": `/users/octocat/repos` means octocat's repositories.
 - A **singular** name is for something there is only one of: GitHub's `/user` means "the logged-in user", you.
 
-### Part 3 — Break things on purpose (30 min)
+### Part 3 — Break things on purpose · Uniform interface: status codes (30 min)
 A scavenger hunt for status codes. You'll try requests that *should* fail and inspect what comes back. Goal: collect as many distinct status codes as you can, and figure out which method/path combinations produce them.
 
 Some are easy. Some are sneaky (try to find a `422`).
@@ -78,7 +90,7 @@ Response headers are the API telling about itself. We'll look at `ETag`, `Cache-
 - `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`: how many requests you get per hour, how many you have left, and when the count starts over.
 - `If-None-Match`: a header *you* send, containing the `ETag` you got last time. If nothing has changed, GitHub answers `304 Not Modified` with no body, and the request doesn't count against your rate limit.
 
-### Part 5 — Follow the links (20 min)
+### Part 5 — Follow the links · Uniform interface: hypermedia (HATEOAS) (20 min)
 **HATEOAS** ("Hypermedia As The Engine Of Application State") is one of the REST ideas: an API response should contain links to what you can do or see next, just as a web page does. In theory, a client only needs to know one starting address and can find everything else by following links.
 
 Look at a single repository response, for example `https://api.github.com/repos/octocat/Hello-World`. Count the `*_url` fields. We'll try to navigate from a user to a specific issue without typing a single URL — only by following links inside responses. Then we'll talk about why almost no real client actually does this.
@@ -101,7 +113,7 @@ Each pair picks one mystery and writes up a short dossier — what URI shape, wh
 - What's the difference between `/user` and `/users`?
 - Page through a user's repositories. How does the API tell you there's a next page?
 
-### Part 7 — What we just learned (30 min)
+### Part 7 — What we just learned · All six constraints (30 min)
 Where we saw each constraint today:
 
 - **Client–server:** `curl` and GitHub share nothing but HTTP. Any client (`curl`, a browser, a script) talks to the server the same way.
