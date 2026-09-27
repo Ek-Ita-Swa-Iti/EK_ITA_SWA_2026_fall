@@ -41,13 +41,7 @@ REST is not a technology. It is a set of **constraints**: rules for how a client
 
 - **Client–server:** the client and the server are separate and only talk through requests and responses. *Why:* each side can change without the other.
 
-```mermaid
-sequenceDiagram
-    participant C as Client (curl, browser, script)
-    participant S as Server (api.github.com)
-    C->>S: Request: GET /users/octocat
-    S-->>C: Response: 200 OK + JSON
-```
+![A client sends a request to the server and gets a response back](images/client-server.svg)
 
 - **Stateless:** every request carries everything the server needs; the server remembers nothing between requests. *Why:* any server can answer any request, so it's easy to add more servers.
 - **Cacheable:** every response says whether it may be reused, and for how long. *Why:* fewer requests, faster answers.
