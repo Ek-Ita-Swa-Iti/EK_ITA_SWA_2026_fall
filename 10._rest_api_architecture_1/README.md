@@ -118,10 +118,10 @@ Start here and follow the trail:
 Look at step 3: is filling in a template still "following a link"?
 
 ### Part 6 — API archaeology (45 min, in pairs)
-Each pair picks one mystery and writes up a short dossier — what URI shape, what method, what status codes, what surprised you. Examples:
+Each pair picks one mystery and investigates it: what URI shape, what method, what status codes, what surprised you. Examples:
 
 - Star a repo, then unstar it. What methods? What status codes?
-- Create an issue, edit it, close it. Document the full lifecycle.
+- Create an issue, edit it, close it. Follow the full lifecycle.
 - Find every way GitHub returns `422`.
 - What's the difference between `/user` and `/users`?
 - Page through a user's repositories. How does the API tell you there's a next page?
