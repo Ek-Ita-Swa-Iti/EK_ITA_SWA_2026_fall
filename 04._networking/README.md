@@ -31,13 +31,13 @@ Last week you ran `curl https://api.github.com/...` and got JSON back. *Between 
 
 **The shape.** A **client** wants something from a **server**; they exchange messages over a network.
 
-![Clients — a laptop, a phone, a desktop — all send requests through the Internet to a single server, which sends responses back.](img/client-server-model.webp)
+<img src="img/client-server-model.webp" alt="Clients — a laptop, a phone, a desktop — all send requests through the Internet to a single server, which sends responses back." width="400">
 
 Every client (a browser, a phone app, another service, `curl`) sends a **request** and gets a **response** back. "The Internet" in the middle stands for all the network hops the message actually crosses. That is the mental model for the rest of the semester: **an architecture is boxes (processes) connected by these request/response wires.**
 
 **The journey.** How does one request actually get there and back? It can be modelled in these four steps:
 
-![A user asks a DNS server for a domain's address; the DNS server replies with the web server's IP; the user then makes an HTTP request to that IP, and the web server responds with the data.](img/request-journey-dns.png)
+<img src="img/request-journey-dns.png" alt="A user asks a DNS server for a domain's address; the DNS server replies with the web server's IP; the user then makes an HTTP request to that IP, and the web server responds with the data." width="400">
 
 A web server does not have a name, it has an **IP address**. The name is just a lookup key — easier for people to remember than an IP address.
 
