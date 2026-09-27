@@ -53,6 +53,14 @@ Then probe each one. `-i` shows the status line and headers above the body:
 curl -i -H "Authorization: Bearer $GH_TOKEN" https://api.github.com/users/octocat
 ```
 
+**How to build a URL.** The URLs you just probed follow a few simple rules:
+
+- A resource is a **noun**, never a verb: `/users`, not `/getUsers`. The HTTP method is the verb.
+- A **collection is plural**: `/users`, `/users/octocat/repos`.
+- **One item** is the collection plus an id: `/users/octocat`, `/repos/octocat/Hello-World/issues/1`.
+- **Nesting** shows "belongs to": `/users/octocat/repos` means octocat's repositories.
+- A **singular** name is for something there is only one of: GitHub's `/user` means "the logged-in user", you.
+
 ### Part 3 — Break things on purpose (30 min)
 A scavenger hunt for status codes. You'll try requests that *should* fail and inspect what comes back. Goal: collect as many distinct status codes as you can, and figure out which method/path combinations produce them.
 
@@ -90,7 +98,7 @@ Each pair picks one mystery and writes up a short dossier — what URI shape, wh
 - Star a repo, then unstar it. What methods? What status codes?
 - Create an issue, edit it, close it. Document the full lifecycle.
 - Find every way GitHub returns `422`.
-- Why does `/user` work but `/users` (with no name) doesn't?
+- What's the difference between `/user` and `/users`?
 - Page through a user's repositories. How does the API tell you there's a next page?
 
 ### Part 7 — What we just learned (30 min)
