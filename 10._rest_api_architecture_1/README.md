@@ -59,10 +59,6 @@ REST is not a technology. It is a set of **constraints**: rules for how a client
 
 ![The client talks to a cache, which talks to a load balancer, which talks to the server; the client only sees api.github.com](images/layered-system.svg)
 
-- **Code on demand (optional):** the server may send code for the client to run, like JavaScript in a web page. *Why:* the client can be extended without being reinstalled.
-
-![A web server sends a script in its response and the browser runs it](images/code-on-demand.svg)
-
 Today you'll find these in GitHub's API. The part headings below say which constraint each part is about.
 
 ### Part 2 — Predict, then probe · Uniform interface: resources (15 min)
@@ -130,7 +126,7 @@ Each pair picks one mystery and writes up a short dossier — what URI shape, wh
 - What's the difference between `/user` and `/users`?
 - Page through a user's repositories. How does the API tell you there's a next page?
 
-### Part 7 — What we just learned · All six constraints (30 min)
+### Part 7 — What we just learned · The REST constraints (30 min)
 Where we saw each constraint today:
 
 - **Client–server:** `curl` and GitHub share nothing but HTTP. Any client (`curl`, a browser, a script) talks to the server the same way.
@@ -138,7 +134,6 @@ Where we saw each constraint today:
 - **Cacheability:** responses say whether and for how long they may be reused (`Cache-Control`, `ETag`), and a `304` saves both data and rate limit (Part 4).
 - **Uniform interface:** the same few rules everywhere: resources with URLs, the same methods, the same status codes, and links to what comes next (Parts 2, 3 and 5).
 - **Layered system:** you can't tell whether you're talking to GitHub's own servers or to something in front of them, like a cache, and you don't need to.
-- **Code on demand (optional):** the server may send code for the client to run, like a web page sending JavaScript. GitHub's API doesn't; it only sends data.
 
 ---
 
