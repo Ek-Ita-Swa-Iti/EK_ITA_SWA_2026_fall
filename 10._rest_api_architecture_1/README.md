@@ -19,7 +19,7 @@
 
 You'll spend most of the session hitting a real API directly from the terminal. Set up these in advance (≤15 min):
 
-1. You need `curl`. It's already on macOS and Linux, and in **Git Bash** on Windows. On Windows, use Git Bash for everything in this session, not PowerShell. (Optional: `httpie`, `brew install httpie`, for friendlier output.)
+1. You need `curl`. It's already on macOS and Linux, and in **Git Bash** on Windows. On Windows, use Git Bash for everything in this session, not PowerShell.
 2. Create a **GitHub Personal Access Token (classic)** with read-only scopes (`public_repo`, `read:user`). Save it in an env var, e.g. `export GH_TOKEN=...`.
 3. Sanity check:
    ```bash
