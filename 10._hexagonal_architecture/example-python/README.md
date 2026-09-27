@@ -1,6 +1,6 @@
 # example-python — the notes service as ports & adapters
 
-The same notes API as Session 9's `example-node/`: same endpoints, same `curl`s. But it's built the hexagonal way and written in Python, using only Python's standard library, so there's nothing to install.
+The same notes API as Session 9's `example-node/`: same endpoints, same `curl`s. But it's built the hexagonal way, and written in Python.
 
 ## Run it
 
@@ -71,4 +71,4 @@ Every solid arrow points **into** the core. `main.py` is the only file that know
 grep -rn "import" core/
 ```
 
-The only import in `core/` that isn't from Python's standard library is from `core/` itself. The core never imports an adapter.
+Nothing in `core/` imports anything from `adapters/`. The core never knows which adapters are plugged in.

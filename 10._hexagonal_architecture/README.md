@@ -34,7 +34,7 @@ docker compose up --build
 
 Then talk to it with `curl localhost:3000/notes`. It's the same endpoints and the same `curl`s as `example-node/`.
 
-What it is, in one breath: **five small files** (a core, one port, two adapters and a `main.py` that plugs them together) and **zero dependencies**, because it uses only Python's standard library. The folder's own [`README.md`](example-python/README.md) has the run instructions, a diagram and a table of the five words we use today.
+What it is, in one breath: **five small files**: a core, one port, two adapters and a `main.py` that plugs them together. The folder's own [`README.md`](example-python/README.md) has the run instructions, a diagram and a table of the five words we use today.
 
 Follow along during the demo and keep these questions in mind:
 
