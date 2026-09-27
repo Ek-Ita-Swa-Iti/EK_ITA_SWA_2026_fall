@@ -63,7 +63,7 @@ When you find a code you don't know, look it up in MDN's [list of HTTP status co
 We will collect all your findings on the blackboard.
 
 ### Part 4 — Statelessness and caching are part of the protocol (25 min)
-Response headers are an API talking about itself. We'll look at `ETag`, `Cache-Control`, and the rate-limit headers — and use conditional requests (`If-None-Match`) to make calls that *don't count against your rate limit*.
+Response headers are the API talking about itself. We'll look at `ETag`, `Cache-Control`, and the rate-limit headers — and use conditional requests (`If-None-Match`) to make calls that *don't count against your rate limit*.
 
 ### Part 5 — Follow the links (20 min)
 Look at a single repository response. Count the `*_url` fields. We'll try to navigate from a user to a specific issue without typing a single URL — only by following links inside responses. Then we'll talk about why almost no real client actually does this.
