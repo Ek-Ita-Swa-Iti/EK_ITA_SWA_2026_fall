@@ -71,6 +71,8 @@ Response headers are the API telling about itself. We'll look at `ETag`, `Cache-
 - `If-None-Match`: a header *you* send, containing the `ETag` you got last time. If nothing has changed, GitHub answers `304 Not Modified` with no body, and the request doesn't count against your rate limit.
 
 ### Part 5 — Follow the links (20 min)
+**HATEOAS** ("Hypermedia As The Engine Of Application State") is one of the REST ideas: an API response should contain links to what you can do or see next, just as a web page does. In theory, a client only needs to know one starting address and can find everything else by following links.
+
 Look at a single repository response, for example `https://api.github.com/repos/octocat/Hello-World`. Count the `*_url` fields. We'll try to navigate from a user to a specific issue without typing a single URL — only by following links inside responses. Then we'll talk about why almost no real client actually does this.
 
 Start here and follow the trail:
