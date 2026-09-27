@@ -96,7 +96,14 @@ Each pair picks one mystery and writes up a short dossier — what URI shape, wh
 ### Part 7 — What we just learned (30 min)
 Whiteboard. Every pair calls out what they found. We'll group your observations into the REST constraints (uniform interface, statelessness, cacheability, client-server, layered, code-on-demand). The constraints are names for things you already saw.
 
-Pull-through to S9 vocabulary: a REST endpoint is a *driving adapter's contract with the world*. The constraints are what that contract commits to so that any client — `curl`, a browser, Vibe — can talk to the server without prior arrangement. Next week (S11) we tighten that contract: versioning so it can evolve, pagination so it can scale, error shapes so failures are legible, OpenAPI so it's machine-checkable. Everything S11 does is *built on what you just probed today*.
+Where we saw each constraint today:
+
+- **Client–server:** `curl` and GitHub share nothing but HTTP. Any client (`curl`, a browser, a script) talks to the server the same way.
+- **Statelessness:** every request carries everything the server needs, including your token. GitHub doesn't remember you between calls (Parts 1 and 4).
+- **Cacheability:** responses say whether and for how long they may be reused (`Cache-Control`, `ETag`), and a `304` saves both data and rate limit (Part 4).
+- **Uniform interface:** the same few rules everywhere: resources with URLs, the same methods, the same status codes, and links to what comes next (Parts 2, 3 and 5).
+- **Layered system:** you can't tell whether you're talking to GitHub's own servers or to something in front of them, like a cache, and you don't need to.
+- **Code on demand (optional):** the server may send code for the client to run, like a web page sending JavaScript. GitHub's API doesn't; it only sends data.
 
 ---
 
