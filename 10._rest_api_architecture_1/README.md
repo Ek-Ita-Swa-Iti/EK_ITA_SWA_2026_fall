@@ -10,7 +10,7 @@
 
 - Model a domain as **resources** and read URL shapes critically.
 - Use HTTP methods (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`) correctly, and explain *why* each behaves the way it does.
-- Use status codes (2xx, 3xx, 4xx, 5xx) with intent, not vibes.
+- Explain what each group of status codes means (2xx success, 3xx redirect, 4xx client error, 5xx server error), and choose the right one for a response.
 - Recognise the REST constraints (uniform interface, statelessness, cacheability, …) in a real API you've just used.
 
 ---
