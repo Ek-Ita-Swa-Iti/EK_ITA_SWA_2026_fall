@@ -58,6 +58,8 @@ A scavenger hunt for status codes. You'll try requests that *should* fail and in
 
 Some are easy. Some are sneaky (try to find a `422`).
 
+We will collect all your findings on the blackboard.
+
 ### Part 4 — Statelessness and caching are part of the protocol (25 min)
 Response headers are an API talking about itself. We'll look at `ETag`, `Cache-Control`, and the rate-limit headers — and use conditional requests (`If-None-Match`) to make calls that *don't count against your rate limit*.
 
