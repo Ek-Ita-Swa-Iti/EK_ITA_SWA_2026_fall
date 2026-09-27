@@ -34,7 +34,21 @@ If GitHub auth is genuinely blocking you, you can do most of the session unauthe
 ## Today's Teachings
 
 ### Part 1 — Predict, then probe (15 min)
-We'll look at a handful of GitHub API URLs *before* hitting them. You predict what each returns. Then we hit them and compare. Bring your terminal.
+We'll look at a handful of GitHub API URLs *before* hitting them. You predict what each returns. Then we hit them and compare.
+
+For each URL, predict: the **status code**, whether you get **one object or a list**, and **one field** you expect to see.
+
+1. `https://api.github.com/users/octocat`
+2. `https://api.github.com/users/octocat/repos`
+3. `https://api.github.com/repos/torvalds/linux`
+4. `https://api.github.com/users/this-user-does-not-exist-9x7`
+5. `https://api.github.com/`
+
+Then probe each one. `-i` shows the status line and headers above the body:
+
+```bash
+curl -i -H "Authorization: Bearer $GH_TOKEN" https://api.github.com/users/octocat
+```
 
 ### Part 2 — Break things on purpose (30 min)
 A scavenger hunt for status codes. You'll try requests that *should* fail and inspect what comes back. Goal: collect as many distinct status codes as you can, and figure out which method/path combinations produce them.
