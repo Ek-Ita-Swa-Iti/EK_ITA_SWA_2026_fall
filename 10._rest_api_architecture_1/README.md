@@ -58,6 +58,8 @@ A scavenger hunt for status codes. You'll try requests that *should* fail and in
 
 Some are easy. Some are sneaky (try to find a `422`).
 
+When you find a code you don't know, look it up in MDN's [list of HTTP status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status).
+
 We will collect all your findings on the blackboard.
 
 ### Part 4 — Statelessness and caching are part of the protocol (25 min)
