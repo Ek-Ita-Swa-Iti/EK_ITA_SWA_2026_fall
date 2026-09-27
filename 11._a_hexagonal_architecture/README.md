@@ -1,4 +1,4 @@
-# Session 10: Hexagonal Architecture (Ports & Adapters)
+# Session 11a: Hexagonal Architecture (Ports & Adapters)
 
 **ITA Software Architecture 2026 Fall | 3 hours**
 
@@ -30,7 +30,7 @@ We start by looking at code together. I'll demo the same tiny notes service you 
 We warm up on an even smaller one first: [`example-simple/`](example-simple/README.md), a welcome message with one port and two adapters you swap by changing one line.
 
 ```bash
-cd 10._hexagonal_architecture/example-python
+cd 11._a_hexagonal_architecture/example-python
 docker compose up --build
 ```
 
