@@ -119,7 +119,7 @@ You learned the REST constraints by poking at a real API. Now sharpen what you n
 
 Pick **three** of the four prompts below. For each:
 
-1. Run the prompt in Claude Code (or another LLM tool — Claude works well because it can also run the verification command for you).
+1. Run the prompt in Mistral Vibe (or another LLM tool — Vibe works well because it can also run the verification command for you).
 2. Verify the central claim with a real request or a doc lookup.
 3. Note one place the LLM was correct, one place it was vague, wrong, or hedged.
 
