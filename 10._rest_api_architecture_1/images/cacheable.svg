@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="330" viewBox="0 0 720 330" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="330" fill="#ffffff"/>
+
+  <!-- Row labels -->
+  <text x="30" y="40" font-size="15" font-weight="bold" fill="#555">First time</text>
+  <text x="30" y="190" font-size="15" font-weight="bold" fill="#555">Within the next 60 seconds</text>
+
+  <!-- Row 1: client, server -->
+  <rect x="30" y="55" width="170" height="90" rx="14" fill="#e8f1fb" stroke="#2f6db5" stroke-width="2"/>
+  <text x="115" y="107" text-anchor="middle" font-size="22" font-weight="bold" fill="#1d3f6b">Client</text>
+
+  <rect x="520" y="55" width="170" height="90" rx="14" fill="#eaf6ec" stroke="#2e8b47" stroke-width="2"/>
+  <text x="605" y="107" text-anchor="middle" font-size="22" font-weight="bold" fill="#1e5a2e">Server</text>
+
+  <line x1="205" y1="80" x2="513" y2="80" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="360" y="72" text-anchor="middle" font-size="14" font-family="Menlo, Consolas, monospace" fill="#333">GET /users/octocat</text>
+
+  <line x1="515" y1="120" x2="207" y2="120" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="360" y="112" text-anchor="middle" font-size="14" font-family="Menlo, Consolas, monospace" fill="#333">200 OK + JSON</text>
+  <text x="360" y="140" text-anchor="middle" font-size="13" font-family="Menlo, Consolas, monospace" fill="#b5652b">Cache-Control: max-age=60</text>
+
+  <!-- Row 2: client with saved copy, no request -->
+  <rect x="30" y="205" width="170" height="90" rx="14" fill="#e8f1fb" stroke="#2f6db5" stroke-width="2"/>
+  <text x="115" y="245" text-anchor="middle" font-size="22" font-weight="bold" fill="#1d3f6b">Client</text>
+  <text x="115" y="272" text-anchor="middle" font-size="14" fill="#333">reuses its copy</text>
+
+  <rect x="520" y="205" width="170" height="90" rx="14" fill="#f4f4f4" stroke="#aaa" stroke-width="2" stroke-dasharray="6,5"/>
+  <text x="605" y="257" text-anchor="middle" font-size="22" font-weight="bold" fill="#999">Server</text>
+
+  <text x="360" y="245" text-anchor="middle" font-size="16" font-weight="bold" fill="#2e8b47">No request needed</text>
+  <text x="360" y="268" text-anchor="middle" font-size="14" fill="#555">faster, and the server does no work</text>
+
+  <!-- Caption -->
+  <text x="360" y="320" text-anchor="middle" font-size="14" font-style="italic" fill="#666">The response says how long it may be reused. Reusing it saves a request.</text>
+</svg>

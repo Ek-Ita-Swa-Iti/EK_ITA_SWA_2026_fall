@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="320" viewBox="0 0 720 320" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="320" fill="#ffffff"/>
+
+  <!-- Client -->
+  <rect x="30" y="70" width="190" height="150" rx="14" fill="#e8f1fb" stroke="#2f6db5" stroke-width="2"/>
+  <text x="125" y="140" text-anchor="middle" font-size="24" font-weight="bold" fill="#1d3f6b">Client</text>
+  <text x="125" y="168" text-anchor="middle" font-size="15" fill="#333">sends the token</text>
+  <text x="125" y="188" text-anchor="middle" font-size="15" fill="#333">every time</text>
+
+  <!-- Server A -->
+  <rect x="500" y="20" width="190" height="110" rx="14" fill="#eaf6ec" stroke="#2e8b47" stroke-width="2"/>
+  <text x="595" y="66" text-anchor="middle" font-size="22" font-weight="bold" fill="#1e5a2e">Server A</text>
+  <text x="595" y="94" text-anchor="middle" font-size="14" fill="#333">remembers nothing</text>
+
+  <!-- Server B -->
+  <rect x="500" y="160" width="190" height="110" rx="14" fill="#eaf6ec" stroke="#2e8b47" stroke-width="2"/>
+  <text x="595" y="206" text-anchor="middle" font-size="22" font-weight="bold" fill="#1e5a2e">Server B</text>
+  <text x="595" y="234" text-anchor="middle" font-size="14" fill="#333">remembers nothing</text>
+
+  <!-- Request 1 -->
+  <line x1="225" y1="115" x2="493" y2="75" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="355" y="62" text-anchor="middle" font-size="14" font-family="Menlo, Consolas, monospace" fill="#333">GET /user</text>
+  <text x="355" y="80" text-anchor="middle" font-size="13" font-family="Menlo, Consolas, monospace" fill="#b5652b">+ token</text>
+
+  <!-- Request 2 -->
+  <line x1="225" y1="175" x2="493" y2="215" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="355" y="222" text-anchor="middle" font-size="14" font-family="Menlo, Consolas, monospace" fill="#333">GET /user/repos</text>
+  <text x="355" y="240" text-anchor="middle" font-size="13" font-family="Menlo, Consolas, monospace" fill="#b5652b">+ token</text>
+
+  <!-- Caption -->
+  <text x="360" y="302" text-anchor="middle" font-size="14" font-style="italic" fill="#666">Every request carries everything the server needs, so any server can answer it.</text>
+</svg>

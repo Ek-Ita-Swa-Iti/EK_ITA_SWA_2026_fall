@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="340" viewBox="0 0 720 340" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="340" fill="#ffffff"/>
+
+  <!-- Client -->
+  <rect x="30" y="95" width="160" height="130" rx="14" fill="#e8f1fb" stroke="#2f6db5" stroke-width="2"/>
+  <text x="110" y="155" text-anchor="middle" font-size="24" font-weight="bold" fill="#1d3f6b">Client</text>
+  <text x="110" y="182" text-anchor="middle" font-size="15" fill="#333">one tool, e.g. curl</text>
+
+  <!-- The same rules -->
+  <rect x="225" y="60" width="240" height="200" rx="14" fill="#fff6ec" stroke="#d98a3a" stroke-width="2"/>
+  <text x="345" y="92" text-anchor="middle" font-size="17" font-weight="bold" fill="#8a4b12">The same rules everywhere</text>
+  <text x="245" y="126" font-size="14" fill="#333">URLs for resources</text>
+  <text x="245" y="146" font-size="13" font-family="Menlo, Consolas, monospace" fill="#555">/users/octocat</text>
+  <text x="245" y="174" font-size="14" fill="#333">Methods</text>
+  <text x="245" y="194" font-size="13" font-family="Menlo, Consolas, monospace" fill="#555">GET POST PUT DELETE</text>
+  <text x="245" y="222" font-size="14" fill="#333">Status codes and links</text>
+  <text x="245" y="242" font-size="13" font-family="Menlo, Consolas, monospace" fill="#555">200 404 … *_url</text>
+
+  <!-- Servers -->
+  <rect x="520" y="25" width="170" height="70" rx="14" fill="#eaf6ec" stroke="#2e8b47" stroke-width="2"/>
+  <text x="605" y="66" text-anchor="middle" font-size="16" font-weight="bold" fill="#1e5a2e">api.github.com</text>
+
+  <rect x="520" y="125" width="170" height="70" rx="14" fill="#eaf6ec" stroke="#2e8b47" stroke-width="2"/>
+  <text x="605" y="166" text-anchor="middle" font-size="16" font-weight="bold" fill="#1e5a2e">your own API</text>
+
+  <rect x="520" y="225" width="170" height="70" rx="14" fill="#eaf6ec" stroke="#2e8b47" stroke-width="2"/>
+  <text x="605" y="266" text-anchor="middle" font-size="16" font-weight="bold" fill="#1e5a2e">any REST API</text>
+
+  <!-- Arrows -->
+  <line x1="193" y1="160" x2="221" y2="160" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="468" y1="120" x2="514" y2="65" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="468" y1="160" x2="514" y2="160" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="468" y1="200" x2="514" y2="255" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Caption -->
+  <text x="360" y="325" text-anchor="middle" font-size="14" font-style="italic" fill="#666">Every REST API is used the same way, so one client works with all of them.</text>
+</svg>

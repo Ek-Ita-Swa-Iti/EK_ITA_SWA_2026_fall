@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="280" viewBox="0 0 720 280" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="280" fill="#ffffff"/>
+
+  <!-- What the client sees -->
+  <rect x="190" y="30" width="510" height="190" rx="16" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="8,6"/>
+  <text x="445" y="56" text-anchor="middle" font-size="15" font-weight="bold" fill="#777">What the client sees: "api.github.com"</text>
+
+  <!-- Client -->
+  <rect x="20" y="85" width="140" height="100" rx="14" fill="#e8f1fb" stroke="#2f6db5" stroke-width="2"/>
+  <text x="90" y="142" text-anchor="middle" font-size="22" font-weight="bold" fill="#1d3f6b">Client</text>
+
+  <!-- Cache -->
+  <rect x="215" y="85" width="135" height="100" rx="14" fill="#fff6ec" stroke="#d98a3a" stroke-width="2"/>
+  <text x="282" y="133" text-anchor="middle" font-size="19" font-weight="bold" fill="#8a4b12">Cache</text>
+  <text x="282" y="157" text-anchor="middle" font-size="13" fill="#555">answers if it can</text>
+
+  <!-- Load balancer -->
+  <rect x="385" y="85" width="135" height="100" rx="14" fill="#fff6ec" stroke="#d98a3a" stroke-width="2"/>
+  <text x="452" y="126" text-anchor="middle" font-size="19" font-weight="bold" fill="#8a4b12">Load</text>
+  <text x="452" y="148" text-anchor="middle" font-size="19" font-weight="bold" fill="#8a4b12">balancer</text>
+  <text x="452" y="170" text-anchor="middle" font-size="13" fill="#555">picks a server</text>
+
+  <!-- Server -->
+  <rect x="555" y="85" width="130" height="100" rx="14" fill="#eaf6ec" stroke="#2e8b47" stroke-width="2"/>
+  <text x="620" y="142" text-anchor="middle" font-size="22" font-weight="bold" fill="#1e5a2e">Server</text>
+
+  <!-- Arrows -->
+  <line x1="163" y1="135" x2="209" y2="135" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="353" y1="135" x2="379" y2="135" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="523" y1="135" x2="549" y2="135" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Caption -->
+  <text x="360" y="262" text-anchor="middle" font-size="14" font-style="italic" fill="#666">The client only talks to the next layer. It can't tell what's behind it, and doesn't need to.</text>
+</svg>

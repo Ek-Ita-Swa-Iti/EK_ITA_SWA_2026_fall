@@ -44,10 +44,24 @@ REST is not a technology. It is a set of **constraints**: rules for how a client
 ![A client sends a request to the server and gets a response back](images/client-server.svg)
 
 - **Stateless:** every request carries everything the server needs; the server remembers nothing between requests. *Why:* any server can answer any request, so it's easy to add more servers.
+
+![Two requests, each carrying the token, answered by two different servers that remember nothing](images/stateless.svg)
+
 - **Cacheable:** every response says whether it may be reused, and for how long. *Why:* fewer requests, faster answers.
+
+![The first response says it may be reused for 60 seconds, so the next time no request is needed](images/cacheable.svg)
+
 - **Uniform interface:** every API is used the same way: resources with URLs, standard methods, status codes, and links to what comes next. *Why:* one client, like `curl`, works with any REST API.
+
+![One client uses the same rules to talk to GitHub, your own API and any other REST API](images/uniform-interface.svg)
+
 - **Layered system:** the client can't tell whether it talks to the real server or to something in between, like a cache. *Why:* caches, load balancers and security can be added without changing the client.
+
+![The client talks to a cache, which talks to a load balancer, which talks to the server; the client only sees api.github.com](images/layered-system.svg)
+
 - **Code on demand (optional):** the server may send code for the client to run, like JavaScript in a web page. *Why:* the client can be extended without being reinstalled.
+
+![A web server sends a script in its response and the browser runs it](images/code-on-demand.svg)
 
 Today you'll find these in GitHub's API. The part headings below say which constraint each part is about.
 
