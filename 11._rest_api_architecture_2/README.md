@@ -30,6 +30,18 @@ Efter i dag kan du:
 
 - Hav jeres **notes-service fra session 9** klar og kørende (`docker compose up`). Det er jeres API i dag. Hvis jeres version ikke virker, så brug eksemplet i [`09._Layered_architecture_hands_on/example-node`](../09._Layered_architecture_hands_on/example-node). Gem denne applikation i en mappe på din computer, og kør den med kommandoen `docker compose up --build`.
 - Sørg for, at jeres version ligger på **GitHub**, og at repoet er offentligt eller delt med holdet.
+  - Sådan gør I (som i [session 2](../02._terminal_linux_git/README.md)): Opret et nyt, tomt repo på github.com under jeres egen konto, og vælg **Public**. Klon det, kopiér jeres notes-service ind i mappen, og push:
+
+    ```bash
+    git clone <url-til-jeres-repo>
+    cd <jeres-repo>
+    # kopiér filerne fra jeres notes-service herind
+    git add .
+    git commit -m "Notes-service"
+    git push
+    ```
+
+    Vil I hellere have et privat repo, så giv det andet par adgang under **Settings → Collaborators → Add people**.
 - Hav jeres AI-agent klar. I må bruge den til alt i dag.
 - I dag skal vi arbejde med Docker, docker-compose og REST API, som er ting vi har arbejdet med tidligere.
 
