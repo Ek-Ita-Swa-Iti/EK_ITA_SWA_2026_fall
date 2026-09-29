@@ -20,7 +20,6 @@
 
 - Meet our second codebase: **Gitea** — `https://github.com/go-gitea/gitea` (we read it pinned at **v1.26.2**). It's a self-hosted GitHub you can read the source of — the server-side counterpart to last week's view from outside. Browse it on GitHub or clone it shallow: `git clone --depth 1 --branch v1.26.2 https://github.com/go-gitea/gitea.git`. Today we both *read* it and *run* it.
 - You've had Docker since S8 — make sure it's running, and pre-pull the image so class isn't waiting on a download: `docker pull gitea/gitea:1.26.2`.
-- Bring your API sketch / notes from session 10.
 - [optional] Skim the OpenAPI 3.x landing page — just enough to know what a spec document looks like.
 
 ---
