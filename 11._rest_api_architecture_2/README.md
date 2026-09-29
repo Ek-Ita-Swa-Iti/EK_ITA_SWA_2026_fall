@@ -183,9 +183,7 @@ Giv det andet par jeres tre bedste fund.
 
 På tavlen laver vi to kolonner:
 
-| Det var nemt | Det var dyrt |
-|---|---|
-| | |
+<img src="images/tavle-nemt-dyrt.svg" width="480" alt="En tavle delt i to kolonner, Det var nemt og Det var dyrt, med gule post-its i begge kolonner.">
 
 Hver gruppe sætter post-its op ud fra dagens oplevelser.
 

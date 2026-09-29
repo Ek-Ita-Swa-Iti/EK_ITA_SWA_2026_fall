@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="300" viewBox="0 0 640 400" font-family="Helvetica, Arial, sans-serif">
+  <rect width="640" height="400" fill="#ffffff"/>
+
+  <!-- Board -->
+  <rect x="20" y="16" width="600" height="340" rx="10" fill="#b8c0c8"/>
+  <rect x="32" y="28" width="576" height="316" rx="4" fill="#fbfbf8"/>
+  <!-- Tray + markers -->
+  <rect x="120" y="356" width="400" height="14" rx="4" fill="#98a2ab"/>
+  <rect x="180" y="346" width="60" height="11" rx="5" fill="#2f6db5"/>
+  <rect x="250" y="346" width="60" height="11" rx="5" fill="#d9546e"/>
+  <rect x="420" y="349" width="44" height="8" rx="3" fill="#555"/>
+
+  <!-- Headings -->
+  <text x="176" y="78" text-anchor="middle" font-size="32" font-family="'Marker Felt', 'Comic Sans MS', 'Segoe Print', cursive" fill="#2e8b47">Det var nemt</text>
+  <text x="464" y="78" text-anchor="middle" font-size="32" font-family="'Marker Felt', 'Comic Sans MS', 'Segoe Print', cursive" fill="#c0392b">Det var dyrt</text>
+  <path d="M60,92 Q176,86 292,93" stroke="#2e8b47" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M348,93 Q464,87 580,92" stroke="#c0392b" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- Divider -->
+  <path d="M320,48 Q323,190 319,330" stroke="#555" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Post-its: easy -->
+    <g transform="rotate(-4 109 157)">
+    <rect x="68" y="117" width="90" height="90" rx="3" fill="#000" opacity="0.12"/>
+    <rect x="64" y="112" width="90" height="90" rx="3" fill="#ffe066"/>
+    <rect x="64" y="112" width="90" height="16" fill="#f5d44f"/>
+    <path d="M76,146 q8,-5 16,0 t16,0 t16,0 t14,0" stroke="#8a6d1c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M76,162 q8,-5 16,0 t16,0 t16,0 t0,0" stroke="#8a6d1c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M76,178 q8,-5 16,0 t16,0 t16,0 t8,0" stroke="#8a6d1c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    </g>
+    <g transform="rotate(3 221 167)">
+    <rect x="180" y="127" width="90" height="90" rx="3" fill="#000" opacity="0.12"/>
+    <rect x="176" y="122" width="90" height="90" rx="3" fill="#ffe066"/>
+    <rect x="176" y="122" width="90" height="16" fill="#f5d44f"/>
+    <path d="M188,156 q8,-5 16,0 t16,0 t16,0 t14,0" stroke="#8a6d1c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M188,172 q8,-5 16,0 t16,0 t16,0 t0,0" stroke="#8a6d1c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    </g>
+    <g transform="rotate(2 155 271)">
+    <rect x="114" y="231" width="90" height="90" rx="3" fill="#000" opacity="0.12"/>
+    <rect x="110" y="226" width="90" height="90" rx="3" fill="#ffe066"/>
+    <rect x="110" y="226" width="90" height="16" fill="#f5d44f"/>
+    <path d="M122,260 q8,-5 16,0 t16,0 t16,0 t14,0" stroke="#8a6d1c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M122,276 q8,-5 16,0 t16,0 t16,0 t0,0" stroke="#8a6d1c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M122,292 q8,-5 16,0 t16,0 t16,0 t8,0" stroke="#8a6d1c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    </g>
+  <!-- Post-its: expensive -->
+    <g transform="rotate(3 397 155)">
+    <rect x="356" y="115" width="90" height="90" rx="3" fill="#000" opacity="0.12"/>
+    <rect x="352" y="110" width="90" height="90" rx="3" fill="#ffe066"/>
+    <rect x="352" y="110" width="90" height="16" fill="#f5d44f"/>
+    <path d="M364,144 q8,-5 16,0 t16,0 t16,0 t14,0" stroke="#8a6d1c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M364,160 q8,-5 16,0 t16,0 t16,0 t0,0" stroke="#8a6d1c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M364,176 q8,-5 16,0 t16,0 t16,0 t8,0" stroke="#8a6d1c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    </g>
+    <g transform="rotate(-3 515 163)">
+    <rect x="474" y="123" width="90" height="90" rx="3" fill="#000" opacity="0.12"/>
+    <rect x="470" y="118" width="90" height="90" rx="3" fill="#ffe066"/>
+    <rect x="470" y="118" width="90" height="16" fill="#f5d44f"/>
+    <path d="M482,152 q8,-5 16,0 t16,0 t16,0 t14,0" stroke="#8a6d1c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M482,168 q8,-5 16,0 t16,0 t16,0 t0,0" stroke="#8a6d1c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    </g>
+    <g transform="rotate(-2 405 271)">
+    <rect x="364" y="231" width="90" height="90" rx="3" fill="#000" opacity="0.12"/>
+    <rect x="360" y="226" width="90" height="90" rx="3" fill="#ffe066"/>
+    <rect x="360" y="226" width="90" height="16" fill="#f5d44f"/>
+    <path d="M372,260 q8,-5 16,0 t16,0 t16,0 t14,0" stroke="#8a6d1c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M372,276 q8,-5 16,0 t16,0 t16,0 t0,0" stroke="#8a6d1c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    </g>
+    <g transform="rotate(4 523 277)">
+    <rect x="482" y="237" width="90" height="90" rx="3" fill="#000" opacity="0.12"/>
+    <rect x="478" y="232" width="90" height="90" rx="3" fill="#ffe066"/>
+    <rect x="478" y="232" width="90" height="16" fill="#f5d44f"/>
+    <path d="M490,266 q8,-5 16,0 t16,0 t16,0 t14,0" stroke="#8a6d1c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M490,282 q8,-5 16,0 t16,0 t16,0 t0,0" stroke="#8a6d1c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M490,298 q8,-5 16,0 t16,0 t16,0 t8,0" stroke="#8a6d1c" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    </g>
+</svg>
