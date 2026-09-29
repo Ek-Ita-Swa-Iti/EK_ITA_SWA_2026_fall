@@ -54,9 +54,9 @@ Efter i dag kan du:
 
 Kort demo - GitHubs API, som I kender fra [session 10](../10._rest_api_architecture_1/README.md):
 
-1. **Hent en ressource:** `GET https://api.github.com/users/octocat`. Se statuskoden (`200 OK`), JSON-svaret og fanen med headers. Find `x-ratelimit-remaining`.
+1. **Hent en ressource:** `GET https://api.github.com/users/Ek-Ita-Swa-Iti`. Se statuskoden (`200 OK`), JSON-svaret og fanen med headers. Find `x-ratelimit-remaining`.
 2. **Noget, der ikke findes:** `GET https://api.github.com/users/<et-navn-der-ikke-findes>`. Nu får I `404 Not Found` og et JSON-svar med en `message`.
-3. **Fra curl til Insomnia:** Indsæt en `curl`-kommando i URL-feltet, fx `curl https://api.github.com/users/octocat/repos`. Insomnia laver den om til en request.
+3. **Fra curl til Insomnia:** Indsæt en `curl`-kommando i URL-feltet, fx `curl https://api.github.com/users/Ek-Ita-Swa-Iti/repos`. Insomnia laver den om til en request.
 
 ---
 
