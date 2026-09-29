@@ -164,16 +164,6 @@ Tilbage til dagens spørgsmål: **AI kan ændre et API på 30 sekunder. Hvorfor 
 
 ---
 
-## Efter timen
-
-Skriv **5 linjer** i din semester-notesbog:
-
-1. Hvilken ændring lavede I, og gik den andet pars klient i stykker?
-2. Hvad ville du gøre anderledes, hvis dit API havde 1.000 brugere?
-3. Én ting, du ikke vidste i morges.
-
----
-
 ## Hvis du vil vide mere
 
 - [valgfrit] Zalando, *RESTful API Guidelines.* Læs afsnittene om versionering og kompatibilitet.
