@@ -27,9 +27,6 @@
 
 ## Today's Teachings
 
-### Part 0 — Compare notes from S10 (10 min)
-Pairs swap S10 investigation deliverables: one thing GitHub's API did well, one quirk. Two pairs share. Routine.
-
 ### Part 1 — From "an API" to "a contract" (20 min)
 An API is a **boundary** (S6). The **contract** is everything that has to be agreed for two sides to talk without prior arrangement: the path, the method, the request shape, the response shape — *and* what happens when it fails.
 
