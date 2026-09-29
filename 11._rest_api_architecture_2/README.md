@@ -127,7 +127,7 @@ Alt det, der står på tavlen, er det, en klient skal vide for at kunne bruge et
 
 ---
 
-## Pause (10 min)
+## Pause
 
 ---
 
