@@ -208,6 +208,4 @@ Gem `openapi.yaml`. I skal bruge den i projektet (session 14-17).
 
 ## Hvis du vil vide mere
 
-- [valgfrit] Gitea's live API-dokumentation: kør Gitea i Docker og åbn `/api/swagger`. Find en `// swagger:operation`-kommentar i `routers/api/v1/` og sammenlign.
-- [valgfrit] *RFC 9457: Problem Details for HTTP APIs.* Et standardformat for fejlsvar (afløser RFC 7807).
 - [valgfrit] Zalando, *RESTful API Guidelines.* Læs afsnittene om versionering og kompatibilitet.
