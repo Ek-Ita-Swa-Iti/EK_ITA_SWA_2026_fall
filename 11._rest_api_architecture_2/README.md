@@ -11,7 +11,7 @@
 
 **AI kan ændre et API på 30 sekunder. Hvorfor betragtes det så stadig som dyrt at ændre et API?**
 
-Det skal I kunne svare på, når I går hjem. Ikke fordi I har læst svaret, men fordi I har prøvet det.
+Det kan I kunne svare på, når I går hjem. Ikke fordi I har læst svaret, men fordi I har prøvet det.
 
 ---
 
