@@ -176,6 +176,8 @@ For hvert svar: **Hvilken statuskode fik I? Kunne jeres klient gøre noget fornu
 
 Giv det andet par jeres tre bedste fund.
 
+**Som API-ejere:** Ændr jeres API, så det løser de fundne problemer. Læg mærke til, om ændringen ødelægger jeres API for det andet pars klient (**breaking** eller **non-breaking**).
+
 ---
 
 ## Del 6: Afrunding · Hvad var dyrt? (15 min)
