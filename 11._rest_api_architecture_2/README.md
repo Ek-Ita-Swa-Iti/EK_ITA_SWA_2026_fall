@@ -97,7 +97,7 @@ Så kører klient-scriptet igen.
 2. vise én note ud fra dens id
 3. oprette en ny note
 
-Formen er valgfri: et script i Node eller Python, en simpel HTML-side eller en samling requests i Insomnia. Brug gerne AI til at bygge den.
+Formen er valgfri: et script i Node, en simpel HTML-side eller en samling requests i Insomnia. Brug gerne AI til at bygge den.
 
 **Sådan får I API'et til at køre hos jer:**
 
