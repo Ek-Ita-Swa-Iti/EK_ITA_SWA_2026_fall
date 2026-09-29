@@ -28,7 +28,7 @@ Efter i dag kan du:
 
 ## Før timen
 
-- Hav jeres **notes-service fra session 9** klar og kørende (`docker compose up`). Det er jeres API i dag. Hvis jeres version ikke virker, så brug eksemplet i [`09._Layered_architecture_hands_on/example-node`](../09._Layered_architecture_hands_on/example-node).
+- Hav jeres **notes-service fra session 9** klar og kørende (`docker compose up`). Det er jeres API i dag. Hvis jeres version ikke virker, så brug eksemplet i [`09._Layered_architecture_hands_on/example-node`](../09._Layered_architecture_hands_on/example-node). Gem denne applikation i en mappe på din computer, og kør den med kommandoen `docker compose up --build`.
 - Sørg for, at jeres version ligger på **GitHub**, og at repoet er offentligt eller delt med holdet.
 - Hav jeres AI-agent klar. I må bruge den til alt i dag.
 
