@@ -76,7 +76,7 @@ Par A bruger Par B's API, og Par B bruger Par A's.
 
 ## Del 1: Demo · Det tog 30 sekunder (15 min)
 
-Underviseren kører notes-servicen og et lille klient-script, der viser noterne. Alt virker.
+Vi starter med en kort demo af hvad der er jeres øvelse går ud på
 
 Så kommer en ny udvikler ind og synes, at feltet `body` er et dårligt navn. Underviseren beder AI'en omdøbe det til `content`. Det tager et halvt minut, koden er pæn, og servicens egen frontend er også opdateret.
 
