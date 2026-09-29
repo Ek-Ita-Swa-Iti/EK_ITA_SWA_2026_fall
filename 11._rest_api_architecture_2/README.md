@@ -195,4 +195,4 @@ Tilbage til dagens spørgsmål: **AI kan ændre et API på 30 sekunder. Hvorfor 
 
 ## Hvis du vil vide mere
 
-- [valgfrit] Zalando, *RESTful API Guidelines.* Læs afsnittene om versionering og kompatibilitet.
+- [valgfrit] Zalando, [*RESTful API Guidelines*](https://opensource.zalando.com/restful-api-guidelines/). Læs [afsnittene om versionering og kompatibilitet](https://opensource.zalando.com/restful-api-guidelines/#compatibility).
