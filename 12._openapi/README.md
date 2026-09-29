@@ -59,6 +59,15 @@ AI'en skrev specifikationen hurtigt. Men har den ret? Og hvem opdager det, hvis 
 
 Demo: GitHubs egen OpenAPI-specifikation af api.github.com, det API I brugte i session 10 og 11: [`api.github.com.json`](https://github.com/github/rest-api-description/blob/main/descriptions/api.github.com/api.github.com.json).
 
+Flere kendte API'er, der offentliggør deres OpenAPI-specifikation:
+
+- **Stripe** (betalinger): [`stripe/openapi`](https://github.com/stripe/openapi/blob/master/openapi/spec3.json)
+- **Twilio** (SMS og telefoni): [`twilio/twilio-oai`](https://github.com/twilio/twilio-oai/blob/main/spec/json/twilio_api_v2010.json)
+- **DigitalOcean** (cloud-hosting): [`digitalocean/openapi`](https://github.com/digitalocean/openapi/blob/main/specification/DigitalOcean-public.v2.yaml)
+- **Kubernetes**: [`api/openapi-spec/swagger.json`](https://github.com/kubernetes/kubernetes/blob/master/api/openapi-spec/swagger.json)
+- **Swagger Petstore**, det klassiske eksempel, som kører live i Swagger UI: <https://petstore3.swagger.io/>
+- **APIs.guru**, et katalog med tusindvis af offentlige specifikationer: <https://apis.guru/>
+
 ---
 
 ## Efter timen
