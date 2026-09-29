@@ -1,6 +1,6 @@
 # Session 11: Når andre afhænger af dit API
 
-**ITA Software Architecture 2026 Fall | 3 timer | 100 % hands-on**
+**ITA Software Architecture 2026 Fall**
 
 > I dag bygger I ikke et API. I lader andre bruge det, og så ændrer I det.
 > Det er dér, man finder ud af, hvad et API egentlig lover.
