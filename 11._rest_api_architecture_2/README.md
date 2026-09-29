@@ -43,7 +43,20 @@ Efter i dag kan du:
 
     Vil I hellere have et privat repo, så giv det andet par adgang under **Settings → Collaborators → Add people**.
 - Hav jeres AI-agent klar. I må bruge den til alt i dag.
+- Installér **Insomnia** fra <https://insomnia.rest/download>. Vælg **Scratch Pad**, når den starter, så skal I ikke oprette en konto.
 - I dag skal vi arbejde med Docker, docker-compose og REST API, som er ting vi har arbejdet med tidligere.
+
+---
+
+## Demo · Insomnia i stedet for curl (10 min)
+
+**I dag bruger vi Insomnia i stedet for `curl`.** Det er det samme: I sender en HTTP-request og ser svaret. Men i Insomnia ser I statuskode, headers og JSON på én gang, og I kan gemme jeres requests og sende dem igen.
+
+Underviseren viser det mod GitHubs API, som I kender fra [session 10](../10._rest_api_architecture_1/README.md):
+
+1. **Hent en ressource:** `GET https://api.github.com/users/octocat`. Se statuskoden (`200 OK`), JSON-svaret og fanen med headers. Find `x-ratelimit-remaining`.
+2. **Noget, der ikke findes:** `GET https://api.github.com/users/<et-navn-der-ikke-findes>`. Nu får I `404 Not Found` og et JSON-svar med en `message`.
+3. **Fra curl til Insomnia:** Indsæt en `curl`-kommando i URL-feltet, fx `curl https://api.github.com/users/octocat/repos`. Insomnia laver den om til en request.
 
 ---
 
@@ -58,7 +71,7 @@ I arbejder i **par**, og to par danner en **gruppe**. Hvert par har to roller p�
 
 Par A bruger Par B's API, og Par B bruger Par A's.
 
-**Én regel gælder hele dagen: Som klient må I ikke åbne det andet pars kode.** I må bruge `curl`, prøve jer frem og spørge ejerne. Præcis som hvis API'et tilhørte en anden virksomhed.
+**Én regel gælder hele dagen: Som klient må I ikke åbne det andet pars kode.** I må bruge Insomnia, prøve jer frem og spørge ejerne. Præcis som hvis API'et tilhørte en anden virksomhed.
 
 ---
 
@@ -85,7 +98,7 @@ Så kører klient-scriptet igen.
 2. vise én note ud fra dens id
 3. oprette en ny note
 
-Formen er valgfri: et script i Node eller Python, en simpel HTML-side eller et bash-script med `curl`. Brug gerne AI til at bygge den.
+Formen er valgfri: et script i Node eller Python, en simpel HTML-side eller en samling requests i Insomnia. Brug gerne AI til at bygge den.
 
 **Sådan får I API'et til at køre hos jer:**
 
