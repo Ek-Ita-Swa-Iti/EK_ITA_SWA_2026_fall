@@ -21,7 +21,7 @@ Efter i dag kan du:
 
 - forklare, hvad en **API-kontrakt** er, og hvorfor den er en arkitekturbeslutning
 - skelne mellem en **breaking** og en **non-breaking** ændring
-- ændre et API uden at ødelægge dem, der bruger det (versionering, *tilføj, fjern ikke*)
+- ændre et API uden at ødelægge dem, der bruger det (versionering, *tilføj, men fjern ikke*)
 - vurdere, om et API's **fejlsvar** er til at bruge for en klient
 
 ---
