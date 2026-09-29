@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="350" height="195" viewBox="0 0 700 390" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <rect width="700" height="390" rx="18" fill="#ffffff"/>
+
+  <!-- Calls: each pair's laptop (client) calls the other pair's server rack (API) -->
+  <path d="M580,158 C580,0 65,0 65,146" fill="none" stroke="#555" stroke-width="3" stroke-dasharray="9,7" marker-end="url(#arrow)"/>
+  <path d="M230,158 C230,70 415,70 415,146" fill="none" stroke="#555" stroke-width="3" stroke-dasharray="9,7" marker-end="url(#arrow)"/>
+  <text x="330" y="28" text-anchor="middle" font-size="18" fill="#555" stroke="#ffffff" stroke-width="8" paint-order="stroke">kalder</text>
+  <text x="330" y="80" text-anchor="middle" font-size="18" fill="#555" stroke="#ffffff" stroke-width="8" paint-order="stroke">kalder</text>
+
+  <!-- Pair A: server rack (API) + two people at one laptop (client) -->
+  <rect x="23" y="150" width="84" height="190" rx="7" fill="#3b4252"/>
+  <rect x="29" y="336" width="14" height="8" fill="#2e3440"/><rect x="87" y="336" width="14" height="8" fill="#2e3440"/>
+  <rect x="31" y="162" width="68" height="26" rx="3" fill="#4c566a"/>
+  <circle cx="40" cy="175" r="3.5" fill="#57d163"/>
+  <circle cx="51" cy="175" r="3.5" fill="#57d163"/>
+  <rect x="63" y="169" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="71" y="169" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="79" y="169" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="87" y="169" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="31" y="196" width="68" height="26" rx="3" fill="#4c566a"/>
+  <circle cx="40" cy="209" r="3.5" fill="#57d163"/>
+  <circle cx="51" cy="209" r="3.5" fill="#f0c040"/>
+  <rect x="63" y="203" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="71" y="203" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="79" y="203" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="87" y="203" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="31" y="264" width="68" height="26" rx="3" fill="#4c566a"/>
+  <circle cx="40" cy="277" r="3.5" fill="#57d163"/>
+  <circle cx="51" cy="277" r="3.5" fill="#57d163"/>
+  <rect x="63" y="271" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="71" y="271" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="79" y="271" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="87" y="271" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="31" y="298" width="68" height="26" rx="3" fill="#4c566a"/>
+  <circle cx="40" cy="311" r="3.5" fill="#57d163"/>
+  <circle cx="51" cy="311" r="3.5" fill="#f0c040"/>
+  <rect x="63" y="305" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="71" y="305" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="79" y="305" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="87" y="305" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="31" y="230" width="68" height="28" rx="4" fill="#2e8b47"/>
+  <text x="65" y="251" text-anchor="middle" font-size="19" font-weight="bold" fill="#ffffff">API</text>
+  <circle cx="185" cy="198" r="29" fill="#4a3222"/>
+  <path d="M139,330 L139,272 Q139,240 170,238 L200,238 Q231,240 231,272 L231,330 Z" fill="#7a5ea8"/>
+  <rect x="177" y="224" width="16" height="17" fill="#f1c7a5"/>
+  <circle cx="185" cy="206" r="25" fill="#f1c7a5"/>
+  <path d="M160,204 A25,25 0 0 1 210,204 Q189,187 160,204 Z" fill="#4a3222"/>
+  <circle cx="177" cy="210" r="2.5" fill="#2b2b2b"/><circle cx="193" cy="210" r="2.5" fill="#2b2b2b"/>
+  <path d="M178,218 Q185,224 192,218" stroke="#2b2b2b" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <circle cx="253" cy="190" r="11" fill="#1f1a17"/>
+  <circle cx="262" cy="179" r="11" fill="#1f1a17"/>
+  <circle cx="275" cy="174" r="11" fill="#1f1a17"/>
+  <circle cx="288" cy="179" r="11" fill="#1f1a17"/>
+  <circle cx="297" cy="190" r="11" fill="#1f1a17"/>
+  <circle cx="249" cy="203" r="11" fill="#1f1a17"/>
+  <circle cx="301" cy="203" r="11" fill="#1f1a17"/>
+  <path d="M229,330 L229,272 Q229,240 260,238 L290,238 Q321,240 321,272 L321,330 Z" fill="#e0864a"/>
+  <rect x="267" y="224" width="16" height="17" fill="#8d5a3b"/>
+  <circle cx="275" cy="206" r="25" fill="#8d5a3b"/>
+  <circle cx="267" cy="210" r="2.5" fill="#2b2b2b"/><circle cx="283" cy="210" r="2.5" fill="#2b2b2b"/>
+  <path d="M268,218 Q275,224 282,218" stroke="#2b2b2b" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <rect x="130" y="318" width="200" height="18" rx="5" fill="#c8a27a"/>
+  <rect x="168" y="258" width="124" height="66" rx="7" fill="#e8f1fb" stroke="#2f6db5" stroke-width="2.5"/>
+  <text x="230" y="298" text-anchor="middle" font-size="20" font-weight="bold" fill="#2f6db5">Klient</text>
+
+  <!-- Pair B -->
+  <rect x="373" y="150" width="84" height="190" rx="7" fill="#3b4252"/>
+  <rect x="379" y="336" width="14" height="8" fill="#2e3440"/><rect x="437" y="336" width="14" height="8" fill="#2e3440"/>
+  <rect x="381" y="162" width="68" height="26" rx="3" fill="#4c566a"/>
+  <circle cx="390" cy="175" r="3.5" fill="#57d163"/>
+  <circle cx="401" cy="175" r="3.5" fill="#57d163"/>
+  <rect x="413" y="169" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="421" y="169" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="429" y="169" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="437" y="169" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="381" y="196" width="68" height="26" rx="3" fill="#4c566a"/>
+  <circle cx="390" cy="209" r="3.5" fill="#57d163"/>
+  <circle cx="401" cy="209" r="3.5" fill="#f0c040"/>
+  <rect x="413" y="203" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="421" y="203" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="429" y="203" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="437" y="203" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="381" y="264" width="68" height="26" rx="3" fill="#4c566a"/>
+  <circle cx="390" cy="277" r="3.5" fill="#57d163"/>
+  <circle cx="401" cy="277" r="3.5" fill="#57d163"/>
+  <rect x="413" y="271" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="421" y="271" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="429" y="271" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="437" y="271" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="381" y="298" width="68" height="26" rx="3" fill="#4c566a"/>
+  <circle cx="390" cy="311" r="3.5" fill="#57d163"/>
+  <circle cx="401" cy="311" r="3.5" fill="#f0c040"/>
+  <rect x="413" y="305" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="421" y="305" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="429" y="305" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="437" y="305" width="3" height="12" rx="1" fill="#2e3440"/>
+  <rect x="381" y="230" width="68" height="28" rx="4" fill="#2e8b47"/>
+  <text x="415" y="251" text-anchor="middle" font-size="19" font-weight="bold" fill="#ffffff">API</text>
+  <rect x="504" y="176" width="62" height="76" rx="24" fill="#d9b25f"/>
+  <circle cx="535" cy="198" r="29" fill="#d9b25f"/>
+  <path d="M489,330 L489,272 Q489,240 520,238 L550,238 Q581,240 581,272 L581,330 Z" fill="#4fa3a5"/>
+  <rect x="527" y="224" width="16" height="17" fill="#f0c09a"/>
+  <circle cx="535" cy="206" r="25" fill="#f0c09a"/>
+  <path d="M510,204 A25,25 0 0 1 560,204 Q539,187 510,204 Z" fill="#d9b25f"/>
+  <circle cx="527" cy="210" r="2.5" fill="#2b2b2b"/><circle cx="543" cy="210" r="2.5" fill="#2b2b2b"/>
+  <path d="M528,218 Q535,224 542,218" stroke="#2b2b2b" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <circle cx="625" cy="168" r="12" fill="#2a211c"/>
+  <circle cx="625" cy="198" r="29" fill="#2a211c"/>
+  <path d="M579,330 L579,272 Q579,240 610,238 L640,238 Q671,240 671,272 L671,330 Z" fill="#d9546e"/>
+  <rect x="617" y="224" width="16" height="17" fill="#c68a5e"/>
+  <circle cx="625" cy="206" r="25" fill="#c68a5e"/>
+  <path d="M600,204 A25,25 0 0 1 650,204 Q629,187 600,204 Z" fill="#2a211c"/>
+  <circle cx="617" cy="210" r="2.5" fill="#2b2b2b"/><circle cx="633" cy="210" r="2.5" fill="#2b2b2b"/>
+  <path d="M618,218 Q625,224 632,218" stroke="#2b2b2b" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <rect x="480" y="318" width="200" height="18" rx="5" fill="#c8a27a"/>
+  <rect x="518" y="258" width="124" height="66" rx="7" fill="#e8f1fb" stroke="#2f6db5" stroke-width="2.5"/>
+  <text x="580" y="298" text-anchor="middle" font-size="20" font-weight="bold" fill="#2f6db5">Klient</text>
+
+  <text x="180" y="376" text-anchor="middle" font-size="22" font-weight="bold" fill="#444">Par A</text>
+  <text x="530" y="376" text-anchor="middle" font-size="22" font-weight="bold" fill="#444">Par B</text>
+</svg>
