@@ -49,7 +49,7 @@ Efter i dag kan du:
 
 ## Sådan er I sat sammen
 
-<img src="images/par-og-roller.svg" align="right" width="320" alt="Fire studerende i to par ved hvert sit bord. I hvert par sidder den ene ved en laptop mærket API og den anden ved en laptop mærket Klient. Stiplede pile viser, at Par A's klient kalder Par B's API, og at Par B's klient kalder Par A's API.">
+<img src="images/par-og-roller.svg" align="right" width="350" alt="To par. Hvert par har et server-rack mærket API og to studerende, der deler en laptop mærket Klient. Stiplede pile viser, at Par A kalder Par B's API, og at Par B kalder Par A's API.">
 
 I arbejder i **par**, og to par danner en **gruppe**. Hvert par har to roller på samme tid:
 
