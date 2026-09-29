@@ -32,6 +32,17 @@ Efter i dag kan du:
 - Sørg for, at jeres version ligger på **GitHub**, og at repoet er offentligt eller delt med holdet.
 - Hav jeres AI-agent klar. I må bruge den til alt i dag.
 
+### Det bruger vi fra tidligere sessioner
+
+- **Docker** ([session 5](../05._docker_compose/README.md)): Et *image* er opskriften, og en *container* er en kørende udgave af det. Jeres notes-service kører i containere.
+- **Docker Compose** ([session 5](../05._docker_compose/README.md)): `docker-compose.yml` beskriver de containere, der hører sammen. `docker compose up --build` starter det hele, og `docker compose down` stopper og fjerner det. `"3000:3000"` under `ports` betyder *port på jeres maskine : port i containeren*. I dag starter I det andet pars API med `docker compose up`. Når I har kørt `git pull`, skal I bruge `--build`, ellers kører I stadig den gamle kode.
+- **API** ([session 10](../10._rest_api_architecture_1/README.md)): En ressource har en URL (`/notes`, `/notes/1`). Metoden siger, hvad I vil (`GET` henter, `POST` opretter). Statuskoden siger, hvordan det gik (`200`, `201`, `400`, `404`). Med `curl` ([session 3](../03._bash_and_http/README.md)) kan I prøve et API af uden en klient:
+
+  ```bash
+  curl localhost:3000/notes
+  curl -X POST localhost:3000/notes -H "Content-Type: application/json" -d '{"title": "Hej", "body": "Test"}'
+  ```
+
 ---
 
 ## Sådan er I sat sammen
