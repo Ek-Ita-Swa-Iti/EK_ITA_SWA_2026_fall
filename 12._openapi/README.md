@@ -59,6 +59,8 @@ AI'en skrev specifikationen hurtigt. Men har den ret? Og hvem opdager det, hvis 
 
 Underviseren viser kort, hvordan Gitea håndterer det samme problem: versionen står i stien (`/api/v1/`), og specifikationen bliver genereret ud fra koden. Hvis en udvikler ændrer et endpoint uden at opdatere specifikationen, går builden i stykker. Samme problem, løst med værktøjer.
 
+Demo: GitHubs egen OpenAPI-specifikation af api.github.com, det API I brugte i session 10 og 11: [`api.github.com.json`](https://github.com/github/rest-api-description/blob/main/descriptions/api.github.com/api.github.com.json).
+
 ---
 
 ## Efter timen
