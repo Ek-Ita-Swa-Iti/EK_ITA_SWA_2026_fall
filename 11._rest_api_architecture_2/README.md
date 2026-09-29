@@ -2,8 +2,8 @@
 
 **ITA Software Architecture 2026 Fall**
 
-> I dag bygger I ikke et API. I lader andre bruge det, og så ændrer I det.
-> Det er dér, man finder ud af, hvad et API egentlig lover.
+> I dag bygger I ikke et API. I lader andre bruge det i allerede har lavet, og så ændrer I det, og ser hvad der sker.
+> Det er her, i finder ud af, hvad et API egentlig lover.
 
 ---
 
