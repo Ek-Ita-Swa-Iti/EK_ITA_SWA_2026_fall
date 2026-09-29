@@ -20,7 +20,6 @@ Det skal I kunne svare på, når I går hjem. Ikke fordi I har læst svaret, men
 Efter i dag kan du:
 
 - forklare, hvad en **API-kontrakt** er, og hvorfor den er en arkitekturbeslutning
-- skrive en kontrakt ned som **OpenAPI** og tjekke, om den passer med virkeligheden
 - skelne mellem en **breaking** og en **non-breaking** ændring
 - ændre et API uden at ødelægge dem, der bruger det (versionering, *tilføj, fjern ikke*)
 - vurdere, om et API's **fejlsvar** er til at bruge for en klient
@@ -32,7 +31,6 @@ Efter i dag kan du:
 - Hav jeres **notes-service fra session 9** klar og kørende (`docker compose up`). Det er jeres API i dag. Hvis jeres version ikke virker, så brug eksemplet i [`09._Layered_architecture_hands_on/example-node`](../09._Layered_architecture_hands_on/example-node).
 - Sørg for, at jeres version ligger på **GitHub**, og at repoet er offentligt eller delt med holdet.
 - Hav jeres AI-agent klar. I må bruge den til alt i dag.
-- Hent Swagger UI på forhånd, så vi ikke venter på downloads: `docker pull swaggerapi/swagger-ui`
 
 ---
 
@@ -106,33 +104,7 @@ Alt det, der står på tavlen, er det, en klient skal vide for at kunne bruge et
 
 ---
 
-## Del 4: Øvelse · Skriv kontrakten ned (30 min)
-
-**Som API-ejere:** Skriv en **OpenAPI-specifikation** (`openapi.yaml`) for jeres eget API. Brug AI'en til første udkast. Den skal dække:
-
-- alle endpoints, med metoder og felter
-- mindst **ét fejlsvar** pr. endpoint, ikke kun det, der går godt
-- en **version** i stien, fx `/v1/notes` (skal I så ændre koden? Beslut det selv)
-
-Se den som dokumentation i Swagger UI:
-
-```bash
-docker run -p 8081:8080 -e SWAGGER_JSON=/spec/openapi.yaml -v "$(pwd)":/spec swaggerapi/swagger-ui
-```
-
-Åbn <http://localhost:8081>.
-
-**Byt og tjek.** Giv jeres `openapi.yaml` til det andet par. Som klient skal I nu teste den mod virkeligheden med `curl`:
-
-- Passer felterne?
-- Er statuskoderne, som specifikationen siger?
-- Kan I finde **mindst én uoverensstemmelse** mellem specifikationen og det, API'et faktisk gør?
-
-AI'en skrev specifikationen hurtigt. Men har den ret? Og hvem opdager det, hvis den tager fejl?
-
----
-
-## Del 5: Øvelse · Kunden har et ønske (35 min)
+## Del 4: Øvelse · Kunden har et ønske (35 min)
 
 Hvert par trækker et **forandringskort** fra underviseren. Kortet er et krav fra kunden, som I skal lave i jeres API. Eksempler:
 
@@ -150,7 +122,7 @@ Hvert par trækker et **forandringskort** fra underviseren. Kortet er et krav fr
 **Gang i den:**
 
 1. **Forudsig først (5 min).** Før I rører koden: Vil ændringen ødelægge det andet pars klient? Skriv jeres gæt ned.
-2. **Lav ændringen (15 min).** Brug AI. Opdatér også `openapi.yaml`. Push til GitHub.
+2. **Lav ændringen (15 min).** Brug AI. Push til GitHub.
 3. **Sandhedens øjeblik (5 min).** Det andet par kører `git pull`, genstarter jeres API og kører deres klient. Virker den stadig?
 4. **Hvis den gik i stykker (10 min).** Find en måde at levere kundens ønske på *uden* at ødelægge klienten. Nogle muligheder:
    - **Tilføj, fjern ikke:** send både `body` og `content` i en periode
@@ -161,7 +133,7 @@ Skriv på jeres kort: **breaking eller non-breaking?** Og hvordan ville I levere
 
 ---
 
-## Del 6: Fejljagt · Kan man bruge jeres fejl til noget? (15 min)
+## Del 5: Fejljagt · Kan man bruge jeres fejl til noget? (15 min)
 
 Som klient: Prøv at ødelægge det andet pars API. Send
 
@@ -174,11 +146,11 @@ Som klient: Prøv at ødelægge det andet pars API. Send
 
 For hvert svar: **Hvilken statuskode fik I? Kunne jeres klient gøre noget fornuftigt med svaret?** Eller skulle I bare vise "Noget gik galt"?
 
-Giv det andet par jeres tre bedste fund. Står de i deres `openapi.yaml`?
+Giv det andet par jeres tre bedste fund.
 
 ---
 
-## Del 7: Afrunding · Hvad var dyrt? (15 min)
+## Del 6: Afrunding · Hvad var dyrt? (15 min)
 
 På tavlen laver vi to kolonner:
 
@@ -190,8 +162,6 @@ Hver gruppe sætter post-its op ud fra dagens oplevelser.
 
 Tilbage til dagens spørgsmål: **AI kan ændre et API på 30 sekunder. Hvorfor er det så stadig dyrt?** Passer jeres oplevelse med det? Eller var ændringerne i virkeligheden nemme hele vejen igennem?
 
-**Sådan gør de andre (5 min).** Underviseren viser kort, hvordan Gitea håndterer det samme problem: versionen står i stien (`/api/v1/`), og specifikationen bliver genereret ud fra koden. Hvis en udvikler ændrer et endpoint uden at opdatere specifikationen, går builden i stykker. Samme problem som i dag, løst med værktøjer.
-
 ---
 
 ## Efter timen
@@ -201,8 +171,6 @@ Skriv **5 linjer** i din semester-notesbog:
 1. Hvilken ændring lavede I, og gik den andet pars klient i stykker?
 2. Hvad ville du gøre anderledes, hvis dit API havde 1.000 brugere?
 3. Én ting, du ikke vidste i morges.
-
-Gem `openapi.yaml`. I skal bruge den i projektet (session 14-17).
 
 ---
 
