@@ -52,7 +52,7 @@ Efter i dag kan du:
 
 **I dag bruger vi Insomnia i stedet for `curl`.** Det er det samme: I sender en HTTP-request og ser svaret. Men i Insomnia ser I statuskode, headers og JSON på én gang, og I kan gemme jeres requests og sende dem igen.
 
-Underviseren viser det mod GitHubs API, som I kender fra [session 10](../10._rest_api_architecture_1/README.md):
+Kort demo - GitHubs API, som I kender fra [session 10](../10._rest_api_architecture_1/README.md):
 
 1. **Hent en ressource:** `GET https://api.github.com/users/octocat`. Se statuskoden (`200 OK`), JSON-svaret og fanen med headers. Find `x-ratelimit-remaining`.
 2. **Noget, der ikke findes:** `GET https://api.github.com/users/<et-navn-der-ikke-findes>`. Nu får I `404 Not Found` og et JSON-svar med en `message`.
