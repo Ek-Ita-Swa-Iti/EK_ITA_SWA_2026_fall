@@ -2,7 +2,7 @@
 
 **ITA Software Architecture 2026 Fall**
 
-> Bygger videre på [session 11](../11._rest_api_architecture_2/README.md): samme par, samme notes-service.
+> Vi bygger videre på [session 11](../11._rest_api_architecture_2/README.md): samme par, samme notes-service.
 
 ---
 
@@ -10,7 +10,7 @@
 
 Efter i dag kan du:
 
-- skrive en kontrakt ned som **OpenAPI** og tjekke, om den passer med virkeligheden
+- skrive en kontrakt ned som en **OpenAPI-specifikation** og tjekke, om den passer med virkeligheden
 
 ---
 
@@ -23,21 +23,29 @@ Efter i dag kan du:
 
 ## Del 1: Øvelse · Skriv kontrakten ned (30 min)
 
-**Som API-ejere:** Skriv en **OpenAPI-specifikation** (`openapi.yaml`) for jeres eget API. Brug AI'en til første udkast. Den skal dække:
+**Som API-ejere:** Skriv eller generér en **OpenAPI-specifikation** (`swagger.json`) for jeres eget API. Brug AI'en til første udkast. Den skal dække:
 
 - alle endpoints, med metoder og felter
 - mindst **ét fejlsvar** pr. endpoint, ikke kun det, der går godt
 - en **version** i stien, fx `/v1/notes` (skal I så ændre koden? Beslut det selv)
+- en `servers`-linje, der peger på jeres API: `"servers": [{ "url": "http://localhost:3000" }]`
 
-Se den som dokumentation i Swagger UI:
+Se den som dokumentation i Swagger UI. Læg `swagger.json` i en mappe `spec/` ved siden af jeres `docker-compose.yml`, og tilføj Swagger UI som en service i filen:
 
-```bash
-docker run -p 8081:8080 -e SWAGGER_JSON=/spec/openapi.yaml -v "$(pwd)":/spec swaggerapi/swagger-ui
+```yaml
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    ports:
+      - "8081:8080"
+    environment:
+      SWAGGER_JSON: /spec/swagger.json
+    volumes:
+      - ./spec:/spec:ro
 ```
 
-Åbn <http://localhost:8081>.
+Kør `docker compose up`, og åbn <http://localhost:8081>. Når I retter i `spec/swagger.json`, skal I bare genindlæse siden.
 
-**Byt og tjek.** Giv jeres `openapi.yaml` til det andet par. Som klient skal I nu teste den mod virkeligheden med `curl`:
+**Byt og tjek.** Giv jeres `swagger.json` til det andet par. Som klient skal I nu teste den mod virkeligheden med **Insomnia**. I kan importere `swagger.json` direkte i Insomnia, så har I alle requests klar:
 
 - Passer felterne?
 - Er statuskoderne, som specifikationen siger?
@@ -55,4 +63,4 @@ Underviseren viser kort, hvordan Gitea håndterer det samme problem: versionen s
 
 ## Efter timen
 
-Gem `openapi.yaml`. I skal bruge den i projektet (session 14-17).
+Gem `swagger.json`. I skal bruge den i projektet (session 14-17).
