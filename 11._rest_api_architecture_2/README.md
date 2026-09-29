@@ -120,7 +120,7 @@ Som API-ejere skal I svare, når det andet par spørger. Skriv også ned, hvad I
 
 ## Del 3: Opsamling · Spørgelisten er kontrakten (15 min)
 
-Hver gruppe læser sin spørgeliste op. Underviseren samler dem på tavlen.
+Hver gruppe læser sin spørgeliste op. vi samler alle spørgsmål på tavlen.
 
 Alt det, der står på tavlen, er det, en klient skal vide for at kunne bruge et API uden at ringe til dem, der har lavet det. Det hedder en **kontrakt**. Den findes altid, men ofte kun i hovedet på den, der har skrevet koden.
 
