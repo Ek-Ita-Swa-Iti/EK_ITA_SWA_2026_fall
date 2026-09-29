@@ -49,6 +49,8 @@ Efter i dag kan du:
 
 ## Sådan er I sat sammen
 
+<img src="images/par-og-roller.svg" align="right" width="240" alt="En gruppe med Par A og Par B. Hvert par er både API-ejer af sin notes-service og klient. Par A's klient kalder Par B's API, og Par B's klient kalder Par A's API.">
+
 I arbejder i **par**, og to par danner en **gruppe**. Hvert par har to roller på samme tid:
 
 - **API-ejer:** I ejer jeres egen notes-service.
