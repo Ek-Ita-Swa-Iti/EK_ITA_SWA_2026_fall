@@ -44,7 +44,6 @@ Efter i dag kan du:
     Vil I hellere have et privat repo, så giv det andet par adgang under **Settings → Collaborators → Add people**.
 - Hav jeres AI-agent klar. I må bruge den til alt i dag.
 - Installér **Insomnia** fra <https://insomnia.rest/download> (hvis I ikke allerede har den installeret fra 1. semester).
-- I dag skal vi arbejde med Docker, docker-compose og REST API, som er ting vi har arbejdet med tidligere.
 
 ---
 
