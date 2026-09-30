@@ -2,6 +2,8 @@
 
 **ITA Software Architecture 2026 Fall**
 
+Vi starter dagen med tre [evalueringer](evalueringer.md).
+
 > I dag bygger I ikke et API. I lader andre bruge det i allerede har lavet, og så ændrer I det, og ser hvad der sker.
 > Det er her, i finder ud af, hvad et API egentlig lover.
 
