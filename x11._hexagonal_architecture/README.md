@@ -30,7 +30,7 @@ We start by looking at code together. I'll demo the same tiny notes service you 
 We warm up on an even smaller one first: [`example-simple/`](example-simple/README.md), a welcome message with one port and two adapters you swap by changing one line.
 
 ```bash
-cd 11._x_hexagonal_architecture/example-python
+cd x11._hexagonal_architecture/example-python
 docker compose up --build
 ```
 
