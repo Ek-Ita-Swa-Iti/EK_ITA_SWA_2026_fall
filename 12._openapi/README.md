@@ -19,6 +19,7 @@ Efter i dag kan du:
 ## Før timen
 
 - Hav jeres **notes-service** fra session 11 klar og kørende (`docker compose up`).
+- Tag jeres **spørgeliste** fra session 11 med.
 - Hent Swagger UI på forhånd, så vi ikke venter på downloads: `docker pull swaggerapi/swagger-ui`
 
 ---
