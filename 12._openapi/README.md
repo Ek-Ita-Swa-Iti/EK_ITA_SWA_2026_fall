@@ -33,7 +33,7 @@ Efter i dag kan du:
 - en **version** i stien, fx `/v1/notes` (skal I så ændre koden? Beslut det selv)
 - en `servers`-linje, der peger på jeres API: `"servers": [{ "url": "http://localhost:3000" }]`
 
-Se `swagger.json` som dokumentation i Swagger UI (https://editor.swagger.io/, eller Insomnia). Læg `swagger.json` i en mappe der hedder `spec/` i samme niveau som jeres `docker-compose.yml`, og tilføj Swagger UI som en service i docker-compose filen:
+Se `swagger.json` dokumentationen i en Swagger UI (https://editor.swagger.io/, eller Insomnia). Læg `swagger.json` i en mappe der hedder `spec/` i samme niveau som jeres `docker-compose.yml`, og tilføj Swagger UI som en service i docker-compose filen:
 
 ```yaml
   swagger-ui:
