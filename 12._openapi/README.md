@@ -33,7 +33,7 @@ Efter i dag kan du:
 - en **version** i stien, fx `/v1/notes` (skal I så ændre koden? Beslut det selv)
 - en `servers`-linje, der peger på jeres API: `"servers": [{ "url": "http://localhost:3000" }]`
 
-Se `swagger.json` dokumentationen i en Swagger UI (https://editor.swagger.io/, eller Insomnia). Læg `swagger.json` i en mappe der hedder `spec/` i samme niveau som jeres `docker-compose.yml`, og tilføj Swagger UI som en service i docker-compose filen:
+**Se jeres specifikation som dokumentation.** Til det bruger I **Swagger UI**, et værktøj der læser `swagger.json` og viser den som klikbar dokumentation over alle jeres endpoints. I kører det lokalt i Docker, ved siden af jeres API. Læg `swagger.json` i en mappe `spec/` ved siden af `docker-compose.yml`, og tilføj Swagger UI som en service i `docker-compose.yml`:
 
 ```
 notes-service/
@@ -43,7 +43,7 @@ notes-service/
 ├── frontend/
 ├── spec/
 │   └── swagger.json      ← ny
-└── docker-compose.yml    ← tilføj swagger-ui her
+└── docker-compose.yml
 ```
 
 ```yaml
@@ -58,6 +58,8 @@ notes-service/
 ```
 
 Kør `docker compose up`, og åbn <http://localhost:8081>. Når I retter i `spec/swagger.json`, skal I bare genindlæse siden.
+
+> Virker Docker ikke, kan I i stedet indsætte indholdet af `swagger.json` i **Swagger Editor** på <https://editor.swagger.io/>. Den viser den samme dokumentation i højre side.
 
 **Byt og tjek.** Giv jeres `swagger.json` til det andet par. Som klient skal I nu teste den mod virkeligheden med **Insomnia**. I kan importere `swagger.json` direkte i Insomnia, så har I alle requests klar:
 
