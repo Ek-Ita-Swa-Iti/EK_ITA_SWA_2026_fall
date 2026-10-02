@@ -33,11 +33,15 @@ Efter i dag kan du:
 - en **version** i stien, fx `/v1/notes` (skal I så ændre koden? Beslut det selv)
 - en `servers`-linje, der peger på jeres API: `"servers": [{ "url": "http://localhost:3000" }]`
 
+<hr>
+
 <img src="images/swagger-ui.png" align="right" width="400" alt="Swagger UI viser Notes API med fem endpoints: GET og POST på /v1/notes samt GET, PUT og DELETE på /v1/notes/{id}, hver med en farvet metode-knap.">
 
 **Se jeres specifikation som dokumentation.** Til det bruger I **Swagger UI**, et værktøj der læser `swagger.json` og viser den som klikbar dokumentation over alle jeres endpoints. I kører det lokalt i Docker, ved siden af jeres API. Læg `swagger.json` i en mappe `spec/` ved siden af `docker-compose.yml`, og tilføj Swagger UI som en service i `docker-compose.yml`:
 
 <br clear="right">
+
+<hr>
 
 ```
 notes-service/
