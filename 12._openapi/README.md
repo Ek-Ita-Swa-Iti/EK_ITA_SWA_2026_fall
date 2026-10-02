@@ -4,7 +4,7 @@
 
 > Vi bygger videre på [session 11](../11._rest_api_architecture_2/README.md): samme par, samme notes-service.
 >
-> Sidst skrev I en spørgeliste over alt det, I skulle gætte eller spørge ejerne om for at bruge det andet pars API. Den liste er kontrakten, men indtil nu har den kun fandtes på papir og i hovedet på dem, der skrev koden. I dag bruger I den til at skrive kontrakten ned som en OpenAPI-specifikation.
+> Sidst skrev I en spørgeliste over alt det, I skulle gætte jer til eller spørge ejerne om for at bruge det andet pars API. Den liste er kontrakten, men indtil nu har den kun fandtes på papir og i hovedet på dem, der skrev koden. I dag bruger I den til at skrive kontrakten ned som en OpenAPI-specifikation.
 
 ---
 
@@ -33,7 +33,7 @@ Efter i dag kan du:
 - en **version** i stien, fx `/v1/notes` (skal I så ændre koden? Beslut det selv)
 - en `servers`-linje, der peger på jeres API: `"servers": [{ "url": "http://localhost:3000" }]`
 
-Se den som dokumentation i Swagger UI. Læg `swagger.json` i en mappe `spec/` ved siden af jeres `docker-compose.yml`, og tilføj Swagger UI som en service i filen:
+Se `swagger.json` som dokumentation i Swagger UI (https://editor.swagger.io/, eller Insomnia). Læg `swagger.json` i en mappe der hedder `spec/` i samme niveau som jeres `docker-compose.yml`, og tilføj Swagger UI som en service i docker-compose filen:
 
 ```yaml
   swagger-ui:
