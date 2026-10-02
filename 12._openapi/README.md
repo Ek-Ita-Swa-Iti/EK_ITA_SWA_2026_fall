@@ -88,6 +88,7 @@ Flere kendte API'er, der offentliggør deres OpenAPI-specifikation:
 - **DMI** (vejrdata): DMI's API til vejrobservationer kører live i Swagger UI, ligesom jeres egen: <https://opendataapi.dmi.dk/v2/metObs/api>
 - **Discord**: [`discord/discord-api-spec`](https://github.com/discord/discord-api-spec/blob/main/specs/openapi.json)
 - **OpenAI** (API'et bag ChatGPT): [`openai/openai-openapi`](https://github.com/openai/openai-openapi/blob/main/openapi.yaml)
+- **Mistral AI** (europæisk AI, bag Le Chat): [`openapi.yaml`](https://docs.mistral.ai/openapi.yaml)
 
 ---
 
