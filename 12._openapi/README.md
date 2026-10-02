@@ -85,12 +85,9 @@ Demo: GitHubs egen OpenAPI-specifikation af api.github.com, det API I brugte i s
 
 Flere kendte API'er, der offentliggør deres OpenAPI-specifikation:
 
-- **Stripe** (betalinger): [`stripe/openapi`](https://github.com/stripe/openapi/blob/master/openapi/spec3.json)
-- **Twilio** (SMS og telefoni): [`twilio/twilio-oai`](https://github.com/twilio/twilio-oai/blob/main/spec/json/twilio_api_v2010.json)
-- **DigitalOcean** (cloud-hosting): [`digitalocean/openapi`](https://github.com/digitalocean/openapi/blob/main/specification/DigitalOcean-public.v2.yaml)
-- **Kubernetes**: [`api/openapi-spec/swagger.json`](https://github.com/kubernetes/kubernetes/blob/master/api/openapi-spec/swagger.json)
-- **Swagger Petstore**, det klassiske eksempel, som kører live i Swagger UI: <https://petstore3.swagger.io/>
-- **APIs.guru**, et katalog med tusindvis af offentlige specifikationer: <https://apis.guru/>
+- **DMI** (vejrdata): DMI's API til vejrobservationer kører live i Swagger UI, ligesom jeres egen: <https://opendataapi.dmi.dk/v2/metObs/api>
+- **Discord**: [`discord/discord-api-spec`](https://github.com/discord/discord-api-spec/blob/main/specs/openapi.json)
+- **OpenAI** (API'et bag ChatGPT): [`openai/openai-openapi`](https://github.com/openai/openai-openapi/blob/main/openapi.yaml)
 
 ---
 
