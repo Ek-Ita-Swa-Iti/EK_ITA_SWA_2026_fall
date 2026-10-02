@@ -35,6 +35,17 @@ Efter i dag kan du:
 
 Se `swagger.json` dokumentationen i en Swagger UI (https://editor.swagger.io/, eller Insomnia). Læg `swagger.json` i en mappe der hedder `spec/` i samme niveau som jeres `docker-compose.yml`, og tilføj Swagger UI som en service i docker-compose filen:
 
+```
+notes-service/
+├── backend/
+│   ├── Dockerfile
+│   └── src/
+├── frontend/
+├── spec/
+│   └── swagger.json      ← ny
+└── docker-compose.yml    ← tilføj swagger-ui her
+```
+
 ```yaml
   swagger-ui:
     image: swaggerapi/swagger-ui
