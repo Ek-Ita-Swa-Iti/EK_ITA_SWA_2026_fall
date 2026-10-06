@@ -2,6 +2,8 @@
 
 **ITA Software Architecture 2026 Fall**
 
+Vi starter dagen med at gennemgå resultaterne af [evalueringerne](evalueringer.md).
+
 > Vi bygger videre på [session 11](../11._rest_api_architecture_2/README.md): samme par, samme notes-service.
 >
 > Sidst skrev I en spørgeliste over alt det, I skulle gætte jer til eller spørge ejerne om for at bruge det andet pars API. Den liste er kontrakten, men indtil nu har den kun fandtes på papir og i hovedet på dem, der skrev koden. I dag bruger I den til at skrive kontrakten ned som en OpenAPI-specifikation.
