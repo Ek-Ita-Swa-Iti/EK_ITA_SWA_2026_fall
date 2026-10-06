@@ -1,0 +1,13 @@
+{
+  "name": "notes-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Notes-backend til session 12 (OpenAPI): presentation + persistence, MongoDB.",
+  "main": "src/presentation/server.js",
+  "scripts": {
+    "start": "node src/presentation/server.js"
+  },
+  "dependencies": {
+    "mongodb": "^6.9.0"
+  }
+}
