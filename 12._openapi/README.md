@@ -68,7 +68,9 @@ notes-service/
 
 3. Kør `docker compose up`, og åbn <http://localhost:8081>.
 
-**Byt og tjek.** Byt `swagger.json` med det andet par. Nu er I "klienter" og tester det andet pars specifikation mod deres kørende API i **Insomnia**. Få IP-adressen på deres computer, og ændr `servers`-feltet i deres `swagger.json`, så det peger på den ip-adresse. Importér `swagger.json` direkte i Insomnia, så står alle requests klar:
+**Byt og tjek.** Byt `swagger.json` med det andet par. Nu er I "klienter" og tester det andet pars specifikation mod deres kørende API i **Insomnia**. Få IP-adressen på deres computer, og ændr `servers`-feltet i deres `swagger.json`, så det peger på den ip-adresse.
+
+### Importér `swagger.json` direkte i Insomnia
 
 1. Åbn Insomnia, og gå til det projekt, I vil bruge.
 2. Klik på **Create** (eller **+**) og vælg **Import**.
