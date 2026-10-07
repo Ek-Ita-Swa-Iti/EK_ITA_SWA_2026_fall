@@ -66,7 +66,7 @@ notes-service/
       - ./spec:/spec:ro
 ```
 
-3. Kør `docker compose up`, og åbn <http://localhost:8081>. Retter I i `spec/swagger.json`, skal I bare genindlæse siden.
+3. Kør `docker compose up`, og åbn <http://localhost:8081>.
 
 > Virker Docker ikke, så indsæt indholdet af `swagger.json` i **Swagger Editor** på <https://editor.swagger.io/>. Den viser den samme dokumentation i højre side.
 
