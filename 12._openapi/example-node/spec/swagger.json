@@ -29,12 +29,7 @@
         "tags": ["notes"],
         "summary": "Opret en note",
         "operationId": "createNote",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": { "schema": { "$ref": "#/components/schemas/NewNote" } }
-          }
-        },
+        "requestBody": { "$ref": "#/components/requestBodies/NoteInput" },
         "responses": {
           "201": {
             "description": "Noten er oprettet",
@@ -42,37 +37,18 @@
               "application/json": { "schema": { "$ref": "#/components/schemas/Note" } }
             }
           },
-          "400": {
-            "description": "Ugyldig JSON, eller title/body mangler",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" },
-                "examples": {
-                  "missingFields": { "value": { "error": "title and body are required" } },
-                  "invalidJson": { "value": { "error": "Invalid JSON body" } }
-                }
-              }
-            }
-          },
+          "400": { "$ref": "#/components/responses/InvalidNote" },
+          "415": { "$ref": "#/components/responses/UnsupportedMediaType" },
           "500": { "$ref": "#/components/responses/InternalError" }
         }
       }
     },
     "/v1/notes/{id}": {
+      "parameters": [{ "$ref": "#/components/parameters/NoteId" }],
       "get": {
         "tags": ["notes"],
         "summary": "Hent én note",
         "operationId": "getNote",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Notens numeriske id",
-            "schema": { "type": "integer", "minimum": 1 },
-            "example": 1
-          }
-        ],
         "responses": {
           "200": {
             "description": "Noten",
@@ -80,15 +56,50 @@
               "application/json": { "schema": { "$ref": "#/components/schemas/Note" } }
             }
           },
-          "404": {
-            "description": "Ingen note med det id",
+          "400": { "$ref": "#/components/responses/InvalidId" },
+          "404": { "$ref": "#/components/responses/NoteNotFound" },
+          "500": { "$ref": "#/components/responses/InternalError" }
+        }
+      },
+      "put": {
+        "tags": ["notes"],
+        "summary": "Erstat en note",
+        "description": "Erstatter hele noten, så både `title` og `body` skal med. Id'et kan ikke ændres.",
+        "operationId": "replaceNote",
+        "requestBody": { "$ref": "#/components/requestBodies/NoteInput" },
+        "responses": {
+          "200": {
+            "description": "Noten er opdateret",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Note" } }
+            }
+          },
+          "400": {
+            "description": "Ugyldigt id, ugyldig JSON, eller title/body mangler",
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/Error" },
-                "example": { "error": "Note not found" }
+                "examples": {
+                  "invalidId": { "value": { "error": "id must be a positive integer" } },
+                  "missingFields": { "value": { "error": "title and body are required" } },
+                  "invalidJson": { "value": { "error": "Invalid JSON body" } }
+                }
               }
             }
           },
+          "404": { "$ref": "#/components/responses/NoteNotFound" },
+          "415": { "$ref": "#/components/responses/UnsupportedMediaType" },
+          "500": { "$ref": "#/components/responses/InternalError" }
+        }
+      },
+      "delete": {
+        "tags": ["notes"],
+        "summary": "Slet en note",
+        "operationId": "deleteNote",
+        "responses": {
+          "204": { "description": "Noten er slettet. Svaret har ingen body." },
+          "400": { "$ref": "#/components/responses/InvalidId" },
+          "404": { "$ref": "#/components/responses/NoteNotFound" },
           "500": { "$ref": "#/components/responses/InternalError" }
         }
       }
@@ -109,8 +120,8 @@
         "type": "object",
         "required": ["title", "body"],
         "properties": {
-          "title": { "type": "string", "example": "Indkøb" },
-          "body": { "type": "string", "example": "Køb mælk" }
+          "title": { "type": "string", "minLength": 1, "example": "Indkøb" },
+          "body": { "type": "string", "minLength": 1, "example": "Køb mælk" }
         }
       },
       "Error": {
@@ -121,7 +132,64 @@
         }
       }
     },
+    "parameters": {
+      "NoteId": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "Notens numeriske id",
+        "schema": { "type": "integer", "minimum": 1 },
+        "example": 1
+      }
+    },
+    "requestBodies": {
+      "NoteInput": {
+        "required": true,
+        "content": {
+          "application/json": { "schema": { "$ref": "#/components/schemas/NewNote" } }
+        }
+      }
+    },
     "responses": {
+      "InvalidNote": {
+        "description": "Ugyldig JSON, eller title/body mangler",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" },
+            "examples": {
+              "missingFields": { "value": { "error": "title and body are required" } },
+              "invalidJson": { "value": { "error": "Invalid JSON body" } }
+            }
+          }
+        }
+      },
+      "InvalidId": {
+        "description": "Id'et er ikke et positivt heltal, fx `abc` eller `0`",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" },
+            "example": { "error": "id must be a positive integer" }
+          }
+        }
+      },
+      "NoteNotFound": {
+        "description": "Ingen note med det id",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" },
+            "example": { "error": "Note not found" }
+          }
+        }
+      },
+      "UnsupportedMediaType": {
+        "description": "Content-Type er ikke application/json",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" },
+            "example": { "error": "Content-Type must be application/json" }
+          }
+        }
+      },
       "InternalError": {
         "description": "Uventet fejl, fx hvis databasen ikke svarer",
         "content": {

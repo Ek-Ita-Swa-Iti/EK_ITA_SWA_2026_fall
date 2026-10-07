@@ -28,7 +28,7 @@ example-node/
 │   ├── package.json
 │   └── src/
 │       ├── presentation/
-│       │   └── server.js                  ← /v1 i stien, CORS-preflight, 500-svar
+│       │   └── server.js                  ← /v1 i stien, PUT/DELETE, fejlkoder, CORS
 │       └── persistence/
 │           ├── notesMongoDBRepository.js  ← den der bruges
 │           ├── notesRepository.js         ← hardcoded, til udvikling
@@ -44,18 +44,32 @@ Opgaven stiller fire krav. Sådan er de løst i `swagger.json`:
 
 | Krav | I `swagger.json` |
 |------|------------------|
-| Alle endpoints med metoder og felter | `GET` og `POST /v1/notes` samt `GET /v1/notes/{id}`. Felterne er samlet i `components.schemas` som `Note`, `NewNote` og `Error`. |
-| Mindst ét fejlsvar pr. endpoint | `POST` kan give `400` (med to eksempler), `GET {id}` kan give `404`, og alle tre kan give `500`. |
+| Alle endpoints med metoder og felter | `GET` og `POST /v1/notes` samt `GET`, `PUT` og `DELETE /v1/notes/{id}`. Felterne er samlet i `components.schemas` som `Note`, `NewNote` og `Error`. |
+| Mindst ét fejlsvar pr. endpoint | Se tabellen over fejlkoder nedenfor. De fejlsvar, der går igen, ligger i `components.responses`, så hvert endpoint kun henviser til dem. |
 | Version i stien | `/v1/notes`. Koden er rettet til, så den gamle `/notes` nu giver `404`. |
 | `servers`-linje | `"servers": [{ "url": "http://localhost:3000" }]` |
 
+### Fejlkoderne
+
+| Kode | Hvornår | Endpoints |
+|------|---------|-----------|
+| `400` | Ugyldig JSON, `title`/`body` mangler, eller id'et er ikke et positivt heltal (`/v1/notes/abc`) | `POST`, `PUT`, og alle på `{id}` |
+| `404` | Der findes ingen note med det id | `GET`, `PUT`, `DELETE` på `{id}` |
+| `405` | Stien findes, men ikke med den metode (fx `PATCH /v1/notes/1`). Svaret har en `Allow`-header. | Alle stier |
+| `415` | `Content-Type` er ikke `application/json` | `POST`, `PUT` |
+| `500` | Databasen svarer ikke, eller noget andet uventet | Alle |
+
+`DELETE` svarer `204 No Content` uden body, når noten er slettet. `405` står ikke i `swagger.json`: OpenAPI beskriver de operationer, der findes, ikke dem der ikke gør.
+
 ## Hvad er ændret i koden, og hvorfor
 
-En kontrakt er kun noget værd, hvis den passer med virkeligheden. Derfor er `server.js` ændret tre steder i forhold til session 9:
+En kontrakt er kun noget værd, hvis den passer med virkeligheden. Derfor er `server.js` ændret i forhold til session 9:
 
 1. **`/v1` i stien.** Skal koden ændres? Ja, ellers lover kontrakten noget, API'et ikke gør.
 2. **`500` i stedet for et crash.** Uden `try/catch` kan en databasefejl lukke hele Node-processen, så klienten slet ikke får et svar. Nu svarer serveren `500 {"error":"Internal server error"}`, og det kan specifikationen beskrive.
-3. **CORS-preflight (`OPTIONS`).** "Try it out" i Swagger UI kører i browseren på `localhost:8081` og kalder `localhost:3000`, en anden origin. Før en `POST` med JSON sender browseren derfor først en `OPTIONS`-forespørgsel. Uden et svar på den virker `GET`, men `POST` fejler. Det er værd at tage op i timen: kontrakten kan være helt korrekt, og alligevel kan værktøjet ikke kalde API'et.
+3. **CORS-preflight (`OPTIONS`).** "Try it out" i Swagger UI kører i browseren på `localhost:8081` og kalder `localhost:3000`, en anden origin. Før en `POST`, `PUT` eller `DELETE` sender browseren derfor først en `OPTIONS`-forespørgsel. Uden et svar på den virker `GET`, men resten fejler. Det er værd at tage op i timen: kontrakten kan være helt korrekt, og alligevel kan værktøjet ikke kalde API'et.
+4. **`PUT` og `DELETE`.** Begge ligger på `/v1/notes/{id}`. `PUT` erstatter hele noten og kræver derfor både `title` og `body`, ligesom `POST`. Persistence-laget har fået to nye funktioner, `update` og `remove`, i alle tre repositories, så de stadig kan byttes ud med hinanden.
+5. **Flere fejlkoder.** `400` for et id, der ikke er et tal, i stedet for `404`. `415` for en forkert `Content-Type`. `405` for en metode, stien ikke understøtter. Se tabellen ovenfor.
 
 ## Gode steder at stoppe op i timen
 
@@ -66,6 +80,6 @@ En kontrakt er kun noget værd, hvis den passer med virkeligheden. Derfor er `se
 
 ## Bevidst udeladt
 
-- **`PUT` og `DELETE`.** Backend'en fra session 9 har dem ikke, og en specifikation må kun beskrive det, der findes.
+- **`PATCH`.** `PUT` erstatter hele noten. Delvis opdatering er ikke med, så `PATCH` giver `405`.
 - **Login og sikkerhed.** Det kommer i session 20.
 - **Specifikation genereret fra koden.** `swagger.json` er skrevet i hånden med AI til første udkast, ligesom de studerende gør.

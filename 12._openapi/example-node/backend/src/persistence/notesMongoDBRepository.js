@@ -1,7 +1,7 @@
 // Persistence layer backed by MongoDB — the Session 9, Part 2b swap.
 //
-// Same three-function contract as notesRepository.js: findAll, findById,
-// create, all async, same note shape ({ id, title, body }). server.js only
+// Same contract as notesRepository.js: findAll, findById, create, update,
+// remove, all async, same note shape ({ id, title, body }). server.js only
 // needs its require(...) line changed to point here — nothing else.
 //
 // Connects to docker-compose.yml's "mongo" service, container-to-container,
@@ -69,4 +69,16 @@ async function create(title, body) {
   return { id, title, body };
 }
 
-module.exports = { findAll, findById, create };
+async function update(id, title, body) {
+  await ready;
+  const result = await notes.updateOne({ id }, { $set: { title, body } });
+  return result.matchedCount === 1 ? { id, title, body } : null;
+}
+
+async function remove(id) {
+  await ready;
+  const result = await notes.deleteOne({ id });
+  return result.deletedCount === 1;
+}
+
+module.exports = { findAll, findById, create, update, remove };

@@ -1,9 +1,10 @@
 // Development-only persistence layer: hardcoded data, no database.
 //
 // This is a swap point, not the final answer. A later persistence layer that
-// reads from a real database will expose the same three functions
-// (findAll, findById, create) with the same shapes — so presentation/server.js,
-// which only calls this contract, won't need to change when that swap happens.
+// reads from a real database will expose the same functions (findAll,
+// findById, create, update, remove) with the same shapes — so
+// presentation/server.js, which only calls this contract, won't need to
+// change when that swap happens.
 //
 // The functions are async even though nothing here waits on anything: a real
 // database or HTTP call returns a Promise, so the contract is async from day one.
@@ -29,4 +30,21 @@ async function create(title, body) {
   return note;
 }
 
-module.exports = { findAll, findById, create };
+// update and remove return null/false when the id doesn't exist, so the
+// presentation layer can answer 404 without knowing how notes are stored.
+async function update(id, title, body) {
+  const note = notes.find((n) => n.id === id);
+  if (!note) return null;
+  note.title = title;
+  note.body = body;
+  return note;
+}
+
+async function remove(id) {
+  const index = notes.findIndex((note) => note.id === id);
+  if (index === -1) return false;
+  notes.splice(index, 1);
+  return true;
+}
+
+module.exports = { findAll, findById, create, update, remove };
