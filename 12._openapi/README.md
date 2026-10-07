@@ -68,7 +68,7 @@ notes-service/
 
 3. Kør `docker compose up`, og åbn <http://localhost:8081>.
 
-**Byt og tjek.** Byt `swagger.json` med det andet par. Nu er I klienter og tester deres specifikation mod deres kørende API i **Insomnia**. Importér `swagger.json` direkte i Insomnia, så står alle requests klar:
+**Byt og tjek.** Byt `swagger.json` med det andet par. Nu er I "klienter" og tester det andet pars specifikation mod deres kørende API i **Insomnia**. Få IP-adressen på deres computer, og ændr `servers`-feltet i deres `swagger.json`, så det peger på den. Importér `swagger.json` direkte i Insomnia, så står alle requests klar:
 
 - Passer felterne?
 - Får I de statuskoder, som specifikationen lover?
