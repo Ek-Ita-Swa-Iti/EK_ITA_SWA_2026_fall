@@ -70,6 +70,16 @@ notes-service/
 
 **Byt og tjek.** Byt `swagger.json` med det andet par. Nu er I "klienter" og tester det andet pars specifikation mod deres kørende API i **Insomnia**. Få IP-adressen på deres computer, og ændr `servers`-feltet i deres `swagger.json`, så det peger på den. Importér `swagger.json` direkte i Insomnia, så står alle requests klar:
 
+1. Åbn Insomnia, og gå til det projekt, I vil bruge.
+2. Klik på **Create** (eller **+**) og vælg **Import**.
+3. Vælg **File**, og find det andet pars `swagger.json`. I kan også trække filen ind i vinduet.
+4. Klik **Scan** og derefter **Import**. Insomnia laver et dokument med samme navn som `info.title` i specifikationen.
+5. Åbn dokumentet, og gå til fanen **Collection**. Her ligger én request pr. endpoint.
+6. Tjek, at adressen i requests er den fra `servers`-feltet. Den står i miljøvariablen `base_url`, som I kan rette under **Base Environment**, hvis den er forkert.
+7. Send en request, og se om svaret passer med specifikationen.
+
+Tjek så:
+
 - Passer felterne?
 - Får I de statuskoder, som specifikationen lover?
 - Find **mindst ét sted**, hvor specifikationen og API'et ikke siger det samme.
