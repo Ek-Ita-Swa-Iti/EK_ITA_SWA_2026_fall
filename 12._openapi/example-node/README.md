@@ -35,6 +35,7 @@ example-node/
 │           └── notesAPIRepository.js      ← jsonplaceholder
 ├── spec/
 │   └── swagger.json                       ← kontrakten
+├── spoergeliste.md                        ← eksempel på en spørgeliste fra session 11
 └── docker-compose.yml                     ← backend + mongo + swagger-ui
 ```
 
