@@ -41,7 +41,7 @@ Specifikationen skal som minimum have:
 
 <img src="images/swagger-ui.png" align="right" width="50%" alt="Swagger UI viser Notes API med fem endpoints: GET og POST på /v1/notes samt GET, PUT og DELETE på /v1/notes/{id}, hver med en farvet metode-knap.">
 
-**Vis jeres specifikation i jeres Swagger UI docker image.** Swagger UI læser `swagger.json` og laver en side, hvor man kan se og afprøve alle jeres endpoints.
+**Vis specifikationen i et Swagger UI docker image.** Swagger UI læser `swagger.json` og laver en side, hvor man kan se og afprøve alle jeres endpoints.
 
 1. Opret mappen `spec/`, og læg `swagger.json` i den.
 2. Tilføj Swagger UI som en service i `docker-compose.yml`:
