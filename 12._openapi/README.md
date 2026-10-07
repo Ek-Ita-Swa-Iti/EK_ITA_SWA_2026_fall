@@ -68,8 +68,6 @@ notes-service/
 
 3. Kør `docker compose up`, og åbn <http://localhost:8081>.
 
-> Virker Docker ikke, så indsæt indholdet af `swagger.json` i **Swagger Editor** på <https://editor.swagger.io/>. Den viser den samme dokumentation i højre side.
-
 **Byt og tjek.** Byt `swagger.json` med det andet par. Nu er I klienter og tester deres specifikation mod deres kørende API i **Insomnia**. Importér `swagger.json` direkte i Insomnia, så står alle requests klar:
 
 - Passer felterne?
