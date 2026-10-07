@@ -72,13 +72,12 @@ notes-service/
 
 ### Importér `swagger.json` direkte i Insomnia
 
-1. Åbn Insomnia, og gå til det projekt, I vil bruge.
-2. Klik på **Create** (eller **+**) og vælg **Import**.
-3. Vælg **File**, og find det andet pars `swagger.json`. I kan også trække filen ind i vinduet.
-4. Klik **Scan** og derefter **Import**. Insomnia laver et dokument med samme navn som `info.title` i specifikationen.
-5. Åbn dokumentet, og gå til fanen **Collection**. Her ligger én request pr. endpoint.
-6. Tjek, at adressen i requests er den fra `servers`-feltet. Den står i miljøvariablen `base_url`, som I kan rette under **Base Environment**, hvis den er forkert.
-7. Send en request, og se om svaret passer med specifikationen.
+1. Opret et nyt projekt i Insomnia med **+ New Project** øverst i venstre side.
+2. Projektet er tomt, så I ser "Welcome to your project!". Klik på **Import**.
+3. Vælg det andet pars `swagger.json`, og importér den.
+4. Specifikationen åbner som en fane med navn og version fra `info`, fx **Notes API 1.0.0**. Her ligger én request pr. endpoint.
+5. Tjek, at requests går til ip-adressen fra `servers`-feltet. Adressen ligger i miljøvariablen `base_url`, så I kan rette den ét sted, hvis den er forkert.
+6. Send en request, og se om svaret passer med specifikationen.
 
 Tjek så:
 
