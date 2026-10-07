@@ -28,7 +28,7 @@ Efter i dag kan du:
 
 ## Del 1: Øvelse · Skriv kontrakten ned (30 min)
 
-**Som API-ejere:** Beskriv jeres eget API i en **OpenAPI-specifikation**, en fil der hedder `swagger.json`. Lad gerne AI'en skrive den. Specifikationen skal have:
+**Som API-ejere:** Beskriv jeres eget API i en **OpenAPI-specifikation**. Dette skal gøres i en fil der hedder `swagger.json`. Lad en AI skrive den, og få en forklaring på hvad denne fil indeholder (spørg ind til det). Specifikationen skal have:
 
 - alle endpoints, med metoder og felter
 - mindst **ét fejlsvar** pr. endpoint: hvad sker der, når noget går galt?
