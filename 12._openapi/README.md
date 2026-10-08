@@ -33,6 +33,7 @@ Efter i dag kan du:
 Specifikationen skal som minimum have:
 
 - alle endpoints, med metoder og felter
+- routes til `GET`, `POST`, `PUT` og `DELETE`. Mangler nogle af dem i jeres service, så tilføj dem i koden først
 - mindst **ét fejlsvar** pr. endpoint: hvad sker der, når noget går galt?
 - en **version** i stien, fx `/v1/notes`
 - en `servers`-linje, der peger på jeres API: `"servers": [{ "url": "http://localhost:3000" }]`
