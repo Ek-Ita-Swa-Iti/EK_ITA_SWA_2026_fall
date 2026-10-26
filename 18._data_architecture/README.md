@@ -115,7 +115,7 @@ CREATE TABLE notes (
 );
 INSERT INTO users (name) VALUES ('Ali'), ('Bo');
 INSERT INTO notes (user_id, title, body) VALUES
-  (1, 'Indkøb', 'Kaffebønner og mælk'),
+  (1, 'Indkøb', 'Mælk og brød'),
   (1, 'Espresso', 'Maskinen skal afkalkes'),
   (2, 'Møde', 'Flyttet til torsdag');
 ```
@@ -135,7 +135,7 @@ docker compose exec mongo mongosh
 ```js
 use notes
 db.notes.insertMany([
-  { title: "Indkøb", items: ["kaffebønner", "mælk"], done: false },
+  { title: "Indkøb", items: ["mælk", "brød"], done: false },
   { title: "Opskrift", ingredients: [{ name: "mel", gram: 500 }], tags: ["bagning"] },
   { title: "Møde", when: "torsdag", attendees: ["Ali", "Bo"] }
 ])

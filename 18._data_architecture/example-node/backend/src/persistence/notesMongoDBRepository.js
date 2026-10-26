@@ -29,7 +29,7 @@ const ready = (async () => {
   const count = await notes.countDocuments();
   if (count === 0) {
     await notes.insertMany([
-      { id: 1, title: "Indkøb", body: "Kaffebønner og mælk" },
+      { id: 1, title: "Indkøb", body: "Mælk og brød" },
       { id: 2, title: "Espresso", body: "Maskinen skal afkalkes" },
       { id: 3, title: "Møde", body: "Flyttet til torsdag" },
     ]);
