@@ -1,0 +1,13 @@
+{
+  "name": "notes-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Notes-service for Session 18 — presentation + persistence, MongoDB as the source of truth.",
+  "main": "src/presentation/server.js",
+  "scripts": {
+    "start": "node src/presentation/server.js"
+  },
+  "dependencies": {
+    "mongodb": "^6.9.0"
+  }
+}

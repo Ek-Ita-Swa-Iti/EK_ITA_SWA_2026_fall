@@ -31,7 +31,7 @@ Efter i dag kan du:
 
 Downloads tager tid, så gør det hjemmefra.
 
-- Hav jeres **notes-service** fra session 11–12 klar og kørende (`docker compose up`). Hvis jeres version ikke virker, så brug [`09._Layered_architecture_hands_on/example-node`](../09._Layered_architecture_hands_on/example-node).
+- Hav jeres **notes-service** fra session 11–12 klar og kørende (`docker compose up`). Hvis jeres version ikke virker, så brug [`example-node`](example-node) i denne mappe. Den har allerede alle de nye services herunder i sin `docker-compose.yml`.
 - Tilføj disse services i jeres `docker-compose.yml` (ved siden af `backend` og `frontend`):
 
 ```yaml
