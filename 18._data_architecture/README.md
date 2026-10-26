@@ -2,7 +2,7 @@
 
 **ITA Software Architecture 2026 Fall**
 
-> Jeres notes-service kan finde note nummer 3. Men kan den finde *noten om kaffen*, hvis ordet "kaffe" ikke står i den?
+> Søg på "motion" i en almindelig database, og du finder kun sider, hvor ordet "motion" står. Men siden om løb handler jo også om motion.
 >
 > En almindelig database sammenligner bogstaver. I dag møder I en database, der sammenligner **betydning**: en vektordatabase. I finder ud af, hvordan den virker, og hvorfor det overhovedet er muligt at søge på den måde.
 
@@ -10,7 +10,7 @@
 
 ## Dagens spørgsmål
 
-**Hvordan kan en database finde "noten om kaffen", når ordet kaffe ikke står i den?**
+**Hvordan kan en database finde siden om løb, når I søger på "motion", og ordet ikke står på siden?**
 
 ---
 
@@ -20,42 +20,44 @@ Efter i dag kan du:
 
 - forklare, hvad en **embedding** er: en tekst lavet om til en liste af tal, hvor tekster, der betyder det samme, får tal, der ligger tæt på hinanden
 - forklare, **hvorfor man kan søge** i en vektordatabase: at søge er at finde de punkter, der ligger tættest på
-- bruge en **vektordatabase** (Qdrant) fra Insomnia og fra kode
+- bruge en **vektordatabase** (Qdrant) og læse koden, der taler med den
 - forklare arkitekturen: **MySQL er sandhedskilden**, og vektordatabasen er en søgeindgang ved siden af
 
 ---
 
 ## Før timen
 
-- Hent MySQL hjemmefra: `docker pull mysql:8.0`
-- Hav **Insomnia** klar.
-- Underviseren giver jer en **URL** og en **API-nøgle** til holdets vektordatabase i Qdrant Cloud.
-  - Vil I hellere have jeres egen? Opret en gratis konto på <https://cloud.qdrant.io>, lav en **Free**-cluster, og lav en API-nøgle under **API Keys**.
-
----
-
-## Del 1: Problemet (15 min)
-
-Start eksemplet i [`example-node`](example-node). Det har 8 noter i MySQL. **Ingen af dem nævner kaffe.**
+Byg eksemplet hjemmefra. Første gang hentes en embedding-model (ca. 120 MB), og det tager et par minutter.
 
 ```bash
-cd 18._data_architecture/example-node
+cd 18._data_architecture/example-search-engine
 docker compose up --build
 ```
 
-Søg efter kaffe med SQL:
+Åbn <http://localhost:8080>. Kan I søge, er I klar.
 
-```bash
-docker compose exec mysql mysql -uroot -pmy-secret-pw notes_db
-```
+---
 
-```sql
-SELECT * FROM notes WHERE body LIKE '%kaffe%' OR title LIKE '%kaffe%';
-```
+## Del 1: To søgninger, samme side (20 min)
 
-Tomt. Men en af noterne handler jo om kaffe. Hvilken? Hvordan vidste *I* det?
+Eksemplet er en lille **søgemaskine** over 20 opdigtede hjemmesider. Hver søgning køres to gange, og I ser begge resultater side om side:
 
-En database sammenligner **bogstaver**. For at finde noten om kaffen skal den kunne sammenligne **betydning**. Men en computer kan kun regne med tal. Så spørgsmålet er: **Kan man lave betydning om til tal?**
+- **Venstre:** MySQL og den SQL, der bliver kørt
+- **Højre:** Qdrant og de trin, søgningen går igennem
+
+I par: Søg på de her, og skriv ned, hvad hver side finder:
+
+| Søgning | MySQL fandt | Qdrant fandt |
+|---------|-------------|--------------|
+| kaffe | | |
+| billig kaffe | | |
+| motion | | |
+| ferie i Italien | | |
+| spare penge | | |
+
+- Hvorfor finder MySQL ingenting på "motion"? Se på SQL'en.
+- Hvorfor finder MySQL "billig kaffe", men ikke "kaffe billig"? Prøv det.
+- Qdrant finder sider, hvor ingen af ordene står. **Hvordan kan den det?** Det er resten af dagen.
 
 ---
 
@@ -68,74 +70,48 @@ Tegn et koordinatsystem med to akser:
 - **x:** "noget man drikker" (0 = slet ikke, 10 = helt sikkert)
 - **y:** "noget med motion" (0 = slet ikke, 10 = helt sikkert)
 
-Sæt de her ord ind som punkter: **kaffe, espresso, te, løb, fodbold, regning**.
+Sæt de her ord ind som punkter: **kaffe, espresso, te, løb, yoga, elregning**.
 
 - Hvilke punkter ligger tæt på hinanden?
-- Hvor ligger "regning"?
+- Hvor ligger "elregning"?
 - Sæt et nyt ord ind: **cappuccino**. Hvilket ord ligger det tættest på?
 
-**Det I lige har lavet, er en embedding.** Hvert ord er blevet til to tal, fx kaffe = `[9, 1]`. Ord, der betyder noget lignende, ligger tæt på hinanden. Og at **søge** er bare at spørge: *hvilke punkter ligger tættest på det her?*
+**Det I lige har lavet, er en embedding.** Hvert ord er blevet til to tal, fx kaffe = `[9, 1]`. Ord, der betyder noget lignende, ligger tæt på hinanden. Og at **søge** er bare at spørge: *Hvilke punkter ligger tættest på det her?*
 
 ### Fra 2 tal til 384 tal
 
 En rigtig **embedding-model** gør det samme, men:
 
-- med **384 tal** i stedet for 2 (384 akser, ikke kun "drikke" og "motion")
+- med **384 tal** i stedet for 2, altså 384 akser i stedet for kun "drikke" og "motion"
 - for hele sætninger, ikke kun ord
 - og ingen har valgt akserne. Modellen har selv lært dem ved at læse enorme mængder tekst.
 
-Hvor tæt to tekster er, måles som regel med **cosine similarity**: Peger de to pile i samme retning? `1` betyder samme retning (næsten samme betydning), og jo lavere tallet er, jo mindre har de med hinanden at gøre.
+Hvor tæt to tekster er, måles med **cosine similarity**: Peger de to pile i samme retning? `1` betyder præcis samme retning, og jo lavere tallet er, jo mindre har de med hinanden at gøre.
 
 En **vektordatabase** er en database, der er bygget til ét spørgsmål: *Hvilke punkter ligger tættest på det her?* Og den kan svare hurtigt, også når der er millioner af punkter.
 
 ---
 
-## Del 3: Prøv vektordatabasen direkte (30 min)
+## Del 3: Kig ind i vektorsøgningen (30 min)
 
-I par, i Insomnia. Alle requests går til jeres Qdrant-URL og skal have headeren `api-key: <jeres nøgle>`. Brug jeres eget navn til samlingen, fx `par3`, så I ikke skriver i de andres.
+Søg på "kaffe" igen, og følg de fire trin i højre side:
 
-**1. Opret en samling** (en "tabel" til vektorer): `PUT <url>/collections/par3`
+1. **Søgeteksten** får `query: ` foran. Hvorfor tror I, modellen vil vide, at det er en søgning?
+2. **Embedding-modellen** laver teksten om til 384 tal. Striben viser dem: én tynd streg pr. tal, orange for positive og blå for negative.
+3. **Qdrant** får de 384 tal og svarer med de 5 nærmeste punkter. Se request'en: Der står ingen tekst i den, kun tal.
+4. **MySQL** leverer selve siderne. Qdrant kender kun id'er.
 
-```json
-{ "vectors": { "size": 384, "distance": "Cosine" } }
-```
+Sammenlign striben for jeres søgning med striberne under resultaterne. Kan I se, at de øverste ligner mest?
 
-Hvorfor `384`? Fordi det er antallet af tal, modellen laver for hver tekst.
+**Åbn Qdrant-dashboardet** på <http://localhost:6333/dashboard> → **Collections** → `pages`:
 
-**2. Gem tre noter:** `PUT <url>/collections/par3/points?wait=true`
+- Hvor mange punkter er der? Passer det med antallet af sider i MySQL?
+- Åbn et punkt. Hvad er gemt ud over de 384 tal?
 
-```json
-{
-  "points": [
-    { "id": 1, "vector": { "text": "Espresso. Maskinen skal afkalkes", "model": "intfloat/multilingual-e5-small" }, "payload": { "title": "Espresso" } },
-    { "id": 2, "vector": { "text": "Indkøb. Mælk og brød", "model": "intfloat/multilingual-e5-small" }, "payload": { "title": "Indkøb" } },
-    { "id": 3, "vector": { "text": "Træning. Løb 5 km i Fælledparken", "model": "intfloat/multilingual-e5-small" }, "payload": { "title": "Træning" } }
-  ]
-}
-```
+**Søg på "rumfart".** Ingen af siderne handler om rumfart.
 
-**Læg mærke til det: I sender tekst, ikke tal.** Qdrant sender teksten til modellen og gemmer de 384 tal, der kommer ud.
-
-**3. Se tallene:** `POST <url>/collections/par3/points`
-
-```json
-{ "ids": [1], "with_vector": true }
-```
-
-Der er de: 384 tal. Det er "betydningen" af "Espresso. Maskinen skal afkalkes".
-
-**4. Søg:** `POST <url>/collections/par3/points/query`
-
-```json
-{ "query": { "text": "kaffe", "model": "intfloat/multilingual-e5-small" }, "limit": 3, "with_payload": true }
-```
-
-Kom espresso-noten øverst? Se på `score` for hver note.
-
-**5. Prøv selv:** Søg på "motion", "noget at spise" og "fodbold".
-
-- Får I altid et svar, også når ingen note passer?
-- Hvad er `score`, når den passer godt, og når den ikke gør?
+- Får I alligevel 5 svar?
+- Hvad er `score` nu, sammenlignet med "kaffe"?
 
 > **Vigtigt:** En vektordatabase finder *altid* de nærmeste punkter, også selvom de ligger langt væk. Den siger aldrig "ingen resultater" af sig selv. Det er jeres job at bestemme, hvornår en `score` er for lav.
 
@@ -145,27 +121,25 @@ Kom espresso-noten øverst? Se på `score` for hver note.
 
 ---
 
-## Del 4: Vektordatabasen i notes-service (40 min)
-
-Skriv URL, nøgle og jeres samlingsnavn ind i `.env` (se [`example-node/README.md`](example-node/README.md)), og genstart med `docker compose up --build`. Søg på "kaffe" på <http://localhost:8080>.
+## Del 4: Koden og arkitekturen (45 min)
 
 ### Læs koden (15 min)
 
-Åbn `backend/src/persistence/notesVectorIndex.js` og `backend/src/presentation/server.js`. Svar i jeres par:
+Backend har tre lag (se [`example-search-engine/README.md`](example-search-engine/README.md)). Åbn `application/searchService.js` først, og svar i jeres par:
 
-- **Hvor bliver teksten lavet om til tal?** (Søg efter et sted i koden, hvor der regnes. Er der et?)
-- Når en note oprettes: Hvilken database skrives der til først? Hvorfor i den rækkefølge?
-- Når I søger: Qdrant svarer med id'er. Hvorfor henter vi så noterne fra MySQL i stedet for at gemme hele noten i Qdrant?
-- Hvad sker der i `rebuildIndex()`, når backend starter?
+- **Hvor bliver teksten lavet om til tal?** Find stedet. Hvilket lag ligger det i?
+- Når en side gemmes (`addPage`): Hvilken database skrives der til først? Hvorfor i den rækkefølge?
+- Qdrant svarer med id'er. Hvorfor gemmer vi så ikke hele siden i Qdrant?
+- Hvad sker der i `ready()`, når backend starter?
 
-### Byg videre (25 min)
+### Byg videre (30 min)
 
-1. **Opret en ny note** i Insomnia, fx `{ "title": "Te", "body": "Grøn te fra Netto" }`. Søg på "noget varmt at drikke". Bliver den fundet med det samme?
-2. **Sæt en grænse:** Søg på "fodbold". Får I noter, der intet har med fodbold at gøre? Tilføj `score_threshold` i `search()` i `notesVectorIndex.js`, så for dårlige svar bliver sorteret fra. Find selv en god værdi.
-3. **Ødelæg det:** Skriv en forkert API-nøgle i `.env`, og genstart. Opret en note.
-   - Bliver den gemt i MySQL?
-   - Kan den findes med søgningen?
-   - Ret nøglen, og genstart. Kan den findes nu? Hvorfor? (Se `rebuildIndex()`.)
+1. **Tilføj en side** nederst på søgemaskinen, fx om grøn smoothie eller cykelferie. Søg efter den med ord, der ikke står i den. Bliver den fundet med det samme? Hvad sker der i koden, når I trykker **Gem**?
+2. **Sæt en grænse:** Lav søgningen på "rumfart" om, så den ikke giver svar. Tilføj `score_threshold` i Qdrant-request'en i `pagesVectorRepository.query()`, og find selv en god værdi. **Arkitekturspørgsmål:** Grænsen er en regel for søgemaskinen. Hører den så hjemme i persistence-laget, eller burde application-laget bestemme værdien?
+3. **Ødelæg det:**
+   - `docker compose stop qdrant`. Søg. Hvad virker stadig?
+   - Tilføj en side. Bliver den gemt? Kan den findes på betydning?
+   - `docker compose start qdrant` og `docker compose restart backend`. Kan siden findes nu? Hvorfor? (Se `ready()`.)
 
 Pointen med 3: **Vektordatabasen kan altid bygges op igen ud fra MySQL.** Derfor er MySQL sandhedskilden, og Qdrant er "bare" en søgeindgang.
 
@@ -174,29 +148,28 @@ Pointen med 3: **Vektordatabasen kan altid bygges op igen ud fra MySQL.** Derfor
 ## Del 5: Hvor bruges det? (15 min)
 
 - **"Chat med jeres dokumenter"** (RAG): Find de 3 tekster, der ligger tættest på spørgsmålet, og giv dem til en sprogmodel sammen med spørgsmålet. Det er sådan, en supportbot kan svare ud fra en manual.
-- **Anbefalinger:** "Andre noter/produkter/film, der ligner denne."
+- **Anbefalinger:** "Andre sider/produkter/film, der ligner denne."
 - **Billedsøgning:** Den samme idé virker med billeder. Et billede kan også laves om til tal.
 
 Andre måder at gøre det på:
 
-- **ChromaDB** laver også embeddings automatisk, men i klientbiblioteket i jeres kode i stedet for i databasen.
+- **ChromaDB** gør det samme som vores eksempel: Modellen kører i klientbiblioteket, og man sender bare tekst.
+- **Qdrant Cloud** og andre skytjenester kan lave embeddingen *inde i databasen*. Så sender man også bare tekst.
 - **pgvector** lægger vektorsøgning ind i Postgres. Så er der kun én database.
-- **Modellen er et valg:** Vi bruger en *flersproget* model, fordi noterne er på dansk. En model, der er trænet på engelsk, ville finde dårligere svar.
+- **Modellen er et valg:** Vi bruger en lille *flersproget* model, fordi siderne er på dansk. Den er hurtig og gratis, men ikke klog. Søg på "rumfart" efter at have tilføjet en side om raketter: En større model ville forstå sammenhængen bedre.
 
-> **Data i skyen:** Den gratis model i Qdrant Cloud kører i USA. Læg ikke personoplysninger i den.
-
-Tilbage til dagens spørgsmål: **Hvordan kan en database finde "noten om kaffen", når ordet kaffe ikke står i den?**
+Tilbage til dagens spørgsmål: **Hvordan kan en database finde siden om løb, når I søger på "motion"?**
 
 ---
 
 ## Efter timen
 
-Skriv fem linjer i jeres semesternotesbog: Forklar med egne ord, og uden ordet "AI", hvorfor vektordatabasen kan finde espresso-noten, når I søger på "kaffe".
+Skriv fem linjer i jeres semesternotesbog: Forklar med egne ord, og uden ordet "AI", hvorfor Qdrant kan finde siden om løb, når I søger på "motion".
 
 ---
 
 ## Optional
 
-- [optional] Qdrant: [Cloud Inference](https://qdrant.tech/documentation/inference/cloud-inference/), som er det, der laver tekst om til tal i vores eksempel
 - [optional] Qdrant: [What is a vector database?](https://qdrant.tech/articles/what-is-a-vector-database/)
+- [optional] Hugging Face: [`multilingual-e5-small`](https://huggingface.co/intfloat/multilingual-e5-small), den model vi bruger
 - [optional] `pgvector`: [README](https://github.com/pgvector/pgvector)

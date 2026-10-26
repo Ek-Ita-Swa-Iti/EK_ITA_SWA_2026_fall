@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Søgemaskinen</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Søgemaskinen</h1>
+    <form id="search-form">
+      <input id="q" placeholder="Søg, fx kaffe" autocomplete="off" autofocus />
+      <button>Søg</button>
+    </form>
+    <p class="examples">Prøv: <a href="#">kaffe</a> <a href="#">billig kaffe</a> <a href="#">motion</a> <a href="#">ferie i Italien</a> <a href="#">spare penge</a> <a href="#">rumfart</a></p>
+    <p class="meta error" id="message"></p>
+  </header>
+
+  <main id="columns" hidden>
+    <section class="column sql">
+      <h2>MySQL <span>søger på bogstaver</span></h2>
+
+      <div class="step">
+        <h3>SQL'en, der bliver kørt</h3>
+        <pre id="sql-statement"></pre>
+        <p class="meta" id="sql-meta"></p>
+      </div>
+
+      <ol class="results" id="sql-results"></ol>
+    </section>
+
+    <section class="column vector">
+      <h2>Qdrant <span>søger på betydning</span></h2>
+
+      <div class="step">
+        <h3><b>1</b> Søgeteksten</h3>
+        <pre id="vec-text"></pre>
+      </div>
+
+      <div class="step">
+        <h3><b>2</b> Embedding-modellen laver teksten om til tal</h3>
+        <canvas class="strip" id="vec-strip" width="384" height="24"></canvas>
+        <pre id="vec-numbers"></pre>
+        <p class="meta" id="vec-embed-meta"></p>
+      </div>
+
+      <div class="step">
+        <h3><b>3</b> Qdrant finder de punkter, der ligger tættest på</h3>
+        <pre id="vec-request"></pre>
+        <p class="meta" id="vec-qdrant-meta"></p>
+      </div>
+
+      <div class="step">
+        <h3><b>4</b> Siderne hentes i MySQL</h3>
+        <pre id="vec-mysql"></pre>
+        <p class="meta">Qdrant kender kun id'er. Selve siderne ligger i MySQL, som er sandhedskilden.</p>
+      </div>
+
+      <ol class="results" id="vec-results"></ol>
+      <p class="meta legend">Hver stribe er 384 tal: <span class="pos">positive</span> og <span class="neg">negative</span>. Jo mere en sides stribe ligner søgningens, jo højere er <i>score</i> (cosine similarity: 1 = peger i præcis samme retning).</p>
+    </section>
+  </main>
+
+  <details>
+    <summary>Tilføj en side</summary>
+    <form id="add-form">
+      <input id="add-title" placeholder="Titel" required />
+      <input id="add-url" placeholder="https://min-side.example" required />
+      <textarea id="add-body" placeholder="Tekst" required></textarea>
+      <button>Gem</button>
+    </form>
+    <p class="meta" id="add-result"></p>
+  </details>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -8,7 +8,7 @@ const path = require("path");
 
 const PORT = process.env.PORT || 8080;
 const PUBLIC_DIR = path.join(__dirname, "public");
-const CONTENT_TYPES = { ".html": "text/html", ".js": "text/javascript" };
+const CONTENT_TYPES = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8" };
 
 const server = http.createServer((req, res) => {
   const filePath = req.url === "/" ? "/index.html" : req.url;

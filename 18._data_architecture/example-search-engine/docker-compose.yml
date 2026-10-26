@@ -6,12 +6,10 @@ services:
     environment:
       DB_HOST: mysql
       DB_PASSWORD: my-secret-pw
-      # Vektordatabasen ligger i skyen (Qdrant Cloud). Værdierne kommer fra .env
-      QDRANT_URL: ${QDRANT_URL}
-      QDRANT_API_KEY: ${QDRANT_API_KEY}
-      QDRANT_COLLECTION: ${QDRANT_COLLECTION:-notes}
+      QDRANT_URL: http://qdrant:6333
     depends_on:
       - mysql
+      - qdrant
 
   frontend:
     build: ./frontend
@@ -20,10 +18,16 @@ services:
     depends_on:
       - backend
 
-  # Sandhedskilden: her bor noterne.
+  # Sandhedskilden: her bor siderne, som tekst.
   mysql:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: my-secret-pw
     ports:
       - "3306:3306"
+
+  # Vektordatabasen: her bor siderne, som tal. Bruges kun til søgning.
+  qdrant:
+    image: qdrant/qdrant
+    ports:
+      - "6333:6333"

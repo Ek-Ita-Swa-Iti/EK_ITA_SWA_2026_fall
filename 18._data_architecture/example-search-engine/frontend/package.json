@@ -1,0 +1,10 @@
+{
+  "name": "search-engine-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static file server for the search engine frontend. Zero dependencies.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
