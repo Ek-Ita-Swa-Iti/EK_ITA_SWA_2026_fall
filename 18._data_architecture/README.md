@@ -94,12 +94,11 @@ En **vektordatabase** er en database, der er bygget til ét spørgsmål: *Hvilke
 
 ## Del 3: Kig ind i vektorsøgningen (30 min)
 
-Søg på "kaffe" igen, og følg de fire trin i højre side:
+Søg på "kaffe" igen, og følg de tre trin i højre side:
 
 1. **Søgeteksten** får `query: ` foran. Hvorfor tror I, modellen vil vide, at det er en søgning?
 2. **Embedding-modellen** laver teksten om til 384 tal. Striben viser dem: én tynd streg pr. tal, orange for positive og blå for negative.
-3. **Qdrant** får de 384 tal og svarer med de 5 nærmeste punkter. Se request'en: Der står ingen tekst i den, kun tal.
-4. **MySQL** leverer selve siderne. Qdrant kender kun id'er.
+3. **Qdrant** får de 384 tal og svarer med de 5 nærmeste punkter. Se request'en: Der står ingen tekst i den, kun tal. Se svaret: Hvert punkt har et `id`, en `score` og den side, der er gemt sammen med tallene (`payload`).
 
 Sammenlign striben for jeres søgning med striberne under resultaterne. Kan I se, at de øverste ligner mest?
 
@@ -129,7 +128,7 @@ Backend har tre lag (se [`example-search-engine/README.md`](example-search-engin
 
 - **Hvor bliver teksten lavet om til tal?** Find stedet. Hvilket lag ligger det i?
 - Når en side gemmes (`addPage`): Hvilken database skrives der til først? Hvorfor i den rækkefølge?
-- Qdrant svarer med id'er. Hvorfor gemmer vi så ikke hele siden i Qdrant?
+- Hver side ligger nu to steder: som tekst i MySQL og som `payload` i Qdrant. Hvad er fordelen? Og hvad skal der ske i Qdrant, hvis en side bliver rettet i MySQL?
 - Hvad sker der i `ready()`, når backend starter?
 
 ### Byg videre (30 min)

@@ -5,7 +5,8 @@
 // Every search runs twice, side by side:
 //   1. text search in MySQL   — do the letters match?
 //   2. vector search in Qdrant — does the meaning match?
-// and returns what each one did, so the frontend can show it.
+// and returns what each one did, so the frontend can show it. The two don't
+// talk to each other: Qdrant answers with whole pages on its own.
 
 const pagesRepository = require("../persistence/pagesMySQLRepository");
 const vectorRepository = require("../persistence/pagesVectorRepository");
@@ -20,7 +21,7 @@ function passageOf(page) {
 
 async function index(pages) {
   const vectors = await embeddingModel.embedMany(pages.map(passageOf));
-  await vectorRepository.upsert(pages.map((page, i) => ({ id: page.id, title: page.title, vector: vectors[i] })));
+  await vectorRepository.upsert(pages.map((page, i) => ({ page, vector: vectors[i] })));
 }
 
 // Make sure Qdrant has every page from MySQL. If the counts differ, rebuild
@@ -61,23 +62,19 @@ async function vectorSearch(q) {
   const vector = await embeddingModel.embed(text);
   const embedMs = Date.now() - started;
 
-  // Step 3: Qdrant finds the points closest to those numbers.
+  // Step 3: Qdrant finds the points closest to those numbers, and answers
+  // with each point's score and the page stored next to it (its payload).
   const qdrant = await vectorRepository.query(vector, VECTOR_RESULTS);
-
-  // Step 4: Qdrant only knows ids. The pages themselves come from MySQL.
-  const ids = qdrant.hits.map((hit) => hit.id);
-  const fetched = await pagesRepository.findByIds(ids);
-  const results = qdrant.hits
-    .map((hit) => {
-      const page = fetched.rows.find((row) => row.id === hit.id);
-      return page && { ...page, score: hit.score, vector: hit.vector };
-    })
-    .filter(Boolean);
+  const results = qdrant.points.map((point) => ({
+    id: point.id,
+    ...point.payload,
+    score: point.score,
+    vector: point.vector,
+  }));
 
   return {
     embedding: { text, model: embeddingModel.MODEL, dimensions: vector.length, vector, ms: embedMs },
     qdrant: { request: qdrant.request, ms: qdrant.ms },
-    mysql: { statement: fetched.statement, ms: fetched.ms },
     results,
   };
 }

@@ -69,13 +69,13 @@ function showVector(vector) {
   const list = $("vec-results");
   list.innerHTML = "";
   if (vector.error) {
-    ["vec-text", "vec-numbers", "vec-request", "vec-mysql"].forEach((id) => ($(id).textContent = ""));
+    ["vec-text", "vec-numbers", "vec-request", "vec-response"].forEach((id) => ($(id).textContent = ""));
     $("vec-embed-meta").textContent = "";
     $("vec-qdrant-meta").innerHTML = `<span class="error">Qdrant svarer ikke: ${escapeHtml(vector.error)}</span>`;
     return;
   }
 
-  const { embedding, qdrant, mysql, results } = vector;
+  const { embedding, qdrant, results } = vector;
 
   $("vec-text").textContent = embedding.text;
 
@@ -87,9 +87,13 @@ function showVector(vector) {
   const body = { ...qdrant.request.body, query: "VEKTOR" };
   const json = JSON.stringify(body, null, 2).replace('"VEKTOR"', shortVector(qdrant.request.body.query, 3));
   $("vec-request").textContent = `${qdrant.request.method} ${qdrant.request.path}\n${json}`;
-  $("vec-qdrant-meta").textContent = `${results.length} nærmeste punkter · ${qdrant.ms} ms`;
 
-  $("vec-mysql").textContent = mysql.statement;
+  // And Qdrant's answer, one line per point: id, score, payload (shortened).
+  const points = results.map(
+    (page) => `  { "id": ${page.id}, "score": ${page.score.toFixed(3)}, "payload": { "title": ${JSON.stringify(page.title)}, … } }`,
+  );
+  $("vec-response").textContent = `{ "points": [\n${points.join(",\n")}\n] }`;
+  $("vec-qdrant-meta").textContent = `${results.length} nærmeste punkter · ${qdrant.ms} ms`;
 
   results.forEach((page) => {
     const li = document.createElement("li");

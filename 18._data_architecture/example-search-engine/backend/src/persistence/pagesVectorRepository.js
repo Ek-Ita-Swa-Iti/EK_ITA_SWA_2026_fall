@@ -1,6 +1,6 @@
-// Persistence: Qdrant — the vector database. Every page lives here too, but
-// as 384 numbers (its embedding) plus its id. It's only used for search, and
-// it can always be rebuilt from MySQL.
+// Persistence: Qdrant — the vector database. Every page lives here too: its
+// id, its 384 numbers (its embedding), and the page itself as "payload", so a
+// search can answer with whole pages. It can always be rebuilt from MySQL.
 //
 // Qdrant has a plain HTTP API, so we call it with fetch — no client library.
 
@@ -48,15 +48,19 @@ async function count() {
   return result.count;
 }
 
-// points: [{ id, vector, title }]. Same id as in MySQL, so saving again overwrites.
+// points: [{ page, vector }]. Same id as in MySQL, so saving again overwrites.
 async function upsert(points) {
   await qdrant("PUT", `/collections/${COLLECTION}/points?wait=true`, {
-    points: points.map(({ id, vector, title }) => ({ id, vector, payload: { title } })),
+    points: points.map(({ page, vector }) => ({
+      id: page.id,
+      vector,
+      payload: { title: page.title, url: page.url, body: page.body },
+    })),
   });
 }
 
-// "Which points lie closest to this one?" Returns the request too, so the
-// frontend can show exactly what was sent.
+// "Which points lie closest to this one?" Returns the request and the
+// answer as they were, so the frontend can show exactly what happened.
 async function query(vector, limit) {
   const path = `/collections/${COLLECTION}/points/query`;
   const body = { query: vector, limit, with_payload: true, with_vector: true };
@@ -64,7 +68,7 @@ async function query(vector, limit) {
   const result = await qdrant("POST", path, body);
   return {
     request: { method: "POST", path, body },
-    hits: result.points.map((point) => ({ id: point.id, score: point.score, vector: point.vector })),
+    points: result.points,
     ms: Date.now() - started,
   };
 }

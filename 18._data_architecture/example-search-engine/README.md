@@ -6,7 +6,7 @@ søgning køres **to gange**, og siden viser begge dele ved siden af hinanden:
 | | MySQL | Qdrant |
 |---|---|---|
 | Søger på | **bogstaver** (`LIKE '%kaffe%'`) | **betydning** (de nærmeste punkter) |
-| Gemmer siderne som | tekst | 384 tal pr. side (en *embedding*) |
+| Gemmer siderne som | tekst | 384 tal pr. side (en *embedding*), og siden selv som `payload` |
 | Rolle | **sandhedskilden** | en søgeindgang, der kan bygges op igen fra MySQL |
 
 ## Kør det
@@ -53,14 +53,15 @@ backend/src/
 **MySQL:** `SELECT … WHERE title LIKE '%kaffe%' OR body LIKE '%kaffe%'`. Den finder kun sider, hvor
 bogstaverne står.
 
-**Qdrant**, i fire trin, som frontend viser:
+**Qdrant**, i tre trin, som frontend viser:
 
 1. Søgeteksten får `query: ` foran. Modellen (`multilingual-e5-small`) er trænet til at se `query: ` foran
    søgninger og `passage: ` foran det, der gemmes.
 2. `embeddingModel.embed()` laver teksten om til 384 tal.
-3. `pagesVectorRepository.query()` sender de 384 tal til Qdrant og får de 5 nærmeste id'er tilbage med en
-   `score` (cosine similarity).
-4. Siderne hentes i MySQL med `WHERE id IN (…)`, fordi Qdrant kun kender id'er.
+3. `pagesVectorRepository.query()` sender de 384 tal til Qdrant. Qdrant svarer med de 5 nærmeste punkter,
+   hver med en `score` (cosine similarity) og den side, der er gemt sammen med tallene (`payload`).
+
+Vektorsøgningen bruger slet ikke MySQL. Qdrant svarer selv med hele siderne.
 
 ## Hvad sker der, når en side gemmes?
 

@@ -1,7 +1,6 @@
 // Persistence: MySQL — the source of truth. Every page lives here, as text.
 //
-// The search functions return the exact SQL they ran, so the frontend can
-// show it. mysql2's pool.query() fills in the ? placeholders itself before
+// search() returns the exact SQL it ran, so the frontend can show it. mysql2's pool.query() fills in the ? placeholders itself before
 // sending, and pool.format() gives us that same string.
 
 const mysql = require("mysql2/promise");
@@ -86,11 +85,6 @@ async function search(text) {
   );
 }
 
-async function findByIds(ids) {
-  if (ids.length === 0) return { statement: "", rows: [], ms: 0 };
-  return run("SELECT id, title, url, body FROM pages WHERE id IN (?)", [ids]);
-}
-
 async function findAll() {
   return (await run("SELECT id, title, url, body FROM pages ORDER BY id")).rows;
 }
@@ -101,4 +95,4 @@ async function create(title, url, body) {
   return { id: result.insertId, title, url, body };
 }
 
-module.exports = { search, findByIds, findAll, create };
+module.exports = { search, findAll, create };

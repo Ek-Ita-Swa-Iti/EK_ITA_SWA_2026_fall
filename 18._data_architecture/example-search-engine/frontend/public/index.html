@@ -47,14 +47,11 @@
 
       <div class="step">
         <h3><b>3</b> Qdrant finder de punkter, der ligger tættest på</h3>
+        <p class="meta">Vi sender de 384 tal:</p>
         <pre id="vec-request"></pre>
+        <p class="meta">Qdrant svarer med de nærmeste punkter, nærmest først. Hvert punkt har en <i>score</i> og den side, der er gemt sammen med tallene (<code>payload</code>):</p>
+        <pre id="vec-response"></pre>
         <p class="meta" id="vec-qdrant-meta"></p>
-      </div>
-
-      <div class="step">
-        <h3><b>4</b> Siderne hentes i MySQL</h3>
-        <pre id="vec-mysql"></pre>
-        <p class="meta">Qdrant kender kun id'er. Selve siderne ligger i MySQL, som er sandhedskilden.</p>
       </div>
 
       <ol class="results" id="vec-results"></ol>
