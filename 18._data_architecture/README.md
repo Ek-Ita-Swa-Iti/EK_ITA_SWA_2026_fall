@@ -1,18 +1,16 @@
-# Session 18: Dataarkitektur · Vælg det rigtige sted til jeres data
+# Session 18: Dataarkitektur · Søg på betydning med en vektordatabase
 
 **ITA Software Architecture 2026 Fall**
 
-> Indtil nu har jeres notes-service gemt sine noter ét sted. Men der er ikke én database, der er bedst. Der er en database, der er god til *det spørgsmål, I stiller jeres data*.
+> Jeres notes-service kan finde note nummer 3. Men kan den finde *noten om kaffen*, hvis ordet "kaffe" ikke står i den?
 >
-> I dag prøver I fire slags databaser på de samme noter. Så bygger I en vektordatabase ind i jeres notes-service, og til sidst vælger I database (eller API) til en række rigtige situationer.
+> En almindelig database sammenligner bogstaver. I dag møder I en database, der sammenligner **betydning**: en vektordatabase. I finder ud af, hvordan den virker, og hvorfor det overhovedet er muligt at søge på den måde.
 
 ---
 
 ## Dagens spørgsmål
 
-**"Hvilken database skal vi bruge?" Hvorfor er det det forkerte spørgsmål at starte med?**
-
-Det kan I svare på, når I går hjem, fordi I har prøvet at stille det samme spørgsmål til den forkerte database.
+**Hvordan kan en database finde "noten om kaffen", når ordet kaffe ikke står i den?**
 
 ---
 
@@ -20,184 +18,126 @@ Det kan I svare på, når I går hjem, fordi I har prøvet at stille det samme s
 
 Efter i dag kan du:
 
-- forklare, hvad en **relationel database**, en **dokumentdatabase**, en **key-value store** og en **vektordatabase** hver især er god til, og hvad de er dårlige til
-- vælge et sted til data ud fra **de spørgsmål, I skal stille data**: hvad I slår op, hvor tit, og hvor slemt det er, hvis data er forkert eller forsvinder
-- vurdere, hvornår I slet ikke skal have jeres egen database, men bruge en andens **API**
-- bygge en **vektordatabase** ind i en arkitektur ved siden af den database, der er **sandhedskilden**, og forklare, hvad der sker, når de to er uenige
+- forklare, hvad en **embedding** er: en tekst lavet om til en liste af tal, hvor tekster, der betyder det samme, får tal, der ligger tæt på hinanden
+- forklare, **hvorfor man kan søge** i en vektordatabase: at søge er at finde de punkter, der ligger tættest på
+- bruge en **vektordatabase** (Qdrant) fra Insomnia og fra kode
+- forklare arkitekturen: **MySQL er sandhedskilden**, og vektordatabasen er en søgeindgang ved siden af
 
 ---
 
 ## Før timen
 
-Downloads tager tid, så gør det hjemmefra.
-
-- Hav jeres **notes-service** fra session 11–12 klar og kørende (`docker compose up`). Hvis jeres version ikke virker, så brug [`example-node`](example-node) i denne mappe. Den har allerede alle de nye services herunder i sin `docker-compose.yml`.
-- Tilføj disse services i jeres `docker-compose.yml` (ved siden af `backend` og `frontend`):
-
-```yaml
-  postgres:
-    image: postgres:17
-    environment:
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "5432:5432"
-
-  mongo:
-    image: mongo:8
-    ports:
-      - "27017:27017"
-
-  redis:
-    image: redis:7
-    ports:
-      - "6379:6379"
-
-  qdrant:
-    image: qdrant/qdrant
-    ports:
-      - "6333:6333"
-    volumes:
-      - qdrant-data:/qdrant/storage
-
-  ollama:
-    image: ollama/ollama
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama-data:/root/.ollama
-
-volumes:
-  qdrant-data:
-  ollama-data:
-```
-
-- Start dem, og hent embedding-modellen (ca. 300 MB):
-
-```bash
-docker compose up -d
-docker compose exec ollama ollama pull nomic-embed-text
-```
-
-- Hav **Insomnia** og jeres AI-agent klar. I må bruge agenten til alt i dag.
+- Hent MySQL hjemmefra: `docker pull mysql:8.0`
+- Hav **Insomnia** klar.
+- Underviseren giver jer en **URL** og en **API-nøgle** til holdets vektordatabase i Qdrant Cloud.
+  - Vil I hellere have jeres egen? Opret en gratis konto på <https://cloud.qdrant.io>, lav en **Free**-cluster, og lav en API-nøgle under **API Keys**.
 
 ---
 
-## Del 1: Fire spørgsmål, før I vælger (15 min)
+## Del 1: Problemet (15 min)
 
-Fælles på tavlen. Før I vælger et sted til data, skal I kunne svare på:
-
-1. **Hvad skal I spørge data om?** Slå én ting op på et id? Tælle og sammenligne på tværs? Finde "noget, der ligner"?
-2. **Hvor fast er formen?** Har alle rækker de samme felter, eller er hver ting forskellig?
-3. **Hvor slemt er det, hvis data er forkert eller forsvinder?** En bankoverførsel eller en tæller for sidevisninger?
-4. **Er det overhovedet jeres data?** Eller ejer en anden dem, og så skal I bare spørge dem?
-
-Hold de fire spørgsmål op mod alt, hvad I laver i dag.
-
----
-
-## Del 2: Øvelse · Samme noter, fire databaser (50 min)
-
-Arbejd i par. Ved hver station gør I to ting: **løs den opgave, databasen er god til**, og **prøv en opgave, den er dårlig til**. Skriv én linje pr. station: *god til …, dårlig til …*
-
-### Station A · Relationel (Postgres)
+Start eksemplet i [`example-node`](example-node). Det har 8 noter i MySQL. **Ingen af dem nævner kaffe.**
 
 ```bash
-docker compose exec postgres psql -U postgres
+cd 18._data_architecture/example-node
+docker compose up --build
+```
+
+Søg efter kaffe med SQL:
+
+```bash
+docker compose exec mysql mysql -uroot -pmy-secret-pw notes_db
 ```
 
 ```sql
-CREATE TABLE users (id SERIAL PRIMARY KEY, name TEXT NOT NULL);
-CREATE TABLE notes (
-  id SERIAL PRIMARY KEY,
-  user_id INT NOT NULL REFERENCES users(id),
-  title TEXT NOT NULL,
-  body TEXT
-);
-INSERT INTO users (name) VALUES ('Ali'), ('Bo');
-INSERT INTO notes (user_id, title, body) VALUES
-  (1, 'Indkøb', 'Mælk og brød'),
-  (1, 'Espresso', 'Maskinen skal afkalkes'),
-  (2, 'Møde', 'Flyttet til torsdag');
+SELECT * FROM notes WHERE body LIKE '%kaffe%' OR title LIKE '%kaffe%';
 ```
 
-- **God til:** Hvor mange noter har hver bruger? Skriv det som én `SELECT` med `JOIN` og `GROUP BY`.
-- **Prøv:** `INSERT INTO notes (user_id, title) VALUES (99, 'Hvem ejer mig?');` Hvad siger databasen? Hvem beskytter jer her?
-- **Dårlig til:** Find alle noter om kaffe. Prøv `WHERE body LIKE '%kaffe%'`. Finder I espresso-noten?
+Tomt. Men en af noterne handler jo om kaffe. Hvilken? Hvordan vidste *I* det?
 
-### Station B · Dokument (MongoDB)
+En database sammenligner **bogstaver**. For at finde noten om kaffen skal den kunne sammenligne **betydning**. Men en computer kan kun regne med tal. Så spørgsmålet er: **Kan man lave betydning om til tal?**
 
-Den kender I fra session 9.
+---
 
-```bash
-docker compose exec mongo mongosh
+## Del 2: Betydning som tal (30 min)
+
+### På papir, i par
+
+Tegn et koordinatsystem med to akser:
+
+- **x:** "noget man drikker" (0 = slet ikke, 10 = helt sikkert)
+- **y:** "noget med motion" (0 = slet ikke, 10 = helt sikkert)
+
+Sæt de her ord ind som punkter: **kaffe, espresso, te, løb, fodbold, regning**.
+
+- Hvilke punkter ligger tæt på hinanden?
+- Hvor ligger "regning"?
+- Sæt et nyt ord ind: **cappuccino**. Hvilket ord ligger det tættest på?
+
+**Det I lige har lavet, er en embedding.** Hvert ord er blevet til to tal, fx kaffe = `[9, 1]`. Ord, der betyder noget lignende, ligger tæt på hinanden. Og at **søge** er bare at spørge: *hvilke punkter ligger tættest på det her?*
+
+### Fra 2 tal til 384 tal
+
+En rigtig **embedding-model** gør det samme, men:
+
+- med **384 tal** i stedet for 2 (384 akser, ikke kun "drikke" og "motion")
+- for hele sætninger, ikke kun ord
+- og ingen har valgt akserne. Modellen har selv lært dem ved at læse enorme mængder tekst.
+
+Hvor tæt to tekster er, måles som regel med **cosine similarity**: Peger de to pile i samme retning? `1` betyder samme retning (næsten samme betydning), og jo lavere tallet er, jo mindre har de med hinanden at gøre.
+
+En **vektordatabase** er en database, der er bygget til ét spørgsmål: *Hvilke punkter ligger tættest på det her?* Og den kan svare hurtigt, også når der er millioner af punkter.
+
+---
+
+## Del 3: Prøv vektordatabasen direkte (30 min)
+
+I par, i Insomnia. Alle requests går til jeres Qdrant-URL og skal have headeren `api-key: <jeres nøgle>`. Brug jeres eget navn til samlingen, fx `par3`, så I ikke skriver i de andres.
+
+**1. Opret en samling** (en "tabel" til vektorer): `PUT <url>/collections/par3`
+
+```json
+{ "vectors": { "size": 384, "distance": "Cosine" } }
 ```
 
-```js
-use notes
-db.notes.insertMany([
-  { title: "Indkøb", items: ["mælk", "brød"], done: false },
-  { title: "Opskrift", ingredients: [{ name: "mel", gram: 500 }], tags: ["bagning"] },
-  { title: "Møde", when: "torsdag", attendees: ["Ali", "Bo"] }
-])
-db.notes.find({ tags: "bagning" })
+Hvorfor `384`? Fordi det er antallet af tal, modellen laver for hver tekst.
+
+**2. Gem tre noter:** `PUT <url>/collections/par3/points?wait=true`
+
+```json
+{
+  "points": [
+    { "id": 1, "vector": { "text": "Espresso. Maskinen skal afkalkes", "model": "intfloat/multilingual-e5-small" }, "payload": { "title": "Espresso" } },
+    { "id": 2, "vector": { "text": "Indkøb. Mælk og brød", "model": "intfloat/multilingual-e5-small" }, "payload": { "title": "Indkøb" } },
+    { "id": 3, "vector": { "text": "Træning. Løb 5 km i Fælledparken", "model": "intfloat/multilingual-e5-small" }, "payload": { "title": "Træning" } }
+  ]
+}
 ```
 
-- **God til:** Tre noter med helt forskellige felter, og ingen `CREATE TABLE`. Tilføj en fjerde med felter, I selv finder på.
-- **Prøv:** Indsæt en note **uden** `title`. Hvem stopper jer?
-- **Dårlig til:** Tæl noter pr. bruger, når brugerne ligger i en anden collection. Spørg agenten, hvordan man gør (`$lookup`). Sammenlign med jeres SQL fra station A.
+**Læg mærke til det: I sender tekst, ikke tal.** Qdrant sender teksten til modellen og gemmer de 384 tal, der kommer ud.
 
-### Station C · Key-value (Redis)
+**3. Se tallene:** `POST <url>/collections/par3/points`
 
-```bash
-docker compose exec redis redis-cli
+```json
+{ "ids": [1], "with_vector": true }
 ```
 
-```
-INCR note:1:views
-INCR note:1:views
-GET note:1:views
-SET session:abc "user=1" EX 30
-TTL session:abc
-LPUSH recent:ali 3 7 1
-LRANGE recent:ali 0 4
+Der er de: 384 tal. Det er "betydningen" af "Espresso. Maskinen skal afkalkes".
+
+**4. Søg:** `POST <url>/collections/par3/points/query`
+
+```json
+{ "query": { "text": "kaffe", "model": "intfloat/multilingual-e5-small" }, "limit": 3, "with_payload": true }
 ```
 
-- **God til:** Tællere, sessioner, der udløber af sig selv, og "seneste 5". Alt slås op på en nøgle, og det går lynhurtigt.
-- **Prøv:** Vent 30 sekunder, og kør `GET session:abc`. Hvad skete der?
-- **Dårlig til:** Find alle noter, hvor teksten indeholder "kaffe". Hvorfor kan I ikke det?
-- **Spørg agenten:** Hvad sker der med data i Redis, når serveren genstarter? Skal man gemme noget i Redis, man ikke har andre steder?
+Kom espresso-noten øverst? Se på `score` for hver note.
 
-### Station D · Vektor (Qdrant + Ollama)
+**5. Prøv selv:** Søg på "motion", "noget at spise" og "fodbold".
 
-En **embedding** er en tekst lavet om til en liste af tal (her 768 tal). Tekster, der betyder det samme, får tal, der ligger tæt på hinanden. En **vektordatabase** er god til ét spørgsmål: *hvilke punkter ligger tættest på det her?*
+- Får I altid et svar, også når ingen note passer?
+- Hvad er `score`, når den passer godt, og når den ikke gør?
 
-I Insomnia:
-
-1. **Lav en embedding:** `POST http://localhost:11434/api/embed` med
-
-   ```json
-   { "model": "nomic-embed-text", "input": "Maskinen skal afkalkes" }
-   ```
-
-   Se svaret. Det er hele "betydningen" af sætningen, som tal.
-2. **Opret en collection:** `PUT http://localhost:6333/collections/notes` med
-
-   ```json
-   { "vectors": { "size": 768, "distance": "Cosine" } }
-   ```
-
-3. **Gem tre noter:** `PUT http://localhost:6333/collections/notes/points`. Lav en embedding af hver note, og kopiér vektoren ind:
-
-   ```json
-   { "points": [ { "id": 2, "vector": [ /* de 768 tal */ ], "payload": { "title": "Espresso" } } ] }
-   ```
-
-   Er det for besværligt at kopiere? Lad agenten skrive et lille script, der gør trin 1 og 3 for jer.
-4. **Søg:** Lav en embedding af "kaffe", og send den til `POST http://localhost:6333/collections/notes/points/query` med `{ "query": [ /* tallene */ ], "limit": 3, "with_payload": true }`.
-5. Åbn <http://localhost:6333/dashboard>, og se jeres punkter.
-
-- **God til:** Finder I espresso-noten, selvom ordet "kaffe" ikke står i den? Se `score`.
-- **Dårlig til:** Hvor mange noter har Ali? Kan Qdrant svare på det?
+> **Vigtigt:** En vektordatabase finder *altid* de nærmeste punkter, også selvom de ligger langt væk. Den siger aldrig "ingen resultater" af sig selv. Det er jeres job at bestemme, hvornår en `score` er for lav.
 
 ---
 
@@ -205,74 +145,58 @@ I Insomnia:
 
 ---
 
-## Del 3: Øvelse · Byg vektordatabasen ind i notes-service (40 min)
+## Del 4: Vektordatabasen i notes-service (40 min)
 
-Nu skal jeres notes-service kunne søge på betydning. Brugeren skal kunne finde "noten om kaffen".
+Skriv URL, nøgle og jeres samlingsnavn ind i `.env` (se [`example-node/README.md`](example-node/README.md)), og genstart med `docker compose up --build`. Søg på "kaffe" på <http://localhost:8080>.
 
-**Krav:**
+### Læs koden (15 min)
 
-- `POST /v1/notes` gemmer noten som før **og** laver en embedding af `title + body` og gemmer den i Qdrant med samme `id`.
-- Nyt endpoint: `GET /v1/notes/search?q=kaffe` laver en embedding af `q`, spørger Qdrant og returnerer de 3 bedste noter.
-- Koden til Qdrant og Ollama ligger i **nye filer**, ikke i `server.js`. I bestemmer selv hvor, men skal kunne forklare valget (tænk på lagene fra session 8–9).
-- Fra containeren hedder services `http://ollama:11434` og `http://qdrant:6333`, ikke `localhost`. Hvorfor? (Session 9.)
-- Opdatér `swagger.json` fra session 12 med det nye endpoint.
+Åbn `backend/src/persistence/notesVectorIndex.js` og `backend/src/presentation/server.js`. Svar i jeres par:
 
-**Én beslutning, I skal træffe og skrive ned:** Når søgningen finder et id i Qdrant, henter I så noten fra Qdrants `payload` eller fra jeres egen database? Hvilken af dem er **sandhedskilden**?
+- **Hvor bliver teksten lavet om til tal?** (Søg efter et sted i koden, hvor der regnes. Er der et?)
+- Når en note oprettes: Hvilken database skrives der til først? Hvorfor i den rækkefølge?
+- Når I søger: Qdrant svarer med id'er. Hvorfor henter vi så noterne fra MySQL i stedet for at gemme hele noten i Qdrant?
+- Hvad sker der i `rebuildIndex()`, når backend starter?
 
-**Færdig betyder:** Opret fem noter. En søgning på "kaffe" finder espresso-noten.
+### Byg videre (25 min)
 
-### Ødelæg det
+1. **Opret en ny note** i Insomnia, fx `{ "title": "Te", "body": "Grøn te fra Netto" }`. Søg på "noget varmt at drikke". Bliver den fundet med det samme?
+2. **Sæt en grænse:** Søg på "fodbold". Får I noter, der intet har med fodbold at gøre? Tilføj `score_threshold` i `search()` i `notesVectorIndex.js`, så for dårlige svar bliver sorteret fra. Find selv en god værdi.
+3. **Ødelæg det:** Skriv en forkert API-nøgle i `.env`, og genstart. Opret en note.
+   - Bliver den gemt i MySQL?
+   - Kan den findes med søgningen?
+   - Ret nøglen, og genstart. Kan den findes nu? Hvorfor? (Se `rebuildIndex()`.)
 
-Gæt først, hvad der sker. Prøv det så, og skriv svaret ned.
-
-1. `docker compose stop qdrant`. Opret en note. Bliver den gemt? Kan den findes, når Qdrant kører igen?
-2. Slet en note med `DELETE /v1/notes/:id`. Dukker den stadig op i søgningen?
-3. Skift model til `all-minilm` (`ollama pull all-minilm`). Hvad siger Qdrant? Hvad skal der ske med alle de vektorer, I allerede har gemt?
-
-Det her er prisen for at have **to steder til de samme data**. Hvad skulle der til for at genopbygge hele Qdrant ud fra jeres egen database?
+Pointen med 3: **Vektordatabasen kan altid bygges op igen ud fra MySQL.** Derfor er MySQL sandhedskilden, og Qdrant er "bare" en søgeindgang.
 
 ---
 
-## Del 4: Workshop · Vælg til situationen (30 min)
+## Del 5: Hvor bruges det? (15 min)
 
-I par: tag tre af kortene. For hvert kort skal I vælge **ét sted til data**: relationel, dokument, key-value, vektor, filer (object storage), eller *en andens API*. Begrund valget med de fire spørgsmål fra Del 1, og sig, hvad I **giver afkald på**.
+- **"Chat med jeres dokumenter"** (RAG): Find de 3 tekster, der ligger tættest på spørgsmålet, og giv dem til en sprogmodel sammen med spørgsmålet. Det er sådan, en supportbot kan svare ud fra en manual.
+- **Anbefalinger:** "Andre noter/produkter/film, der ligner denne."
+- **Billedsøgning:** Den samme idé virker med billeder. Et billede kan også laves om til tal.
 
-| # | Situation |
-|:-:|-----------|
-| 1 | En webshop skal gemme ordrer og betalinger. Ingen ordre må forsvinde eller tælles dobbelt. |
-| 2 | En produktkatalog, hvor en cykel, en t-shirt og en kaffemaskine har helt forskellige egenskaber. |
-| 3 | Et login, der skal huske, hvem der er logget ind, i 30 minutter. Og højst 5 forkerte forsøg i minuttet. |
-| 4 | En supportbot, der skal svare ud fra 2.000 sider dokumentation. |
-| 5 | En app, der viser vejret i København. |
-| 6 | Brugere skal kunne uploade profilbilleder og PDF'er. |
-| 7 | Et dashboard, der viser "mest læste noter i dag". |
+Andre måder at gøre det på:
 
-Tre par præsenterer ét kort hver. Var der nogen, der valgte forskelligt på det samme kort? Hvem har ret?
+- **ChromaDB** laver også embeddings automatisk, men i klientbiblioteket i jeres kode i stedet for i databasen.
+- **pgvector** lægger vektorsøgning ind i Postgres. Så er der kun én database.
+- **Modellen er et valg:** Vi bruger en *flersproget* model, fordi noterne er på dansk. En model, der er trænet på engelsk, ville finde dårligere svar.
 
-> Hint til kort 5: Hvem ejer vejrdata? Tænk på DMI's API fra session 12. Skal I gemme noget selv, eller bare spørge, og måske huske svaret et kort stykke tid?
+> **Data i skyen:** Den gratis model i Qdrant Cloud kører i USA. Læg ikke personoplysninger i den.
 
----
-
-## Del 5: Sådan gør de andre (15 min)
-
-- **Postgres er standardvalget.** De fleste systemer har én relationel database som sandhedskilde og *måske* én specialist ved siden af. Det kaldes **polyglot persistence**, og hver ekstra database er en ekstra ting, der kan gå ned og blive uenig med de andre.
-- **Måske behøver I ikke en ekstra database.** [`pgvector`](https://github.com/pgvector/pgvector) lægger vektorsøgning ind i Postgres, og MongoDB Atlas har det samme. Så er der ét sted til data og ingen synkronisering. Prisen er færre funktioner og mindre skala end en dedikeret vektordatabase som Qdrant.
-- **Det I lavede i Del 3, er "R" i RAG** (Retrieval-Augmented Generation). Det er sådan "chat med jeres dokumenter" virker: find de 3 nærmeste tekster, og giv dem til en sprogmodel sammen med spørgsmålet. Kort 4 fra workshoppen er præcis det.
-
-Tilbage til dagens spørgsmål: **Hvorfor er "hvilken database?" det forkerte spørgsmål at starte med?**
+Tilbage til dagens spørgsmål: **Hvordan kan en database finde "noten om kaffen", når ordet kaffe ikke står i den?**
 
 ---
 
 ## Efter timen
 
-- Gem jeres notes-service med søgningen. I skal bruge den igen.
-- Skriv fem linjer i jeres semesternotesbog: Hvilken database er sandhedskilden i jeres notes-service, hvilken er afledt, og hvad gør I, når de er uenige?
+Skriv fem linjer i jeres semesternotesbog: Forklar med egne ord, og uden ordet "AI", hvorfor vektordatabasen kan finde espresso-noten, når I søger på "kaffe".
 
 ---
 
 ## Optional
 
-- [optional] Qdrant: [Quickstart](https://qdrant.tech/documentation/quickstart/)
-- [optional] Ollama: [Embedding models](https://ollama.com/blog/embedding-models)
+- [optional] Qdrant: [Cloud Inference](https://qdrant.tech/documentation/inference/cloud-inference/), som er det, der laver tekst om til tal i vores eksempel
+- [optional] Qdrant: [What is a vector database?](https://qdrant.tech/articles/what-is-a-vector-database/)
 - [optional] `pgvector`: [README](https://github.com/pgvector/pgvector)
-- [optional] Kleppmann, M. — *Designing Data-Intensive Applications*, kapitel 2 (datamodeller og forespørgselssprog).

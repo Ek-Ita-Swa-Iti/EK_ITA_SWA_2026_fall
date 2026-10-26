@@ -1,61 +1,62 @@
-# notes-service til session 18
+# notes-service med vektordatabase
 
-Udgangspunktet for [session 18](../README.md). Det er den samme notes-service som i
-[session 9](../../09._Layered_architecture_hands_on/example-node/README.md), bygget op til det, I har lavet i session 11–12:
+Eksemplet til [session 18](../README.md). Den samme notes-service som i
+[session 9](../../09._Layered_architecture_hands_on/example-node/README.md), nu med to databaser:
 
-- **Versioneret API** med `GET`, `POST`, `PUT` og `DELETE` på `/v1/notes`
-- **MongoDB** er sandhedskilden (`backend/src/persistence/notesMongoDBRepository.js`)
-- **`spec/swagger.json`** med Swagger UI på <http://localhost:8081>
-- **De fire databaser og Ollama** fra "Før timen" i `docker-compose.yml`
+| Database | Hvad den gemmer | Hvor den kører |
+|----------|-----------------|----------------|
+| **MySQL** | Noterne. Det er **sandhedskilden**. | I Docker, på jeres computer |
+| **Qdrant** | Noternes *betydning*, som tal. Bruges kun til søgning. | I skyen (Qdrant Cloud) |
 
-Semantisk søgning (`/v1/notes/search`) er **ikke** bygget ind. Det er jeres opgave i Del 3.
+I sender **tekst** til Qdrant. Qdrant laver selv teksten om til tal (en *embedding*), både når en note
+gemmes, og når I søger. I skal ikke installere nogen model.
 
 ## Kør det
 
+1. Kopiér `.env.example` til `.env`, og udfyld `QDRANT_URL`, `QDRANT_API_KEY` og `QDRANT_COLLECTION`.
+   `.env` står i `.gitignore`, så den kommer ikke i Git.
+2. Start:
+
+   ```bash
+   docker compose up --build
+   ```
+
+3. Åbn <http://localhost:8080>, og søg på "kaffe".
+
+Når backend starter, opretter den samlingen i Qdrant (hvis den ikke findes) og gemmer alle noter fra
+MySQL i den. I loggen står der `Vector index rebuilt from MySQL: 8 notes`.
+
+Uden `.env` virker alt undtagen søgningen, som svarer `503`.
+
+## API
+
+| Metode | Sti | Hvad sker der |
+|--------|-----|---------------|
+| `GET` | `/v1/notes` | Alle noter fra MySQL |
+| `GET` | `/v1/notes/:id` | Én note fra MySQL |
+| `POST` | `/v1/notes` | Gemmes i MySQL, **og** teksten sendes til Qdrant |
+| `PUT` | `/v1/notes/:id` | Opdateres i MySQL, **og** i Qdrant |
+| `DELETE` | `/v1/notes/:id` | Slettes i MySQL, **og** i Qdrant |
+| `GET` | `/v1/notes/search?q=kaffe` | Qdrant finder de 3 nærmeste id'er, noterne hentes fra MySQL |
+
 ```bash
-docker compose up -d --build
-docker compose exec ollama ollama pull nomic-embed-text
+curl "localhost:3000/v1/notes/search?q=kaffe"
+curl -X POST localhost:3000/v1/notes -H 'Content-Type: application/json' -d '{"title":"Te","body":"Grøn te fra Netto"}'
 ```
 
-| Service | Adresse fra jeres computer | Adresse fra en anden container |
-|---------|----------------------------|--------------------------------|
-| backend | <http://localhost:3000/v1/notes> | `http://backend:3000` |
-| frontend | <http://localhost:8080> | |
-| Swagger UI | <http://localhost:8081> | |
-| Postgres | `localhost:5432` (bruger `postgres`, password `postgres`) | `postgres:5432` |
-| MongoDB | `localhost:27017` | `mongo:27017` |
-| Redis | `localhost:6379` | `redis:6379` |
-| Qdrant | <http://localhost:6333/dashboard> | `http://qdrant:6333` |
-| Ollama | <http://localhost:11434> | `http://ollama:11434` |
-
-Stop med `docker compose down`. Tilføj `-v`, hvis I også vil slette Qdrant-data og den hentede model.
-
-## Prøv API'et
-
-```bash
-curl localhost:3000/v1/notes
-curl localhost:3000/v1/notes/2
-curl -X POST localhost:3000/v1/notes -H 'Content-Type: application/json' -d '{"title":"Bønner","body":"Køb nye espressobønner"}'
-curl -X PUT localhost:3000/v1/notes/3 -H 'Content-Type: application/json' -d '{"title":"Møde","body":"Flyttet til fredag"}'
-curl -X DELETE localhost:3000/v1/notes/3
-```
-
-Eller importér `spec/swagger.json` i Insomnia, som i session 12.
-
-## Lagene
+## Filerne
 
 ```
 backend/src/
 ├── presentation/
-│   └── server.js                    ← HTTP og JSON
+│   └── server.js                  ← HTTP. Skriver til MySQL først, så til Qdrant
 └── persistence/
-    ├── notesMongoDBRepository.js    ← MongoDB (i brug)
-    └── notesRepository.js           ← hardcodet, uden database
+    ├── notesMySQLRepository.js    ← MySQL: sandhedskilden
+    └── notesVectorIndex.js        ← Qdrant: søgning på betydning
 ```
 
-Begge persistence-filer har den samme kontrakt: `findAll()`, `findById(id)`, `create(title, body)`,
-`update(id, title, body)` og `remove(id)`, alle `async`. `server.js` vælger én af dem i sin
-`require(...)`-linje øverst.
+Læs `notesVectorIndex.js` først. Den er kort, og hele idéen står i den:
 
-Noterne starter med tre eksempler: "Indkøb", "Espresso" og "Møde". "Espresso" er den, en søgning på
-"kaffe" skal finde, selvom ordet ikke står i den.
+- `ensureCollection()` opretter samlingen med `size: 384`, fordi modellen laver 384 tal pr. tekst.
+- `indexAll()` sender `{ text, model }` i stedet for tal.
+- `search()` sender søgeteksten på samme måde og får id'er og `score` tilbage.

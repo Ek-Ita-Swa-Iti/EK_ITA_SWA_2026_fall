@@ -1,13 +1,21 @@
 <!doctype html>
-<html lang="en">
+<html lang="da">
 <head>
   <meta charset="utf-8" />
   <title>Notes</title>
 </head>
 <body>
   <h1>Notes</h1>
-  <p>Read from the backend's presentation layer — see app.js.</p>
+
+  <form id="search-form">
+    <input id="search" placeholder="Søg på betydning, fx kaffe" size="40" />
+    <button>Søg</button>
+  </form>
+  <ul id="results"></ul>
+
+  <h2>Alle noter</h2>
   <ul id="notes"></ul>
+
   <script src="/app.js"></script>
 </body>
 </html>
