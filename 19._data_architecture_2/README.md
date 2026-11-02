@@ -28,6 +28,7 @@ Efter i dag kan du:
 ## Før timen
 
 - Hav jeres **notes-service** fra session 12 klar og kørende (`docker compose up --build`): `GET`, `POST`, `PUT` og `DELETE` på `/v1/notes` og MongoDB som database.
+  - Virker jeres ikke, eller vil I starte forfra, så brug [`example-node`](example-node/README.md) i denne mappe. Kopiér den ind i jeres repo, og kør den derfra.
 - Lav en ny branch i jeres repo, så I altid kan komme tilbage:
 
   ```bash
@@ -393,6 +394,7 @@ Genstart backend, og prøv det:
 docker compose up -d --build backend
 docker compose logs backend        # står der "Qdrant bygget op igen"?
 
+# Bruger I example-node, ligger Espresso der allerede. Så spring den første over.
 curl -X POST localhost:3000/v1/notes -H 'Content-Type: application/json' \
   -d '{"title":"Espresso","body":"Maskinen skal afkalkes"}'
 curl -X POST localhost:3000/v1/notes -H 'Content-Type: application/json' \
