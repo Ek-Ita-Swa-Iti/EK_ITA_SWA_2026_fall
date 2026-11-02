@@ -118,10 +118,6 @@ Sammenlign striben for jeres søgning med striberne under resultaterne. Kan I se
 
 ---
 
-## Pause
-
----
-
 ## Del 4: Koden og arkitekturen
 
 ### Læs koden
