@@ -45,7 +45,7 @@ Eksemplet er en lille **søgemaskine** over 20 opdigtede hjemmesider. Hver søgn
 - **Venstre:** MySQL og den SQL, der bliver kørt
 - **Højre:** Qdrant og de trin, søgningen går igennem
 
-I par: Søg på de her, og skriv ned, hvad hver side finder:
+> **Miniøvelse (i par):** Søg på de her, og skriv ned, hvad hver side finder:
 
 | Søgning | MySQL fandt | Qdrant fandt |
 |---------|-------------|--------------|
