@@ -38,7 +38,7 @@ docker compose up --build
 
 ---
 
-## Del 1: To søgninger, samme side (20 min)
+## Del 1: To søgninger, samme side
 
 Eksemplet er en lille **søgemaskine** over 20 opdigtede hjemmesider. Hver søgning køres to gange, og I ser begge resultater side om side:
 
@@ -61,7 +61,7 @@ I par: Søg på de her, og skriv ned, hvad hver side finder:
 
 ---
 
-## Del 2: Betydning som tal (30 min)
+## Del 2: Betydning som tal
 
 ### På papir, i par
 
@@ -92,7 +92,7 @@ En **vektordatabase** er en database, der er bygget til ét spørgsmål: *Hvilke
 
 ---
 
-## Del 3: Kig ind i vektorsøgningen (30 min)
+## Del 3: Kig ind i vektorsøgningen
 
 Søg på "kaffe" igen, og følg de tre trin i højre side:
 
@@ -116,13 +116,13 @@ Sammenlign striben for jeres søgning med striberne under resultaterne. Kan I se
 
 ---
 
-## Pause (15 min)
+## Pause
 
 ---
 
-## Del 4: Koden og arkitekturen (45 min)
+## Del 4: Koden og arkitekturen
 
-### Læs koden (15 min)
+### Læs koden
 
 Backend har tre lag (se [`example-search-engine/README.md`](example-search-engine/README.md)). Åbn `application/searchService.js` først, og svar i jeres par:
 
@@ -131,7 +131,7 @@ Backend har tre lag (se [`example-search-engine/README.md`](example-search-engin
 - Hver side ligger nu to steder: som tekst i MySQL og som `payload` i Qdrant. Hvad er fordelen? Og hvad skal der ske i Qdrant, hvis en side bliver rettet i MySQL?
 - Hvad sker der i `ready()`, når backend starter?
 
-### Byg videre (30 min)
+### Byg videre
 
 1. **Tilføj en side** nederst på søgemaskinen, fx om grøn smoothie eller cykelferie. Søg efter den med ord, der ikke står i den. Bliver den fundet med det samme? Hvad sker der i koden, når I trykker **Gem**?
 2. **Sæt en grænse:** Lav søgningen på "rumfart" om, så den ikke giver svar. Tilføj `score_threshold` i Qdrant-request'en i `pagesVectorRepository.query()`, og find selv en god værdi. **Arkitekturspørgsmål:** Grænsen er en regel for søgemaskinen. Hører den så hjemme i persistence-laget, eller burde application-laget bestemme værdien?
@@ -144,7 +144,7 @@ Pointen med 3: **Vektordatabasen kan altid bygges op igen ud fra MySQL.** Derfor
 
 ---
 
-## Del 5: Hvor bruges det? (15 min)
+## Del 5: Hvor bruges det?
 
 - **"Chat med jeres dokumenter"** (RAG): Find de 3 tekster, der ligger tættest på spørgsmålet, og giv dem til en sprogmodel sammen med spørgsmålet. Det er sådan, en supportbot kan svare ud fra en manual.
 - **Anbefalinger:** "Andre sider/produkter/film, der ligner denne."
