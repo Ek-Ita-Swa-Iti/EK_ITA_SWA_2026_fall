@@ -167,4 +167,3 @@ Tilbage til dagens spørgsmål: **Hvordan kan en database finde siden om løb, n
 
 - [optional] Qdrant: [What is a vector database?](https://qdrant.tech/articles/what-is-a-vector-database/)
 - [optional] Hugging Face: [`multilingual-e5-small`](https://huggingface.co/intfloat/multilingual-e5-small), den model vi bruger
-- [optional] `pgvector`: [README](https://github.com/pgvector/pgvector)
