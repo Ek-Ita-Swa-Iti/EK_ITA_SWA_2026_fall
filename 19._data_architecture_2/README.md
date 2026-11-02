@@ -62,8 +62,10 @@ flowchart LR
     mongo[("MongoDB :27017<br/>sandhedskilden")]
     ollama["Ollama :11434<br/>model: bge-m3"]
     qdrant[("Qdrant :6333<br/>søgeindeks")]
+    swagger["Swagger UI :8081<br/>spec/swagger.json"]
 
     browser -- "HTTP /v1/notes" --> server
+    browser -- "dokumentation" --> swagger
     mongoRepo -- "mongodb://mongo:27017" --> mongo
     embed -- "http://ollama:11434" --> ollama
     vectorRepo -- "http://qdrant:6333" --> qdrant
