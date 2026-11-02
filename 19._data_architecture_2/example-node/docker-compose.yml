@@ -1,0 +1,30 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    environment:
+      MONGO_URL: mongodb://mongo:27017
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
+
+  mongo:
+    image: mongo:8
+    ports:
+      - "27017:27017"
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    ports:
+      - "8081:8080"
+    environment:
+      SWAGGER_JSON: /spec/swagger.json
+    volumes:
+      - ./spec:/spec:ro

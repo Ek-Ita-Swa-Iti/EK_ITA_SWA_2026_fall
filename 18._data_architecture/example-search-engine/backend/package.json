@@ -1,0 +1,14 @@
+{
+  "name": "search-engine-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Session 18: a tiny search engine — three layers, MySQL (text search) and Qdrant (vector search) side by side.",
+  "main": "src/presentation/server.js",
+  "scripts": {
+    "start": "node src/presentation/server.js"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^3.5.0",
+    "mysql2": "^3.11.0"
+  }
+}

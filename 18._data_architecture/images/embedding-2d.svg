@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="512" viewBox="0 0 620 512" font-family="Helvetica, Arial, sans-serif">
+  <rect width="620" height="512" fill="#ffffff"/>
+  <!-- Grid -->
+  <line x1="120" y1="450" x2="120" y2="50" stroke="#eeeeee"/>
+  <line x1="80" y1="410" x2="480" y2="410" stroke="#eeeeee"/>
+  <line x1="160" y1="450" x2="160" y2="50" stroke="#eeeeee"/>
+  <line x1="80" y1="370" x2="480" y2="370" stroke="#eeeeee"/>
+  <line x1="200" y1="450" x2="200" y2="50" stroke="#eeeeee"/>
+  <line x1="80" y1="330" x2="480" y2="330" stroke="#eeeeee"/>
+  <line x1="240" y1="450" x2="240" y2="50" stroke="#eeeeee"/>
+  <line x1="80" y1="290" x2="480" y2="290" stroke="#eeeeee"/>
+  <line x1="280" y1="450" x2="280" y2="50" stroke="#eeeeee"/>
+  <line x1="80" y1="250" x2="480" y2="250" stroke="#eeeeee"/>
+  <line x1="320" y1="450" x2="320" y2="50" stroke="#eeeeee"/>
+  <line x1="80" y1="210" x2="480" y2="210" stroke="#eeeeee"/>
+  <line x1="360" y1="450" x2="360" y2="50" stroke="#eeeeee"/>
+  <line x1="80" y1="170" x2="480" y2="170" stroke="#eeeeee"/>
+  <line x1="400" y1="450" x2="400" y2="50" stroke="#eeeeee"/>
+  <line x1="80" y1="130" x2="480" y2="130" stroke="#eeeeee"/>
+  <line x1="440" y1="450" x2="440" y2="50" stroke="#eeeeee"/>
+  <line x1="80" y1="90" x2="480" y2="90" stroke="#eeeeee"/>
+  <line x1="480" y1="450" x2="480" y2="50" stroke="#eeeeee"/>
+  <line x1="80" y1="50" x2="480" y2="50" stroke="#eeeeee"/>
+  <!-- Axes -->
+  <line x1="80" y1="450" x2="510" y2="450" stroke="#333" stroke-width="2"/>
+  <polygon points="518,450 508,445 508,455" fill="#333"/>
+  <line x1="80" y1="450" x2="80" y2="20" stroke="#333" stroke-width="2"/>
+  <polygon points="80,12 75,22 85,22" fill="#333"/>
+  <text x="80" y="470" text-anchor="middle" font-size="13" fill="#555">0</text>
+  <text x="280" y="470" text-anchor="middle" font-size="13" fill="#555">5</text>
+  <text x="70" y="254" text-anchor="end" font-size="13" fill="#555">5</text>
+  <text x="480" y="470" text-anchor="middle" font-size="13" fill="#555">10</text>
+  <text x="70" y="54" text-anchor="end" font-size="13" fill="#555">10</text>
+  <text x="280" y="496" text-anchor="middle" font-size="16" fill="#333"><tspan font-weight="bold">x:</tspan> noget man drikker</text>
+  <text transform="translate(40 250) rotate(-90)" text-anchor="middle" font-size="16" fill="#333"><tspan font-weight="bold">y:</tspan> noget med motion</text>
+
+  <!-- Words -->
+  <circle cx="400" cy="210" r="6" fill="#2f6db5"/>
+  <text x="412" y="215" text-anchor="start" font-size="16" fill="#1d3f6e">beer pong</text>
+  <circle cx="440" cy="410" r="6" fill="#2f6db5"/>
+  <text x="428" y="414" text-anchor="end" font-size="16" fill="#1d3f6e">kaffe</text>
+  <circle cx="480" cy="430.0" r="6" fill="#2f6db5"/>
+  <text x="492" y="434.0" text-anchor="start" font-size="16" fill="#1d3f6e">espresso</text>
+  <circle cx="400" cy="350.0" r="6" fill="#2f6db5"/>
+  <text x="388" y="354.0" text-anchor="end" font-size="16" fill="#1d3f6e">te</text>
+  <circle cx="120" cy="90" r="6" fill="#2f6db5"/>
+  <text x="132" y="95" text-anchor="start" font-size="16" fill="#1d3f6e">løb</text>
+  <circle cx="140.0" cy="130" r="6" fill="#2f6db5"/>
+  <text x="152.0" y="135" text-anchor="start" font-size="16" fill="#1d3f6e">yoga</text>
+  <circle cx="100.0" cy="430.0" r="6" fill="#2f6db5"/>
+  <text x="112.0" y="424.0" text-anchor="start" font-size="16" fill="#1d3f6e">elregning</text>
+</svg>
