@@ -21,7 +21,7 @@ Efter i dag kan du:
 - forklare, hvad en **embedding** er: en tekst lavet om til en liste af tal, hvor tekster, der betyder det samme, får tal, der ligger tæt på hinanden
 - forklare, **hvorfor man kan søge** i en vektordatabase: at søge er at finde de punkter, der ligger tættest på
 - bruge en **vektordatabase** (Qdrant) og se, hvad der bliver gemt i den
-- forklare, at den samme idé virker for **billeder og musik**: Alt, der kan laves om til tal, kan søges på betydning
+- forklare, at den samme idé virker for andet end tekst, fx **musik**: Alt, der kan laves om til tal, kan søges på betydning
 - selv lave en tekst om til en embedding via et **API** (Ollama) og læse svaret
 
 ---
@@ -125,24 +125,9 @@ Sammenlign striben for jeres søgning med striberne under resultaterne. Kan I se
 
 ---
 
-## Del 4: Demo: billeder og musik
+## Del 4: Demo: musik i Spotify
 
-Søgemaskinen forstår kun tekst. Kan den samme idé bruges på billeder og musik? Vi ser det sammen.
-
-### Billedsøgning
-
-En **vision-model** kan se på et billede og beskrive det med ord. Den kører i Ollama, ligesom I selv skal prøve i Del 5.
-
-1. **Billede → tekst:** I Insomnia sender vi et billede til vision-modellen (`POST /api/chat`, billedet som base64 i feltet `images`) og beder om en beskrivelse på dansk.
-2. **Tekst → søgemaskinen:** Beskrivelsen gemmes under **Tilføj en side**, med billedets filnavn som titel.
-3. **Søg:** Vi søger med ord, der ikke står i beskrivelsen. Bliver billedet fundet?
-
-- Søger vi nu på billedet eller på beskrivelsen? Hvad sker der, hvis modellen overser noget på billedet?
-- Skulle der ændres noget i søgemaskinens kode, for at den kunne finde billeder?
-
-Nyere modeller springer teksten over: De laver billedet om til tal direkte, i det samme koordinatsystem som teksten. Så ligger et billede af en hund tæt på ordet "hund".
-
-### Musik i Spotify
+Søgemaskinen forstår kun tekst. Kan den samme idé bruges på musik? Vi ser det i Spotify.
 
 Vi starter en radio ud fra en sang i Spotify og ser, hvad den foreslår.
 
@@ -161,7 +146,6 @@ Når I er færdige:
 
 - Hvor mange tal får I for "Hej verden" med `nomic-embed-text`? Og med `bge-m3`? Søgemaskinens model laver 384. Hvorfor er tallet forskelligt?
 - I Insomnia kører modellen i sin egen container, og I kalder den over HTTP. Hvor kører modellen i søgemaskinen?
-- Vil I prøve billedet fra demoen selv: `docker exec ollama ollama pull gemma3:4b`, og send et billede til `/api/chat`.
 
 Tilbage til dagens spørgsmål: **Hvordan kan en database finde siden om løb, når I søger på "motion"?**
 
