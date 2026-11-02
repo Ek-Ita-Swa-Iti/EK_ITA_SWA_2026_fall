@@ -63,20 +63,20 @@ I par: Søg på de her, og skriv ned, hvad hver side finder:
 
 ## Del 2: Betydning som tal
 
-### På papir, i par
+### På tavlen
 
-Tegn et koordinatsystem med to akser:
+Vi tegner et koordinatsystem med to akser på tavlen:
 
 - **x:** "noget man drikker" (0 = slet ikke, 10 = helt sikkert)
 - **y:** "noget med motion" (0 = slet ikke, 10 = helt sikkert)
 
-Sæt de her ord ind som punkter: **kaffe, espresso, te, løb, yoga, elregning**.
+Vi sætter de her ord ind som punkter: **kaffe, espresso, te, løb, yoga, elregning**.
 
 - Hvilke punkter ligger tæt på hinanden?
 - Hvor ligger "elregning"?
-- Sæt et nyt ord ind: **cappuccino**. Hvilket ord ligger det tættest på?
+- Så sætter vi et nyt ord ind: **cappuccino**. Hvilket ord ligger det tættest på?
 
-**Det I lige har lavet, er en embedding.** Hvert ord er blevet til to tal, fx kaffe = `[9, 1]`. Ord, der betyder noget lignende, ligger tæt på hinanden. Og at **søge** er bare at spørge: *Hvilke punkter ligger tættest på det her?*
+**Det, vi lige har tegnet, er en embedding.** Hvert ord er blevet til to tal, fx kaffe = `[9, 1]`. Ord, der betyder noget lignende, ligger tæt på hinanden. Og at **søge** er bare at spørge: *Hvilke punkter ligger tættest på det her?*
 
 ### Fra 2 tal til 384 tal
 
