@@ -4,7 +4,7 @@
 
 > Vi bygger videre på [session 18](../18._data_architecture/README.md). I dag bygger I søgefunktionen ind i jeres egen **notes-service**: Ollama laver noterne om til tal, og Qdrant finder de nærmeste noter.
 >
-> Hele dagen er én tutorial. Jeg starter med en kort intro til arkitekturen, og derefter arbejder I i par.
+> Hele dagen er én tutorial. Jeg starter med en kort intro til arkitekturen, og derefter arbejder I i par, i grupper eller alene.
 
 ---
 
