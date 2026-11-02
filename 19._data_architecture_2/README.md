@@ -2,7 +2,7 @@
 
 **ITA Software Architecture 2026 Fall**
 
-> Vi bygger videre på [session 18](../18._data_architecture/README.md). Der så I en søgemaskine finde siden om løb, når I søgte på "motion". I dag bygger I det samme ind i jeres egen **notes-service**: Ollama laver noterne om til tal, og Qdrant finder de nærmeste.
+> Vi bygger videre på [session 18](../18._data_architecture/README.md). I dag bygger I det samme ind i jeres egen **notes-service**: Ollama laver noterne om til tal, og Qdrant finder de nærmeste.
 >
 > Hele dagen er én tutorial. Jeg starter med en kort intro til arkitekturen, og derefter arbejder I i par.
 
