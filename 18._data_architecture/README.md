@@ -127,7 +127,7 @@ Sammenlign striben for jeres søgning med striberne under resultaterne. Kan I se
 
 ## Del 4: Demo: musik i Spotify
 
-Søgemaskinen forstår kun tekst. Kan den samme idé bruges på musik? Vi ser det i Spotify.
+Søgemaskinen forstår kun tekst. Kan den samme idé bruges på musik?
 
 Vi starter en radio ud fra en sang i Spotify og ser, hvad den foreslår.
 
