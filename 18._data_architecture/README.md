@@ -57,7 +57,7 @@ I par: Søg på de her, og skriv ned, hvad hver side finder:
 
 - Hvorfor finder MySQL ingenting på "motion"? Se på SQL'en.
 - Hvorfor finder MySQL "billig kaffe", men ikke "kaffe billig"? Prøv det.
-- Qdrant finder sider, hvor ingen af ordene står. **Hvordan kan den det?** Det er resten af dagen.
+- Qdrant finder sider, hvor ingen af ordene står. **Hvordan kan den det?**
 
 ---
 
