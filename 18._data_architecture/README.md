@@ -70,11 +70,15 @@ Forestil jer et koordinatsystem med to akser, x og y:
 
 Vi sætter de her ord ind som punkter: **kaffe, espresso, te, løb, yoga, elregning**.
 
+<img src="images/embedding-2d.svg" width="480" alt="Et koordinatsystem med x-aksen noget man drikker og y-aksen noget med motion, begge fra 0 til 10. Løb og yoga ligger øverst til venstre, kaffe, espresso og te nederst til højre, og elregning nede ved 0,0.">
+
 - Hvilke punkter ligger tæt på hinanden?
 - Hvor ligger "elregning"?
 - Så sætter vi et nyt ord ind: **cappuccino**. Hvilket ord ligger det tættest på?
 
 **Det, vi lige har tegnet, er en embedding.** Hvert ord er blevet til to tal, fx kaffe = `[9, 1]`. Ord, der betyder noget lignende, ligger tæt på hinanden. Og at **søge** er bare at spørge: *Hvilke punkter ligger tættest på det her?*
+
+<img src="images/embedding-2d-soegning.svg" width="480" alt="Samme koordinatsystem med cappuccino tilføjet nederst til højre. En stiplet cirkel om cappuccino rammer kaffe, espresso og te: søgning betyder at finde de punkter, der ligger tættest på.">
 
 ### Fra 2 tal til 384 tal
 
