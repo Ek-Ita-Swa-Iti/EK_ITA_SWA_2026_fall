@@ -68,9 +68,9 @@ Forestil jer et koordinatsystem med to akser, x og y:
 - **x:** "noget man drikker" (0 = slet ikke, 10 = helt sikkert)
 - **y:** "noget med motion" (0 = slet ikke, 10 = helt sikkert)
 
-Vi sætter de her ord ind som punkter: **kaffe, espresso, te, løb, yoga, elregning**.
+Vi sætter de her ord ind som punkter: **kaffe, espresso, te, løb, yoga, elregning, beer pong**.
 
-<img src="images/embedding-2d.svg" width="480" alt="Et koordinatsystem med x-aksen noget man drikker og y-aksen noget med motion, begge fra 0 til 10. Løb og yoga ligger øverst til venstre, kaffe, espresso og te nederst til højre, og elregning nede ved 0,0.">
+<img src="images/embedding-2d.svg" width="480" alt="Et koordinatsystem med x-aksen noget man drikker og y-aksen noget med motion, begge fra 0 til 10. Løb og yoga ligger øverst til venstre, kaffe, espresso og te nederst til højre, elregning nede ved 0,0, og beer pong oppe i midten til højre, fordi det både er noget man drikker og noget med motion.">
 
 - Hvilke punkter ligger tæt på hinanden?
 - Hvor ligger "elregning"?

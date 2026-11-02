@@ -39,6 +39,8 @@
   <line x1="460.0" y1="378.0" x2="480" y2="430.0" stroke="#d9546e" stroke-width="1.5" stroke-dasharray="4 4"/>
   <line x1="460.0" y1="378.0" x2="400" y2="350.0" stroke="#d9546e" stroke-width="1.5" stroke-dasharray="4 4"/>
   <!-- Words -->
+  <circle cx="400" cy="210" r="6" fill="#2f6db5"/>
+  <text x="412" y="215" text-anchor="start" font-size="16" fill="#1d3f6e">beer pong</text>
   <circle cx="440" cy="410" r="6" fill="#2f6db5"/>
   <text x="428" y="414" text-anchor="end" font-size="16" fill="#1d3f6e">kaffe</text>
   <circle cx="480" cy="430.0" r="6" fill="#2f6db5"/>
