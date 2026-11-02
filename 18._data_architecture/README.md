@@ -163,12 +163,6 @@ Tilbage til dagens spørgsmål: **Hvordan kan en database finde siden om løb, n
 
 ---
 
-## Efter timen
-
-Skriv fem linjer i jeres semesternotesbog: Forklar med egne ord, og uden ordet "AI", hvorfor Qdrant kan finde siden om løb, når I søger på "motion".
-
----
-
 ## Optional
 
 - [optional] Qdrant: [What is a vector database?](https://qdrant.tech/articles/what-is-a-vector-database/)
