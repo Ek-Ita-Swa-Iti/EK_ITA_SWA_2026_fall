@@ -63,9 +63,7 @@ Eksemplet er en lille **søgemaskine** over 20 opdigtede hjemmesider. Hver søgn
 
 ## Del 2: Betydning som tal
 
-### På tavlen
-
-Vi tegner et koordinatsystem med to akser på tavlen:
+Forestil jer et koordinatsystem med to akser, x og y:
 
 - **x:** "noget man drikker" (0 = slet ikke, 10 = helt sikkert)
 - **y:** "noget med motion" (0 = slet ikke, 10 = helt sikkert)
