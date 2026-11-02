@@ -20,8 +20,9 @@ Efter i dag kan du:
 
 - forklare, hvad en **embedding** er: en tekst lavet om til en liste af tal, hvor tekster, der betyder det samme, får tal, der ligger tæt på hinanden
 - forklare, **hvorfor man kan søge** i en vektordatabase: at søge er at finde de punkter, der ligger tættest på
-- bruge en **vektordatabase** (Qdrant) og læse koden, der taler med den
-- forklare arkitekturen: **MySQL er sandhedskilden**, og vektordatabasen er en søgeindgang ved siden af
+- bruge en **vektordatabase** (Qdrant) og se, hvad der bliver gemt i den
+- forklare, at den samme idé virker for **billeder og musik**: Alt, der kan laves om til tal, kan søges på betydning
+- selv lave en tekst om til en embedding via et **API** (Ollama) og læse svaret
 
 ---
 
@@ -35,6 +36,12 @@ docker compose up --build
 ```
 
 Åbn <http://localhost:8080>. Kan I søge, er I klar.
+
+Hent også Ollama-imaget til Del 5. Det fylder ca. 8 GB, så gør det hjemmefra:
+
+```bash
+docker pull ollama/ollama
+```
 
 ---
 
@@ -118,42 +125,43 @@ Sammenlign striben for jeres søgning med striberne under resultaterne. Kan I se
 
 ---
 
-## Del 4: Koden og arkitekturen
+## Del 4: Demo: billeder og musik
 
-### Læs koden
+Søgemaskinen forstår kun tekst. Kan den samme idé bruges på billeder og musik? Vi ser det sammen.
 
-Backend har tre lag (se [`example-search-engine/README.md`](example-search-engine/README.md)). Åbn `application/searchService.js` først, og svar i jeres par:
+### Billedsøgning
 
-- **Hvor bliver teksten lavet om til tal?** Find stedet. Hvilket lag ligger det i?
-- Når en side gemmes (`addPage`): Hvilken database skrives der til først? Hvorfor i den rækkefølge?
-- Hver side ligger nu to steder: som tekst i MySQL og som `payload` i Qdrant. Hvad er fordelen? Og hvad skal der ske i Qdrant, hvis en side bliver rettet i MySQL?
-- Hvad sker der i `ready()`, når backend starter?
+En **vision-model** kan se på et billede og beskrive det med ord. Den kører i Ollama, ligesom I selv skal prøve i Del 5.
 
-### Byg videre
+1. **Billede → tekst:** I Insomnia sender vi et billede til vision-modellen (`POST /api/chat`, billedet som base64 i feltet `images`) og beder om en beskrivelse på dansk.
+2. **Tekst → søgemaskinen:** Beskrivelsen gemmes under **Tilføj en side**, med billedets filnavn som titel.
+3. **Søg:** Vi søger med ord, der ikke står i beskrivelsen. Bliver billedet fundet?
 
-1. **Tilføj en side** nederst på søgemaskinen, fx om grøn smoothie eller cykelferie. Søg efter den med ord, der ikke står i den. Bliver den fundet med det samme? Hvad sker der i koden, når I trykker **Gem**?
-2. **Sæt en grænse:** Lav søgningen på "rumfart" om, så den ikke giver svar. Tilføj `score_threshold` i Qdrant-request'en i `pagesVectorRepository.query()`, og find selv en god værdi. **Arkitekturspørgsmål:** Grænsen er en regel for søgemaskinen. Hører den så hjemme i persistence-laget, eller burde application-laget bestemme værdien?
-3. **Ødelæg det:**
-   - `docker compose stop qdrant`. Søg. Hvad virker stadig?
-   - Tilføj en side. Bliver den gemt? Kan den findes på betydning?
-   - `docker compose start qdrant` og `docker compose restart backend`. Kan siden findes nu? Hvorfor? (Se `ready()`.)
+- Søger vi nu på billedet eller på beskrivelsen? Hvad sker der, hvis modellen overser noget på billedet?
+- Skulle der ændres noget i søgemaskinens kode, for at den kunne finde billeder?
 
-Pointen med 3: **Vektordatabasen kan altid bygges op igen ud fra MySQL.** Derfor er MySQL sandhedskilden, og Qdrant er "bare" en søgeindgang.
+Nyere modeller springer teksten over: De laver billedet om til tal direkte, i det samme koordinatsystem som teksten. Så ligger et billede af en hund tæt på ordet "hund".
+
+### Musik i Spotify
+
+Vi starter en radio ud fra en sang i Spotify og ser, hvad den foreslår.
+
+- Hvad tror I, Spotify sammenligner? Der står jo ikke "glad sommermusik" i lydfilen.
+- Hvis I skulle tegne koordinatsystemet fra Del 2 for musik, hvad kunne akserne så være?
+
+Spotify har selv lavet open source-værktøjer til at finde de nærmeste punkter hurtigt: først **Annoy** og senere **Voyager**.
 
 ---
 
-## Del 5: Hvor bruges det?
+## Del 5: Lav jeres egne embeddings
 
-- **"Chat med jeres dokumenter"** (RAG): Find de 3 tekster, der ligger tættest på spørgsmålet, og giv dem til en sprogmodel sammen med spørgsmålet. Det er sådan, en supportbot kan svare ud fra en manual.
-- **Anbefalinger:** "Andre sider/produkter/film, der ligner denne."
-- **Billedsøgning:** Den samme idé virker med billeder. Et billede kan også laves om til tal.
+> **Øvelse (i par):** Følg tutorialen [Embeddings med Ollama i Docker og Insomnia](ollama-docker-insomnia-tutorial.md).
 
-Andre måder at gøre det på:
+Når I er færdige:
 
-- **ChromaDB** gør det samme som vores eksempel: Modellen kører i klientbiblioteket, og man sender bare tekst.
-- **Qdrant Cloud** og andre skytjenester kan lave embeddingen *inde i databasen*. Så sender man også bare tekst.
-- **pgvector** lægger vektorsøgning ind i Postgres. Så er der kun én database.
-- **Modellen er et valg:** Vi bruger en lille *flersproget* model, fordi siderne er på dansk. Den er hurtig og gratis, men ikke klog. Søg på "rumfart" efter at have tilføjet en side om raketter: En større model ville forstå sammenhængen bedre.
+- Hvor mange tal får I for "Hej verden" med `nomic-embed-text`? Og med `bge-m3`? Søgemaskinens model laver 384. Hvorfor er tallet forskelligt?
+- I Insomnia kører modellen i sin egen container, og I kalder den over HTTP. Hvor kører modellen i søgemaskinen?
+- Vil I prøve billedet fra demoen selv: `docker exec ollama ollama pull gemma3:4b`, og send et billede til `/api/chat`.
 
 Tilbage til dagens spørgsmål: **Hvordan kan en database finde siden om løb, når I søger på "motion"?**
 
