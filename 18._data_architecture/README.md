@@ -130,6 +130,29 @@ Vi sætter de her ord ind som punkter: **kaffe, espresso, te, løb, yoga, elregn
 
 <img src="images/embedding-2d-soegning.svg" width="480" alt="Samme koordinatsystem med cappuccino tilføjet nederst til højre. En stiplet cirkel om cappuccino rammer kaffe, espresso og te: søgning betyder at finde de punkter, der ligger tættest på.">
 
+### En akse mere: z = energi
+
+Kaffe og te ligger næsten oven i hinanden. Det samme gør løb og yoga. Men de er jo ikke det samme. Så vi tilføjer en tredje akse:
+
+- **z:** "giver energi" (0 = slet ikke, 10 = helt sikkert)
+
+| Ord | x (drikker) | y (motion) | z (energi) |
+|-----|:-----------:|:----------:|:----------:|
+| kaffe | 9 | 1 | **8** |
+| espresso | 10 | 0.5 | **10** |
+| te | 8 | 2.5 | **3** |
+| løb | 1 | 9 | **8** |
+| yoga | 1.5 | 8 | **2** |
+| beer pong | 8 | 6 | **5** |
+| elregning | 0.5 | 0.5 | **0** |
+
+<img src="images/embedding-3d.svg" width="560" alt="Et 3D-koordinatsystem med x: noget man drikker, y: noget med motion og z: energi, der går ind i billedet. Hvert punkt har en stiplet linje ned til gulvet, og jo mørkere blå, jo mere energi. Kaffe og espresso ligger langt inde på z-aksen, te ligger tæt på forkanten. Løb ligger langt inde, yoga tæt på forkanten. Elregning ligger ved 0,0,0.">
+
+- Hvad sker der med afstanden mellem kaffe og te? Og mellem løb og yoga?
+- Kaffe og løb er rykket lidt tættere på hinanden. Hvorfor?
+
+Hver ny akse fanger en ny slags lighed. Jo flere akser, jo finere forskelle kan man se.
+
 ### Fra 2 tal til 384 tal
 
 En rigtig **embedding-model** gør det samme, men:

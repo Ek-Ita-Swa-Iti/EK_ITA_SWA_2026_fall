@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="460" viewBox="0 0 740 550" font-family="Helvetica, Arial, sans-serif">
+  <rect width="740" height="550" fill="#ffffff"/>
+  <!-- Floor grid (y = 0) -->
+  <line x1="90" y1="470" x2="250" y2="370" stroke="#eeeeee"/>
+  <line x1="90" y1="470" x2="430" y2="470" stroke="#eeeeee"/>
+  <line x1="124" y1="470" x2="284" y2="370" stroke="#eeeeee"/>
+  <line x1="106" y1="460" x2="446" y2="460" stroke="#eeeeee"/>
+  <line x1="158" y1="470" x2="318" y2="370" stroke="#eeeeee"/>
+  <line x1="122" y1="450" x2="462" y2="450" stroke="#eeeeee"/>
+  <line x1="192" y1="470" x2="352" y2="370" stroke="#eeeeee"/>
+  <line x1="138" y1="440" x2="478" y2="440" stroke="#eeeeee"/>
+  <line x1="226" y1="470" x2="386" y2="370" stroke="#eeeeee"/>
+  <line x1="154" y1="430" x2="494" y2="430" stroke="#eeeeee"/>
+  <line x1="260" y1="470" x2="420" y2="370" stroke="#eeeeee"/>
+  <line x1="170" y1="420" x2="510" y2="420" stroke="#eeeeee"/>
+  <line x1="294" y1="470" x2="454" y2="370" stroke="#eeeeee"/>
+  <line x1="186" y1="410" x2="526" y2="410" stroke="#eeeeee"/>
+  <line x1="328" y1="470" x2="488" y2="370" stroke="#eeeeee"/>
+  <line x1="202" y1="400" x2="542" y2="400" stroke="#eeeeee"/>
+  <line x1="362" y1="470" x2="522" y2="370" stroke="#eeeeee"/>
+  <line x1="218" y1="390" x2="558" y2="390" stroke="#eeeeee"/>
+  <line x1="396" y1="470" x2="556" y2="370" stroke="#eeeeee"/>
+  <line x1="234" y1="380" x2="574" y2="380" stroke="#eeeeee"/>
+  <line x1="430" y1="470" x2="590" y2="370" stroke="#eeeeee"/>
+  <line x1="250" y1="370" x2="590" y2="370" stroke="#eeeeee"/>
+  <!-- Back wall grid (z = 10) -->
+  <line x1="250" y1="370" x2="250" y2="70" stroke="#f3f3f3"/>
+  <line x1="250" y1="370" x2="590" y2="370" stroke="#f3f3f3"/>
+  <line x1="420" y1="370" x2="420" y2="70" stroke="#f3f3f3"/>
+  <line x1="250" y1="220" x2="590" y2="220" stroke="#f3f3f3"/>
+  <line x1="590" y1="370" x2="590" y2="70" stroke="#f3f3f3"/>
+  <line x1="250" y1="70" x2="590" y2="70" stroke="#f3f3f3"/>
+  <!-- Axes -->
+  <line x1="90" y1="470" x2="457.20000000000005" y2="470" stroke="#333" stroke-width="2"/>
+  <line x1="90" y1="470" x2="90" y2="146.0" stroke="#333" stroke-width="2"/>
+  <line x1="90" y1="470" x2="262.8" y2="362.0" stroke="#333" stroke-width="2"/>
+  <polygon points="465.20000000000005,470 455.20000000000005,465 455.20000000000005,475" fill="#333"/>
+  <polygon points="90,138.0 85,148.0 95,148.0" fill="#333"/>
+  <polygon points="269.8,357.6 258.8,359.0 263.8,367.0" fill="#333"/>
+  <text x="260" y="490" text-anchor="middle" font-size="13" fill="#555">5</text>
+  <text x="80" y="324" text-anchor="end" font-size="13" fill="#555">5</text>
+  <text x="162" y="414" text-anchor="end" font-size="13" fill="#555">5</text>
+  <text x="430" y="490" text-anchor="middle" font-size="13" fill="#555">10</text>
+  <text x="80" y="174" text-anchor="end" font-size="13" fill="#555">10</text>
+  <text x="242" y="364" text-anchor="end" font-size="13" fill="#555">10</text>
+  <text x="80" y="490" text-anchor="middle" font-size="13" fill="#555">0</text>
+  <text x="260" y="514" text-anchor="middle" font-size="16" fill="#333"><tspan font-weight="bold">x:</tspan> noget man drikker</text>
+  <text transform="translate(40 320) rotate(-90)" text-anchor="middle" font-size="16" fill="#333"><tspan font-weight="bold">y:</tspan> noget med motion</text>
+  <text x="276.8" y="358.0" text-anchor="start" font-size="16" fill="#333"><tspan font-weight="bold">z:</tspan> energi</text>
+  <!-- Words: dashed line down to the floor shows where the point sits on z -->
+  <line x1="524" y1="360" x2="524" y2="390" stroke="#9aa7b8" stroke-dasharray="3 3"/>
+  <ellipse cx="524" cy="390" rx="4" ry="2" fill="#c5ccd6"/>
+  <line x1="590" y1="355.0" x2="590" y2="370" stroke="#9aa7b8" stroke-dasharray="3 3"/>
+  <ellipse cx="590" cy="370" rx="4" ry="2" fill="#c5ccd6"/>
+  <line x1="410" y1="365.0" x2="410" y2="440" stroke="#9aa7b8" stroke-dasharray="3 3"/>
+  <ellipse cx="410" cy="440" rx="4" ry="2" fill="#c5ccd6"/>
+  <line x1="252" y1="120" x2="252" y2="390" stroke="#9aa7b8" stroke-dasharray="3 3"/>
+  <ellipse cx="252" cy="390" rx="4" ry="2" fill="#c5ccd6"/>
+  <line x1="173.0" y1="210" x2="173.0" y2="450" stroke="#9aa7b8" stroke-dasharray="3 3"/>
+  <ellipse cx="173.0" cy="450" rx="4" ry="2" fill="#c5ccd6"/>
+  <line x1="107.0" y1="455.0" x2="107.0" y2="470" stroke="#9aa7b8" stroke-dasharray="3 3"/>
+  <ellipse cx="107.0" cy="470" rx="4" ry="2" fill="#c5ccd6"/>
+  <line x1="442" y1="240" x2="442" y2="420" stroke="#9aa7b8" stroke-dasharray="3 3"/>
+  <ellipse cx="442" cy="420" rx="4" ry="2" fill="#c5ccd6"/>
+  <circle cx="524" cy="360" r="7" fill="#2d5ba4" stroke="#1d3f6e" stroke-width="1"/>
+  <text x="512" y="361" text-anchor="end" font-size="16" fill="#1d3f6e">kaffe</text>
+  <text x="512" y="376" text-anchor="end" font-size="12" fill="#666">z = 8</text>
+  <circle cx="590" cy="355.0" r="7" fill="#0b3d91" stroke="#1d3f6e" stroke-width="1"/>
+  <text x="602" y="356.0" text-anchor="start" font-size="16" fill="#1d3f6e">espresso</text>
+  <text x="602" y="371.0" text-anchor="start" font-size="12" fill="#666">z = 10</text>
+  <circle cx="410" cy="365.0" r="7" fill="#83a6d3" stroke="#1d3f6e" stroke-width="1"/>
+  <text x="398" y="366.0" text-anchor="end" font-size="16" fill="#1d3f6e">te</text>
+  <text x="398" y="381.0" text-anchor="end" font-size="12" fill="#666">z = 3</text>
+  <circle cx="252" cy="120" r="7" fill="#2d5ba4" stroke="#1d3f6e" stroke-width="1"/>
+  <text x="264" y="121" text-anchor="start" font-size="16" fill="#1d3f6e">løb</text>
+  <text x="264" y="136" text-anchor="start" font-size="12" fill="#666">z = 8</text>
+  <circle cx="173.0" cy="210" r="7" fill="#95b5dc" stroke="#1d3f6e" stroke-width="1"/>
+  <text x="185.0" y="211" text-anchor="start" font-size="16" fill="#1d3f6e">yoga</text>
+  <text x="185.0" y="226" text-anchor="start" font-size="12" fill="#666">z = 2</text>
+  <circle cx="107.0" cy="455.0" r="7" fill="#b7d3ef" stroke="#1d3f6e" stroke-width="1"/>
+  <text x="117.0" y="432.0" text-anchor="start" font-size="16" fill="#1d3f6e">elregning</text>
+  <text x="117.0" y="447.0" text-anchor="start" font-size="12" fill="#666">z = 0</text>
+  <circle cx="442" cy="240" r="7" fill="#6188c0" stroke="#1d3f6e" stroke-width="1"/>
+  <text x="454" y="241" text-anchor="start" font-size="16" fill="#1d3f6e">beer pong</text>
+  <text x="454" y="256" text-anchor="start" font-size="12" fill="#666">z = 5</text>
+  <!-- Legend -->
+  <circle cx="560" cy="510" r="7" fill="#b7d3ef" stroke="#1d3f6e" stroke-width="1"/>
+  <circle cx="582" cy="510" r="7" fill="#6188c0" stroke="#1d3f6e" stroke-width="1"/>
+  <circle cx="604" cy="510" r="7" fill="#0b3d91" stroke="#1d3f6e" stroke-width="1"/>
+  <text x="545" y="535" font-size="12" fill="#666">lidt energi → meget</text>
+</svg>
