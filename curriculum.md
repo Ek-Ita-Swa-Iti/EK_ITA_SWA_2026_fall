@@ -3,88 +3,83 @@
 **EK Business Academy Copenhagen** · 29 sessions × 3 hours
 
 This course teaches software architecture as **decisions, boundaries, and conventions** — the rules a
-system commits to so it can grow without collapsing under its own weight. Rather than drawing diagrams,
-you'll **read real systems with an AI coding agent**, design small ones of your own, and learn to defend
-your choices.
+system commits to so it can grow without collapsing under its own weight. You'll **read real systems
+with an AI coding agent**, build and change small ones of your own, and learn to defend your choices.
 
-> **Method in one line:** read *structure*, not syntax. You'll open large real codebases (in languages
-> you may not know) and use an agent to map how they're built — then verify its claims against the code
-> yourself.
+> **Method in one line:** read *structure*, not syntax — then verify what the agent tells you against
+> the code yourself.
 
 ---
 
-## What you'll do every teaching session
+## How a session works
 
-Each teaching-session README follows the same shape:
-
-1. **Before Class** — a short reading or setup task.
-2. **Part 0 — compare notes** — 10 min comparing last session's investigation with a partner.
-3. **Today's Teachings** — the concepts, anchored to a *set-piece* in a real codebase you can open.
-4. **Exercise** — an in-class task on your own project.
-5. **Investigation (after class)** — ask your agent a question, **verify it against the code**, write up half a page.
-6. **Optional** — canonical readings, never required (hands-on first).
-
-*This is the rhythm of the architecture teaching sessions (6–13 and 18–21). The **IT-infrastructure foundations block**
-(Sessions 2–5) is keyboard-first: setup, live teachings, and an in-class exercise you commit to Git —
-no agent-investigation write-up.*
+- **IT-infrastructure foundations (Sessions 2–5)** — keyboard-first: setup, live teachings, and an
+  in-class exercise you commit to Git.
+- **Architecture reading (Sessions 6–10)** — *Before Class*, *Today's Teachings* anchored in a real
+  codebase, an *Exercise*, and an *Investigation (after class)*: ask your agent, **verify against the
+  code**, write it up.
+- **Building on the notes-service (Sessions 9–12, 18–19)** — the small layered Node.js notes-service
+  from Session 9 is the running project. Each session adds to it: a new persistence layer, an API
+  other pairs depend on, an OpenAPI contract, semantic search. From Session 11 the material is in
+  Danish and opens with *Dagens spørgsmål*, followed by demos and *Miniøvelser*.
+- **Optional** readings are never required — hands-on first.
 
 ---
 
 ## What you need
 
-- A laptop with **Docker Desktop** (introduced in Session 2, used throughout to run environments and examples).
+- A laptop with **Docker Desktop** (introduced in Session 2, used throughout).
 - An **LLM coding agent** (e.g. Claude Code, Mistral Vibe) — the course's core tool.
-- **Git / GitHub**, and the three codebases below cloned or browsable.
+- **Git / GitHub**, and **Insomnia** as HTTP client (from Session 11).
 
-### The codebases you'll read
+### The code you'll work with
 
-| Codebase | Role | Where it's used |
+| Code | Role | Where it's used |
 |---|---|---|
-| `mistral-vibe-ek-ita` | The **spine** — a small CLI agent, the first real codebase you read | Sessions 6–9 |
-| **Gitea** (pinned `v1.26.2`) | The **systems-half anchor** — a real server-side, multi-user, data-backed system | Sessions 11, 12–13, 18–20 |
-| `ek-ita-swa-examples` | **Runnable** minimal examples (`docker compose up`) | Sessions 8, 9, 19 |
+| `mistral-vibe-ek-ita` | The **spine** — a small CLI agent, the first real codebase you read | Sessions 1–2, 6–8, 10 |
+| `example-*` folders in the session folders | **Runnable** examples (`docker compose up`) | Sessions 8, 9, 12, 18, 19 |
+| Your own **notes-service** | The system you build and change | Sessions 9, 11, 12, 19 |
 
 ---
 
 ## Session overview
 
-**Sessions 2–5** are the hands-on **IT-infrastructure foundations block**; architecture teaching runs
-**Sessions 6–13** and **18–21** (with the project block at **14–17**); the exam project is **Sessions 22–29**. (Session 1 is a 3rd-semester intro session.)
+**Sessions 2–5** are the **IT-infrastructure foundations block**; architecture teaching runs
+**Sessions 6–12** and **18–19**, with the project block at **14–17**; the exam project is
+**Sessions 22–29**. Session 1 is a 3rd-semester intro session. Sessions 13, 20 and 21 have no
+material yet.
 
 | # | Topic | What you do |
 |:-:|-------|-------------|
-| 1 | **Introduction to 3rd semester** | Semester overview and toolkit setup after the shared cross-teacher welcome — install Mistral Vibe, meet the wider agent landscape, watch a first agent investigation. No vocabulary taught. |
-| **2** | **Terminal, Linux & Git** | Run a Linux machine in a container, navigate the shell, file permissions & processes, install software with a package manager (`apt`), save/push work with Git. Keyboard-first. |
-| **3** | **Command line: pipes, HTTP & M2M security** | Streams/pipes/redirection & the text toolkit; `curl` + just-enough HTTP; securing machine-to-machine comms — HTTPS/TLS, certificates, bearer-token auth. |
-| **4** | **Networking — how services talk** | Ports & listening processes, `localhost`/`0.0.0.0`, DNS, the client–server round-trip, reverse proxy / load balancer; why the network is unreliable (latency, timeouts, partial failure). |
-| **5** | **Docker, Compose & the cloud** | Images vs containers, write a `Dockerfile`, multi-service `docker compose`; on-prem vs cloud (IaaS/PaaS/SaaS), capex/opex. **Mandatory group assignment** issued. |
-| 6 | **Intro to software architecture** | "Where is the architecture?" in real and toy systems. Set up your agent + the spine repo. |
-| 7 | **Quality attributes** | Performance, scalability, availability, security, maintainability, cost — and the trade-offs between them. Quality-attribute *scenarios*. |
-| 8 | **Layered architecture** | Identify layers in a real codebase; the downward dependency rule. Runnable bilingual (Kotlin + Python) notes service. |
-| 9 | **Layered architecture (hands-on)** | Hands-on: live demo of a minimal two-layer Node.js notes service, then swap its persistence layer yourself — to a JSON API and to MongoDB in Docker. |
-| 10 | **REST API I** | Probe a real API (GitHub) hands-on; REST constraints, resources, methods, status codes, idempotency. |
-| 11 | **API contracts & OpenAPI** | The contract as a generated, CI-checked artefact — read Gitea's OpenAPI. *(Gitea is introduced here.)* |
-| 12 | **Data architecture** | Read Gitea's data model in code (schema as ORM tags), migrations & expand–contract, normalisation vs denormalisation, read/write asymmetry. |
-| 13 | **Caching & performance** | Gitea's cache-aside layer, Redis vs in-memory backends, the hard problem of invalidation, latency budgets. |
+| 1 | **Introduction to 3rd semester** | Semester overview and toolkit setup after the shared welcome — install Mistral Vibe and watch a first agent investigation. |
+| **2** | **Terminal, Linux & Git** | Run a Linux machine in a container, navigate the shell, file permissions, install software with `apt`, save and push work with Git. |
+| **3** | **The command line — pipes & HTTP** | stdin/stdout/stderr, pipes and the text toolkit; `curl` and just enough HTTP; an authenticated request with a bearer token. |
+| **4** | **Networking — how services talk** | Ports and listening processes, `localhost`/`0.0.0.0`, DNS, the client–server round-trip; why the network is unreliable. |
+| **5** | **Docker, Compose & the cloud** | Images vs containers, write a `Dockerfile`, multi-service `docker compose`; on-prem vs cloud (IaaS/PaaS/SaaS). **Mandatory group assignment** issued. |
+| 6 | **Intro to software architecture** | "Where is the architecture?" in `mistral-vibe-ek-ita`: decisions, boundaries, conventions. Ask the agent, then check. |
+| 7 | **Quality attributes** | Performance, scalability, availability, security, maintainability, cost — the trade-offs, and quality-attribute *scenarios*. |
+| 8 | **Layered architecture** | Layers and the downward dependency rule; is Vibe layered? Runnable notes service in Kotlin, Python and Node. |
+| 9 | **Layered architecture (hands-on)** | Live demo of a minimal two-layer Node.js notes-service, then swap its persistence layer yourself — to a JSON API and to MongoDB in Docker. |
+| 10 | **REST API I** | Probe GitHub's API hands-on: resources, methods, status codes, the REST constraints. |
+| 11 | **Når andre afhænger af dit API** | Pairs use each other's notes-service without reading the code, then change it: the API contract, breaking vs non-breaking changes, versioning, useful error responses. |
+| 12 | **Skriv kontrakten ned · OpenAPI** | Write the notes-service contract as an OpenAPI spec, serve it with Swagger UI, and check it against the real API. |
 | **14–17** | **Project: small distributed system** | *No teaching.* Build a modular monolith, applying the architecture concepts from the course so far. |
-| 18 | **Event-driven architecture** | Gitea's queue (one port, three brokers) and the event fan-out to webhooks; queues vs pub/sub, delivery & ordering guarantees. |
-| 19 | **Microservices vs monoliths** | Gitea as a real *modular monolith*; run the same product as a monolith vs **polyglot** microservices (Kotlin + Python + Go). Failure isolation; the distributed-monolith trap. |
-| 20 | **Security architecture** | Gitea's authentication as a port with many adapters and its ordered, default-deny authorization model. OWASP Top 10, trust boundaries, secrets, STRIDE. |
-| 21 | **Documentation: ADRs & the C4 model** | Record decisions as ADRs; draw diagrams that survive contact with reality. |
-| **22–29** | **Exam project** | *No teaching.* Each group finds a real project at a real customer, maps the company's architecture, then designs, implements, and defends an architecture of their own choosing; present and defend it at the exam. |
+| 18 | **Dataarkitektur · Søg på betydning** | Embeddings and vector databases: a side-by-side search engine (MySQL `LIKE` vs Qdrant), music in Spotify, and your own embeddings with Ollama. |
+| 19 | **Dataarkitektur 2 · Semantisk søgning** | A full-day tutorial: add Ollama and Qdrant to your notes-service in the right layers. MongoDB is the source of truth; Qdrant is an index you can rebuild. |
+| **22–29** | **Exam project** | *No teaching.* Each group finds a real project at a real customer, maps the company's architecture, then designs, implements, and defends an architecture of their own choosing. |
 
 ---
 
 ## Projects & exam
 
 - **Foundations group assignment (issued S5, "Containerised Toolbox")** — a small runnable `docker compose` project (a group-written bash tool + `Dockerfile` + a 2-service compose file, on GitHub). Pass/needs-rework; ties together the infrastructure block.
-- **Mid-semester project (14–17)** — a small distributed system, built as a **modular monolith**. (Microservices vs monoliths, **Session 19**, later unpacks the trade-off behind that choice.)
-- **Exam project (22–29)** — the assessment. Each group finds a real project at a real customer, maps the company's architecture, then designs, implements, and defends an architecture of their own choosing, before presenting and defending it. The exam exercises every concept introduced across the semester.
+- **Mid-semester project (14–17)** — a small distributed system, built as a **modular monolith**.
+- **Exam project (22–29)** — the assessment. Each group finds a real project at a real customer, maps the company's architecture, then designs, implements, and defends an architecture of their own choosing, before presenting and defending it at the exam.
 
 ---
 
 ## How to read this course
 
-- **Hands-on first.** Engage with the in-class activity and the after-class investigation before the optional readings.
+- **Hands-on first.** Engage with the in-class activity before the optional readings.
 - **Verify everything.** When the agent tells you how a system works, open the file and check. The habit *is* the skill.
-- **Shape over language.** You'll read Go (Gitea), Python and Kotlin (the spine and examples), and a Go gateway — because architecture is about structure, which survives the choice of language.
+- **Shape over language.** You'll read Python and Kotlin (the spine and examples) and write JavaScript (the notes-service) — because architecture is about structure, which survives the choice of language.
