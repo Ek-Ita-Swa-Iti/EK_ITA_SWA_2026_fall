@@ -43,6 +43,40 @@ Hent også Ollama-imaget til Del 5. Det fylder ca. 8 GB, så gør det hjemmefra:
 docker pull ollama/ollama
 ```
 
+Det her er det, vi ender med at bygge på onsdag i [session 19](../19._data_architecture_2/README.md): jeres notes-service med Ollama og Qdrant. Det **rosa** er det nye.
+
+```mermaid
+flowchart LR
+    browser["Browser<br/>frontend :8080"]
+
+    subgraph backend["backend-container :3000"]
+        direction TB
+        server["presentation/<br/>server.js"]
+        service["application/<br/>notesService.js"]
+        mongoRepo["persistence/<br/>notesMongoDBRepository.js"]
+        vectorRepo["persistence/<br/>notesVectorRepository.js"]
+        embed["persistence/<br/>embeddingModel.js"]
+        server --> service
+        service --> mongoRepo
+        service --> embed
+        service --> vectorRepo
+    end
+
+    mongo[("MongoDB :27017<br/>sandhedskilden")]
+    ollama["Ollama :11434<br/>model: bge-m3"]
+    qdrant[("Qdrant :6333<br/>søgeindeks")]
+    swagger["Swagger UI :8081<br/>spec/swagger.json"]
+
+    browser -- "HTTP /v1/notes" --> server
+    browser -- "dokumentation" --> swagger
+    mongoRepo -- "mongodb://mongo:27017" --> mongo
+    embed -- "http://ollama:11434" --> ollama
+    vectorRepo -- "http://qdrant:6333" --> qdrant
+
+    classDef ny fill:#fde2e7,stroke:#d9546e,stroke-width:2px,color:#000
+    class service,embed,vectorRepo,ollama,qdrant ny
+```
+
 ---
 
 ## Del 1: To søgninger, samme side
