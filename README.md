@@ -14,7 +14,7 @@ A 29-session course on software architecture for ITA students. Each session is 3
 
 - **1 intro session** (Session 1) — 3rd-semester welcome, semester overview, and toolkit setup (Mistral Vibe install).
 - **4 IT-infrastructure foundations sessions** (2–5) — hands-on terminal/Linux/Git, bash/HTTP + M2M security, networking, and Docker/Compose + cloud; ends with a mandatory group assignment.
-- **12 teaching sessions** (6–13, 18–21) covering layered, hexagonal, REST API, data, caching, event-driven, microservices, security, and documentation.
+- **9 teaching sessions** (6–12, 18–19) covering architecture basics, quality attributes, layered architecture, REST APIs, API contracts & OpenAPI, and data architecture (embeddings and vector search). Sessions 13, 20 and 21 have no material yet.
 - **4 mid-semester project sessions** (14–17) — small distributed system.
 - **8 exam project sessions** (22–29) — each group finds a real customer, maps the company's architecture, then designs, implements, and defends an architecture of their own choosing, present at exam.
 
@@ -22,4 +22,4 @@ See **[`curriculum.md`](curriculum.md)** for the full session-by-session table, 
 
 ## Repository layout
 
-Each session is its own folder, numbered. Teaching sessions have a `README.md` with goals, reading, and exercises. Project/exam sessions are empty until their briefs are written.
+Each session is its own folder, numbered. Teaching sessions have a `README.md` with goals, reading, and exercises; some also contain runnable `example-*` folders (`docker compose up`). Project/exam sessions hold a short stub until their briefs are written.
