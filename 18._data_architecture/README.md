@@ -86,6 +86,15 @@ Eksemplet er en lille **søgemaskine** over 20 opdigtede hjemmesider. Hver søgn
 - **Venstre:** MySQL og den SQL, der bliver kørt
 - **Højre:** Qdrant og de trin, søgningen går igennem
 
+**Start eksemplet først.** Åbn en terminal i roden af kursets repo (`EK_ITA_SWA_2026_fall`), og kør:
+
+```bash
+cd 18._data_architecture/example-search-engine
+docker compose up --build
+```
+
+Åbn <http://localhost:8080>, når den er klar.
+
 > **Miniøvelse (i par):** Søg på de her, og skriv ned, hvad hver side finder:
 
 | Søgning | MySQL fandt | Qdrant fandt |
