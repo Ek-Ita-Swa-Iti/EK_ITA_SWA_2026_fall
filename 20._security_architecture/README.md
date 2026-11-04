@@ -39,12 +39,15 @@ Alene, på jeres egen computer. **Vis ikke jeres skærm til andre i denne del.**
 
 Find de *secrets*, I har brugt i semestret, og skriv ned, *hvor* de ligger, og *hvem* der kan læse dem:
 
-| Hvor I brugte den | Prøv |
-|-------------------|------|
-| Mistral Vibe, session 1 | `cat ~/.vibe/.env` |
-| `git push` med token, session 2 | `cat ~/.git-credentials` (hvis I brugte `credential.helper store`) |
-| `export TOKEN=…`, session 3 og 10 | `history \| grep TOKEN` |
-| Databasepasswords i Docker, session 6 og 18 | Kig i jeres `docker-compose.yml`. Ligger den på GitHub? |
+| Hvor I brugte den | Hvor den sandsynligvis ligger | Prøv |
+|-------------------|-------------------------------|------|
+| Mistral Vibe-nøglen, session 1 | I styresystemets **nøglering** | **Mac:** `security find-generic-password -s ai.mistral.vibe`<br>**Windows:** Åbn **Legitimationsstyring** (Credential Manager) → *Windows-legitimationsoplysninger* |
+| GitHub-token til `git push` fra jeres laptop, session 5 og frem | I **nøgleringen**. Git gemmer det selv der | `git config credential.helper` viser hvordan.<br>**Mac:** `security find-internet-password -s github.com`<br>**Windows:** Legitimationsstyring, find `git:https://github.com` |
+| GitHub-token til `git push` i webtop, session 2 | Som **almindelig tekst** i `~/.git-credentials` i webtop-containeren, fordi I kørte `credential.helper store` | `cat ~/.git-credentials` (i webtop) |
+| `export TOKEN=…` og `export GH_TOKEN=…`, session 3 og 10 | I jeres **shell-historik** | `history \| grep TOKEN` |
+| Databasepasswords i Docker, session 6 og 18 | I jeres **`docker-compose.yml`** | Kig i filen. Ligger den på GitHub? |
+
+Kommandoerne til Mac og Windows viser kun, *at* der ligger en nøgle, og ikke selve nøglen. Finder I ikke noget dér, så kig i `~/.vibe/.env`. Ældre versioner af Vibe gemte nøglen i den fil.
 
 Spørgsmål til bagefter, i par:
 
