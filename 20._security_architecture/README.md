@@ -122,10 +122,6 @@ Jeres frontend skal også kunne oprette noter. Hvis I lægger tokenet i `app.js`
 
 ---
 
-## Pause
-
----
-
 ## Del 4: Lækket!
 
 **Scenarie:** I opdager, at jeres `NOTES_API_TOKEN` har ligget i et offentligt GitHub-repo i to dage.
@@ -158,14 +154,6 @@ Hvorfor er det ikke nok at slette tokenet fra repoet? Bots scanner offentlige re
 - **HTTPS:** Et token, der sendes over `http://`, kan læses af alle på netværket. Et bearer-token beskytter kun, hvis forbindelsen er krypteret.
 
 Tilbage til dagens spørgsmål: **Hvem kan slette alle jeres noter nu?**
-
----
-
-## Efter timen
-
-- **Ryd op:** På GitHub under **Settings → Developer settings → Personal access tokens**: slet de tokens, I ikke bruger, og tjek udløbsdatoen på resten.
-- Brugte I `credential.helper store` i session 2? Så ligger jeres token som almindelig tekst i `~/.git-credentials`. Spørg agenten om `osxkeychain` (Mac) eller `manager` (Windows) i stedet.
-- Skriv fem linjer i jeres semesternotesbog: Hvilke *secrets* har jeres notes-service nu, hvor ligger de, og hvad gør I, hvis én lækker?
 
 ---
 
