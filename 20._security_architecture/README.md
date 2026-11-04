@@ -142,7 +142,11 @@ I par: Sæt de her skridt i den rigtige rækkefølge, og begrund:
 
 Hvorfor er det ikke nok at slette tokenet fra repoet? Bots scanner offentlige repos for nøgler inden for få minutter, og forks og kloner har stadig historikken.
 
-> GitHub hjælper: **secret scanning** og **push protection** kan stoppe et push, der indeholder en kendt slags token. Se **Settings → Code security** i jeres repo.
+> **GitHub hjælper.** Gå til jeres repo, og vælg **Settings → Advanced Security** (under *Security and quality* i menuen til venstre). Nederst på siden står **Secret Protection**. Tryk **Enable**.
+>
+> - Så holder GitHub hele tiden øje med repoet og giver jer besked, hvis der ligger *secrets* i det.
+> - Når Secret Protection er slået til, kan I også slå **push protection** til. Den stopper et push, der indeholder en kendt slags token, *før* det lander på GitHub.
+> - Er repoet offentligt, giver GitHub altid selv besked til udbyderen af tokenet, fx AWS eller OpenAI, når den finder et token. Hvad tror I, udbyderen gør så?
 
 **Ligger jeres GitHub-token måske som almindelig tekst?** I session 2 kørte I `git config --global credential.helper store`. Hvis I stadig bruger den indstilling, *kan* jeres token ligge i filen `~/.git-credentials`, som alle med adgang til jeres bruger kan læse. Men det er ikke givet, at den ligger der: Mange gemmer i stedet tokenet i styresystemets nøglering, fx Keychain på Mac. Tjek det, både på jeres laptop og i webtop-containeren fra session 2:
 
