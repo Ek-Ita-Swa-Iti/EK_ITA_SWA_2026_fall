@@ -82,7 +82,7 @@ Hvorfor gav vi tokenet i session 10 kun læseadgang? Det kaldes **least privileg
 
 ## Del 3: Øvelse · Giv notes-service en nøgle
 
-I par, i jeres notes-service. I må bruge agenten.
+I par, i jeres notes-service.
 
 ### 3a · *Secrets* ud af compose-filen
 
