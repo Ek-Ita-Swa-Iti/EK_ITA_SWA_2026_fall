@@ -144,6 +144,15 @@ Hvorfor er det ikke nok at slette tokenet fra repoet? Bots scanner offentlige re
 
 > GitHub hjælper: **secret scanning** og **push protection** kan stoppe et push, der indeholder en kendt slags token. Se **Settings → Code security** i jeres repo.
 
+**Ligger jeres GitHub-token måske som almindelig tekst?** I session 2 kørte I `git config --global credential.helper store`. Hvis I stadig bruger den indstilling, *kan* jeres token ligge i filen `~/.git-credentials`, som alle med adgang til jeres bruger kan læse. Men det er ikke givet, at den ligger der: Mange gemmer i stedet tokenet i styresystemets nøglering, fx Keychain på Mac. Tjek det, både på jeres laptop og i webtop-containeren fra session 2:
+
+```bash
+git config --global credential.helper   # står der "store"?
+ls ~/.git-credentials                   # findes filen?
+```
+
+Står der `store`, eller findes filen, så spørg agenten, hvordan I skifter til `osxkeychain` (Mac) eller `manager` (Windows). Tilbagekald derefter det gamle token, og lav et nyt.
+
 ---
 
 ## Del 5: Sådan gør de andre
