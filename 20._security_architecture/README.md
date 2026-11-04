@@ -33,7 +33,7 @@ Efter i dag kan du:
 
 ---
 
-## Del 1: Jagt på *secrets* (20 min)
+## Del 1: Jagt på *secrets*
 
 Alene, på jeres egen computer. **Vis ikke jeres skærm til andre i denne del.**
 
@@ -54,7 +54,7 @@ Spørgsmål til bagefter, i par:
 
 ---
 
-## Del 2: Hvem er du, og hvad må du? (25 min)
+## Del 2: Hvem er du, og hvad må du?
 
 Demo og øvelse i Insomnia mod GitHubs API, som I kender fra session 3 og 10.
 
@@ -77,7 +77,7 @@ Hvorfor gav vi tokenet i session 10 kun læseadgang? Det kaldes **least privileg
 
 ---
 
-## Del 3: Øvelse · Giv notes-service en nøgle (45 min)
+## Del 3: Øvelse · Giv notes-service en nøgle
 
 I par, i jeres notes-service. I må bruge agenten.
 
@@ -122,11 +122,11 @@ Jeres frontend skal også kunne oprette noter. Hvis I lægger tokenet i `app.js`
 
 ---
 
-## Pause (15 min)
+## Pause
 
 ---
 
-## Del 4: Lækket! (30 min)
+## Del 4: Lækket!
 
 **Scenarie:** I opdager, at jeres `NOTES_API_TOKEN` har ligget i et offentligt GitHub-repo i to dage.
 
@@ -150,7 +150,7 @@ Hvorfor er det ikke nok at slette tokenet fra repoet? Bots scanner offentlige re
 
 ---
 
-## Del 5: Sådan gør de andre (15 min)
+## Del 5: Sådan gør de andre
 
 - **_Secrets_ i rigtige systemer** ligger i en **secrets manager**: GitHub Actions Secrets, HashiCorp Vault, 1Password, eller cloud-udbyderens (AWS Secrets Manager, Azure Key Vault). Koden får dem, når den kører, og de ligger aldrig i Git.
 - **Kortlivede tokens:** Jo kortere et token virker, jo mindre skade gør det, hvis det lækker. Det er derfor, GitHub beder jer om en udløbsdato.
