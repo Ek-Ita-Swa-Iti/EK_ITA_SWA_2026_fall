@@ -1,8 +1,8 @@
-# Session 20: Sikkerhedsarkitektur · Hvor ligger jeres hemmeligheder?
+# Session 20: Sikkerhedsarkitektur · Hvor ligger jeres *secrets*?
 
 **ITA Software Architecture 2026 Fall**
 
-> I har brugt secrets hele semestret: en API-nøgle til Mistral Vibe i session 1, et GitHub-token i session 2, 3 og 10, og passwords til databaser i Docker. I dag samler vi trådene. Hvad er et token egentlig, hvor må en secret ligge, og hvad gør I, når én er lækket?
+> I har brugt *secrets* hele semestret: en API-nøgle til Mistral Vibe i session 1, et GitHub-token i session 2, 3 og 10, og passwords til databaser i Docker. I dag samler vi trådene. Hvad er et token egentlig, hvor må en *secret* ligge, og hvad gør I, når én er lækket?
 >
 > Og så giver I jeres notes-service sin egen nøgle.
 
@@ -20,8 +20,8 @@ Efter i dag kan du:
 
 - skelne mellem **autentificering** (*hvem er du?*) og **autorisation** (*hvad må du?*), og se forskellen på `401` og `403`
 - forklare, hvad et **token** er, og hvorfor det har **scopes** og en **udløbsdato**
-- placere en hemmelighed rigtigt: i en miljøvariabel eller en `.env`-fil, der ikke kommer i Git, og aldrig i kode, images eller frontend
-- handle rigtigt, når en hemmelighed er lækket: **tilbagekald den først**, ryd op bagefter
+- placere en *secret* rigtigt: i en miljøvariabel eller en `.env`-fil, der ikke kommer i Git, og aldrig i kode, images eller frontend
+- handle rigtigt, når en *secret* er lækket: **tilbagekald den først**, ryd op bagefter
 
 ---
 
@@ -33,11 +33,11 @@ Efter i dag kan du:
 
 ---
 
-## Del 1: Hemmelighedsjagt (20 min)
+## Del 1: Jagt på *secrets* (20 min)
 
 Alene, på jeres egen computer. **Vis ikke jeres skærm til andre i denne del.**
 
-Find de hemmeligheder, I har brugt i semestret, og skriv ned, *hvor* de ligger, og *hvem* der kan læse dem:
+Find de *secrets*, I har brugt i semestret, og skriv ned, *hvor* de ligger, og *hvem* der kan læse dem:
 
 | Hvor I brugte den | Prøv |
 |-------------------|------|
@@ -48,7 +48,7 @@ Find de hemmeligheder, I har brugt i semestret, og skriv ned, *hvor* de ligger, 
 
 Spørgsmål til bagefter, i par:
 
-- Hvilke af jeres hemmeligheder ligger som **almindelig tekst** i en fil?
+- Hvilke af jeres *secrets* ligger som **almindelig tekst** i en fil?
 - Ligger nogen af dem på **GitHub**?
 - Hvilken af dem ville gøre mest skade, hvis en anden fik den?
 
@@ -81,7 +81,7 @@ Hvorfor gav vi tokenet i session 10 kun læseadgang? Det kaldes **least privileg
 
 I par, i jeres notes-service. I må bruge agenten.
 
-### 3a · Hemmeligheder ud af compose-filen
+### 3a · *Secrets* ud af compose-filen
 
 Står der et password direkte i `docker-compose.yml` (fx `POSTGRES_PASSWORD: postgres`)? Flyt det ud:
 
@@ -103,7 +103,7 @@ Står der et password direkte i `docker-compose.yml` (fx `POSTGRES_PASSWORD: pos
 3. Tilføj `.env` til `.gitignore`. Lav en `.env.example` med navnene, men uden værdier, og commit den i stedet.
 4. Tjek med `git status`, at `.env` **ikke** kommer med.
 
-Prøv `docker compose config`. Hvad viser den? Hvad betyder det, at en hemmelighed i en miljøvariabel stadig kan læses af alle, der kan køre kommandoer på maskinen?
+Prøv `docker compose config`. Hvad viser den? Hvad betyder det, at en *secret* i en miljøvariabel stadig kan læses af alle, der kan køre kommandoer på maskinen?
 
 ### 3b · Kræv et token for at ændre noter
 
@@ -118,7 +118,7 @@ Prøv `docker compose config`. Hvad viser den? Hvad betyder det, at en hemmeligh
 
 Jeres frontend skal også kunne oprette noter. Hvis I lægger tokenet i `app.js`, hvem kan så se det? Åbn frontend i browseren, og tryk **Vis kilde** (eller kig i DevTools → Sources).
 
-**Frontend kan ikke holde på en hemmelighed.** Alt, hvad der sendes til browseren, kan brugeren læse. Hvad skulle der til i stedet? (Tænk på, hvordan I logger ind på GitHub.)
+**Frontend kan ikke holde på en _secret_.** Alt, hvad der sendes til browseren, kan brugeren læse. Hvad skulle der til i stedet? (Tænk på, hvordan I logger ind på GitHub.)
 
 ---
 
@@ -152,7 +152,7 @@ Hvorfor er det ikke nok at slette tokenet fra repoet? Bots scanner offentlige re
 
 ## Del 5: Sådan gør de andre (15 min)
 
-- **Hemmeligheder i rigtige systemer** ligger i en **secrets manager**: GitHub Actions Secrets, HashiCorp Vault, 1Password, eller cloud-udbyderens (AWS Secrets Manager, Azure Key Vault). Koden får dem, når den kører, og de ligger aldrig i Git.
+- **_Secrets_ i rigtige systemer** ligger i en **secrets manager**: GitHub Actions Secrets, HashiCorp Vault, 1Password, eller cloud-udbyderens (AWS Secrets Manager, Azure Key Vault). Koden får dem, når den kører, og de ligger aldrig i Git.
 - **Kortlivede tokens:** Jo kortere et token virker, jo mindre skade gør det, hvis det lækker. Det er derfor, GitHub beder jer om en udløbsdato.
 - **"Log ind med GitHub/Google"** (OAuth): Brugeren giver en app et token *på sine vegne*, med bestemte scopes, uden at give appen sit password. Det er svaret på 3c.
 - **HTTPS:** Et token, der sendes over `http://`, kan læses af alle på netværket. Et bearer-token beskytter kun, hvis forbindelsen er krypteret.
@@ -165,7 +165,7 @@ Tilbage til dagens spørgsmål: **Hvem kan slette alle jeres noter nu?**
 
 - **Ryd op:** På GitHub under **Settings → Developer settings → Personal access tokens**: slet de tokens, I ikke bruger, og tjek udløbsdatoen på resten.
 - Brugte I `credential.helper store` i session 2? Så ligger jeres token som almindelig tekst i `~/.git-credentials`. Spørg agenten om `osxkeychain` (Mac) eller `manager` (Windows) i stedet.
-- Skriv fem linjer i jeres semesternotesbog: Hvilke hemmeligheder har jeres notes-service nu, hvor ligger de, og hvad gør I, hvis én lækker?
+- Skriv fem linjer i jeres semesternotesbog: Hvilke *secrets* har jeres notes-service nu, hvor ligger de, og hvad gør I, hvis én lækker?
 
 ---
 
