@@ -2,7 +2,7 @@
 
 **ITA Software Architecture 2026 Fall**
 
-> I har brugt hemmeligheder hele semestret: en API-nøgle til Mistral Vibe i session 1, et GitHub-token i session 2, 3 og 10, og passwords til databaser i Docker. I dag samler vi trådene. Hvad er et token egentlig, hvor må en hemmelighed ligge, og hvad gør I, når én er lækket?
+> I har brugt secrets hele semestret: en API-nøgle til Mistral Vibe i session 1, et GitHub-token i session 2, 3 og 10, og passwords til databaser i Docker. I dag samler vi trådene. Hvad er et token egentlig, hvor må en secret ligge, og hvad gør I, når én er lækket?
 >
 > Og så giver I jeres notes-service sin egen nøgle.
 
