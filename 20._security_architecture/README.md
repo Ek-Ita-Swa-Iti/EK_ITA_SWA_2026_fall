@@ -158,7 +158,16 @@ git config --global credential.helper   # står der "store"?
 ls ~/.git-credentials                   # findes filen?
 ```
 
-Står der `store`, eller findes filen, så spørg agenten, hvordan I skifter til `osxkeychain` (Mac) eller `manager` (Windows). Tilbagekald derefter det gamle token, og lav et nyt.
+Står der `store`, eller findes filen, så skift til en sikrere løsning, og slet filen:
+
+```bash
+git config --global credential.helper osxkeychain   # Mac: Keychain
+git config --global credential.helper manager       # Windows: Legitimationsstyring
+git config --global credential.helper cache         # webtop/Linux: husker kun tokenet i 15 minutter
+rm ~/.git-credentials
+```
+
+Tilbagekald derefter det gamle token, og lav et nyt.
 
 ---
 
