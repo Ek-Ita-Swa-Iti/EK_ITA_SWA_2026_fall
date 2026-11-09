@@ -28,7 +28,7 @@ Efter i dag kan du:
 ## Før timen
 
 - Hav jeres **notes-service** klar og kørende (`docker compose up`).
-- Hav **Insomnia** og jeres AI-agent klar.
+- Hav **Insomnia** klar.
 - Find jeres **GitHub-token** fra session 10 (eller lav et nyt med læseadgang: `public_repo`, `read:user`).
 
 ---
