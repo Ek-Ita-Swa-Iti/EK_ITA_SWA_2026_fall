@@ -4,7 +4,7 @@
 
 > Søg på "motion" i en almindelig database, og du finder kun sider, hvor ordet "motion" står. Men siden om løb handler jo også om motion.
 >
-> En almindelig database sammenligner bogstaver. I dag møder I en database, der sammenligner **betydning**: en vektordatabase. I finder ud af, hvordan den virker, og hvorfor det overhovedet er muligt at søge på den måde.
+> En almindelig database sammenligner bogstaver. I dag skal vi arbejde med en database, der sammenligner **betydning**: en vektordatabase. I finder ud af, hvordan den virker, og hvorfor det overhovedet er muligt at søge på den måde.
 
 ---
 
