@@ -169,9 +169,8 @@ En **vektordatabase** er en database, der er bygget til ét spørgsmål: *Hvilke
 
 ## Del 3: Kig ind i vektorsøgningen
 
-Søg på "kaffe" igen, og følg de tre trin i højre side:
+Søg på "kaffe" igen, og følg trin 2 og 3 i højre side:
 
-1. **Søgeteksten** får `query: ` foran. Hvorfor tror I, modellen vil vide, at det er en søgning?
 2. **Embedding-modellen** laver teksten om til 384 tal. Striben viser dem: én tynd streg pr. tal, orange for positive og blå for negative.
 3. **Qdrant** får de 384 tal og svarer med de 5 nærmeste punkter. Se request'en: Der står ingen tekst i den, kun tal. Se svaret: Hvert punkt har et `id`, en `score` og den side, der er gemt sammen med tallene (`payload`).
 
