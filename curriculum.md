@@ -38,15 +38,15 @@ with an AI coding agent**, build and change small ones of your own, and learn to
 |---|---|---|
 | `mistral-vibe-ek-ita` | The **spine** — a small CLI agent, the first real codebase you read | Sessions 1–2, 6–8, 10 |
 | `example-*` folders in the session folders | **Runnable** examples (`docker compose up`) | Sessions 8, 9, 12, 18, 19 |
-| Your own **notes-service** | The system you build and change | Sessions 9, 11, 12, 19 |
+| Your own **notes-service** | The system you build and change | Sessions 9, 11, 12, 19, 20 |
 
 ---
 
 ## Session overview
 
 **Sessions 2–5** are the **IT-infrastructure foundations block**; architecture teaching runs
-**Sessions 6–12** and **18–19**, with the project block at **14–17**; the exam project is
-**Sessions 22–29**. Session 1 is a 3rd-semester intro session. Sessions 13, 20 and 21 have no
+**Sessions 6–12** and **18–20**, with the project block at **14–17**; the exam project is
+**Sessions 22–29**. Session 1 is a 3rd-semester intro session. Sessions 13 and 21 have no
 material yet.
 
 | # | Topic | What you do |
@@ -66,6 +66,7 @@ material yet.
 | **14–17** | **Project: small distributed system** | *No teaching.* Build a modular monolith, applying the architecture concepts from the course so far. |
 | 18 | **Dataarkitektur · Søg på betydning** | Embeddings and vector databases: a side-by-side search engine (MySQL `LIKE` vs Qdrant), music in Spotify, and your own embeddings with Ollama. |
 | 19 | **Dataarkitektur 2 · Semantisk søgning** | A full-day tutorial: add Ollama and Qdrant to your notes-service in the right layers. MongoDB is the source of truth; Qdrant is an index you can rebuild. |
+| 20 | **Sikkerhedsarkitektur · Hvor ligger jeres *secrets*?** | Hunt down the secrets you've used all semester; authentication vs authorisation (`401` vs `403`), tokens with scopes and expiry; give your notes-service its own API key; what to do when a secret leaks — revoke first. |
 | **22–29** | **Exam project** | *No teaching.* Each group finds a real project at a real customer, maps the company's architecture, then designs, implements, and defends an architecture of their own choosing. |
 
 ---
