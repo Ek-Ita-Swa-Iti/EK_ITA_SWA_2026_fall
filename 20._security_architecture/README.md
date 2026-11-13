@@ -35,8 +35,6 @@ Efter i dag kan du:
 
 ## Del 1: Jagt på *secrets*
 
-Alene, på jeres egen computer. **Vis ikke jeres skærm til andre i denne del.**
-
 Find de *secrets*, I har brugt i semestret, og skriv ned, *hvor* de ligger, og *hvem* der kan læse dem:
 
 | Hvor I brugte den | Hvor den sandsynligvis ligger | Prøv |
