@@ -222,6 +222,65 @@ Tilbagekald derefter det gamle token, og lav et nyt.
 - **"Log ind med GitHub/Google"** (OAuth): Brugeren giver en app et token *på sine vegne*, med bestemte scopes, uden at give appen sit password. Det er svaret på 3c.
 - **HTTPS:** Et token, der sendes over `http://`, kan læses af alle på netværket. Et bearer-token beskytter kun, hvis forbindelsen er krypteret.
 
+---
+
+## Del 6: Øvelse · Tjek jeres obligatoriske opgave
+
+Nu skal I bruge det på noget, der allerede er afleveret. Åbn jeres gruppes repo med den obligatoriske opgave, som I afleverede i sidste uge, og find alle de *secrets*, der står som almindelig tekst.
+
+### 6a · Find dem
+
+Klon repoet på ny, så I tjekker præcis det, der ligger på GitHub, og ikke jeres lokale kopi:
+
+```bash
+git clone <url-til-jeres-repo> tjek-aflevering
+cd tjek-aflevering
+```
+
+**I filerne, som de ser ud nu:**
+
+```bash
+git grep -n -i -E "password|passwd|secret|token|api[_-]?key|bearer"
+git grep -n -E "ghp_|github_pat_"            # GitHub-tokens
+git grep -n -E "://[^/@ ]+:[^/@ ]+@"         # URL med brugernavn og password
+ls -a                                         # ligger der en .env?
+cat .gitignore                                # står .env der?
+```
+
+**I historikken.** En *secret*, der er slettet i en senere commit, ligger der stadig (Del 4):
+
+```bash
+git log -p --all | grep -n -i -E "password|token|api[_-]?key|bearer|ghp_"
+git log --all --oneline -- .env               # har .env nogensinde været committet?
+```
+
+Kig især i `docker-compose.yml` (`environment:`), `Dockerfile` (`ENV` og `ARG`), jeres shell-scripts (`curl -H "Authorization: …"`) og `README.md` (eksempler med rigtige værdier).
+
+Slå også **Secret Protection** til på repoet, som i Del 4, og se, om GitHub finder noget, I har overset.
+
+Skriv en liste: *Hvad* er det, *hvor* ligger det (fil og commit), og er det **rigtigt** (virker det et sted), eller er det bare et eksempel?
+
+### 6b · Løs dem
+
+For hver *secret* på listen, i den rækkefølge I fandt frem til i Del 4:
+
+1. **Er den rigtig, så tilbagekald den først**, og lav en ny. Et token på GitHub i flere uger skal regnes for lækket.
+2. **Flyt den ud af koden** til en `.env`-fil, som i Del 3a. Scriptet læser den som miljøvariabel, fx `curl -H "Authorization: Bearer $API_TOKEN" …`, og `docker-compose.yml` sender den videre med `${API_TOKEN}`.
+3. **Tilføj `.env` til `.gitignore`**, og commit en `.env.example` med navnene, men uden værdier.
+4. **Opdatér `README.md`**, så en fremmed kan se, hvilke værdier de selv skal udfylde, før `docker compose up` virker.
+5. **Commit og push**, og kør tjekket fra 6a igen.
+
+**Færdig betyder:** `git grep` finder ingen rigtige *secrets*, `.env` er ikke i repoet, og projektet kan stadig startes ud fra README'en.
+
+> **Miniøvelse:** Fandt I ingen *secrets*? Så kig efter det, der *kunne* blive et problem: et password, der står hardcodet "bare til test", en `ENV` i `Dockerfile`, eller en URL med brugernavn og password i. Hvad ville der ske, hvis I en dag skiftede den ud med en rigtig værdi?
+
+Spørgsmål til bagefter:
+
+- Hvor mange af de *secrets*, I fandt, var stadig gyldige?
+- Hvilken af dem kunne I ikke fjerne ved bare at lave en ny commit? Hvad gjorde I i stedet?
+
+---
+
 Tilbage til dagens spørgsmål: **Hvem kan slette alle jeres noter nu?**
 
 ---
