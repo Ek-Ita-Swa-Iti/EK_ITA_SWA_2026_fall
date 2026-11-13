@@ -113,6 +113,37 @@ Prøv `docker compose config`. Hvad viser den? Hvad betyder det, at en *secret* 
 - Backend læser tokenet fra miljøvariablen `NOTES_API_TOKEN` (`process.env.NOTES_API_TOKEN`), ikke fra koden. Send den videre fra `.env` i `docker-compose.yml`.
 - Tilføj et `securitySchemes`-afsnit med bearer-token i jeres `swagger.json` fra session 12, så kontrakten fortæller klienten, at der kræves et token.
 
+  ```json
+  {
+    "openapi": "3.0.3",
+    "components": {
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer"
+        }
+      }
+    },
+    "paths": {
+      "/v1/notes/{id}": {
+        "get": {
+          "summary": "Hent én note (åben for alle)"
+        },
+        "delete": {
+          "summary": "Slet en note",
+          "security": [{ "bearerAuth": [] }],
+          "responses": {
+            "204": { "description": "Noten er slettet" },
+            "401": { "description": "Mangler eller forkert token" }
+          }
+        }
+      }
+    }
+  }
+  ```
+
+  `securitySchemes` beskriver, *hvordan* klienten sender tokenet. `security` på den enkelte operation siger, *hvor* det kræves. `GET` har ingen `security` og er derfor åben. I Swagger UI dukker der nu en **Authorize**-knap op, hvor I kan indsætte tokenet.
+
 **Færdig betyder:** I Insomnia giver `DELETE /v1/notes/1` uden token `401`, og med token virker det.
 
 ### 3c · Og frontend?
