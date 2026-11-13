@@ -71,7 +71,7 @@ Forskellen på authentication og authorization:
 - **Authentication:** GitHub ved ikke, hvem I er → `401 Unauthorized`.
 - **Authorization:** GitHub ved godt, hvem I er, men tokenet må ikke det, I beder om. Hvilken kode fik I? Står der noget om scopes i headers (`x-oauth-scopes`, `x-accepted-oauth-scopes`)?
 
-Et token er et **adgangskort** (authorization), ikke en identitet (authentication). Det har:
+Et token viser, hvem I er (authentication), men det er først og fremmest et **adgangskort** (authorization): Det må kun det, dets scopes tillader. Det har:
 
 - **scopes**: hvad det må (læse, skrive, slette)
 - **en udløbsdato**: hvor længe det virker
