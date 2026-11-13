@@ -167,6 +167,92 @@ Jeres frontend skal også kunne oprette noter. Hvis I lægger tokenet i `app.js`
 
 **Frontend kan ikke holde på en _secret_.** Alt, hvad der sendes til browseren, kan brugeren læse. Hvad skulle der til i stedet? (Tænk på, hvordan I logger ind på GitHub.)
 
+<details>
+<summary><strong>Løsning:</strong> Login med en session-cookie</summary>
+
+<br>
+
+Browseren skal ikke have en fælles *secret*. I stedet logger **brugeren** ind, og backend giver hver bruger sin egen session, som kan udløbe og slettes.
+
+1. Frontend sender brugernavn og password til `POST /v1/login`.
+2. Backend tjekker passwordet mod en **hash** i MongoDB. Passwordet selv bliver aldrig gemt.
+3. Er det rigtigt, laver backend et tilfældigt session-id, husker hvem det hører til, og sender det tilbage som en cookie:
+
+   ```
+   Set-Cookie: session=4f9c…; HttpOnly; Secure; SameSite=Strict; Max-Age=3600
+   ```
+
+   | Flag | Hvad det gør |
+   |---|---|
+   | `HttpOnly` | JavaScript kan ikke læse cookien. Den står ikke i `app.js` og kan ikke stjæles af et script |
+   | `Secure` | Cookien sendes kun over HTTPS (browsere tillader `localhost` uden HTTPS) |
+   | `SameSite=Strict` | Cookien sendes ikke med, når en anden hjemmeside laver requests til jeres API |
+   | `Max-Age=3600` | Sessionen udløber efter en time |
+
+4. Browseren sender cookien med automatisk. Ved `POST`, `PUT` og `DELETE` slår backend session-id'et op: Hvem er brugeren (authentication), og må brugeren det her (authorization)? Ellers `401`.
+5. `POST /v1/logout` sletter sessionen i backend.
+
+**Backend** (Node har det hele indbygget i `crypto`, så der er ingen nye npm-pakker):
+
+```js
+const crypto = require("crypto");
+
+// Gem aldrig passwordet, kun salt + hash. Det her kører, når en bruger oprettes.
+function hashPassword(password) {
+  const salt = crypto.randomBytes(16).toString("hex");
+  const hash = crypto.scryptSync(password, salt, 64).toString("hex");
+  return `${salt}:${hash}`;
+}
+
+function checkPassword(password, stored) {
+  const [salt, hash] = stored.split(":");
+  const candidate = crypto.scryptSync(password, salt, 64);
+  return crypto.timingSafeEqual(candidate, Buffer.from(hash, "hex"));
+}
+
+const sessions = new Map(); // session-id → { username, expires }
+
+function createSession(username) {
+  const id = crypto.randomBytes(32).toString("hex");
+  sessions.set(id, { username, expires: Date.now() + 60 * 60 * 1000 });
+  return id;
+}
+
+function userFromRequest(req) {
+  const match = (req.headers.cookie || "").match(/(?:^|;\s*)session=([a-f0-9]+)/);
+  const session = match && sessions.get(match[1]);
+  if (!session || session.expires < Date.now()) return null;
+  return session.username;
+}
+```
+
+**Frontend og backend ligger på hver sin origin** (`localhost:8080` og `localhost:3000`), så browseren sender kun cookien med, hvis begge sider siger ja:
+
+```js
+// app.js
+fetch(`${BACKEND_URL}/v1/notes`, {
+  method: "POST",
+  credentials: "include", // send cookien med
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ title, body }),
+});
+```
+
+```js
+// server.js, i send(): ikke "*", når der er cookies med
+"Access-Control-Allow-Origin": "http://localhost:8080",
+"Access-Control-Allow-Credentials": "true",
+```
+
+**Hvor hører det hjemme i lagene?** Login-routen og tjekket af cookien ligger i **presentation** (`server.js`). Reglen "kun ejeren må slette sin note" er en regel for applikationen og hører til i **application** (`notesService.js`). Brugerne med deres password-hash ligger i **persistence**, fx en `usersRepository.js` mod MongoDB.
+
+**Trade-offs:**
+
+- `sessions` ligger i hukommelsen, så alle bliver logget ud, når backend genstarter, og det virker ikke med flere backend-containere. Rigtige systemer gemmer sessionerne i en database eller i Redis.
+- Det her er stadig jeres egen login. Med **"Log ind med GitHub"** (OAuth, Del 5) skal I slet ikke gemme passwords. Til gengæld skal I oprette en OAuth-app på GitHub og holde dens `client_secret` i backends `.env`.
+
+</details>
+
 ---
 
 ## Del 4: Lækket!
