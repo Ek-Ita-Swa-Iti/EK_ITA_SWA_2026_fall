@@ -47,7 +47,7 @@ Find de *secrets*, I har brugt i semestret, og skriv ned, *hvor* de ligger, og *
 
 Kommandoerne til Mac og Windows viser kun, *at* der ligger en nøgle, og ikke selve nøglen. Finder I ikke noget dér, så kig i `~/.vibe/.env`. Ældre versioner af Vibe gemte nøglen i den fil.
 
-Spørgsmål til bagefter, i par:
+Spørgsmål til bagefter:
 
 - Hvilke af jeres *secrets* ligger som **almindelig tekst** i en fil?
 - Ligger nogen af dem på **GitHub**?
