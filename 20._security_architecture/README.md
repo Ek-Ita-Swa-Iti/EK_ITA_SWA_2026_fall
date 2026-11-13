@@ -120,6 +120,8 @@ Prøv `docker compose config`. Hvad viser den? Hvad betyder det, at en *secret* 
 
 ### 3b · Kræv et token for at ændre noter
 
+Det her laver I i [`example-node`](example-node/README.md) i denne mappe: notes-servicen med semantisk søgning fra session 19.
+
 - `GET`-requests er stadig åbne for alle.
 - `POST`, `PUT` og `DELETE` kræver headeren `Authorization: Bearer <token>`. Mangler den, eller er den forkert, svarer API'et `401`.
 - Backend læser tokenet fra miljøvariablen `NOTES_API_TOKEN` (`process.env.NOTES_API_TOKEN`), ikke fra koden. Send den videre fra `.env` i `docker-compose.yml`.
