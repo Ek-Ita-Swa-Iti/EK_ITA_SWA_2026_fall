@@ -80,7 +80,7 @@ Hvorfor gav vi tokenet i session 10 kun læseadgang? Det kaldes **least privileg
 
 ## Del 3: Øvelse · Giv notes-service en nøgle
 
-I par, i jeres notes-service.
+I jeres notes-service.
 
 ### 3a · *Secrets* ud af compose-filen
 
@@ -133,7 +133,7 @@ Jeres frontend skal også kunne oprette noter. Hvis I lægger tokenet i `app.js`
 2. Fjern linjen i en ny commit, og push igen.
 3. Kør `git log -p`. Er tokenet væk?
 
-I par: Sæt de her skridt i den rigtige rækkefølge, og begrund:
+Sæt de her skridt i den rigtige rækkefølge, og begrund:
 
 - Fjern tokenet fra Git-historikken
 - **Tilbagekald tokenet**, og lav et nyt
