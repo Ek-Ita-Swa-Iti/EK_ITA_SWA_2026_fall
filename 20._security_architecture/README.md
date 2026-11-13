@@ -28,6 +28,7 @@ Efter i dag kan du:
 ## Før timen
 
 - Hav jeres **notes-service** klar og kørende (`docker compose up`).
+  - Virker jeres ikke, eller vil I starte forfra, så brug [`example-node`](example-node/README.md) i denne mappe. Det er notes-servicen med semantisk søgning fra session 19. Kopiér den ind i jeres repo, og kør den derfra.
 - Hav **Insomnia** klar.
 - Find jeres **GitHub-token** fra session 10 (eller lav et nyt med læseadgang: `public_repo`, `read:user`).
 
