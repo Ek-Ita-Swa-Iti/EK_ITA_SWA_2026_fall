@@ -127,7 +127,10 @@ Prøv `docker compose config`. Hvad viser den? Hvad betyder det, at en *secret* 
     "paths": {
       "/v1/notes/{id}": {
         "get": {
-          "summary": "Hent én note (åben for alle)"
+          "summary": "Hent én note (åben for alle)",
+          "responses": {
+            "200": { "description": "Noten" }
+          }
         },
         "delete": {
           "summary": "Slet en note",
