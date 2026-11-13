@@ -66,7 +66,7 @@ Demo og øvelse i Insomnia mod GitHubs API, som I kender fra session 3 og 10.
 2. Samme request **med** jeres læse-token fra session 10 (`Authorization: Bearer …`). Hvilken statuskode nu?
 3. `GET https://api.github.com/user` med det samme token. Virker det?
 
-Forklar forskellen:
+Forskellen på authentication og authorization:
 
 - **Autentificering:** GitHub ved ikke, hvem I er → `401 Unauthorized`.
 - **Autorisation:** GitHub ved godt, hvem I er, men tokenet må ikke det, I beder om. Hvilken kode fik I? Står der noget om scopes i headers (`x-oauth-scopes`, `x-accepted-oauth-scopes`)?
