@@ -48,7 +48,7 @@ Find de *secrets*, I har brugt i semestret, og skriv ned, *hvor* de ligger, og *
 
 Kommandoerne til Mac og Windows viser kun, *at* der ligger en nøgle, og ikke selve nøglen. Finder I ikke noget dér, så kig i `~/.vibe/.env`. Ældre versioner af Vibe gemte nøglen i den fil.
 
-At slette en *secret* på jeres egen computer gør den ikke ugyldig. Har en anden fået fat i den, virker den stadig. Det er kun **tilbagekald** hos udbyderen (Mistral, GitHub), der gør den ubrugelig. Mere om det i Del 4.
+At slette en *secret* på jeres egen computer gør den ikke ugyldig. Har en anden fået fat i den, virker den stadig. Det er kun **tilbagekald** hos udbyderen (Mistral, GitHub), der gør den ubrugelig. Mere om det i [Del 4](#del-4-lækket).
 
 Spørgsmål til bagefter:
 
