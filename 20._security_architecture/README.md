@@ -18,7 +18,7 @@
 
 Efter i dag kan du:
 
-- skelne mellem **autentificering** (*hvem er du?*) og **autorisation** (*hvad må du?*), og se forskellen på `401` og `403`
+- skelne mellem **authentication** (*hvem er du?*) og **authorization** (*hvad må du?*), og se forskellen på `401` og `403`
 - forklare, hvad et **token** er, og hvorfor det har **scopes** og en **udløbsdato**
 - placere en *secret* rigtigt: i en miljøvariabel eller en `.env`-fil, der ikke kommer i Git, og aldrig i kode, images eller frontend
 - handle rigtigt, når en *secret* er lækket: **tilbagekald den først**, ryd op bagefter
