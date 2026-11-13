@@ -85,22 +85,31 @@ I jeres notes-service.
 
 ### 3a · *Secrets* ud af compose-filen
 
-Står der et password direkte i `docker-compose.yml` (fx `POSTGRES_PASSWORD: postgres`)? Flyt det ud:
+Står der et password direkte i `docker-compose.yml`? I `example-node` står MongoDB-passwordet `notes123` to steder: hos `mongo` og i backends `MONGO_URL`. Flyt det ud:
 
 1. Lav en fil `.env` ved siden af `docker-compose.yml`:
 
    ```
-   POSTGRES_PASSWORD=et-langt-password
+   MONGO_PASSWORD=et-langt-password
    NOTES_API_TOKEN=et-langt-tilfældigt-token
    ```
 
-   Brug fx `openssl rand -hex 32` til at lave et tilfældigt token.
+   Brug fx `openssl rand -hex 32` til at lave et tilfældigt password og token. Hex er kun bogstaver og tal, så det kan stå i en URL uden problemer.
 2. I `docker-compose.yml` henter I værdierne fra `.env`:
 
    ```yaml
+     backend:
        environment:
-         POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+         MONGO_URL: mongodb://notes:${MONGO_PASSWORD}@mongo:27017
+         NOTES_API_TOKEN: ${NOTES_API_TOKEN}
+
+     mongo:
+       environment:
+         MONGO_INITDB_ROOT_USERNAME: notes
+         MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
    ```
+
+   MongoDB sætter kun passwordet, første gang containeren starter med en tom database. Kør `docker compose down` og så `docker compose up -d`, så `mongo` starter forfra med det nye password.
 
 3. Tilføj `.env` til `.gitignore`. Lav en `.env.example` med navnene, men uden værdier, og commit den i stedet.
 4. Tjek med `git status`, at `.env` **ikke** kommer med.

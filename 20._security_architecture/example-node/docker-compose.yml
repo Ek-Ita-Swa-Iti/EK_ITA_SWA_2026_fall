@@ -4,7 +4,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      MONGO_URL: mongodb://mongo:27017
+      MONGO_URL: mongodb://notes:notes123@mongo:27017
       OLLAMA_URL: http://ollama:11434
       QDRANT_URL: http://qdrant:6333
     depends_on:
@@ -23,6 +23,9 @@ services:
     image: mongo:8
     ports:
       - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: notes
+      MONGO_INITDB_ROOT_PASSWORD: notes123
 
   swagger-ui:
     image: swaggerapi/swagger-ui
