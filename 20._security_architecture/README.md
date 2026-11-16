@@ -2,9 +2,13 @@
 
 **ITA Software Architecture 2026 Fall**
 
-**Eksamensdatoer:** 4.–5. samt 7.–8. januar
-
 > I har brugt *secrets* hele semestret: API-nøgler, GitHub-tokens og databasepasswords. I dag ser vi, hvor hurtigt en *secret* bliver fundet, når den ligger forkert, og så rydder I op i jeres egen kode.
+
+---
+
+## Eksamensdatoer
+
+4.–5. samt 7.–8. januar
 
 ---
 
