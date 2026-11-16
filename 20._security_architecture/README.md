@@ -32,16 +32,12 @@ Efter i dag kan du:
 
 ## Program
 
-| Tid | Hvad |
-|-----|------|
-| 0:00 | Runde 1 · Demo: Vi lækker en nøgle |
-| 0:10 | Runde 2 · *Secrets* ud af compose-filen |
-| 0:55 | Pause |
-| 1:05 | Runde 1 igen · Blev nøglen fundet? |
-| 1:15 | Runde 3 · Find *secrets* i jeres aflevering |
-| 2:15 | Pause |
-| 2:25 | Ekstra · Kræv et token for at slette noter |
-| 2:50 | Opsamling |
+1. Runde 1 · Demo: Vi lækker en nøgle
+2. Runde 2 · *Secrets* ud af compose-filen
+3. Runde 1 igen · Blev nøglen fundet?
+4. Runde 3 · Find *secrets* i jeres aflevering
+5. Ekstra · Kræv et token for at slette noter
+6. Opsamling
 
 ---
 
@@ -51,7 +47,7 @@ Jeg laver en falsk AWS-nøgle på [canarytokens.org](https://canarytokens.org) o
 
 **Gæt:** Hvor lang tid går der, før nogen prøver den?
 
-Vi kigger i min indbakke efter pausen.
+Vi kigger i min indbakke senere i dag.
 
 ---
 
