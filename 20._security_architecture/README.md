@@ -41,8 +41,8 @@ Find de *secrets*, I har brugt i semestret, og skriv ned, *hvor* de ligger, og *
 | Hvor I brugte den | Hvor den sandsynligvis ligger | Prøv | Sådan sletter I den |
 |-------------------|-------------------------------|------|---------------------|
 | Mistral Vibe-nøglen, session 1 | I styresystemets **nøglering** | **Mac:** `security find-generic-password -s ai.mistral.vibe`<br>**Windows:** Åbn **Legitimationsstyring** (Credential Manager) → *Windows-legitimationsoplysninger* | **Mac:** `security delete-generic-password -s ai.mistral.vibe`<br>**Windows:** Legitimationsstyring → vælg nøglen → **Fjern**<br>Slet også linjen i `~/.vibe/.env`, hvis den findes.<br>**Tilbagekald:** <https://console.mistral.ai> → *API Keys* → slet nøglen |
-| GitHub-token til `git push` fra jeres laptop, session 5 og frem | I **nøgleringen**. Git gemmer det selv der | `git config credential.helper` viser hvordan.<br>**Mac:** `security find-internet-password -s github.com`<br>**Windows:** Legitimationsstyring, find `git:https://github.com` | **Mac:** `security delete-internet-password -s github.com`<br>**Windows:** Legitimationsstyring → `git:https://github.com` → **Fjern**<br>**Tilbagekald:** GitHub → *Settings* → *Developer settings* → *Personal access tokens* → **Delete** |
-| GitHub-token til `git push` i webtop, session 2 | Som **almindelig tekst** i `~/.git-credentials` i webtop-containeren, fordi I kørte `credential.helper store` | `cat ~/.git-credentials` (i webtop) | `rm ~/.git-credentials`<br>`git config --global --unset credential.helper`<br>**Tilbagekald** tokenet på GitHub som ovenfor |
+| GitHub-token til `git push` fra jeres laptop, session 5 og frem | I **nøgleringen**. Git gemmer det selv der | `git config credential.helper` viser hvordan.<br>**Mac:** `security find-internet-password -s github.com`<br>**Windows:** Legitimationsstyring, find `git:https://github.com` | **Mac:** `security delete-internet-password -s github.com`<br>**Windows:** Legitimationsstyring → `git:https://github.com` → **Fjern**<br>Står der `store`, så skift til nøgleringen: `git config --global credential.helper osxkeychain` (Mac) eller `manager` (Windows), og `rm ~/.git-credentials`<br>**Tilbagekald:** GitHub → *Settings* → *Developer settings* → *Personal access tokens* → **Delete** |
+| GitHub-token til `git push` i webtop, session 2 | Som **almindelig tekst** i `~/.git-credentials` i webtop-containeren, fordi I kørte `credential.helper store` | `cat ~/.git-credentials` (i webtop) | `rm ~/.git-credentials`<br>Skift til en sikrere helper: `git config --global credential.helper cache` (husker kun tokenet i 15 minutter)<br>**Tilbagekald** tokenet på GitHub som ovenfor |
 | `export TOKEN=…` og `export GH_TOKEN=…`, session 3 og 10 | I jeres **shell-historik** | `history \| grep TOKEN` | `history -d <nummer>` for hver linje (start med det højeste nummer), så `history -w`<br>Eller ryd det hele: `history -c && history -w`<br>**Mac (zsh):** Ret i `~/.zsh_history` i en editor<br>`unset TOKEN GH_TOKEN` fjerner dem fra den åbne terminal |
 | Databasepasswordet i jeres notes-service, session 9 (`DB_PASSWORD` og `MYSQL_ROOT_PASSWORD`). Det samme gælder session 6 og 18 | I jeres **`docker-compose.yml`** | Kig i filen. I lagde notes-service på GitHub i session 11. Ligger passwordet der nu? | Flyt det ud i en `.env`-fil (Del 3a), og **skift passwordet**. Ligger det på GitHub, er det i historikken, selvom I sletter det i en ny commit (Del 4) |
 
@@ -143,24 +143,6 @@ Hvorfor er det ikke nok at slette tokenet fra repoet? Bots scanner offentlige re
 > - Så holder GitHub hele tiden øje med repoet og giver jer besked, hvis der ligger *secrets* i det.
 > - Når Secret Protection er slået til, kan I også slå **push protection** til. Den stopper et push, der indeholder en kendt slags token, *før* det lander på GitHub.
 > - Er repoet offentligt, giver GitHub altid selv besked til udbyderen af tokenet, fx AWS eller OpenAI, når den finder et token. Hvad tror I, udbyderen gør så?
-
-**Ligger jeres GitHub-token måske som almindelig tekst?** I session 2 kørte I `git config --global credential.helper store`. Hvis I stadig bruger den indstilling, *kan* jeres token ligge i filen `~/.git-credentials`, som alle med adgang til jeres bruger kan læse. Men det er ikke givet, at den ligger der: Mange gemmer i stedet tokenet i styresystemets nøglering, fx Keychain på Mac. Tjek det, både på jeres laptop og i webtop-containeren fra session 2:
-
-```bash
-git config --global credential.helper   # står der "store"?
-ls ~/.git-credentials                   # findes filen?
-```
-
-Står der `store`, eller findes filen, så skift til en sikrere løsning, og slet filen:
-
-```bash
-git config --global credential.helper osxkeychain   # Mac: Keychain
-git config --global credential.helper manager       # Windows: Legitimationsstyring
-git config --global credential.helper cache         # webtop/Linux: husker kun tokenet i 15 minutter
-rm ~/.git-credentials
-```
-
-Tilbagekald derefter det gamle token, og lav et nyt.
 
 ---
 
