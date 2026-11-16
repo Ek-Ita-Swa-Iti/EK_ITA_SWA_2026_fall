@@ -55,7 +55,7 @@ Vi kigger i min indbakke senere i dag.
 
 ## Runde 2 · *Secrets* ud af compose-filen
 
-**Demo (5 min):** Jeg gør det i `example-node`.
+**Demo:** Jeg gør det i `example-node`.
 
 **I gør det samme** i jeres notes-service:
 
@@ -106,7 +106,7 @@ At slette den fra repoet er ikke nok. Den ligger stadig i historikken og i alle 
 
 ## Runde 3 · Find *secrets* i jeres aflevering
 
-**Demo (5 min):** Jeg kører prompten herunder på et repo.
+**Demo:** Jeg kører prompten herunder på et repo.
 
 **I gør det samme** på jeres gruppes repo med den obligatoriske opgave. Klon det på ny, så I tjekker det, der ligger på GitHub:
 
