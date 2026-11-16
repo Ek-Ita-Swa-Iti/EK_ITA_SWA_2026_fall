@@ -1,32 +1,4 @@
-# Til underviseren: demo og facit
-
-## Runde 1 · Demo: GitHub fanger et token
-
-**Før timen**
-
-1. Lav et offentligt test-repo, fx `s20-leak-demo`.
-2. GitHub → *Settings* → *Developer settings* → *Personal access tokens* → **Fine-grained tokens** → *Generate new token*.
-   - Udløb: 1 dag
-   - Repository access: *Public repositories (read-only)*, ingen ekstra rettigheder
-3. Prøv demoen én gang, så du ved, hvordan det ser ud.
-
-**I timen**
-
-```bash
-echo "GITHUB_TOKEN=<tokenet>" > config.txt
-git add config.txt && git commit -m "config"
-git push
-```
-
-- **Push protection** afviser pushet og viser fil, linje og token-type. Vis det på skærmen.
-- Fejlbeskeden har et link, hvor du kan tillade pushet. Gør det, og push igen.
-- GitHub ser nu tokenet i et offentligt repo og tilbagekalder det. Vis på *Personal access tokens*, at det er væk, og find mailen fra GitHub.
-
-Slet tokenet manuelt bagefter, hvis det ikke allerede er sket, og slet test-repoet.
-
----
-
-## Runde 3 · Skattejagt: facit
+# Løsning: Runde 3 · Skattejagt
 
 | # | Hvad | Hvor | Hvem kan se den |
 |---|------|------|-----------------|
@@ -36,9 +8,18 @@ Slet tokenet manuelt bagefter, hvis det ikke allerede er sket, og slet test-repo
 | 4 | Admin-token `adm_f3e9a1c07b2d58e4` | `frontend/app.js` | **Alle brugere af hjemmesiden** (Vis kilde / DevTools). Frontend kan aldrig holde på en *secret* |
 | 5 | Deploy-password `Sommerhus-88` | URL i `README.md` (`https://deploy:Sommerhus-88@…`) | Alle med adgang til repoet |
 
+## Sådan finder man dem
+
+```bash
+git grep -n -i -E "password|token|key|://[^/]+:[^@]+@"   # nr. 1, 3, 4 og 5 i filerne nu
+git log --oneline --stat                                  # .env er tilføjet og slettet igen
+git log -p -- .env                                        # nr. 2 i historikken
+git show HEAD~4:.env                                      # eller vis filen fra den commit
+```
+
 **Ikke en *secret*:** `.env.example` har kun navnene uden værdier. Godt at spørge til, om de tæller den med.
 
-**Gode spørgsmål bagefter**
+## Gode spørgsmål bagefter
 
 - Hvilken er værst? (Nr. 4: den ligger hos alle brugere, ikke kun i repoet.)
 - Hvilken kan I ikke fjerne med en ny commit? (Nr. 2: den skal tilbagekaldes.)
