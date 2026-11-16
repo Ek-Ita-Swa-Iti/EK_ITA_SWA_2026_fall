@@ -4,3 +4,8 @@ CLAUDE.md
 
 # Session 20: repoet, som skattejagt/lav-repo.sh laver
 skattejagt-repo/
+
+# Genereret lokalt
+node_modules/
+qdrant_storage/
+__pycache__/
