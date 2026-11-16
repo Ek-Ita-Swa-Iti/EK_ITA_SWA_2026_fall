@@ -66,7 +66,7 @@ Det er "fail fast": Hellere en tydelig fejl ved start end et system, der kører 
 |-----|---------|
 | `backend/src/presentation/auth.js` (ny) | `isAuthorized(req)`: læser `Authorization: Bearer <token>` og sammenligner med `process.env.NOTES_API_TOKEN` |
 | `backend/src/presentation/server.js` (linje 7) | `require("./auth")` |
-| `backend/src/presentation/server.js` (linje 64–68) | Før routingen: `POST`, `PUT` og `DELETE` uden gyldigt token får `401` og headeren `WWW-Authenticate: Bearer` |
+| `backend/src/presentation/server.js` (linje 63–67) | Før routingen: `POST`, `PUT` og `DELETE` uden gyldigt token får `401` og headeren `WWW-Authenticate: Bearer` |
 | `backend/src/presentation/server.js` (linje 11, 20–21) | `send()` kan få ekstra headers. CORS tillader nu headeren `Authorization`, så en browser må sende tokenet |
 | `spec/swagger.json` | `components.securitySchemes.bearerAuth` (`type: http`, `scheme: bearer`), `security: [{ bearerAuth: [] }]` på `POST`, `PUT` og `DELETE`, et fælles `401`-svar i `components.responses.Unauthorized`, og version `1.2.0` |
 
