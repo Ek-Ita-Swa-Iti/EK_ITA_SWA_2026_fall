@@ -4,8 +4,8 @@ services:
     ports:
       - "3000:3000"
     environment:
-      MONGO_URL: mongodb://notes:${MONGO_PASSWORD}@mongo:27017
-      NOTES_API_TOKEN: ${NOTES_API_TOKEN}
+      MONGO_URL: mongodb://notes:${MONGO_PASSWORD:?Lav en .env-fil, se .env.example}@mongo:27017
+      NOTES_API_TOKEN: ${NOTES_API_TOKEN:?Lav en .env-fil, se .env.example}
       OLLAMA_URL: http://ollama:11434
       QDRANT_URL: http://qdrant:6333
     depends_on:
@@ -26,7 +26,7 @@ services:
       - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: notes
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:?Lav en .env-fil, se .env.example}
 
   swagger-ui:
     image: swaggerapi/swagger-ui
