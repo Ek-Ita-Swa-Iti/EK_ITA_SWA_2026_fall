@@ -35,6 +35,16 @@ http.createServer(async (req, res) => {
 }).listen(3000);
 EOF
 
+cat > backend/package.json <<'EOF'
+{
+  "name": "notes-backend",
+  "private": true,
+  "dependencies": {
+    "mongodb": "^6.10.0"
+  }
+}
+EOF
+
 cat > backend/Dockerfile <<'EOF'
 FROM node:20-slim
 WORKDIR /app
