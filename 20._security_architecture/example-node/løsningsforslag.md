@@ -1,4 +1,4 @@
-# Løsningsforslag: Del 3a · *Secrets* ud af compose-filen
+# Løsningsforslag: Del 2a · *Secrets* ud af compose-filen
 
 Løsningen er lavet i denne mappe, `example-node` ([README.md](README.md)), på branchen `session-20-del3-loesning`.
 Alle stier herunder er relative til `example-node/`.
@@ -15,7 +15,7 @@ docker compose up -d --build    # første gang hentes bge-m3 (ca. 1,2 GB)
 
 ---
 
-## 3a · *Secrets* ud af compose-filen
+## 2a · *Secrets* ud af compose-filen
 
 ### Hvad er gjort
 
