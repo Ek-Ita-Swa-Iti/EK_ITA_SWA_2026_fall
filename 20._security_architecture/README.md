@@ -109,7 +109,7 @@ cd skattejagt-repo
 
 Kør scriptet fra denne mappe (`20._security_architecture`). Det laver repoet med hele historikken.
 
-Brug alt, hvad I vil: jeres editor, `git log -p`, `git show <commit>` eller jeres AI-agent.
+Brug alt, hvad I vil: jeres editor, `git log -p` og `git show <commit>`. Brug kun AI til at få hjælp til, hvilke Git- og terminalkommandoer I skal bruge, ikke til at lede efter *secrets*.
 
 **Færdig når:** I har alle 5, og for hver kan I sige *hvor* den ligger (fil eller commit), og *hvem* der kan se den. Den første gruppe vinder.
 
