@@ -10,7 +10,7 @@
 
 ## Dagens spørgsmål
 
-**Jeres notes-service virker. Hvem kan slette alle jeres noter lige nu?**
+**Hvor ligger jeres *secrets*, og hvem kan læse dem lige nu?**
 
 ---
 
@@ -231,7 +231,7 @@ Spørgsmål til bagefter:
 
 ---
 
-Tilbage til dagens spørgsmål: **Hvem kan slette alle jeres noter nu?**
+Tilbage til dagens spørgsmål: **Hvor ligger jeres *secrets* nu, og hvem kan læse dem?**
 
 ---
 
