@@ -34,22 +34,28 @@ Efter i dag kan du:
 
 ## Program
 
-1. Runde 1 · Demo: Vi lækker en nøgle
+1. Runde 1 · Demo: GitHub fanger et token
 2. Runde 2 · *Secrets* ud af compose-filen
-3. Runde 1 igen · Blev nøglen fundet?
-4. Runde 3 · Find *secrets* i jeres aflevering
+3. Runde 3 · Skattejagt
+4. Runde 4 · Find *secrets* i jeres aflevering
 5. Ekstra · Kræv et token for at slette noter
 6. Opsamling
 
 ---
 
-## Runde 1 · Demo: Vi lækker en nøgle
+## Runde 1 · Demo: GitHub fanger et token
 
-Jeg laver en falsk AWS-nøgle på [canarytokens.org](https://canarytokens.org) og pusher den til et offentligt repo på GitHub. Nøglen virker ikke til noget, men jeg får en mail, hvis nogen prøver at bruge den.
+Jeg laver et rigtigt GitHub-token uden rettigheder, lægger det i en fil i et offentligt repo og kører `git push`.
 
-**Gæt:** Hvor lang tid går der, før nogen prøver den?
+**Gæt:** Hvad sker der?
 
-Vi kigger i min indbakke senere i dag.
+Hvis tokenet slipper igennem, scanner både GitHub og bots alle offentlige commits. Så det vigtigste først:
+
+1. **Tilbagekald tokenet**, og lav et nyt
+2. Find ud af, om det er blevet brugt
+3. Fjern det fra koden, og sørg for, at det ikke sker igen (`.gitignore`, `.env.example`)
+
+At slette det i en ny commit er ikke nok. Det ligger stadig i historikken og i alle kloner.
 
 ---
 
@@ -88,23 +94,24 @@ Vi kigger i min indbakke senere i dag.
 
 ---
 
-## Runde 1 igen · Blev nøglen fundet?
+## Runde 3 · Skattejagt
 
-Vi kigger i min indbakke: Hvornår blev nøglen prøvet, og hvorfra?
+Sofie har lavet en lille notes-app og gemt **5 *secrets*** i den. Nogle står i filerne, og én er slettet igen, men ligger stadig i historikken. Find dem alle.
 
-**Demo:** Jeg sletter nøglen i en ny commit og kører `git log -p`. Er den væk?
+```bash
+bash skattejagt/lav-repo.sh
+cd skattejagt-repo
+```
 
-Hvad skal jeg gøre nu? Det vigtigste først:
+Kør scriptet fra denne mappe (`20._security_architecture`). Det laver repoet med hele historikken.
 
-1. **Tilbagekald nøglen**, og lav en ny
-2. Find ud af, om den er blevet brugt
-3. Fjern den fra koden, og sørg for, at det ikke sker igen (`.gitignore`, `.env.example`)
+Brug alt, hvad I vil: jeres editor, `git log -p`, `git show <commit>` eller jeres AI-agent.
 
-At slette den fra repoet er ikke nok. Den ligger stadig i historikken og i alle kloner.
+**Færdig når:** I har alle 5, og for hver kan I sige *hvor* den ligger (fil eller commit), og *hvem* der kan se den. Den første gruppe vinder.
 
 ---
 
-## Runde 3 · Find *secrets* i jeres aflevering
+## Runde 4 · Find *secrets* i jeres aflevering
 
 **Demo:** Jeg kører prompten herunder på et repo.
 
