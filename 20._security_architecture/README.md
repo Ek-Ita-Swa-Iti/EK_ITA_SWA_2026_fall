@@ -204,7 +204,7 @@ Regler:
 
 Tjek agentens svar: Kig selv i de filer og commits, den peger på. En agent kan både overse noget og finde noget, der ikke er der.
 
-> ⚠️ **Stop op:** Agenten har netop læst jeres kode og hele historikken, og alt, hvad den læser, bliver sendt til AI-udbyderens servere. Har I dermed givet jeres *secrets* til en tredjepart? Hjælper det, at prompten beder agenten om at skjule dem, når den allerede har læst dem? Skal de *secrets*, agenten fandt, regnes for lækket, og hvad skal I så gøre i 5b?
+> Agenten har netop læst jeres kode og hele historikken, og alt, hvad den læser, bliver sendt til AI-udbyderens servere. Har I dermed givet jeres *secrets* til en tredjepart? Hjælper det, at prompten beder agenten om at skjule dem, når den allerede har læst dem? Skal de *secrets*, agenten fandt, regnes for lækket, og hvad skal I så gøre i 5b?
 
 Slå også **Secret Protection** til på repoet, som i Del 4, og se, om GitHub finder noget, I har overset.
 
