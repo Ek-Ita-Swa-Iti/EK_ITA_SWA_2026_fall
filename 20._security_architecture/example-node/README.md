@@ -17,10 +17,11 @@ Denne udgave er løsningen på Del 3 (se [`løsningsforslag.md`](løsningsforsla
 
 ```bash
 cp .env.example .env                              # udfyld begge værdier, fx med: openssl rand -hex 32
-docker compose up -d --build
-docker compose exec ollama ollama pull bge-m3     # første gang, ca. 1,2 GB
-docker compose restart backend                    # så indekset bygges med modellen
+docker compose up -d --build                      # første gang hentes bge-m3 (ca. 1,2 GB), så backend starter først bagefter
 ```
+
+Servicen `ollama-init` henter modellen `bge-m3` og stopper derefter. Backend venter på den, så søgningen virker,
+så snart backend er oppe. Følg download med `docker compose logs -f ollama-init`.
 
 | Service | Adresse fra jeres computer | Adresse fra en anden container |
 |---------|----------------------------|--------------------------------|
