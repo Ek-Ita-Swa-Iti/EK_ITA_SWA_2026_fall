@@ -1,6 +1,6 @@
-# Løsning: Del 3 · Giv notes-service en nøgle
+# Løsningsforslag: Del 3 · Giv notes-service en nøgle
 
-Løsningen er lavet i [`example-node`](example-node/README.md) på branchen `session-20-del3-loesning`.
+Løsningen er lavet i denne mappe, `example-node` ([README.md](README.md)), på branchen `session-20-del3-loesning`.
 Alle stier herunder er relative til `example-node/`.
 
 ---
@@ -108,7 +108,7 @@ Der er **ikke** ændret i frontend. Den nuværende frontend læser og søger kun
 
 Løsningen er, at **brugeren** logger ind og får sin egen adgang, som backend udsteder, kan lade udløbe og kan tilbagekalde:
 
-- **Login med en `HttpOnly`-session-cookie.** Se den sammenfoldede **Løsning** under 3c i [README.md](README.md#3c--og-frontend), med kode.
+- **Login med en `HttpOnly`-session-cookie.** Se den sammenfoldede **Løsning** under 3c i [session 20's README](../README.md#3c--og-frontend), med kode.
 - **Et kortlivet token pr. bruger** efter login, som `app.js` kun holder i hukommelsen og sender som `Authorization: Bearer …`. Det er OK over HTTPS, men et ondsindet script på siden (XSS) kan læse det.
 - **"Log ind med GitHub"** (OAuth, Del 5). Så skal I slet ikke gemme passwords.
 

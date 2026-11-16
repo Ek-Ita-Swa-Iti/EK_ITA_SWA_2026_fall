@@ -8,7 +8,7 @@ Udgangspunktet for [session 20](../README.md). Det er notes-servicen fra
 - **MongoDB** er sandhedskilden, og **Qdrant** er et søgeindeks, der bygges op igen, når backend starter
 - **Et søgefelt** i frontend og **`spec/swagger.json`** med `/v1/notes/search`, vist i Swagger UI på <http://localhost:8081>
 
-Denne udgave er løsningen på Del 3 (se [`løsning.md`](../løsning.md)):
+Denne udgave er løsningen på Del 3 (se [`løsningsforslag.md`](løsningsforslag.md)):
 
 - **MongoDB-passwordet og API-tokenet ligger i `.env`**, som ikke er i Git. `docker-compose.yml` henter dem med `${…}`.
 - **`POST`, `PUT` og `DELETE` kræver `Authorization: Bearer <token>`.** `GET` er stadig åben for alle.
