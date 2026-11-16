@@ -8,10 +8,9 @@ Udgangspunktet for [session 20](../README.md). Det er notes-servicen fra
 - **MongoDB** er sandhedskilden, og **Qdrant** er et søgeindeks, der bygges op igen, når backend starter
 - **Et søgefelt** i frontend og **`spec/swagger.json`** med `/v1/notes/search`, vist i Swagger UI på <http://localhost:8081>
 
-Brug den, hvis jeres egen notes-service ikke virker, eller hvis I vil starte forfra. To ting er med vilje forkerte, og det er dem, I laver om i dag:
+Brug den, hvis jeres egen notes-service ikke virker, eller hvis I vil starte forfra. Én ting er med vilje forkert, og det er den, I laver om i dag:
 
 - **MongoDB-passwordet står direkte i `docker-compose.yml`** (`notes123`), både hos `mongo` og i backends `MONGO_URL`.
-- **API'et er helt åbent:** Alle kan oprette, rette og slette noter.
 
 ## Kør det
 
