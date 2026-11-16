@@ -23,27 +23,13 @@ docker compose restart backend
 
 | Fil | Ændring |
 |-----|---------|
-| `docker-compose.yml` (linje 7–8) | `MONGO_URL` er nu `mongodb://notes:${MONGO_PASSWORD:?…}@mongo:27017`. `NOTES_API_TOKEN: ${NOTES_API_TOKEN:?…}` er ny |
-| `docker-compose.yml` (linje 29) | `MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:?…}` i stedet for `notes123` |
+| `docker-compose.yml` (linje 7–8) | `MONGO_URL` er nu `mongodb://notes:${MONGO_PASSWORD}@mongo:27017`. `NOTES_API_TOKEN: ${NOTES_API_TOKEN}` er ny |
+| `docker-compose.yml` (linje 29) | `MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}` i stedet for `notes123` |
 | `.env.example` (ny) | Navnene `MONGO_PASSWORD=` og `NOTES_API_TOKEN=` uden værdier. Den er committet |
 | `.gitignore` (ny) | `.env`, så den rigtige fil aldrig kommer i Git |
 | `README.md` | "Kør det" starter nu med `cp .env.example .env` |
 
 `.env` selv er **ikke** committet. `git status` viser den ikke, fordi den står i `.gitignore`.
-
-### Et skridt ud over opgaven: `${VAR:?besked}`
-
-Opgaven bruger `${MONGO_PASSWORD}`. Løsningen bruger `${MONGO_PASSWORD:?Lav en .env-fil, se .env.example}`.
-Forskellen ses, når `.env` mangler:
-
-- `${MONGO_PASSWORD}`: Compose giver en advarsel og bruger en **tom streng**. MongoDB starter med et tomt password, eller backend kan ikke logge ind, og fejlen viser sig et helt andet sted.
-- `${MONGO_PASSWORD:?…}`: Compose **stopper med det samme** og skriver beskeden:
-
-  ```
-  required variable MONGO_PASSWORD is missing a value: Lav en .env-fil, se .env.example
-  ```
-
-Det er "fail fast": Hellere en tydelig fejl ved start end et system, der kører med forkert eller ingen sikkerhed.
 
 ### Svar på spørgsmålene
 
@@ -94,7 +80,6 @@ Kørt med `docker compose up` og rigtig MongoDB og Qdrant. Ollama var erstattet 
 | `POST /v1/notes` uden / med token | `401` / `201` |
 | `PUT /v1/notes/2` uden / med token | `401` / `200` |
 | `OPTIONS /v1/notes` (CORS preflight) | `204`, `Access-Control-Allow-Headers: Content-Type, Authorization` |
-| `docker compose config` uden `.env` | Stopper med "required variable MONGO_PASSWORD is missing a value" |
 
 **Færdig betyder** er opfyldt: `DELETE /v1/notes/1` uden token giver `401`, og med token virker det.
 
