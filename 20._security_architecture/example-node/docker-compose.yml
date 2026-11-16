@@ -8,9 +8,12 @@ services:
       OLLAMA_URL: http://ollama:11434
       QDRANT_URL: http://qdrant:6333
     depends_on:
-      - mongo
-      - ollama
-      - qdrant
+      mongo:
+        condition: service_started
+      qdrant:
+        condition: service_started
+      ollama-init:
+        condition: service_completed_successfully
 
   frontend:
     build: ./frontend
@@ -42,6 +45,24 @@ services:
       - "11434:11434"
     volumes:
       - ollama-data:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  # Henter bge-m3 første gang (ca. 1,2 GB) og stopper derefter.
+  # Backend venter på, at den er færdig, så søgningen virker fra start.
+  # Ligger modellen allerede i ollama-data, springes download over.
+  ollama-init:
+    image: ollama/ollama
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["ollama list | grep -q bge-m3 || ollama pull bge-m3"]
+    depends_on:
+      ollama:
+        condition: service_healthy
 
   qdrant:
     image: qdrant/qdrant
