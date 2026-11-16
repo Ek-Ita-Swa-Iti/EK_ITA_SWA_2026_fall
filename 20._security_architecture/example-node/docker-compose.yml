@@ -5,10 +5,9 @@ services:
       - "3000:3000"
     # ${NAVN} henter værdien fra .env. Med ${NAVN:?besked} stopper
     # docker compose med beskeden, hvis NAVN mangler i .env, i stedet for
-    # at starte med et tomt password eller token.
+    # at starte med et tomt password.
     environment:
       MONGO_URL: mongodb://notes:${MONGO_PASSWORD:?Lav en .env-fil, se .env.example}@mongo:27017
-      NOTES_API_TOKEN: ${NOTES_API_TOKEN:?Lav en .env-fil, se .env.example}
       OLLAMA_URL: http://ollama:11434
       QDRANT_URL: http://qdrant:6333
     depends_on:

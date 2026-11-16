@@ -4,11 +4,10 @@
 
 const http = require("http");
 const notesService = require("../application/notesService");
-const { isAuthorized } = require("./auth");
 
 const PORT = process.env.PORT || 3000;
 
-function send(res, status, body, extraHeaders = {}) {
+function send(res, status, body) {
   res.writeHead(status, {
     "Content-Type": "application/json",
     // The frontend runs on a separate origin (localhost:8080 vs
@@ -16,9 +15,7 @@ function send(res, status, body, extraHeaders = {}) {
     // including the methods and header a preflight asks about.
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-    // Authorization: the browser must be allowed to send the bearer token.
-    "Access-Control-Allow-Headers": "Content-Type, Authorization",
-    ...extraHeaders,
+    "Access-Control-Allow-Headers": "Content-Type",
   });
   res.end(status === 204 ? undefined : JSON.stringify(body));
 }
@@ -59,12 +56,6 @@ const server = http.createServer(async (req, res) => {
 
   if (req.method === "OPTIONS") {
     return send(res, 204);
-  }
-
-  // GET is open to everyone. Everything that changes notes needs the token.
-  const changesNotes = ["POST", "PUT", "DELETE"].includes(req.method);
-  if (changesNotes && !isAuthorized(req)) {
-    return send(res, 401, { error: "Missing or invalid token" }, { "WWW-Authenticate": "Bearer" });
   }
 
   if (req.method === "GET" && url.pathname === "/v1/notes/search") {

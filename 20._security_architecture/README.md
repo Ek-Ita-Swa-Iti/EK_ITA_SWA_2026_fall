@@ -93,17 +93,15 @@ Står der et password direkte i `docker-compose.yml`? I `example-node` står Mon
 
    ```
    MONGO_PASSWORD=et-langt-password
-   NOTES_API_TOKEN=et-langt-tilfældigt-token
    ```
 
-   Brug fx `openssl rand -hex 32` til at lave et tilfældigt password og token. Hex er kun bogstaver og tal, så det kan stå i en URL uden problemer.
-2. I `docker-compose.yml` henter I værdierne fra `.env`:
+   Brug fx `openssl rand -hex 32` til at lave et tilfældigt password. Hex er kun bogstaver og tal, så det kan stå i en URL uden problemer.
+2. I `docker-compose.yml` henter I værdien fra `.env`:
 
    ```yaml
      backend:
        environment:
          MONGO_URL: mongodb://notes:${MONGO_PASSWORD}@mongo:27017
-         NOTES_API_TOKEN: ${NOTES_API_TOKEN}
 
      mongo:
        environment:
@@ -118,146 +116,11 @@ Står der et password direkte i `docker-compose.yml`? I `example-node` står Mon
 
 Prøv `docker compose config`. Hvad viser den? Hvad betyder det, at en *secret* i en miljøvariabel stadig kan læses af alle, der kan køre kommandoer på maskinen?
 
-### 3b · Kræv et token for at ændre noter
-
-- `GET`-requests er stadig åbne for alle.
-- `POST`, `PUT` og `DELETE` kræver headeren `Authorization: Bearer <token>`. Mangler den, eller er den forkert, svarer API'et `401`.
-- Backend læser tokenet fra miljøvariablen `NOTES_API_TOKEN` (`process.env.NOTES_API_TOKEN`), ikke fra koden. Send den videre fra `.env` i `docker-compose.yml`.
-- Tilføj et `securitySchemes`-afsnit med bearer-token i jeres `swagger.json` fra session 12, så kontrakten fortæller klienten, at der kræves et token.
-
-  ```json
-  {
-    "openapi": "3.0.3",
-    "components": {
-      "securitySchemes": {
-        "bearerAuth": {
-          "type": "http",
-          "scheme": "bearer"
-        }
-      }
-    },
-    "paths": {
-      "/v1/notes/{id}": {
-        "get": {
-          "summary": "Hent én note (åben for alle)",
-          "responses": {
-            "200": { "description": "Noten" }
-          }
-        },
-        "delete": {
-          "summary": "Slet en note",
-          "security": [{ "bearerAuth": [] }],
-          "responses": {
-            "204": { "description": "Noten er slettet" },
-            "401": { "description": "Mangler eller forkert token" }
-          }
-        }
-      }
-    }
-  }
-  ```
-
-  `securitySchemes` beskriver, *hvordan* klienten sender tokenet. `security` på den enkelte operation siger, *hvor* det kræves. `GET` har ingen `security` og er derfor åben. I Swagger UI dukker der nu en **Authorize**-knap op, hvor I kan indsætte tokenet.
-
-**Færdig betyder:** I Insomnia giver `DELETE /v1/notes/1` uden token `401`, og med token virker det.
-
-### 3c · Og frontend?
-
-Jeres frontend skal også kunne oprette noter. Hvis I lægger tokenet i `app.js`, hvem kan så se det? Åbn frontend i browseren, og tryk **Vis kilde** (eller kig i DevTools → Sources).
-
-**Frontend kan ikke holde på en _secret_.** Alt, hvad der sendes til browseren, kan brugeren læse. Hvad skulle der til i stedet? (Tænk på, hvordan I logger ind på GitHub.)
-
-<details>
-<summary><strong>Løsning:</strong> Login med en session-cookie</summary>
-
-<br>
-
-Browseren skal ikke have en fælles *secret*. I stedet logger **brugeren** ind, og backend giver hver bruger sin egen session, som kan udløbe og slettes.
-
-1. Frontend sender brugernavn og password til `POST /v1/login`.
-2. Backend tjekker passwordet mod en **hash** i MongoDB. Passwordet selv bliver aldrig gemt.
-3. Er det rigtigt, laver backend et tilfældigt session-id, husker hvem det hører til, og sender det tilbage som en cookie:
-
-   ```
-   Set-Cookie: session=4f9c…; HttpOnly; Secure; SameSite=Strict; Max-Age=3600
-   ```
-
-   | Flag | Hvad det gør |
-   |---|---|
-   | `HttpOnly` | JavaScript kan ikke læse cookien. Den står ikke i `app.js` og kan ikke stjæles af et script |
-   | `Secure` | Cookien sendes kun over HTTPS (browsere tillader `localhost` uden HTTPS) |
-   | `SameSite=Strict` | Cookien sendes ikke med, når en anden hjemmeside laver requests til jeres API |
-   | `Max-Age=3600` | Sessionen udløber efter en time |
-
-4. Browseren sender cookien med automatisk. Ved `POST`, `PUT` og `DELETE` slår backend session-id'et op: Hvem er brugeren (authentication), og må brugeren det her (authorization)? Ellers `401`.
-5. `POST /v1/logout` sletter sessionen i backend.
-
-**Backend** (Node har det hele indbygget i `crypto`, så der er ingen nye npm-pakker):
-
-```js
-const crypto = require("crypto");
-
-// Gem aldrig passwordet, kun salt + hash. Det her kører, når en bruger oprettes.
-function hashPassword(password) {
-  const salt = crypto.randomBytes(16).toString("hex");
-  const hash = crypto.scryptSync(password, salt, 64).toString("hex");
-  return `${salt}:${hash}`;
-}
-
-function checkPassword(password, stored) {
-  const [salt, hash] = stored.split(":");
-  const candidate = crypto.scryptSync(password, salt, 64);
-  return crypto.timingSafeEqual(candidate, Buffer.from(hash, "hex"));
-}
-
-const sessions = new Map(); // session-id → { username, expires }
-
-function createSession(username) {
-  const id = crypto.randomBytes(32).toString("hex");
-  sessions.set(id, { username, expires: Date.now() + 60 * 60 * 1000 });
-  return id;
-}
-
-function userFromRequest(req) {
-  const match = (req.headers.cookie || "").match(/(?:^|;\s*)session=([a-f0-9]+)/);
-  const session = match && sessions.get(match[1]);
-  if (!session || session.expires < Date.now()) return null;
-  return session.username;
-}
-```
-
-**Frontend og backend ligger på hver sin origin** (`localhost:8080` og `localhost:3000`), så browseren sender kun cookien med, hvis begge sider siger ja:
-
-```js
-// app.js
-fetch(`${BACKEND_URL}/v1/notes`, {
-  method: "POST",
-  credentials: "include", // send cookien med
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ title, body }),
-});
-```
-
-```js
-// server.js, i send(): ikke "*", når der er cookies med
-"Access-Control-Allow-Origin": "http://localhost:8080",
-"Access-Control-Allow-Credentials": "true",
-```
-
-**Hvor hører det hjemme i lagene?** Login-routen og tjekket af cookien ligger i **presentation** (`server.js`). Reglen "kun ejeren må slette sin note" er en regel for applikationen og hører til i **application** (`notesService.js`). Brugerne med deres password-hash ligger i **persistence**, fx en `usersRepository.js` mod MongoDB.
-
-**Trade-offs:**
-
-- `sessions` ligger i hukommelsen, så alle bliver logget ud, når backend genstarter, og det virker ikke med flere backend-containere. Rigtige systemer gemmer sessionerne i en database eller i Redis.
-- Det her er stadig jeres egen login. Med **"Log ind med GitHub"** (OAuth, Del 5) skal I slet ikke gemme passwords. Til gengæld skal I oprette en OAuth-app på GitHub og holde dens `client_secret` i backends `.env`.
-
-</details>
-
 ---
 
 ## Del 4: Lækket!
 
-**Scenarie:** I opdager, at jeres `NOTES_API_TOKEN` har ligget i et offentligt GitHub-repo i to dage.
+**Scenarie:** I opdager, at jeres GitHub-token har ligget i et offentligt GitHub-repo i to dage.
 
 **Prøv det selv med et falsk token** i et nyt, tomt test-repo (aldrig med et rigtigt token):
 
@@ -301,20 +164,11 @@ Tilbagekald derefter det gamle token, og lav et nyt.
 
 ---
 
-## Del 5: Sådan gør de andre
-
-- **_Secrets_ i rigtige systemer** ligger i en **secrets manager**: GitHub Actions Secrets, HashiCorp Vault, 1Password, eller cloud-udbyderens (AWS Secrets Manager, Azure Key Vault). Koden får dem, når den kører, og de ligger aldrig i Git.
-- **Kortlivede tokens:** Jo kortere et token virker, jo mindre skade gør det, hvis det lækker. Det er derfor, GitHub beder jer om en udløbsdato.
-- **"Log ind med GitHub/Google"** (OAuth): Brugeren giver en app et token *på sine vegne*, med bestemte scopes, uden at give appen sit password. Det er svaret på 3c.
-- **HTTPS:** Et token, der sendes over `http://`, kan læses af alle på netværket. Et bearer-token beskytter kun, hvis forbindelsen er krypteret.
-
----
-
-## Del 6: Øvelse · Tjek jeres obligatoriske opgave
+## Del 5: Øvelse · Tjek jeres obligatoriske opgave
 
 Nu skal I bruge det på noget, der allerede er afleveret. Åbn jeres gruppes repo med den obligatoriske opgave, som I afleverede i sidste uge, og find alle de *secrets*, der står som almindelig tekst.
 
-### 6a · Find dem
+### 5a · Find dem
 
 Klon repoet på ny, så I tjekker præcis det, der ligger på GitHub, og ikke jeres lokale kopi:
 
@@ -346,7 +200,7 @@ Slå også **Secret Protection** til på repoet, som i Del 4, og se, om GitHub f
 
 Skriv en liste: *Hvad* er det, *hvor* ligger det (fil og commit), og er det **rigtigt** (virker det et sted), eller er det bare et eksempel?
 
-### 6b · Løs dem
+### 5b · Løs dem
 
 For hver *secret* på listen, i den rækkefølge I fandt frem til i Del 4:
 
@@ -354,7 +208,7 @@ For hver *secret* på listen, i den rækkefølge I fandt frem til i Del 4:
 2. **Flyt den ud af koden** til en `.env`-fil, som i Del 3a. Scriptet læser den som miljøvariabel, fx `curl -H "Authorization: Bearer $API_TOKEN" …`, og `docker-compose.yml` sender den videre med `${API_TOKEN}`.
 3. **Tilføj `.env` til `.gitignore`**, og commit en `.env.example` med navnene, men uden værdier.
 4. **Opdatér `README.md`**, så en fremmed kan se, hvilke værdier de selv skal udfylde, før `docker compose up` virker.
-5. **Commit og push**, og kør tjekket fra 6a igen.
+5. **Commit og push**, og kør tjekket fra 5a igen.
 
 **Færdig betyder:** `git grep` finder ingen rigtige *secrets*, `.env` er ikke i repoet, og projektet kan stadig startes ud fra README'en.
 
