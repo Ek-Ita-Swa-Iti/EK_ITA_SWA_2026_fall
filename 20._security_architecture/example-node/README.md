@@ -1,4 +1,4 @@
-# notes-service: udgangspunktet for session 20
+# notes-service: løsning på Del 3 i session 20
 
 Udgangspunktet for [session 20](../README.md). Det er notes-servicen fra
 [session 19](../../19._data_architecture_2/example-node/README.md), som den ser ud, når hele tutorialen er lavet:
@@ -8,14 +8,15 @@ Udgangspunktet for [session 20](../README.md). Det er notes-servicen fra
 - **MongoDB** er sandhedskilden, og **Qdrant** er et søgeindeks, der bygges op igen, når backend starter
 - **Et søgefelt** i frontend og **`spec/swagger.json`** med `/v1/notes/search`, vist i Swagger UI på <http://localhost:8081>
 
-Brug den, hvis jeres egen notes-service ikke virker, eller hvis I vil starte forfra. To ting er med vilje forkerte, og det er dem, I laver om i dag:
+Denne udgave er løsningen på Del 3 (se [`løsning.md`](../løsning.md)):
 
-- **MongoDB-passwordet står direkte i `docker-compose.yml`** (`notes123`), både hos `mongo` og i backends `MONGO_URL`.
-- **API'et er helt åbent:** Alle kan oprette, rette og slette noter.
+- **MongoDB-passwordet og API-tokenet ligger i `.env`**, som ikke er i Git. `docker-compose.yml` henter dem med `${…}`.
+- **`POST`, `PUT` og `DELETE` kræver `Authorization: Bearer <token>`.** `GET` er stadig åben for alle.
 
 ## Kør det
 
 ```bash
+cp .env.example .env                              # udfyld begge værdier, fx med: openssl rand -hex 32
 docker compose up -d --build
 docker compose exec ollama ollama pull bge-m3     # første gang, ca. 1,2 GB
 docker compose restart backend                    # så indekset bygges med modellen
@@ -37,19 +38,23 @@ tre eksempelnoter. Ollama har en volume (`ollama-data`), så modellen skal kun h
 
 ```bash
 curl localhost:3000/v1/notes
-curl -X POST localhost:3000/v1/notes -H 'Content-Type: application/json' -d '{"title":"Cykel","body":"Ny slange til baghjulet"}'
+TOKEN=$(grep NOTES_API_TOKEN .env | cut -d= -f2)
+
+curl -X POST localhost:3000/v1/notes -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -d '{"title":"Cykel","body":"Ny slange til baghjulet"}'
 curl "localhost:3000/v1/notes/search?q=kaffe"
-curl -X DELETE localhost:3000/v1/notes/3
+curl -X DELETE localhost:3000/v1/notes/3                                   # 401
+curl -X DELETE localhost:3000/v1/notes/3 -H "Authorization: Bearer $TOKEN" # 204
 ```
 
-Eller importér `spec/swagger.json` i Insomnia, som i session 12.
+Eller importér `spec/swagger.json` i Insomnia, som i session 12. I Swagger UI trykker I **Authorize** og indsætter tokenet.
 
 ## Lagene
 
 ```
 backend/src/
 ├── presentation/
-│   └── server.js                    ← HTTP og JSON, kender kun notesService
+│   ├── server.js                    ← HTTP og JSON, kender kun notesService
+│   └── auth.js                      ← tjekker bearer-tokenet
 ├── application/
 │   └── notesService.js              ← bestemmer rækkefølgen: MongoDB → Ollama → Qdrant
 └── persistence/
