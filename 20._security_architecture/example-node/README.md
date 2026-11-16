@@ -23,6 +23,14 @@ docker compose up -d --build                      # første gang hentes bge-m3 (
 Servicen `ollama-init` henter modellen `bge-m3` og stopper derefter. Backend venter på den, så søgningen virker,
 så snart backend er oppe. Følg download med `docker compose logs -f ollama-init`.
 
+> ⚠️ **Har I kørt udgangspunktet før (med `notes123`)?** MongoDB sætter kun passwordet, første gang den starter
+> med en tom datamappe. Genbruger containeren sin gamle data, gælder `notes123` stadig, og backend stopper med
+> `Authentication failed` (i Swagger UI ses det som *Failed to fetch*). Start MongoDB med en frisk datamappe:
+>
+> ```bash
+> docker compose up -d --renew-anon-volumes mongo backend
+> ```
+
 | Service | Adresse fra jeres computer | Adresse fra en anden container |
 |---------|----------------------------|--------------------------------|
 | backend | <http://localhost:3000/v1/notes> | `http://backend:3000` |
