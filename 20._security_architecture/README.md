@@ -131,7 +131,7 @@ Prøv `docker compose config`. Hvad viser den? Hvad betyder det, at en *secret* 
 Sæt de her skridt i den rigtige rækkefølge, og begrund:
 
 - Fjern tokenet fra Git-historikken
-- **Tilbagekald tokenet**, og lav et nyt
+- Tilbagekald tokenet, og lav et nyt
 - Find ud af, om tokenet er blevet brugt
 - Sørg for, at det ikke sker igen (`.gitignore`, `.env.example`)
 - Fortæl det til dem, det går ud over
