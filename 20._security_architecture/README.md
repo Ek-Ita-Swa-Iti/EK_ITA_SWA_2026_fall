@@ -34,31 +34,7 @@ Efter i dag kan du:
 
 ---
 
-## Del 1: Jagt på *secrets*
-
-Find de *secrets*, I har brugt i semestret, og skriv ned, *hvor* de ligger, og *hvem* der kan læse dem:
-
-| Hvor I brugte den | Hvor den sandsynligvis ligger | Prøv | Sådan sletter I den |
-|-------------------|-------------------------------|------|---------------------|
-| Mistral Vibe-nøglen, session 1 | I styresystemets **nøglering** | **Mac:** `security find-generic-password -s ai.mistral.vibe`<br>**Windows:** Åbn **Legitimationsstyring** (Credential Manager) → *Windows-legitimationsoplysninger* | **Mac:** `security delete-generic-password -s ai.mistral.vibe`<br>**Windows:** Legitimationsstyring → vælg nøglen → **Fjern**<br>Slet også linjen i `~/.vibe/.env`, hvis den findes.<br>**Tilbagekald:** <https://console.mistral.ai> → *API Keys* → slet nøglen |
-| GitHub-token til `git push` fra jeres laptop, session 5 og frem | I **nøgleringen**. Git gemmer det selv der | `git config credential.helper` viser hvordan.<br>**Mac:** `security find-internet-password -s github.com`<br>**Windows:** Legitimationsstyring, find `git:https://github.com` | **Mac:** `security delete-internet-password -s github.com`<br>**Windows:** Legitimationsstyring → `git:https://github.com` → **Fjern**<br>Står der `store`, så skift til nøgleringen: `git config --global credential.helper osxkeychain` (Mac) eller `manager` (Windows), og `rm ~/.git-credentials`<br>**Tilbagekald:** GitHub → *Settings* → *Developer settings* → *Personal access tokens* → **Delete** |
-| GitHub-token til `git push` i webtop, session 2 | Som **almindelig tekst** i `~/.git-credentials` i webtop-containeren, fordi I kørte `credential.helper store` | `cat ~/.git-credentials` (i webtop) | `rm ~/.git-credentials`<br>Skift til en sikrere helper: `git config --global credential.helper cache` (husker kun tokenet i 15 minutter)<br>**Tilbagekald** tokenet på GitHub som ovenfor |
-| `export TOKEN=…` og `export GH_TOKEN=…`, session 3 og 10 | I jeres **shell-historik** | `history \| grep TOKEN` | `history -d <nummer>` for hver linje (start med det højeste nummer), så `history -w`<br>Eller ryd det hele: `history -c && history -w`<br>**Mac (zsh):** Ret i `~/.zsh_history` i en editor<br>`unset TOKEN GH_TOKEN` fjerner dem fra den åbne terminal |
-| Databasepasswordet i jeres notes-service, session 9 (`DB_PASSWORD` og `MYSQL_ROOT_PASSWORD`). Det samme gælder session 6 og 18 | I jeres **`docker-compose.yml`** | Kig i filen. I lagde notes-service på GitHub i session 11. Ligger passwordet der nu? | Flyt det ud i en `.env`-fil (Del 3a), og **skift passwordet**. Ligger det på GitHub, er det i historikken, selvom I sletter det i en ny commit (Del 4) |
-
-Kommandoerne til Mac og Windows viser kun, *at* der ligger en nøgle, og ikke selve nøglen. Finder I ikke noget dér, så kig i `~/.vibe/.env`. Ældre versioner af Vibe gemte nøglen i den fil.
-
-At slette en *secret* på jeres egen computer gør den ikke ugyldig. Har en anden fået fat i den, virker den stadig. Det er kun **tilbagekald** hos udbyderen (Mistral, GitHub), der gør den ubrugelig. Mere om det i [Del 4](#del-4-lækket).
-
-Spørgsmål til bagefter:
-
-- Hvilke af jeres *secrets* ligger som **almindelig tekst** i en fil?
-- Ligger nogen af dem på **GitHub**?
-- Hvilken af dem ville gøre mest skade, hvis en anden fik den?
-
----
-
-## Del 2: Hvem er du, og hvad må du?
+## Del 1: Hvem er du, og hvad må du?
 
 Demo og øvelse i Insomnia mod GitHubs API, som I kender fra session 3 og 10.
 
@@ -81,11 +57,11 @@ Hvorfor gav vi tokenet i session 10 kun læseadgang? Det kaldes **least privileg
 
 ---
 
-## Del 3: Øvelse · Giv notes-service en nøgle
+## Del 2: Øvelse · Giv notes-service en nøgle
 
 I jeres notes-service.
 
-### 3a · *Secrets* ud af compose-filen
+### 2a · *Secrets* ud af compose-filen
 
 Står der et password direkte i `docker-compose.yml`? I `example-node` står MongoDB-passwordet `notes123` to steder: hos `mongo` og i backends `MONGO_URL`. Flyt det ud:
 
@@ -118,7 +94,7 @@ Prøv `docker compose config`. Hvad viser den? Hvad betyder det, at en *secret* 
 
 ---
 
-## Del 4: Lækket!
+## Del 3: Lækket!
 
 **Scenarie:** I opdager, at jeres GitHub-token har ligget i et offentligt GitHub-repo i to dage.
 
@@ -146,11 +122,11 @@ Hvorfor er det ikke nok at slette tokenet fra repoet? Bots scanner offentlige re
 
 ---
 
-## Del 5: Øvelse · Tjek jeres obligatoriske opgave
+## Del 4: Øvelse · Tjek jeres obligatoriske opgave
 
 Nu skal I bruge det på noget, der allerede er afleveret. Åbn jeres gruppes repo med den obligatoriske opgave, som I afleverede i sidste uge, og find alle de *secrets*, der står som almindelig tekst.
 
-### 5a · Find dem
+### 4a · Find dem
 
 Klon repoet på ny, så I tjekker præcis det, der ligger på GitHub, og ikke jeres lokale kopi:
 
@@ -186,21 +162,21 @@ Regler:
 
 Tjek agentens svar: Kig selv i de filer og commits, den peger på. En agent kan både overse noget og finde noget, der ikke er der.
 
-> Agenten har netop læst jeres kode og hele historikken, og alt, hvad den læser, bliver sendt til AI-udbyderens servere. Har I dermed givet jeres *secrets* til en tredjepart? Hjælper det, at prompten beder agenten om at skjule dem, når den allerede har læst dem? Skal de *secrets*, agenten fandt, regnes for lækket, og hvad skal I så gøre i 5b?
+> Agenten har netop læst jeres kode og hele historikken, og alt, hvad den læser, bliver sendt til AI-udbyderens servere. Har I dermed givet jeres *secrets* til en tredjepart? Hjælper det, at prompten beder agenten om at skjule dem, når den allerede har læst dem? Skal de *secrets*, agenten fandt, regnes for lækket, og hvad skal I så gøre i 4b?
 
-Slå også **Secret Protection** til på repoet, som i Del 4, og se, om GitHub finder noget, I har overset.
+Slå også **Secret Protection** til på repoet, som i Del 3, og se, om GitHub finder noget, I har overset.
 
 Skriv en liste: *Hvad* er det, *hvor* ligger det (fil og commit), og er det **rigtigt** (virker det et sted), eller er det bare et eksempel?
 
-### 5b · Løs dem
+### 4b · Løs dem
 
-For hver *secret* på listen, i den rækkefølge I fandt frem til i Del 4:
+For hver *secret* på listen, i den rækkefølge I fandt frem til i Del 3:
 
 1. **Er den rigtig, så tilbagekald den først**, og lav en ny. Et token på GitHub i flere uger skal regnes for lækket.
-2. **Flyt den ud af koden** til en `.env`-fil, som i Del 3a. Scriptet læser den som miljøvariabel, fx `curl -H "Authorization: Bearer $API_TOKEN" …`, og `docker-compose.yml` sender den videre med `${API_TOKEN}`.
+2. **Flyt den ud af koden** til en `.env`-fil, som i Del 2a. Scriptet læser den som miljøvariabel, fx `curl -H "Authorization: Bearer $API_TOKEN" …`, og `docker-compose.yml` sender den videre med `${API_TOKEN}`.
 3. **Tilføj `.env` til `.gitignore`**, og commit en `.env.example` med navnene, men uden værdier.
 4. **Opdatér `README.md`**, så en fremmed kan se, hvilke værdier de selv skal udfylde, før `docker compose up` virker.
-5. **Commit og push**, og kør prompten fra 5a igen i en ny klon.
+5. **Commit og push**, og kør prompten fra 4a igen i en ny klon.
 
 **Færdig betyder:** Agenten finder ingen rigtige *secrets* i filerne, `.env` er ikke i repoet, og projektet kan stadig startes ud fra README'en.
 
