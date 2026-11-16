@@ -1,4 +1,4 @@
-# notes-service: løsning på Del 2a i session 20
+# notes-service: løsning på Runde 2 i session 20
 
 Udgangspunktet for [session 20](../README.md). Det er notes-servicen fra
 [session 19](../../19._data_architecture_2/example-node/README.md), som den ser ud, når hele tutorialen er lavet:
@@ -8,7 +8,7 @@ Udgangspunktet for [session 20](../README.md). Det er notes-servicen fra
 - **MongoDB** er sandhedskilden, og **Qdrant** er et søgeindeks, der bygges op igen, når backend starter
 - **Et søgefelt** i frontend og **`spec/swagger.json`** med `/v1/notes/search`, vist i Swagger UI på <http://localhost:8081>
 
-Denne udgave er løsningen på Del 2a (se [`løsningsforslag.md`](løsningsforslag.md)):
+Denne udgave er løsningen på Runde 2 (se [`løsningsforslag.md`](løsningsforslag.md)):
 
 - **MongoDB-passwordet ligger i `.env`**, som ikke er i Git. `docker-compose.yml` henter det med `${…}`.
 
