@@ -61,7 +61,7 @@ At slette det i en ny commit er ikke nok. Det ligger stadig i historikken og i a
 
 ## Runde 2 · *Secrets* ud af compose-filen
 
-**Demo:** Jeg gør det i `example-node`.
+**Demo:** Vi gør det i `example-node`.
 
 **I gør det samme** i jeres notes-service:
 
@@ -113,7 +113,7 @@ Brug alt, hvad I vil: jeres editor, `git log -p`, `git show <commit>` eller jere
 
 ## Runde 4 · Find *secrets* i jeres aflevering
 
-**Demo:** Jeg kører prompten herunder på et repo.
+**Demo:** Vi kører prompten herunder på et repo.
 
 **I gør det samme** på jeres gruppes repo med den obligatoriske opgave. Klon det på ny, så I tjekker det, der ligger på GitHub:
 
