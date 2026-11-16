@@ -45,7 +45,7 @@ Efter i dag kan du:
 
 ## Runde 1 · Demo: GitHub fanger et token
 
-Jeg laver et rigtigt GitHub-token uden rettigheder, lægger det i en fil i et offentligt repo og kører `git push`.
+Vi laver et rigtigt GitHub-token uden rettigheder, lægger det i en fil i et offentligt repo og kører `git push`.
 
 **Gæt:** Hvad sker der?
 
