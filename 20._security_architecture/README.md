@@ -177,24 +177,32 @@ git clone <url-til-jeres-repo> tjek-aflevering
 cd tjek-aflevering
 ```
 
-**I filerne, som de ser ud nu:**
+Åbn jeres AI-agent (fx Mistral Vibe eller Claude Code) i mappen `tjek-aflevering`, og giv den denne prompt:
 
-```bash
-git grep -n -i -E "password|passwd|secret|token|api[_-]?key|bearer"
-git grep -n -E "ghp_|github_pat_"            # GitHub-tokens
-git grep -n -E "://[^/@ ]+:[^/@ ]+@"         # URL med brugernavn og password
-ls -a                                         # ligger der en .env?
-cat .gitignore                                # står .env der?
+```text
+Du er sikkerhedsreviewer. Find alle secrets i dette Git-repo: passwords, API-nøgler,
+tokens (fx GitHub-tokens, der starter med ghp_ eller github_pat_), private nøgler og
+URL'er med brugernavn og password i (fx mongodb://bruger:password@host).
+
+Søg to steder:
+1. I filerne, som de ser ud nu. Kig især i docker-compose.yml (environment:),
+   Dockerfile (ENV og ARG), .env-filer, shell-scripts (fx curl -H "Authorization: ..."),
+   kode, konfigurationsfiler og README.md (eksempler med rigtige værdier).
+2. I hele Git-historikken på alle branches (git log -p --all), også secrets, der er
+   slettet i en senere commit. Tjek også, om en .env-fil nogensinde har været committet.
+
+Tjek desuden, om der ligger en .env-fil, og om .env står i .gitignore.
+
+Lav en tabel med kolonnerne: Hvad (type af secret), Hvor (fil og linje, eller
+commit-hash), Ligger den stadig i filerne nu (ja/nej), og Rigtig eller eksempel
+(med en kort begrundelse).
+
+Regler:
+- Skriv aldrig en hel secret ud. Vis kun de første 4 tegn efterfulgt af ****.
+- Ret, slet eller commit ikke noget. Du skal kun finde og rapportere.
 ```
 
-**I historikken.** En *secret*, der er slettet i en senere commit, ligger der stadig (Del 4):
-
-```bash
-git log -p --all | grep -n -i -E "password|token|api[_-]?key|bearer|ghp_"
-git log --all --oneline -- .env               # har .env nogensinde været committet?
-```
-
-Kig især i `docker-compose.yml` (`environment:`), `Dockerfile` (`ENV` og `ARG`), jeres shell-scripts (`curl -H "Authorization: …"`) og `README.md` (eksempler med rigtige værdier).
+Tjek agentens svar: Kig selv i de filer og commits, den peger på. En agent kan både overse noget og finde noget, der ikke er der.
 
 Slå også **Secret Protection** til på repoet, som i Del 4, og se, om GitHub finder noget, I har overset.
 
@@ -208,9 +216,9 @@ For hver *secret* på listen, i den rækkefølge I fandt frem til i Del 4:
 2. **Flyt den ud af koden** til en `.env`-fil, som i Del 3a. Scriptet læser den som miljøvariabel, fx `curl -H "Authorization: Bearer $API_TOKEN" …`, og `docker-compose.yml` sender den videre med `${API_TOKEN}`.
 3. **Tilføj `.env` til `.gitignore`**, og commit en `.env.example` med navnene, men uden værdier.
 4. **Opdatér `README.md`**, så en fremmed kan se, hvilke værdier de selv skal udfylde, før `docker compose up` virker.
-5. **Commit og push**, og kør tjekket fra 5a igen.
+5. **Commit og push**, og kør prompten fra 5a igen i en ny klon.
 
-**Færdig betyder:** `git grep` finder ingen rigtige *secrets*, `.env` er ikke i repoet, og projektet kan stadig startes ud fra README'en.
+**Færdig betyder:** Agenten finder ingen rigtige *secrets* i filerne, `.env` er ikke i repoet, og projektet kan stadig startes ud fra README'en.
 
 > **Miniøvelse:** Fandt I ingen *secrets*? Så kig efter det, der *kunne* blive et problem: et password, der står hardcodet "bare til test", en `ENV` i `Dockerfile`, eller en URL med brugernavn og password i. Hvad ville der ske, hvis I en dag skiftede den ud med en rigtig værdi?
 
